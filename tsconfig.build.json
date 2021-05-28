@@ -39,7 +39,8 @@
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/*.stories.tsx",
-    "./src/setupTests.ts"
+    "./src/setupTests.ts",
+    "./**.flow.ts",
   ],
   "include": [
     "src"

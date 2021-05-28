@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+footer {
+  margin-top: 60px;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.section {
+  width: 95%;
+  max-width: 650px;
+  margin: 30px auto;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+a {
+  color: DodgerBlue;
+}
+
+code {
+  display: block;
+  width: 600px;
+  margin: 10px auto;
+  padding: 20px 30px;
+  background-color: #eee;
+  text-align: left;
+}
+
+label.usa-radio__label {
+  margin-left: 100px;
+  text-align: left;
+}
+fieldset {
+  margin-left: 100px;
+  float: left;
+}
+input[type='radio'] {
+  margin-left: 100px;
+}
+input[type='radio'] + label.usa-radio__label {
+  margin-left: 10px;
+}
+input[type='radio'] + label:after {
+  content: '';
+  display: block;
+}
+
+ul.usa-card-group {
+  min-height: 300px;
+}
+
+div.usa-step-indicator__header {
+  margin-left: 150px;
+}
+
+.text--grey {
+  color: #999;
+}
+
+.wizard-layout__navbar {
+  height: 30px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fade-in 0.5s forwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes button-appear {
+  0% {
+    opacity: 0;
+    top: 20px;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
