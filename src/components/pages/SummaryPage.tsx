@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
-import { IStep } from '../../survey/IStep';
+import { ReactNode }  from 'react';
+import { noel }       from '../../lib/noop';
+import { IPageData }  from '../../survey/IStepData';
 import { StepLayout } from '../wizard/StepLayout';
 
 /**
@@ -7,11 +8,11 @@ import { StepLayout } from '../wizard/StepLayout';
  * @param props
  * @returns
  */
-const getAnswers = (props: IStep): ReactNode => {
+const getAnswers = (props: IPageData): ReactNode => {
   const answers = Object.keys(props.form.answers).map((key) => (
     <li key={key} className="padding-bottom-2">
       <span className="text-light">
-        {props.form.answers[key].questionText}:&nbsp;&nbsp;
+        {props.form.answers[key].title}:&nbsp;&nbsp;
         <b>{props.form.answers[key].answer}</b>
       </span>
     </li>
@@ -25,10 +26,10 @@ const getAnswers = (props: IStep): ReactNode => {
  * @param props
  * @returns
  */
-export const SummaryPage = (props: IStep): JSX.Element => {
-  const { question } = props;
-  if (!question) {
-    return <></>;
+export const SummaryPage = (props: IPageData): JSX.Element => {
+  const { step: page } = props;
+  if (!page) {
+    return noel();
   }
 
   return <StepLayout {...props}>{getAnswers(props)}</StepLayout>;

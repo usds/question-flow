@@ -1,6 +1,6 @@
-import { values } from 'lodash';
-import { QUESTION_TYPE } from '../lib/enums';
-import { TAge } from '../lib/types';
+import { values }               from 'lodash';
+import { STEP_TYPE }            from '../lib/enums';
+import { TAge }                 from '../lib/types';
 import { IAnswer, IAnswerList } from './IAnswer';
 
 export class Answer implements IAnswer {
@@ -21,27 +21,17 @@ export class Answer implements IAnswer {
 
   public static isValid(form: IAnswer, question: string): boolean {
     if (!form.answers[question]) return false;
-    const q = form.answers[question];
+    const q       = form.answers[question];
     const answers = values(q.answers);
-    switch (q.questionType) {
-      case QUESTION_TYPE.DOB:
+    switch (q.type) {
+      case STEP_TYPE.DOB:
         return undefined !== form?.age?.years && form.age.years > 0;
-      case QUESTION_TYPE.MULTIPLE_CHOICE:
+      case STEP_TYPE.MULTIPLE_CHOICE:
         return q.answer !== undefined && answers?.indexOf(q.answer) !== -1;
-      case QUESTION_TYPE.LANDING_STEP || QUESTION_TYPE.RESULTS_STEP || QUESTION_TYPE.SUMMARY_STEP:
-        return true;
+      // case STEP_TYPE.LANDING || STEP_TYPE.RESULTS || STEP_TYPE.SUMMARY:
+      //   return true;
       default:
-        return false;
+        return true;
     }
-  }
-
-  public static isSelected(
-    form: IAnswer,
-    question: string,
-    answer: string,
-  ): boolean {
-    if (!form.answers[question]) return false;
-    const q = form.answers[question];
-    return Answer.isValid(form, question) && q.answer === answer;
   }
 }

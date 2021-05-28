@@ -1,79 +1,48 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { Radio } from '@trussworks/react-uswds';
-import { kebabCase } from 'lodash';
-import { ReactNode } from 'react';
-import { Answer } from '../../survey/Answer';
-import { IStep } from '../../survey/IStep';
-import { Questionnaire } from '../../survey/Questionnaire';
+import { kebabCase }                from 'lodash';
+import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
+import { Answer }                   from '../../survey/Answer';
+import { IQuestionData, IStepData } from '../../survey/IStepData';
+import { Questionnaire }            from '../../survey/Questionnaire';
 
-export class Steps {
-  static goToStep(step: string, props: IStep): void {
+export abstract class Steps {
+  static goToStep(step: string, props: IStepData): void {
     props.wizard.goToStep(step);
   }
 
-  static goToNextStep(props: IStep, questionnaire: Questionnaire): void {
+  static goToNextStep(props: IStepData, questionnaire: Questionnaire): void {
     Steps.goToStep(questionnaire.getNextStep(props), props);
   }
 
-  static goToPrevStep(props: IStep, questionnaire: Questionnaire): void {
+  static goToPrevStep(props: IStepData, questionnaire: Questionnaire): void {
     Steps.goToStep(questionnaire.getPreviousStep(props), props);
   }
 
-  static isNextDisabled(props: IStep): boolean {
-    return !Questionnaire.isNextEnabled(props);
+  /**
+   * Determines whether the user should be allowed to continue
+   * @param props
+   * @returns
+   */
+  static isNextEnabled(props: IStepData): boolean {
+    if (!props?.step) throw new Error('This survery is not defined');
+
+    if (props.stepId === STEP_TYPE.LANDING) return true;
+
+    if (props.stepId === STEP_TYPE.SUMMARY) return true;
+
+    if (!props.form) return false;
+    // KLUDGE Alert: this is not an elegant way to solve this
+    if (props.step?.type === QUESTION_TYPE.DOB) {
+      return undefined !== props.form?.age?.years && props.form.age.years >= 0;
+    }
+    return Answer.isValid(props.form, props.step.id);
   }
 
-  static updateForm(answer: string, props: IStep): void {
-    Object.assign(props.question, { answer });
-    const value = {
-      answers: {
-        [props.question.id]: props.question,
-      },
-    };
-    return props.dispatchForm({
-      type: 'UPDATE',
-      value,
-    });
+  static getFieldSetName(props: IQuestionData): string {
+    return kebabCase(props.step.title);
   }
 
-  static getSelected(answer: string, props: IStep): boolean | undefined {
-    if (!props || !props.form) return undefined;
-    return Answer.isSelected(props.form, props.question.id, answer);
-  }
-
-  static getFieldSetName(props: IStep): string {
-    return kebabCase(props.question.questionText);
-  }
-
-  static getDomId(answer: string, props: IStep): string {
+  static getDomId(answer: string, props: IQuestionData): string {
     const name = Steps.getFieldSetName(props);
     return `${name}-${kebabCase(answer)}`;
-  }
-
-  static getRadio(answer: string, props: IStep): ReactNode {
-    const handler = () => Steps.updateForm(answer, props);
-    const id = Steps.getDomId(answer, props);
-
-    return (
-      <Radio
-        id={id}
-        key={id}
-        name={Steps.getFieldSetName(props)}
-        label={answer}
-        value={answer}
-        checked={Steps.getSelected(answer, props) === true}
-        className={'multipleChoice'}
-        onChange={handler}
-        onClick={handler}
-      />
-    );
-  }
-
-  static getRadios(props: IStep): ReactNode {
-    const ret: ReactNode[] = [];
-    Object.keys(props.question.answers).forEach((a) => {
-      ret.push(Steps.getRadio(props.question.answers[+a], props));
-    });
-    return ret;
   }
 }

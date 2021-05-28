@@ -1,9 +1,9 @@
 import {
   Card, CardBody, CardFooter, CardGroup, CardHeader,
 } from '@trussworks/react-uswds';
-import { IStep } from '../../survey/IStep';
-import { QuestionableNavbar } from './QuestionableNavbar';
-import { Wizard } from '../lib/Wizard';
+import { IStepData } from '../../survey/IStepData';
+import { Navbar }    from './Navbar';
+import { Wizard }    from '../lib/Wizard';
 import { useGlobal } from '../../state/GlobalState';
 
 /**
@@ -11,7 +11,7 @@ import { useGlobal } from '../../state/GlobalState';
  * @param props
  * @returns
  */
-export const StepLayout = (props: IStep): JSX.Element => {
+export const StepLayout = (props: IStepData): JSX.Element => {
   const { config } = useGlobal();
 
   return (
@@ -35,7 +35,7 @@ export const StepLayout = (props: IStep): JSX.Element => {
           </Card>
         </CardGroup>
       </section>
-      <QuestionableNavbar {...props} />
+      <Navbar {...props} />
     </div>
   );
 };

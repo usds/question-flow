@@ -1,34 +1,50 @@
-import { QUESTION_TYPE } from '../../lib/enums';
-import { useGlobal } from '../../state/GlobalState';
-import { IPrepStep } from '../../survey/IStep';
+import {
+  isEnum, PAGE_TYPE, QUESTION_TYPE,
+} from '../../lib/enums';
+import { useGlobal }                           from '../../state/GlobalState';
+import { IPageData, IQuestionData, IStepData } from '../../survey/IStepData';
 import {
   DateOfBirthStep,
   LandingPage,
-  MultipleChoice,
+  MultipleChoiceStep,
   NoResultsPage,
   ResultsPage,
   SummaryPage,
-} from '../steps';
+} from '../questions';
 
-export const StepFactory = (props: IPrepStep): JSX.Element => {
-  const { step } = props;
+export const StepFactory = (props: IStepData): JSX.Element => {
+  const { stepId }        = props;
   const { questionnaire } = useGlobal();
+  const noop              = <>Step does not exist</>;
+  const step              = questionnaire.getStepById(`${stepId}`);
 
-  const question = questionnaire.getQuestionById(`${step}`);
-  switch (question.questionType) {
-    case QUESTION_TYPE.LANDING_STEP:
-      return <LandingPage {...{ question, ...props }} />;
-    case QUESTION_TYPE.DOB:
-      return <DateOfBirthStep {...{ question, ...props }} />;
-    case QUESTION_TYPE.MULTIPLE_CHOICE:
-      return <MultipleChoice {...{ question, ...props }} />;
-    case QUESTION_TYPE.NO_RESULTS_STEP:
-      return <NoResultsPage {...{ question, ...props }} />;
-    case QUESTION_TYPE.RESULTS_STEP:
-      return <ResultsPage {...{ question, ...props }} />;
-    case QUESTION_TYPE.SUMMARY_STEP:
-      return <SummaryPage {...{ question, ...props }} />;
-    default:
-      return <>Step does not exist</>;
+  if (isEnum(QUESTION_TYPE, step.type)) {
+    const question = questionnaire.getQuestionById(step.id);
+    const stepData = { ...{ step: question, ...props } } as IQuestionData;
+    switch (question.type) {
+      case QUESTION_TYPE.DOB:
+        return <DateOfBirthStep {...stepData} />;
+      case QUESTION_TYPE.MULTIPLE_CHOICE:
+        return <MultipleChoiceStep {...stepData} />;
+      default:
+        return noop;
+    }
+  } else if (isEnum(PAGE_TYPE, step.type)) {
+    const page     = questionnaire.getPageById(step.id);
+    const stepData = { ...{ step: page, ...props } } as IPageData;
+    switch (page.type) {
+      case PAGE_TYPE.LANDING:
+        return <LandingPage {...stepData} />;
+      case PAGE_TYPE.NO_RESULTS:
+        return <NoResultsPage {...stepData} />;
+      case PAGE_TYPE.RESULTS:
+        return <ResultsPage {...stepData} />;
+      case PAGE_TYPE.SUMMARY:
+        return <SummaryPage {...stepData} />;
+      default:
+        return noop;
+    }
+  } else {
+    return noop;
   }
 };

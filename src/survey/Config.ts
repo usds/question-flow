@@ -8,7 +8,7 @@ export class QuestionableConfig implements IQuestionableConfig {
 
   showSteps = false;
 
-  constructor(config: Partial<QuestionableConfig>) {
+  constructor(config: Partial<QuestionableConfig> = {}) {
     Object.assign(this, config);
   }
 }

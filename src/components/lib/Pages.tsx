@@ -1,17 +1,20 @@
-import { ReactNode } from 'react';
+import { ReactNode }    from 'react';
 import { IGlobalState } from '../../state/GlobalState';
-import { IResult } from '../../survey/IResult';
-import { IStep } from '../../survey/IStep';
+import { IResult }      from '../../survey/IResult';
+import { IStepData }    from '../../survey/IStepData';
 
-export class Pages {
+/**
+ * Static utility methods for page components
+ */
+export abstract class Pages {
   /**
    * Internal method to compute reason for a result
    * @param props
    * @param result
    * @returns
    */
-  static getReason(props: IStep, result: IResult, global: IGlobalState): string {
-    let reason = result.match?.explanation;
+  static getReason(props: IStepData, result: IResult, global: IGlobalState): string {
+    let reason                      = result.match?.explanation;
     const { questionnaire, config } = global;
 
     if (!reason) {
@@ -30,7 +33,7 @@ export class Pages {
       }
       Object.keys(result.match.answers).forEach((id) => {
         const q = questionnaire.getQuestionById(id);
-        reason += `You answered "<b>${q.answer}</b>" to the question "<i>${q.questionText}.</i>" `;
+        reason += `You answered "<b>${q.answer}</b>" to the question "<i>${q.title}.</i>" `;
       });
     }
     return reason;
@@ -41,13 +44,13 @@ export class Pages {
    * @param props
    * @returns
    */
-  static getResults(props: IStep, global: IGlobalState): ReactNode {
+  static getResults(props: IStepData, global: IGlobalState): ReactNode {
     const { questionnaire } = global;
     return (questionnaire.getResults(props.form).map((result) => (
-      <li key={`${props.step}_${result.code}`} className="padding-bottom-2">
+      <li key={`${props.stepId}_${result.id}`} className="padding-bottom-2">
         <span>
-          Benefit name: {'  '}
-          <b>{result.description}</b>
+          {result.label}:{'  '}
+          <b>{result.name}</b>
         </span>
         <div
           className="text-light"

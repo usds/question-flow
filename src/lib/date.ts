@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
-import moment from 'moment';
-import { TAge } from './types';
+import moment       from 'moment';
+import { TAge }     from './types';
 
 /**
  * Determines if a string can be parsed into a valid Date
@@ -36,27 +36,30 @@ export const getDateTime = (dt: string): DateTime | undefined => {
 export const getDateTimeAge = (dob: DateTime): TAge => {
   const now = DateTime.now();
 
-  const yearNow = now.year;
+  const yearNow  = now.year;
   const monthNow = now.month;
-  const dateNow = now.day;
+  const dateNow  = now.day;
 
-  const yearDob = dob.year;
+  const yearDob  = dob.year;
   const monthDob = dob.month;
-  const dateDob = dob.day;
+  const dateDob  = dob.day;
 
-  let years = yearNow - yearDob;
+  let years  = yearNow - yearDob;
   let months = 0;
-  if (monthNow >= monthDob) months = monthNow - monthDob;
-  else {
+
+  if (monthNow >= monthDob) {
+    months = monthNow - monthDob;
+  } else {
     years -= 1;
     months = 12 + monthNow - monthDob;
   }
 
   let days = 0;
-  if (dateNow >= dateDob) days = dateNow - dateDob;
-  else {
-    months -= 1;
-    days = 31 + dateNow - dateDob;
+  if (dateNow >= dateDob) {
+    days = dateNow - dateDob;
+  } else {
+    months += -1;
+    days    = 31 + dateNow - dateDob;
 
     if (months < 0) {
       months = 11;
@@ -65,9 +68,9 @@ export const getDateTimeAge = (dob: DateTime): TAge => {
   }
 
   return {
-    years,
-    months,
     days,
+    months,
+    years,
   };
 };
 

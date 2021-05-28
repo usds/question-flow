@@ -51,13 +51,15 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/preset-create-react-app",
     "@storybook/addon-actions",
-    '@storybook/addon-knobs',
+    '@storybook/addon-controls',
     'storybook-readme',
   ],
   typescript: {
     check: false,
     checkOptions: {},
-    reactDocgen: 'react-docgen-typescript',
+    // https://github.com/styleguidist/react-docgen-typescript/issues/356
+    // reactDocgen: 'react-docgen-typescript',
+    reactDocgen: 'none',
     reactDocgenTypescriptOptions: {
       tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
     },

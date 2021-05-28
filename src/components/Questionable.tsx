@@ -1,10 +1,10 @@
-import { useReducer } from 'react';
-import { useWizard } from 'use-wizard';
-import { stepReducer } from '../state/stepReducer';
-import { Answer } from '../survey/Answer';
-import { StepFactory } from './wizard/StepFactory';
-import { QuestionableDevPanel } from './wizard/QuestionableDevPanel';
-import { QuestionableProgressBar } from './wizard/QuestionableProgressBar';
+import { useReducer }                         from 'react';
+import { useWizard }                          from 'use-wizard';
+import { stepReducer }                        from '../state/stepReducer';
+import { Answer }                             from '../survey/Answer';
+import { StepFactory }                        from './wizard/StepFactory';
+import { DevPanel }                           from './wizard/DevPanel';
+import { ProgressBar }                        from './wizard/ProgressBar';
 import { GlobalStateProvider, IQuestionable } from '../state/GlobalState';
 
 export const Questionable = (q: IQuestionable): JSX.Element => {
@@ -34,34 +34,34 @@ export const Questionable = (q: IQuestionable): JSX.Element => {
       </Header> */}
 
       <section>
-        <QuestionableProgressBar
+        <ProgressBar
           {...{
-            step,
-            wizard,
-            form,
             dispatchForm,
+            form,
+            stepId: step,
+            wizard,
           }}
-        ></QuestionableProgressBar>
+        ></ProgressBar>
       </section>
 
       <section className="section">
         <StepFactory
           {...{
-            step,
-            wizard,
-            form,
             dispatchForm,
+            form,
+            stepId: step,
+            wizard,
           }}
         />
       </section>
 
       <section className="section">
-        <QuestionableDevPanel
+        <DevPanel
           {...{
-            step,
-            wizard,
-            form,
             dispatchForm,
+            form,
+            stepId: step,
+            wizard,
           }}
         />
       </section>

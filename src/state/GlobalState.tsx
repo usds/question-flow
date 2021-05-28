@@ -1,7 +1,7 @@
 import React, {
   createContext, useState, useContext, Dispatch, SetStateAction,
 } from 'react';
-import { Questionnaire } from '../survey/Questionnaire';
+import { Questionnaire }      from '../survey/Questionnaire';
 import { QuestionableConfig } from '../survey/Config';
 
 export interface IQuestionable {
@@ -10,13 +10,13 @@ export interface IQuestionable {
 }
 
 const GlobalStateContext = createContext({
-  state: {} as Partial<IQuestionable>,
   setState: {} as Dispatch<SetStateAction<Partial<IQuestionable>>>,
+  state:    {} as Partial<IQuestionable>,
 });
 
 type TGlobalStateContext = {
-    state: Partial<IQuestionable>;
     setState: React.Dispatch<React.SetStateAction<Partial<IQuestionable>>>;
+    state: Partial<IQuestionable>;
 }
 
 const useGlobalState = (): TGlobalStateContext => {
@@ -36,7 +36,7 @@ export const GlobalStateProvider = ({
 }): JSX.Element => {
   const [state, setState] = useState(value);
   return (
-    <GlobalStateContext.Provider value={{ state, setState }}>
+    <GlobalStateContext.Provider value={{ setState, state }}>
       {children}
     </GlobalStateContext.Provider>
   );
@@ -66,6 +66,6 @@ export interface IGlobalState {
 }
 
 export const useGlobal = (): IGlobalState => ({
-  config: useConfig(),
+  config:        useConfig(),
   questionnaire: useQuestionnaire(),
 });

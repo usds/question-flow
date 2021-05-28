@@ -1,38 +1,39 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
     "lib": [
       "es2015",
       "dom"
     ],
-    "outDir": "dist",
-    "jsx": "react-jsx",
     "module": "commonjs",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "strict": true,
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
+    "noImplicitReturns": true,
     "noImplicitThis": true,
-    "alwaysStrict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
     "plugins": [
       {
         "name": "typescript-plugin-css-modules"
       }
     ],
-    "skipLibCheck": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "target": "es5"
   },
   "exclude": [
     "node_modules",
@@ -40,12 +41,12 @@
     "**/*.test.tsx",
     "**/*.stories.tsx",
     "./src/setupTests.ts",
-    "./**.flow.ts",
-  ],
-  "include": [
-    "src"
+    "./**.flow.ts"
   ],
   "files": [
     "./src/index.ts"
+  ],
+  "include": [
+    "src"
   ]
 }

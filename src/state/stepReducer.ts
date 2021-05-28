@@ -1,18 +1,18 @@
-import { merge } from 'lodash';
-import { TActionType } from '../lib/types';
-import { Answer } from '../survey/Answer';
-import { IAnswer } from '../survey/IAnswer';
+import { merge }       from 'lodash';
+import { ACTION_TYPE } from '../lib/enums';
+import { Answer }      from '../survey/Answer';
+import { IAnswer }     from '../survey/IAnswer';
 
 export const stepReducer = (
   previousState: IAnswer,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  action: { type: TActionType; value: any },
+  action: { type: ACTION_TYPE; value: any },
 ): IAnswer => {
   switch (action.type) {
-    case 'RESET':
+    case ACTION_TYPE.RESET:
       return new Answer();
 
-    case 'UPDATE':
+    case ACTION_TYPE.UPDATE:
       return merge(
         {
           ...previousState,

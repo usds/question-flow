@@ -1,4 +1,5 @@
-import { IStep } from '../../survey/IStep';
+import { noel }       from '../../lib/noop';
+import { IPageData }  from '../../survey/IStepData';
 import { StepLayout } from '../wizard/StepLayout';
 
 /**
@@ -6,20 +7,15 @@ import { StepLayout } from '../wizard/StepLayout';
  * @param props
  * @returns
  */
-export const LandingPage = (props: IStep): JSX.Element => {
-  const { question } = props;
-  if (!question) {
-    return <></>;
+export const LandingPage = (props: IPageData): JSX.Element => {
+  const { step } = props;
+  if (!step) {
+    return noel();
   }
 
   return (
     <StepLayout {...props}>
-      {/* TODO: update this logic. See: https://github.com/usds/ssa-eligibility/issues/57 */}
-      <p>
-        To receive Social Security benefits, you have to meet certain
-        requirements. We&rsquo;ll guide you through a series of questions to
-        determine if you may be eligible.
-      </p>
+      <p>{step.body}</p>
     </StepLayout>
   );
 };

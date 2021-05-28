@@ -1,22 +1,27 @@
+import { ArrayUnique } from 'class-validator';
 import {
   DIRECTION,
+  isEnum,
+  PAGE_TYPE,
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
+  STEP_TYPE,
 } from '../lib/enums';
 import {
   TAge,
   TAgeCalc,
   TAnswers,
 } from '../lib/types';
-import { Answer } from './Answer';
-import { validateSteps } from './DefaultSteps';
-import { IAction } from './IAction';
-import { IAnswer } from './IAnswer';
-import { IQuestion } from './IQuestion';
+import { DEFAULT_PAGES }             from './DefaultPages';
+import { IAction }                   from './IAction';
+import { IAnswer }                   from './IAnswer';
+import {
+  IPage, IPages, IQuestion, IStep,
+} from './IStep';
 import { IRequirement } from './IRequirement';
-import { IResult } from './IResult';
-import { ISection } from './ISection';
-import { IPrepStep, IStep } from './IStep';
+import { IResult }      from './IResult';
+import { ISection }     from './ISection';
+import { IStepData }    from './IStepData';
 
 /**
  * Definition for survey data input
@@ -24,6 +29,7 @@ import { IPrepStep, IStep } from './IStep';
 export interface IQuestionnaire {
   readonly actions: IAction[];
   readonly header: string;
+  readonly pages: IPages;
   readonly questions: IQuestion[];
   readonly results: IResult[];
   readonly sections: ISection[];
@@ -33,36 +39,61 @@ export interface IQuestionnaire {
  * Utility wrapper for survey state
  */
 export class Questionnaire implements IQuestionnaire {
+  @ArrayUnique((question: IQuestion) => question.id)
   readonly questions!: IQuestion[];
 
   readonly header!: string;
 
+  @ArrayUnique((result: IResult) => result.label)
   readonly results!: IResult[];
 
   readonly flow: string[];
 
+  @ArrayUnique((section: ISection) => section.id)
   readonly sections!: ISection[];
 
   readonly actions!: IAction[];
 
+  readonly pages: IPages = DEFAULT_PAGES;
+
+  private readonly steps: IStep[];
+
   constructor(data: IQuestionnaire) {
     Object.assign(this, data);
+
+    // Create a new collection for our flow logic
+    this.steps = [...this.questions];
 
     this.init();
 
     // Wizard flow is defined as linear sequence of unique ids
-    this.flow = this.questions.map((q) => q.id);
+    this.flow = this.steps.map((q) => q.id);
+  }
 
-    // Naive duplication check
-    // TODO: make this more robust and report only the dupes
-    const unique: string[] = this.flow.filter((v, i, a) => a.indexOf(v) === i);
-    if (unique.length !== this.flow.length) {
-      throw new Error(
-        `Questionnaire data contains duplicate questions: "${unique.join(
-          ',',
-        )}"`,
-      );
+  /**
+   * Fetches a question by its id
+   * @param id unique identifier of the question
+   * @returns
+   */
+  getStepById(id: string): IStep {
+    const ret = this.steps.find((q) => q.id === id);
+    if (!ret) {
+      throw new Error(`Step id: ${id} not found in survery`);
     }
+    return ret;
+  }
+
+  /**
+   * Fetches a question by its id
+   * @param id unique identifier of the question
+   * @returns
+   */
+  getPageById(id: string): IPage {
+    const ret = this.getStepById(id);
+    if (!isEnum(PAGE_TYPE, ret.type)) {
+      throw new Error(`Step id: ${id} is not a page`);
+    }
+    return ret as IPage;
   }
 
   /**
@@ -71,9 +102,11 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   getQuestionById(id: string): IQuestion {
-    const ret = this.questions.find((q) => q.id === id);
-    if (!ret) throw new Error(`Step id: ${id} not found in survery`);
-    return ret;
+    const ret = this.getStepById(id);
+    if (!isEnum(QUESTION_TYPE, ret.type)) {
+      throw new Error(`Step id: ${id} not a question`);
+    }
+    return ret as IQuestion;
   }
 
   /**
@@ -87,14 +120,14 @@ export class Questionnaire implements IQuestionnaire {
     if (!nextStep) return thisStep;
 
     // Special handling for results
-    if (nextStep === QUESTION_TYPE.RESULTS_STEP && this.getResults(form).length === 0) {
-      return QUESTION_TYPE.NO_RESULTS_STEP;
+    if (nextStep === STEP_TYPE.RESULTS && this.getResults(form).length === 0) {
+      return STEP_TYPE.NO_RESULTS;
     }
-    if (nextStep === QUESTION_TYPE.NO_RESULTS_STEP && this.getResults(form).length > 0) {
-      return QUESTION_TYPE.RESULTS_STEP;
+    if (nextStep === STEP_TYPE.NO_RESULTS && this.getResults(form).length > 0) {
+      return STEP_TYPE.RESULTS;
     }
 
-    const nextQuestion = this.getQuestionById(nextStep);
+    const nextQuestion = this.getStepById(nextStep);
 
     if (!nextQuestion?.requirements) {
       return nextStep;
@@ -126,68 +159,48 @@ export class Questionnaire implements IQuestionnaire {
     return thisStep;
   }
 
-  getNextStep(props: IStep): string {
-    const thisStep = props.step as string;
-    return this.getStep(thisStep, props.form, DIRECTION.forward);
+  getNextStep(props: IStepData): string {
+    const thisStep = props.stepId as string;
+    return this.getStep(thisStep, props.form, DIRECTION.FORWARD);
   }
 
-  getPreviousStep(props: IStep): string {
-    const thisStep = props.step as string;
-    return this.getStep(thisStep, props.form, DIRECTION.backward);
+  getPreviousStep(props: IStepData): string {
+    const thisStep = props.stepId as string;
+    return this.getStep(thisStep, props.form, DIRECTION.BACKWARD);
   }
 
   /**
-   * Gets all of the current available sections
+   * Gets all of the currently available sections
    * @param props
    * @returns
    */
-  getSections(props: IPrepStep): ISection[] {
+  getSections(props: IStepData): ISection[] {
     if (!props) {
       return [];
     }
 
     // Get all sections that meet the requirements based on current answers
-    const sections = this.sections.filter((s) =>
-      s.requirements.some((r) => this.meetsAllRequirements(r, props.form)));
-
-    const thisStep = props.step as string;
-    const thisQuestion = this.getQuestionById(thisStep);
-    const thisQuestionIdx = this.questions.indexOf(thisQuestion);
+    const sections        = this.sections.filter((s) =>
+      s.requirements.length === 0
+      || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)));
+    const thisStep        = props.stepId as string;
+    const thisQuestion    = this.getStepById(thisStep);
+    const thisQuestionIdx = this.steps.indexOf(thisQuestion);
 
     return sections.map((s) => {
-      const section = { ...s };
+      const section    = { ...s };
       section.lastStep = this.questions.reduce(
         (acc, q, index) => (q.sectionId === s.id ? index : acc),
         -1,
       );
       if (section.id === thisQuestion.sectionId) {
-        section.status = PROGRESS_BAR_STATUS.current;
+        section.status = PROGRESS_BAR_STATUS.CURRENT;
       }
       if (section.lastStep < thisQuestionIdx) {
-        section.status = PROGRESS_BAR_STATUS.complete;
+        section.status = PROGRESS_BAR_STATUS.COMPLETE;
       }
       return section;
     });
-  }
-
-  /**
-   * Determines whether the user should be allowed to continue
-   * @param props
-   * @returns
-   */
-  static isNextEnabled(props: IStep): boolean {
-    if (!props) throw new Error('This survery is not defined');
-
-    if (props.step === QUESTION_TYPE.LANDING_STEP) return true;
-
-    if (props.step === QUESTION_TYPE.SUMMARY_STEP) return true;
-
-    if (!props.form) return false;
-    // KLUDGE Alert: this is not an elegant way to solve this
-    if (props.question.questionType === QUESTION_TYPE.DOB) {
-      return undefined !== props.form?.age?.years && props.form.age.years >= 0;
-    }
-    return Answer.isValid(props.form, props.question.id);
   }
 
   /**
@@ -211,7 +224,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   getAction(): IAction {
-    const idx = Math.floor(Math.random() * 3);
+    const idx = Math.floor(Math.random() * this.actions.length);
     return this.actions[idx];
   }
 
@@ -229,7 +242,54 @@ export class Questionnaire implements IQuestionnaire {
     if (this.results?.length <= 0) {
       throw new Error('No results have been defined.');
     }
-    validateSteps(this.questions);
+
+    // NOTE: the following default assignment logic is not yet factored out.
+    // This could be abstracted if repitions of this pattern emerge.
+
+    const error = 'step is not correctly defined or defined more than once';
+
+    // Ensure the wizard has a landing step at the beginning
+    if (this.steps[0].type !== PAGE_TYPE.LANDING) {
+      this.steps.unshift(this.pages.landingPage);
+    }
+    if (
+      this.steps.filter((q) => q.type === PAGE_TYPE.LANDING).length !== 1
+    ) {
+      throw new Error(`${PAGE_TYPE.LANDING} ${error}.`);
+    }
+
+    // Ensure the wizard has a no results step at the end
+    if (this.steps[this.steps.length - 1].type !== PAGE_TYPE.NO_RESULTS) {
+      // No results is last
+      this.steps.push(this.pages.noResultsPage);
+    }
+    if (
+      this.steps.filter((q) => q.type === PAGE_TYPE.NO_RESULTS).length
+    !== 1
+    ) {
+      throw new Error(`${PAGE_TYPE.NO_RESULTS} ${error}.`);
+    }
+
+    // Ensure the wizard has a result step before the no results step
+    if (this.steps[this.steps.length - 2].type !== PAGE_TYPE.RESULTS) {
+      this.steps.splice(this.steps.length - 1, 0, this.pages.resultsPage);
+    }
+    if (
+      this.steps.filter((q) => q.type === PAGE_TYPE.RESULTS).length !== 1
+    ) {
+      throw new Error(`${PAGE_TYPE.RESULTS} ${error}.`);
+    }
+
+    // Ensure the wizard has a summary step before results
+    if (this.steps[this.steps.length - 3].type !== PAGE_TYPE.SUMMARY) {
+    // Create wizard's summary step as the default step
+      this.steps.splice(this.steps.length - 2, 0, this.pages.summaryPage);
+    }
+    if (
+      this.steps.filter((q) => q.type === PAGE_TYPE.SUMMARY).length !== 1
+    ) {
+      throw new Error(`${PAGE_TYPE.SUMMARY} ${error}.`);
+    }
   }
 
   private meetsAllRequirements(requirement: IRequirement, form: IAnswer) {

@@ -1,24 +1,46 @@
-import { ReactNode } from 'react';
-import { IWizard } from 'use-wizard/lib/cjs/useWizard/types/IWizard';
-import { TStep } from 'use-wizard/lib/cjs/useWizard/types/TStep';
-import { TReducer } from '../lib/types';
-import { IAnswer } from './IAnswer';
-import { IQuestion } from './IQuestion';
+import { PAGE_TYPE, QUESTION_TYPE, TStepType } from '../lib/enums';
+import { TAnswerMap }                          from '../lib/types';
+import { IRequirement }                        from './IRequirement';
 
-/**
- * Data defintion for wizard step
- */
-export interface IStep extends IPrepStep {
-  question: IQuestion;
+export interface IPages {
+  readonly landingPage: IPage;
+  readonly noResultsPage: IPage;
+  readonly resultsPage: IPage;
+  readonly summaryPage: IPage;
+}
+
+export interface IPage extends IStep {
+  body?: string;
+  bodyHeader?: string;
+  bodySubHeader?: string;
+  type: PAGE_TYPE;
+}
+
+export interface IQuestion extends IStep {
+  answer?: string;
+  answers: TAnswerMap;
+  type: QUESTION_TYPE;
+}
+
+export interface INavButton {
+  label: string;
 }
 
 /**
- * Data defintion for wizard prep step
+ * Question/step data definition
  */
-export interface IPrepStep {
-  step: TStep;
-  wizard: IWizard;
-  form: IAnswer;
-  dispatchForm: TReducer;
-  children?: ReactNode;
+export interface IStep {
+  buttons?: {
+    next?: INavButton,
+    prev?: INavButton,
+  }
+  footer?: string;
+  id: string;
+  info?: string;
+  internalNotes?: string;
+  requirements?: IRequirement[];
+  sectionId: string;
+  subTitle?: string;
+  title: string;
+  type: TStepType;
 }

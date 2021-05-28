@@ -2,9 +2,9 @@
  * Defines an age relative to a date
  */
 export type TAge = {
-  years: number;
-  months: number;
   days?: number;
+  months: number;
+  years: number;
 };
 
 /**
@@ -36,7 +36,11 @@ export type TSectionMap = {
   [key: string]: number;
 };
 
-export type TActionType = 'RESET' | 'UPDATE';
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TReducer = (...params: any) => void;
+
+export type TDateOfBirth = {
+  day?: string | undefined;
+  month?: string | undefined;
+  year?: string | undefined;
+};

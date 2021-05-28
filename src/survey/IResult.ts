@@ -1,9 +1,9 @@
 import { IRequirement } from './IRequirement';
 
 export interface IResult {
-  name: string;
-  code: string;
-  description: string;
-  requirements: IRequirement[];
+  id: string;
+  label: string;
   match?: IRequirement;
+  name: string;
+  requirements: IRequirement[];
 }
