@@ -1,0 +1,63 @@
+---
+env:
+  browser: true
+  es2021: true
+extends:
+  - airbnb-base
+  - plugin:@typescript-eslint/recommended
+  - plugin:import/errors
+  - plugin:import/typescript
+  - plugin:import/warnings
+  - plugin:jsx-a11y/recommended
+  - plugin:react/recommended
+  - plugin:sonarjs/recommended
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 12
+  sourceType: module
+plugins:
+  - '@typescript-eslint'
+  - import
+  - json-files
+  - jsx-a11y
+  - react
+  - react-hooks
+  - sonarjs
+rules:
+  '@typescript-eslint/no-shadow':
+    - error
+  '@typescript-eslint/no-use-before-define': 1 #warn
+  brace-style: 0
+  '@typescript-eslint/brace-style':
+    - 2
+    - 1tbs
+  json-files/sort-package-json: 1 #warn
+  import/extensions: 0
+  import/prefer-default-export: off
+  implicit-arrow-linebreak: off
+  lines-between-class-members:
+    - error
+    - always
+  max-len:
+    - 1
+    - code: 100
+  no-shadow: 0
+  no-use-before-define: 0
+  react-hooks/exhaustive-deps: warn
+  react-hooks/rules-of-hooks: error
+  react/jsx-uses-react: off
+  react/prop-types: 0
+  react/react-in-jsx-scope: off
+overrides:
+- files: '*.test.ts'
+  rules: 
+    no-unused-expressions: 'off'
+settings:
+  import/resolver:
+    node:
+      extensions: ['.js', '.jsx', '.ts', '.tsx']
+      paths: ['./src']
+  react:
+    version: detect

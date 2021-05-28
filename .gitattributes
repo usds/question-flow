@@ -1,0 +1,8 @@
+# All files should have normalized LF line endings
+* text  eol=lf
+# This is a TypeScript project, allow comments in JSON
+*.json  linguist-language=JSON-with-Comments
+# Do not normalize images
+*.jpg		-text
+*.png		-text
+*.ico		-text

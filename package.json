@@ -1,0 +1,122 @@
+{
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ]
+  },
+  "dependencies": {
+    "@trussworks/react-uswds": "^1.17.0",
+    "lodash": "^4.17.21",
+    "luxon": "^1.27.0",
+    "moment": "^2.29.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-jss": "^10.6.0",
+    "react-scripts": "4.0.3",
+    "typescript": "4.2.4",
+    "use-wizard": "^4.0.4",
+    "web-vitals": "^1.1.2"
+  },
+  "description": "Create user friendly workflows for complex requirements, like eligibility or screener questionnaires",
+  "devDependencies": {
+    "@mdx-js/react": "^1.6.22",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-docs": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-knobs": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/node-logger": "^6.2.9",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.2.9",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^13.1.9",
+    "@types/jest": "^26.0.23",
+    "@types/lodash": "^4.14.170",
+    "@types/luxon": "^1.26.5",
+    "@types/node": "^15.6.1",
+    "@types/react": "^17.0.8",
+    "@types/react-dom": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "copyfiles": "^2.4.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-json-files": "^1.1.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-sonarjs": "^0.7.0",
+    "gh-pages": "^3.2.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.0",
+    "prettier-plugin-organize-imports": "^2.1.0",
+    "pretty-quick": "^3.1.0",
+    "rimraf": "^3.0.2",
+    "semantic-release": "^17.4.3",
+    "storybook-readme": "^5.0.9"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "homepage": "https://usds.github.io/questionable",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "name": "@usds/questionable",
+  "resolutions": {
+    "babel-loader": "8.1.0",
+    "webpack": "4.44.2"
+  },
+  "scripts": {
+    "build": "react-scripts build",
+    "build-storybook": "build-storybook -s public",
+    "build:ts": "tsc --build \"./tsconfig.build.json\"",
+    "build:watch": "yarn build -w",
+    "clean": "rimraf ./dist",
+    "clean-storybook": "rimraf storybook-static",
+    "copy-files": "copyfiles -u 1 src/style/assets/**/*.otf src/style/base.css dist/",
+    "deploy": "gh-pages -d build",
+    "deploy-storybook": "yarn clean-storybook && yarn build-storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
+    "eject": "react-scripts eject",
+    "lint": "pretty-quick --staged && yarn lint:ts",
+    "lint:ts": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
+    "postbuild": "yarn run copy-files",
+    "prebuild": "yarn clean",
+    "predeploy": "npm run build",
+    "prepare": "husky install",
+    "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\"",
+    "semantic-release": "semantic-release",
+    "start": "start-storybook -p 9009 -s public",
+    "storybook": "start-storybook -p 6006 -s public",
+    "test": "react-scripts test",
+    "type-check": "tsc --noEmit"
+  },
+  "version": "0.1.0"
+}
