@@ -6,8 +6,11 @@
 # testing
 /coverage
 
-# production
+# production / NPM
 /dist
+
+# Storybook
+/storybook-static
 
 #ide
 /.idea

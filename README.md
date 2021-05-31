@@ -38,14 +38,11 @@ import { Questionable } from '@usds/questionable'
 
 The project is intended to be a generic wizard suitable for testing eligibility workflows and perhaps other point of entry flows that rely on simple state machine mechanics and can be expressed as a set of linear steps with rules governing their sequence according to branching logic.
 
-Since this is an early prototype, the data input for this version are stored in the `flows` directory. The prototype is architected to make no assumptions about the data in this directory except for (1) its location and (2) that the format complies with the survey interfaces. Future iterations will make (1) configurable so the protype can load data from arbitry resources.
-
-- `flows`: A collection of discrete workflows
+- `flows`: A collection of example workflows ranging from simple to complex
 - `state`: React reducer for the aggregation of survey data
-- `steps`: UI components used for rendering each question in the survey
+- `components`: UI components used for rendering each question in the survey
 - `survey`: Core interfaces and classes for the data structure of the question/anwer/results
-- `util`: Generic helper utilities
-- `wizard`: UI components used to create the wizard container
+- `lib`: Generic helper utilities
 
 ## Background
 
