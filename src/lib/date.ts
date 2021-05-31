@@ -58,9 +58,9 @@ export const getDateTimeAge = (dob: DateTime): TAge => {
   if (dateNow >= dateDob) {
     days = dateNow - dateDob;
   } else {
-    months += -1;
+    // eslint-disable-next-line no-multi-spaces
     days    = 31 + dateNow - dateDob;
-
+    months += -1;
     if (months < 0) {
       months = 11;
       years -= 1;

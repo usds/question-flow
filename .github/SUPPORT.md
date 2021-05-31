@@ -13,17 +13,18 @@ next to their day job; you are not entitled to free customer service.
 
 ## Contents
 
-*   [Questions](#questions)
-    *   [Asking quality questions](#asking-quality-questions)
-*   [Contributions](#contributions)
-*   [License](#license)
+- [Support](#support)
+  - [Contents](#contents)
+  - [Questions](#questions)
+    - [Asking quality questions](#asking-quality-questions)
+  - [Contributions](#contributions)
 
 ## Questions
 
 Please chat and ask questions on [Discussions][chat]!
 Jump in there and lurk, talk to us, and help others.
 
-*   [**questionable**](https://github.com/usds/questionable/discussions)
+- [**questionable**](https://github.com/usds/questionable/discussions)
     — Topics relating to [**questionable**][questionable] in general
 
 ### Asking quality questions
@@ -39,16 +40,16 @@ questions to understand what you are hoping to achieve.
 
 Spending the extra time up front can help save everyone time in the long run.
 
-*   Try to define what you need help with:
-    *   Is there something in particular you want to do?
-    *   What problem are you encountering and what steps have you taken to try
+- Try to define what you need help with:
+  - Is there something in particular you want to do?
+  - What problem are you encountering and what steps have you taken to try
         and fix it?
-    *   Is there a concept you’re not understanding?
-*   Learn about the [rubber duck debugging method][rubberduck]
-*   Avoid falling for the [XY problem][xy]
-*   Search on GitHub to see if a similar question has been asked
-*   If possible, provide sample code, a [CodeSandbox][], or a video
-*   The more time you put into asking your question, the better we can help you
+  - Is there a concept you’re not understanding?
+- Learn about the [rubber duck debugging method][rubberduck]
+- Avoid falling for the [XY problem][xy]
+- Search on GitHub to see if a similar question has been asked
+- If possible, provide sample code, a [CodeSandbox][], or a video
+- The more time you put into asking your question, the better we can help you
 
 ## Contributions
 

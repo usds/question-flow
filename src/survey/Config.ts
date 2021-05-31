@@ -1,14 +1,19 @@
+import { MODE } from '../lib';
+
 export interface IQuestionableConfig {
   dev: boolean;
+  mode: MODE;
   showSteps: boolean;
 }
 
 export class QuestionableConfig implements IQuestionableConfig {
   dev = false;
 
+  mode = MODE.VIEW;
+
   showSteps = false;
 
-  constructor(config: Partial<QuestionableConfig> = {}) {
+  constructor(config: Partial<IQuestionableConfig> = {}) {
     Object.assign(this, config);
   }
 }

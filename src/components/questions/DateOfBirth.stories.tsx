@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /*
   eslint-disable import/no-extraneous-dependencies
 */
@@ -5,14 +6,15 @@ import '@trussworks/react-uswds/lib/index.css';
 import '@trussworks/react-uswds/lib/uswds.css';
 import '../../styles';
 
-import { Story, Meta }   from '@storybook/react';
-import { IQuestionData } from '../../survey';
-import { DateOfBirth }   from './DateOfBirth';
-import { QUESTION_TYPE } from '../../lib';
+import { Story, Meta }           from '@storybook/react';
+import { Answer, IQuestionData } from '../../survey';
+import { DateOfBirth }           from './DateOfBirth';
+import { QUESTION_TYPE }         from '../../lib';
+import { stepReducer }           from '../../state/stepReducer';
 
 export default {
   argTypes: {
-    backgroundColor: { control: 'color' },
+    step: { control: { type: 'object' } },
   },
   component: DateOfBirth,
   title:     'Questions/DateOfBirth',
@@ -22,7 +24,9 @@ const Template: Story<IQuestionData> = (args) => <DateOfBirth {...args} />;
 
 export const DoB = Template.bind({});
 DoB.args = {
-  step: {
+  dispatchForm: stepReducer,
+  form:         new Answer(),
+  step:         {
     answers:       {},
     id:            'B',
     internalNotes: 'Adults age 18 and over',

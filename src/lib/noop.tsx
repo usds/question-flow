@@ -9,4 +9,4 @@ export const noop = (): void => { };
  * Generic no-element
  * @returns empty element
  */
-export const noel = (): JSX.Element => (<></>);
+export const noel = (message = ''): JSX.Element => (<>{message}</>);

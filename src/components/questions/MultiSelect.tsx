@@ -8,11 +8,12 @@ import { StepLayout }    from '../wizard/StepLayout';
  * @param props
  * @returns
  */
-export const MultipleChoice = (props: IQuestionData): JSX.Element => {
+export const MultipleSelect = (props: IQuestionData): JSX.Element => {
   if (props?.step?.answers === undefined) {
-    return noel('Question and answer are not defined');
+    return noel();
   }
-  return Questions.getRadios(props);
+
+  return Questions.getCheckboxes(props);
 };
 
 /**
@@ -20,8 +21,8 @@ export const MultipleChoice = (props: IQuestionData): JSX.Element => {
  * @param props
  * @returns
  */
-export const MultipleChoiceStep = (props: IQuestionData): JSX.Element => (
+export const MultipleSelectStep = (props: IQuestionData): JSX.Element => (
   <StepLayout {...props}>
-    <MultipleChoice {...props} />
+    <MultipleSelect {...props} />
   </StepLayout>
 );

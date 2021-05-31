@@ -8,7 +8,7 @@ export const stepReducer = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: { type: ACTION_TYPE; value: any },
 ): IAnswer => {
-  switch (action.type) {
+  switch (action?.type) {
     case ACTION_TYPE.RESET:
       return new Answer();
 
