@@ -1,0 +1,39 @@
+{
+  "projectName": "questionable",
+  "projectOwner": "usds",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "froehlichcr",
+      "name": "Christopher Froehlich",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73488661?v=4",
+      "profile": "https://github.com/froehlichcr/",
+      "contributions": [
+        "bug",
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "TomNUSDS",
+      "name": "TomNUSDS",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74203452?v=4",
+      "profile": "https://github.com/TomNUSDS",
+      "contributions": [
+        "question",
+        "bug",
+        "code",
+        "review",
+        "test"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
