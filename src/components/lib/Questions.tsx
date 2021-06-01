@@ -5,7 +5,7 @@ import { DATE_UNIT, ACTION_TYPE }    from '../../lib/enums';
 import { IQuestionData }             from '../../survey/IStepData';
 import { Steps }                     from './Steps';
 import { getDateTime }               from '../../lib/date';
-import { TDateOfBirth } from '../../lib/types';
+import { TDateOfBirth }              from '../../lib/types';
 
 /**
  * Static utility methods for question components
@@ -145,31 +145,10 @@ export abstract class Questions {
   }
 
   /**
-   * Gets the default value for a unit of time
-   * @param props
-   * @param unit
-   * @returns
+   * Converts a Date of Birth type into a string
+   * @param dob 
+   * @returns 
    */
-  private static getDateUnitDefaultValue(
-    props: IQuestionData,
-    unit: DATE_UNIT,
-  ): string | undefined {
-    const dt = Questions.getBirthdate(props);
-    if (!dt) {
-      return undefined;
-    }
-    switch (unit) {
-      case DATE_UNIT.MONTH:
-        return `${dt.month}`.padStart(2, '0');
-      case DATE_UNIT.DAY:
-        return `${dt.day}`.padStart(2, '0');
-      case DATE_UNIT.YEAR:
-        return `${dt.year}`;
-      default:
-        throw new Error(`Unit ${unit} is not valid`);
-    }
-  }
-
   public static toBirthdate(dob: TDateOfBirth): string | undefined {
     if (dob.month && dob.day && dob.year) {
       return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${
