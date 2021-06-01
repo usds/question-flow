@@ -1,19 +1,19 @@
-import { kebabCase }                from 'lodash';
+import { kebabCase, values }        from 'lodash';
 import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
-import { Answer }                   from '../../survey/Answer';
+import { IAnswer }                  from '../../survey/IAnswer';
 import { IQuestionData, IStepData } from '../../survey/IStepData';
 import { Questionnaire }            from '../../survey/Questionnaire';
 
 export abstract class Steps {
-  static goToStep(step: string, props: IStepData): void {
+  public static goToStep(step: string, props: IStepData): void {
     props.wizard.goToStep(step);
   }
 
-  static goToNextStep(props: IStepData, questionnaire: Questionnaire): void {
+  public static goToNextStep(props: IStepData, questionnaire: Questionnaire): void {
     Steps.goToStep(questionnaire.getNextStep(props), props);
   }
 
-  static goToPrevStep(props: IStepData, questionnaire: Questionnaire): void {
+  public static goToPrevStep(props: IStepData, questionnaire: Questionnaire): void {
     Steps.goToStep(questionnaire.getPreviousStep(props), props);
   }
 
@@ -22,7 +22,7 @@ export abstract class Steps {
    * @param props
    * @returns
    */
-  static isNextEnabled(props: IStepData): boolean {
+  public static isNextEnabled(props: IStepData): boolean {
     if (!props?.step) throw new Error('This survery is not defined');
 
     if (props.stepId === STEP_TYPE.LANDING) return true;
@@ -34,14 +34,30 @@ export abstract class Steps {
     if (props.step?.type === QUESTION_TYPE.DOB) {
       return undefined !== props.form?.age?.years && props.form.age.years >= 0;
     }
-    return Answer.isValid(props.form, props.step.id);
+    return Steps.isValid(props.form, props.step.id);
   }
 
-  static getFieldSetName(props: IQuestionData): string {
+  public static isValid(form: IAnswer, question: string): boolean {
+    if (!form.answers[question]) return false;
+    const q       = form.answers[question];
+    const answers = values(q.answers);
+    switch (q.type) {
+      case STEP_TYPE.DOB:
+        return undefined !== form?.age?.years && form.age.years > 0;
+      case STEP_TYPE.MULTIPLE_CHOICE:
+        return q.answer !== undefined && answers?.indexOf(q.answer) !== -1;
+      // case STEP_TYPE.LANDING || STEP_TYPE.RESULTS || STEP_TYPE.SUMMARY:
+      //   return true;
+      default:
+        return true;
+    }
+  }
+
+  public static getFieldSetName(props: IQuestionData): string {
     return kebabCase(props.step.title);
   }
 
-  static getDomId(answer: string, props: IQuestionData): string {
+  public static getDomId(answer: string, props: IQuestionData): string {
     const name = Steps.getFieldSetName(props);
     return `${name}-${kebabCase(answer)}`;
   }

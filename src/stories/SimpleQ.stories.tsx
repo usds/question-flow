@@ -10,7 +10,7 @@ import { QuestionableConfig } from '../survey/Config';
 
 export default {
   argTypes: {
-    backgroundColor: { control: 'color' },
+    config: { control: { type: 'object' } },
   },
   component: Questionable,
   title:     'Questionable/Simple',

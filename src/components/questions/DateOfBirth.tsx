@@ -10,15 +10,6 @@ import { Questions }                 from '../lib/Questions';
 import { Steps }                     from '../lib/Steps';
 import { StepLayout }                from '../wizard/StepLayout';
 
-const toBirthdate = (dob: TDateOfBirth) => {
-  if (dob.month && dob.day && dob.year) {
-    return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${
-      dob.year
-    }`;
-  }
-  return undefined;
-};
-
 export const DateOfBirth = (props: IQuestionData): JSX.Element => {
   const { step }          = props;
   const dob: TDateOfBirth = {
@@ -44,7 +35,7 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
     setState({
       ...state,
     });
-    const bd  = toBirthdate(state);
+    const bd  = Questions.toBirthdate(state);
     const age = getAge(bd);
     if (age) {
       props.dispatchForm({
@@ -62,7 +53,7 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
     label: string,
   ): JSX.Element => {
     let length = 2;
-    if (unit === DATE_UNIT.year) {
+    if (unit === DATE_UNIT.YEAR) {
       length = 4;
     }
     return (
@@ -80,9 +71,9 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
 
   const getDateInputGroup = (label: string): JSX.Element => (
     <DateInputGroup>
-      {getDateInput(DATE_UNIT.month, label)}
-      {getDateInput(DATE_UNIT.day, label)}
-      {getDateInput(DATE_UNIT.year, label)}
+      {getDateInput(DATE_UNIT.MONTH, label)}
+      {getDateInput(DATE_UNIT.DAY, label)}
+      {getDateInput(DATE_UNIT.YEAR, label)}
     </DateInputGroup>
   );
 

@@ -4,6 +4,7 @@
 export enum QUESTION_TYPE {
   DOB = 'dob',
   MULTIPLE_CHOICE = 'multiple_choice',
+  MULTIPLE_SELECT = 'multiple_select',
 }
 
 /**
@@ -50,9 +51,14 @@ export enum ACTION_TYPE {
 }
 
 export enum DATE_UNIT {
-  day = 'day',
-  month = 'month',
-  year = 'year',
+  DAY = 'day',
+  MONTH = 'month',
+  YEAR = 'year',
+}
+
+export enum MODE {
+  EDIT = 'edit',
+  VIEW = 'view'
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
