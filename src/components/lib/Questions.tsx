@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { DateTime }                  from 'luxon';
-import { DATE_UNIT, ACTION_TYPE }    from '../../lib/enums';
+import { ACTION_TYPE }               from '../../lib/enums';
 import { IQuestionData }             from '../../survey/IStepData';
 import { Steps }                     from './Steps';
 import { getDateTime }               from '../../lib/date';
@@ -146,8 +146,8 @@ export abstract class Questions {
 
   /**
    * Converts a Date of Birth type into a string
-   * @param dob 
-   * @returns 
+   * @param dob
+   * @returns
    */
   public static toBirthdate(dob: TDateOfBirth): string | undefined {
     if (dob.month && dob.day && dob.year) {
