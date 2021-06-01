@@ -33,6 +33,6 @@ export const QuestionFactory = (props: IStepData): JSX.Element => {
     case QUESTION_TYPE.MULTIPLE_SELECT:
       return <MultipleSelectStep {...stepData} />;
     default:
-      return noel('Question does not exist');
+      return noel('Question does not exist', 'QuestionFactory');
   }
 };

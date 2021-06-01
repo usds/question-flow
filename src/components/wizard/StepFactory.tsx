@@ -23,5 +23,5 @@ export const StepFactory = (props: IStepData): JSX.Element => {
   if (isEnum(PAGE_TYPE, step.type)) {
     return PageFactory(props);
   }
-  return noel('Step does not exist');
+  return noel('Step does not exist', 'StepFactory');
 };

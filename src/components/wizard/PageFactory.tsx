@@ -35,6 +35,6 @@ export const PageFactory = (props: IStepData): JSX.Element => {
     case PAGE_TYPE.SUMMARY:
       return <SummaryPage {...stepData} />;
     default:
-      return noel('Page does not exist');
+      return noel('Page does not exist', 'PageFactory');
   }
 };
