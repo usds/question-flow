@@ -27,6 +27,8 @@
   "description": "Create user friendly workflows for complex requirements, like eligibility or screener questionnaires",
   "devDependencies": {
     "@mdx-js/react": "^1.6.22",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-docs": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
@@ -35,6 +37,7 @@
     "@storybook/node-logger": "^6.2.9",
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
+    "@storybook/storybook-deployer": "^2.8.8",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
@@ -46,6 +49,7 @@
     "@types/react-dom": "^17.0.5",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
+    "all-contributors-cli": "^6.20.0",
     "copyfiles": "^2.4.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -67,16 +71,32 @@
     "prettier": "^2.3.0",
     "prettier-plugin-organize-imports": "^2.1.0",
     "pretty-quick": "^3.1.0",
-    "react-scripts": "4.0.3",
+    "react-docgen-typescript-loader": "^3.7.2",
+    "react-scripts": "^4.0.3",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.4.3",
     "storybook-readme": "^5.0.9"
+  },
+  "engines": {
+    "node": "14.x - 16.x"
   },
   "files": [
     "dist",
     "README.md"
   ],
   "homepage": "https://usds.github.io/questionable",
+  "keywords": [
+    "react",
+    "uswds",
+    "uswds 2.0",
+    "react component",
+    "us web design",
+    "design system",
+    "component library",
+    "usds",
+    "survey",
+    "questionnaire"
+  ],
   "license": "ISC",
   "main": "dist/index.js",
   "name": "@usds/questionable",
@@ -84,12 +104,17 @@
     "babel-loader": "8.1.0",
     "webpack": "4.44.2"
   },
+  "contributors": [
+    "Christopher Froehlich <christopher.r.froehlich@omb.eop.gov>",
+    "Tom Neilsen <thomas.a.nielsen@omb.eop.gov>"
+  ],
   "scripts": {
-    "build-storybook": "build-storybook -s public",
     "build": "tsc --build \"./tsconfig.build.json\"",
+    "build-storybook": "build-storybook -s public",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",
     "clean-storybook": "rimraf storybook-static",
+    "contributors:add": "all-contributors add",
     "copy-files": "copyfiles -u 1 src/style/assets/**/*.otf src/style/base.css dist/",
     "deploy": "gh-pages -d build",
     "deploy-storybook": "yarn clean-storybook && yarn build-storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
@@ -106,5 +131,6 @@
     "test": "react-scripts test",
     "type-check": "tsc --noEmit"
   },
+  "types": "dist/index.d.ts",
   "version": "0.9.0"
 }

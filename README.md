@@ -1,37 +1,34 @@
 # @usds/questionable
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 If you have questions, you have questionable content. Questionable is a USDS React component that transforms complex workflows into a simple, linear wizard.
 
 ![q](https://user-images.githubusercontent.com/73488661/120005468-d9d42480-bfa5-11eb-9fc2-c940bfd473ea.gif)
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
 ## Install
 
 Install this package with npm or yarn:
 
-```
+```sh
 yarn add @usds/questionable
 ```
 
 or
 
-```
+```sh
 npm i @usds/questionable
 ```
 
 ## Usage
 
-It is strongly suggested applications use the same version of USWDS that was used to build the version of ReactUSWDS they're using. A version mismatch may result in unexpected markup & CSS combinations.
+It is strongly suggested applications use the same version of [USWDS](https://designsystem.digital.gov/) that is used by [@trussworks/react-uswds](https://github.com/trussworks/react-uswds). A version mismatch may result in unexpected markup & CSS combinations. This project will stay current with @trussworks/react-uswds, which is often behind the USWDS by a point release or two.
 
-You can import ReactUSWDS components using ES6 syntax:
+You can import Questionable components using ES6 syntax:
 
-```
-import { Questionable } from '@usds/questionable'
+```ts
+import { Questionable } from '@usds/questionable';
 ```
 
 ## Organization
@@ -46,7 +43,7 @@ The project is intended to be a generic wizard suitable for testing eligibility 
 
 ## Background
 
-The primary deliverable is a published npm package that can be included as a dependency in other projects that use USWDS with React. In order for these components to be useful, they should follow best practices for accessible, semantic, markup; be well-tested across browsers and devices; and allow for an appropriate level of customization. We adhere to a set of [development guidelines](./github/CONTRIBUTING.mds) as much as possible and use automation to enforce tests, linting, and other standards.
+The primary deliverable is a published npm package that can be included as a dependency in other projects that use USWDS with React. In order for these components to be useful, they should follow best practices for accessible, semantic, markup; be well-tested across browsers and devices; and allow for an appropriate level of customization. We adhere to a set of [development guidelines](./github/CONTRIBUTING.md) as much as possible and use automation to enforce tests, linting, and other standards.
 
 ### Non-Goals
 
@@ -95,14 +92,13 @@ This repository is governed by the [Contributor Covenant](./github/CODE_OF_CONDU
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/froehlichcr"><img src="https://avatars.githubusercontent.com/u/73488661?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Christopher Froehlich</b></sub></a><br /><a href="https://github.com/usds/questionable/commits?author=froehlichcr" title="Code">💻</a> <a href="https://github.com/usds/questionable/commits?author=froehlichcr" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/TomNUSDS"><img src="https://avatars.githubusercontent.com/u/74203452?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tom Neilsen</b></sub></a><br /><a href="https://github.com/usds/questionable/commits?author=TomNUSDS" title="Code">💻</a> <a href="https://github.com/usds/questionable/commits?author=TomNUSDS" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/froehlichcr/"><img src="https://avatars.githubusercontent.com/u/73488661?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Christopher Froehlich</b></sub></a><br /><a href="https://github.com/usds/questionable/issues?q=author%3Afroehlichcr" title="Bug reports">🐛</a> <a href="https://github.com/usds/questionable/commits?author=froehlichcr" title="Code">💻</a> <a href="#design-froehlichcr" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/TomNUSDS"><img src="https://avatars.githubusercontent.com/u/74203452?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TomNUSDS</b></sub></a><br /><a href="#question-TomNUSDS" title="Answering Questions">💬</a> <a href="https://github.com/usds/questionable/issues?q=author%3ATomNUSDS" title="Bug reports">🐛</a> <a href="https://github.com/usds/questionable/commits?author=TomNUSDS" title="Code">💻</a> <a href="https://github.com/usds/questionable/pulls?q=is%3Apr+reviewed-by%3ATomNUSDS" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/usds/questionable/commits?author=TomNUSDS" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
