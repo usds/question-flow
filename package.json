@@ -99,7 +99,7 @@
   ],
   "license": "ISC",
   "main": "dist/index.js",
-  "name": "@usds/questionable",
+  "name": "@usds.gov.gov/questionable",
   "resolutions": {
     "babel-loader": "8.1.0",
     "webpack": "4.44.2"

@@ -4882,9 +4882,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usds/questionable@workspace:.":
+"@usds.gov/questionable@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@usds/questionable@workspace:."
+  resolution: "@usds.gov/questionable@workspace:."
   dependencies:
     "@mdx-js/react": ^1.6.22
     "@semantic-release/changelog": ^5.0.1

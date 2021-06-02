@@ -1,6 +1,9 @@
-# @usds/questionable
+# @usds.gov/questionable
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 If you have questions, you have questionable content. Questionable is a USDS React component that transforms complex workflows into a simple, linear wizard.
@@ -12,13 +15,13 @@ If you have questions, you have questionable content. Questionable is a USDS Rea
 Install this package with npm or yarn:
 
 ```sh
-yarn add @usds/questionable
+yarn add @usds.gov/questionable
 ```
 
 or
 
 ```sh
-npm i @usds/questionable
+npm i @usds.gov/questionable
 ```
 
 ## Usage
@@ -28,7 +31,7 @@ It is strongly suggested applications use the same version of [USWDS](https://de
 You can import Questionable components using ES6 syntax:
 
 ```ts
-import { Questionable } from '@usds/questionable';
+import { Questionable } from '@usds.gov/questionable';
 ```
 
 ## Organization
@@ -92,6 +95,7 @@ This repository is governed by the [Contributor Covenant](./github/CODE_OF_CONDU
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
