@@ -4,7 +4,7 @@ import { IPages }    from '../../../survey';
 
 export const pages: IPages = {
   landingPage: {
-    body:    'To receive Social Security benefits, you have to meet certain requirements. We\'ll guide you through a series of questions to determine if you may be eligible.',
+    body:    'To receive benefits, you have to meet certain requirements. We\'ll guide you through a series of questions to determine if you may be eligible.',
     buttons: {
       next: {
         label: 'Get Started',
@@ -20,7 +20,7 @@ export const pages: IPages = {
     id:        PAGE_TYPE.NO_RESULTS,
     sectionId: 'results',
     subTitle:  'You can <a href="#">apply for benefits</a> but based on what you told us today, you may not be eligible at this time.',
-    title:     'You may not be eligible for Social Security benefits.',
+    title:     'You may not be eligible for benefits.',
     type:      PAGE_TYPE.NO_RESULTS,
   },
   resultsPage: {
@@ -32,7 +32,7 @@ The information you shared today tells us about your current situation. In the f
     id:            PAGE_TYPE.RESULTS,
     info:          'Each benefit we provide has an official name. You may see these names in other materials or hear our employees use them on the phone and in our offices.',
     sectionId:     'results',
-    title:         'You may be eligible for Social Security benefits.',
+    title:         'You may be eligible for benefits.',
     type:          PAGE_TYPE.RESULTS,
   },
   summaryPage: {

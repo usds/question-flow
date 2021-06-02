@@ -33,7 +33,7 @@ export const results: IResult[] = [
     id:    'DI.10105.060',
     label: name,
     name:
-      'Disability, also referred to as Social Security Disability Insurance (SSDI)',
+      'Disability, also referred to as benefits Disability Insurance (SSDI)',
     requirements: [
       {
         ageCalc: (birthday) => !isFraCalculator(birthday, 12),
@@ -126,7 +126,7 @@ export const results: IResult[] = [
           J: [0], // Spouse has benefits
         },
         explanation:
-          "You're 62 or older and your spouse gets Social Security checks every month.",
+          "You're 62 or older and your spouse gets benefits checks every month.",
         minAge: {
           months: 0,
           years:  62,
@@ -151,7 +151,7 @@ export const results: IResult[] = [
           ],
         },
         explanation:
-          'Your spouse gets Social Security checks every month and you take care of kids under the age of 16.',
+          'Your spouse gets benefits checks every month and you take care of kids under the age of 16.',
         minAge: {
           months: 0,
           years:  18,
@@ -166,7 +166,7 @@ export const results: IResult[] = [
           R: [1], // Children are disabled
         },
         explanation:
-          'Your spouse gets Social Security checks every month and you take care of disabled kids over the age of 16.',
+          'Your spouse gets benefits checks every month and you take care of disabled kids over the age of 16.',
         minAge: {
           months: 0,
           years:  18,
@@ -334,7 +334,7 @@ export const results: IResult[] = [
           ],
         },
         explanation:
-          "The child's parent(s) may get Social Security checks every month.",
+          "The child's parent(s) may get benefits checks every month.",
       },
       {
         answers: {
@@ -345,7 +345,7 @@ export const results: IResult[] = [
           ],
         },
         explanation:
-          'You go to high school full time and your parent(s) may get Social Security checks every month.',
+          'You go to high school full time and your parent(s) may get benefits checks every month.',
         maxAge: {
           months: 1,
           years:  19,
@@ -365,7 +365,7 @@ export const results: IResult[] = [
           ],
         },
         explanation:
-          'You expect a condition, illness, or injury to affect your ability to work for a year or more. And it started to affect you before your 22nd birthday. Your parent(s) may get Social Security checks every month.',
+          'You expect a condition, illness, or injury to affect your ability to work for a year or more. And it started to affect you before your 22nd birthday. Your parent(s) may get benefits checks every month.',
         minAge: {
           months: 0,
           years:  18,
@@ -444,7 +444,7 @@ export const results: IResult[] = [
           ],
         },
         explanation:
-          'You go to high school full time and your parent(s) may get Social Security checks every month.',
+          'You go to high school full time and your parent(s) may get benefits checks every month.',
         maxAge: {
           months: 1,
           years:  19,
