@@ -4420,7 +4420,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^15.6.1":
+"@types/node@npm:*":
   version: 15.6.1
   resolution: "@types/node@npm:15.6.1"
   checksum: 8ed16d4f7404203d3aade0b73e58c969fab4a721cfe637eff9b739f6b25a35e33dfe9e0961b9ac5994d629302faa977f8ee8931d09187a136875f966332cc552
@@ -4431,6 +4431,13 @@ __metadata:
   version: 14.17.1
   resolution: "@types/node@npm:14.17.1"
   checksum: 81cc34ecd6e21ed723f00e55f042ccc1e1bde306122fa73aab9437584339fe1dd0c10e00ee691c99f0b9ca1ebcc9d6f0d35ca78356f7d0d580eaf3e93bd48718
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^15.9.0":
+  version: 15.9.0
+  resolution: "@types/node@npm:15.9.0"
+  checksum: 6ba9033ee00cf2fd260755d7aeeb65d6287f507473e54c1bce0dbd687c03245aff636580c8dc9215bea16cc32096d60344d00a9cb0a110c9baaca885573dc402
   languageName: node
   linkType: hard
 
@@ -4513,12 +4520,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.5":
-  version: 17.0.5
-  resolution: "@types/react-dom@npm:17.0.5"
+"@types/react-dom@npm:^17.0.6":
+  version: 17.0.6
+  resolution: "@types/react-dom@npm:17.0.6"
   dependencies:
     "@types/react": "*"
-  checksum: ff301198c621864e1ee6c566285dc5cdc9eb5d881ca7fe7fcb8ebf29afe0357ffb7f77e401ab81ff444c64ff1375f653eeb28f04cd088a361915dee31cb3f4a8
+  checksum: cc167c24a77cef2be8dcabd1bbe8b95c0d713b943b2f1c8a1468c8009c50daad51a46859a217a8383b89bb4ea499937d405699ce8db164f70c871f9d22d703f0
   languageName: node
   linkType: hard
 
@@ -4549,7 +4556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17.0.8":
+"@types/react@npm:*":
   version: 17.0.8
   resolution: "@types/react@npm:17.0.8"
   dependencies:
@@ -4557,6 +4564,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 6398dc200623dbf213747f3a1cf9f3c3bcac29b519e49c9fcb81d2665dadb21155c485381cddbb04b483a5bf3ddddefaff1a1a6ef4fa5080b1b9b144c789673e
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^17.0.9":
+  version: 17.0.9
+  resolution: "@types/react@npm:17.0.9"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: c626e3ca42b6173b0617102af6c1c8c6068f69fafeba51f5d614962cabaf98a5706295081941ece93da04117268cb0aad471be87e76dde7e0d5f79a46280c586
   languageName: node
   linkType: hard
 
@@ -4684,7 +4702,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^4.25.0, @typescript-eslint/eslint-plugin@npm:^4.5.0":
+"@typescript-eslint/eslint-plugin@npm:^4.26.0, @typescript-eslint/eslint-plugin@npm:^4.5.0":
   version: 4.26.0
   resolution: "@typescript-eslint/eslint-plugin@npm:4.26.0"
   dependencies:
@@ -4892,10 +4910,10 @@ __metadata:
     "@types/jest": ^26.0.23
     "@types/lodash": ^4.14.170
     "@types/luxon": ^1.26.5
-    "@types/node": ^15.6.1
-    "@types/react": ^17.0.8
-    "@types/react-dom": ^17.0.5
-    "@typescript-eslint/eslint-plugin": ^4.25.0
+    "@types/node": ^15.9.0
+    "@types/react": ^17.0.9
+    "@types/react-dom": ^17.0.6
+    "@typescript-eslint/eslint-plugin": ^4.26.0
     "@typescript-eslint/parser": ^4.26.0
     all-contributors-cli: ^6.20.0
     class-validator: ^0.13.1
