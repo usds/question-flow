@@ -22,7 +22,7 @@
     "react-jss": "^10.6.0",
     "typescript": "4.3.2",
     "use-wizard": "^4.0.4",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^2.0.0"
   },
   "description": "Create user friendly workflows for complex requirements, like eligibility or screener questionnaires",
   "devDependencies": {
