@@ -19,16 +19,17 @@
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-jss": "^10.6.0",
     "typescript": "4.3.2",
-    "use-wizard": "^4.0.4",
-    "web-vitals": "^1.1.2"
+    "use-wizard": "^4.0.4"
   },
   "description": "Create user friendly workflows for complex requirements, like eligibility or screener questionnaires",
   "devDependencies": {
     "@mdx-js/react": "^1.6.22",
     "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.1.3",
+    "@semantic-release/release-notes-generator": "^9.0.2",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-docs": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
@@ -50,7 +51,6 @@
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.26.0",
     "all-contributors-cli": "^6.20.0",
-    "copyfiles": "^2.4.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-align-assignments": "^1.1.2",
@@ -99,7 +99,7 @@
   ],
   "license": "ISC",
   "main": "dist/index.js",
-  "name": "@usds.gov.gov/questionable",
+  "name": "@usds.gov/questionable",
   "resolutions": {
     "babel-loader": "8.1.0",
     "webpack": "4.44.2"
@@ -113,11 +113,10 @@
     "build-storybook": "build-storybook -s public",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",
-    "clean-storybook": "rimraf storybook-static",
+    "clean:storybook": "rimraf storybook-static",
     "contributors:add": "all-contributors add",
-    "copy-files": "copyfiles -u 1 src/style/assets/**/*.otf src/style/base.css dist/",
     "deploy": "gh-pages -d build",
-    "deploy-storybook": "yarn clean-storybook && yarn build-storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
+    "deploy:storybook": "yarn clean-storybook && yarn build-storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
     "eject": "react-scripts eject",
     "lint": "pretty-quick --staged && yarn lint:ts",
     "lint:ts": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
@@ -132,5 +131,9 @@
     "type-check": "tsc --noEmit"
   },
   "types": "dist/index.d.ts",
-  "version": "0.9.0"
+  "version": "0.9.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usds/questionable.git"
+  }
 }
