@@ -1,5 +1,8 @@
 ---
 release:
+  branches:
+    - master
+    - next
   plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
@@ -12,6 +15,7 @@ release:
   - path: '@semantic-release/git'
     assets:
     - package.json
-    - yarn-lock.json
+    - yarn.lock
     - CHANGELOG.md
-    message: 'release: ${nextRelease.version} [skip ci]nn${nextRelease.notes}'
+    - README.md
+    message: 'release: ${version} [skip ci]nn${notes}'
