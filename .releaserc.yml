@@ -1,21 +1,20 @@
 ---
-release:
-  branches:
-    - master
-    - next
-  plugins:
+branches:
+  - master
+  - next
+plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
   - - '@semantic-release/npm'
     - npmPublish: true
   - '@semantic-release/github'
-  prepare:
+prepare:
   - '@semantic-release/changelog'
   - '@semantic-release/npm'
   - path: '@semantic-release/git'
     assets:
-    - package.json
-    - yarn.lock
-    - CHANGELOG.md
-    - README.md
+      - package.json
+      - yarn.lock
+      - CHANGELOG.md
+      - README.md
     message: 'release: ${version} [skip ci]nn${notes}'
