@@ -1,7 +1,7 @@
 import { getDateTime, getDateTimeAge } from '../../../lib/date';
 
 /**
- * Custom SSA calculator to compute Full Retirement Age (FRA)
+ * Custom benefits calculator to compute Full Retirement Age (FRA)
  * @param dob Date of Birth as a string
  * @param monthOffset optional number of months to adjust calculation
  * @returns true if the given date is FRA as of now

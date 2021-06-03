@@ -11,6 +11,10 @@
       "not op_mini all"
     ]
   },
+  "contributors": [
+    "Christopher Froehlich <christopher.r.froehlich@omb.eop.gov>",
+    "Tom Neilsen <thomas.a.nielsen@omb.eop.gov>"
+  ],
   "dependencies": {
     "@trussworks/react-uswds": "^1.17.0",
     "class-validator": "^0.13.1",
@@ -19,16 +23,17 @@
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-jss": "^10.6.0",
     "typescript": "4.3.2",
-    "use-wizard": "^4.0.4",
-    "web-vitals": "^1.1.2"
+    "use-wizard": "^4.0.4"
   },
   "description": "Create user friendly workflows for complex requirements, like eligibility or screener questionnaires",
   "devDependencies": {
     "@mdx-js/react": "^1.6.22",
     "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.1.3",
+    "@semantic-release/release-notes-generator": "^9.0.2",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-docs": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
@@ -44,13 +49,12 @@
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.170",
     "@types/luxon": "^1.26.5",
-    "@types/node": "^15.6.1",
-    "@types/react": "^17.0.8",
-    "@types/react-dom": "^17.0.5",
-    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@types/node": "^15.9.0",
+    "@types/react": "^17.0.9",
+    "@types/react-dom": "^17.0.6",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "all-contributors-cli": "^6.20.0",
-    "copyfiles": "^2.4.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-align-assignments": "^1.1.2",
@@ -99,25 +103,66 @@
   ],
   "license": "ISC",
   "main": "dist/index.js",
-  "name": "@usds/questionable",
+  "name": "@usds.gov/questionable",
+  "release": {
+    "branches": [
+      "master",
+      "next"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "label": "TS distribution",
+              "path": "dist/**"
+            }
+          ]
+        }
+      ]
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      {
+        "assets": [
+          "dist/**",
+          "package.json",
+          "yarn.lock",
+          "CHANGELOG.md",
+          "README.md"
+        ],
+        "message": "release: ${version} [skip ci]nn${notes}",
+        "path": "@semantic-release/git"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usds/questionable.git"
+  },
   "resolutions": {
     "babel-loader": "8.1.0",
     "webpack": "4.44.2"
   },
-  "contributors": [
-    "Christopher Froehlich <christopher.r.froehlich@omb.eop.gov>",
-    "Tom Neilsen <thomas.a.nielsen@omb.eop.gov>"
-  ],
   "scripts": {
     "build": "tsc --build \"./tsconfig.build.json\"",
-    "build-storybook": "build-storybook -s public",
+    "build:storybook": "build-storybook -s public",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",
-    "clean-storybook": "rimraf storybook-static",
+    "clean:storybook": "rimraf storybook-static",
     "contributors:add": "all-contributors add",
-    "copy-files": "copyfiles -u 1 src/style/assets/**/*.otf src/style/base.css dist/",
     "deploy": "gh-pages -d build",
-    "deploy-storybook": "yarn clean-storybook && yarn build-storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
+    "deploy:storybook": "yarn clean:storybook && yarn build:storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
     "eject": "react-scripts eject",
     "lint": "pretty-quick --staged && yarn lint:ts",
     "lint:ts": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
