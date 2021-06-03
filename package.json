@@ -104,6 +104,48 @@
   "license": "ISC",
   "main": "dist/index.js",
   "name": "@usds.gov/questionable",
+  "release": {
+    "branches": [
+      "master",
+      "next"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "label": "TS distribution",
+              "path": "dist/**"
+            }
+          ]
+        }
+      ]
+    ],
+    "prepare": [
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      {
+        "assets": [
+          "dist/**",
+          "package.json",
+          "yarn.lock",
+          "CHANGELOG.md",
+          "README.md"
+        ],
+        "message": "release: ${version} [skip ci]nn${notes}",
+        "path": "@semantic-release/git"
+      }
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/usds/questionable.git"
