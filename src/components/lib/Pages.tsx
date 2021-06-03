@@ -11,6 +11,7 @@ export abstract class Pages {
    * Internal method to compute reason for a result
    * @param props
    * @param result
+   * @param global
    * @returns
    */
   static getReason(props: IStepData, result: IResult, global: IGlobalState): string {
@@ -42,6 +43,7 @@ export abstract class Pages {
   /**
    * Internal method to generate list of results
    * @param props
+   * @param global
    * @returns
    */
   static getResults(props: IStepData, global: IGlobalState): ReactNode {

@@ -9,8 +9,7 @@ import { TAge }     from './types';
  */
 export const isValidDate = (dt: string | undefined): boolean => {
   if (!dt || dt.length < 8) return false;
-  if (!moment(dt, 'MM/DD/YYYY', true).isValid()) return false;
-  return true;
+  return moment(dt, 'MM/DD/YYYY', true).isValid();
 };
 
 /**

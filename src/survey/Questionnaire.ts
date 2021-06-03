@@ -78,7 +78,7 @@ export class Questionnaire implements IQuestionnaire {
   getStepById(id: string): IStep {
     const ret = this.steps.find((q) => q.id === id);
     if (!ret) {
-      throw new Error(`Step id: ${id} not found in survery`);
+      throw new Error(`Step id: ${id} not found in survey`);
     }
     return ret;
   }
@@ -229,7 +229,7 @@ export class Questionnaire implements IQuestionnaire {
   }
 
   /**
-   * Performs constructor validation on the survery inputs.
+   * Performs constructor validation on the survey inputs.
    * Sets step defaults for landing, summary and result if none are defined.
    */
   private init() {
@@ -244,7 +244,7 @@ export class Questionnaire implements IQuestionnaire {
     }
 
     // NOTE: the following default assignment logic is not yet factored out.
-    // This could be abstracted if repitions of this pattern emerge.
+    // This could be abstracted if repetitions of this pattern emerge.
 
     const error = 'step is not correctly defined or defined more than once';
 

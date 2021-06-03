@@ -43,7 +43,7 @@ export const pages: IPages = {
     id:        PAGE_TYPE.SUMMARY,
     sectionId: 'results',
     subTitle:
-      'If everything looks correct, click "Submit" to view your results; otherwise, go back and change your asnwers as needed.',
+      'If everything looks correct, click "Submit" to view your results; otherwise, go back and change your answers as needed.',
     title: 'Review your answers',
     type:  PAGE_TYPE.SUMMARY,
   },

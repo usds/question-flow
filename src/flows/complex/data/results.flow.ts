@@ -292,7 +292,7 @@ export const results: IResult[] = [
     requirements: [
       {
         answers: {
-          A: [1], // Childer under 18
+          A: [1], // Childern under 18
           Y: [0], // Child has experienced loss of parent
         },
         explanation: 'The child lost a parent.',

@@ -23,7 +23,7 @@ export abstract class Steps {
    * @returns
    */
   public static isNextEnabled(props: IStepData): boolean {
-    if (!props?.step) throw new Error('This survery is not defined');
+    if (!props?.step) throw new Error('This survey is not defined');
 
     if (props.stepId === STEP_TYPE.LANDING) return true;
 

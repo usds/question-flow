@@ -385,7 +385,7 @@ export const questions: IQuestion[] = [
         answers: {
           Q: [
             0, // Have children < 16
-            1, // Have childred >= 16
+            1, // Have children >= 16
           ],
         },
       },
@@ -474,7 +474,7 @@ export const questions: IQuestion[] = [
     requirements:  [
       {
         answers: {
-          T: [0], // Has surving parent
+          T: [0], // Has surviving parent
         },
       },
       {
@@ -626,7 +626,7 @@ export const questions: IQuestion[] = [
       },
       {
         answers: {
-          Z: [0], // Has surving parent
+          Z: [0], // Has surviving parent
         },
       },
     ],

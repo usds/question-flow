@@ -6,21 +6,21 @@ import { IAnswer }                 from './IAnswer';
 import { IPage, IQuestion, IStep } from './IStep';
 
 /**
- * Data defintion for question step
+ * Data definition for question step
  */
 export interface IQuestionData extends IStepData {
   step: IQuestion;
 }
 
 /**
- * Data defintion for page step
+ * Data definition for page step
  */
 export interface IPageData extends IStepData {
   step: IPage;
 }
 
 /**
- * Data defintion for base wizard step
+ * Data definition for base wizard step
  */
 export interface IStepData {
   children?: ReactNode;

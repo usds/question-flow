@@ -15,7 +15,7 @@ export const questions: IQuestion[] = [
       1: 'No',
     },
     id:            'A',
-    internalNotes: 'everone',
+    internalNotes: 'everyone',
     sectionId:     'introduction',
     subTitle:      'Surveys, questionnaires, slides, decks, polls--they\'re all linear questions/statements.',
     title:         'Do you like surveys?',
