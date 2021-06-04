@@ -191,5 +191,5 @@
     "type-check": "tsc --noEmit -p tsconfig.lint.json"
   },
   "types": "dist/index.d.ts",
-  "version": "1.0.1"
+  "version": "1.0.2"
 }

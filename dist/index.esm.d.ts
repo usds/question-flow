@@ -281,4 +281,4 @@ interface IQuestionable {
 }
 declare const Questionable: (q: IQuestionable) => JSX.Element;
 export { Questionable };
-//# sourceMappingURL=index.d.ts.map
+//# sourceMappingURL=index.esm.d.ts.map
