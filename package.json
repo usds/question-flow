@@ -81,7 +81,8 @@
     "react-scripts": "^4.0.3",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.4.3",
-    "storybook-readme": "^5.0.9"
+    "storybook-readme": "^5.0.9",
+    "typescript-bundle": "^1.0.17"
   },
   "engines": {
     "node": "14.x - 16.x"
@@ -153,7 +154,7 @@
     "webpack": "4.44.2"
   },
   "scripts": {
-    "build": "tsc --build \"./tsconfig.build.json\"",
+    "build": "yarn type-check && tsc-bundle tsconfig.build.json",
     "build:storybook": "build-storybook -s public",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",
