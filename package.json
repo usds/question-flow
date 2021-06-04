@@ -1,4 +1,5 @@
 {
+  "browser": "dist/index.umd.js",
   "browserslist": {
     "development": [
       "last 1 chrome version",
@@ -28,9 +29,12 @@
   },
   "description": "Create user friendly workflows for complex requirements, like eligibility or screener questionnaires",
   "devDependencies": {
+    "@babel/core": "^7.12.10",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@mdx-js/react": "^1.6.22",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
@@ -57,11 +61,17 @@
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "all-contributors-cli": "^6.20.0",
+    "babel-loader": "^8.1.0",
+    "babel-preset-react-app": "^10.0.0",
+    "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-align-assignments": "^1.1.2",
     "eslint-plugin-align-import": "^1.0.0",
+    "eslint-plugin-flowtype": "^5.7.2",
     "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.3.6",
     "eslint-plugin-json-files": "^1.1.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
@@ -69,20 +79,30 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-sonarjs": "^0.7.0",
     "eslint-plugin-sort-keys-fix": "^1.1.1",
+    "eslint-plugin-testing-library": "^4.6.0",
     "eslint-plugin-typescript-sort-keys": "^1.6.0",
     "eslint-plugin-yaml": "^0.4.2",
     "gh-pages": "^3.2.0",
     "husky": "^6.0.0",
+    "jest": "^26.6.3",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.0",
     "prettier-plugin-organize-imports": "^2.1.0",
     "pretty-quick": "^3.1.0",
     "react-docgen-typescript-loader": "^3.7.2",
-    "react-scripts": "^4.0.3",
     "rimraf": "^3.0.2",
+    "rollup": "^2.36.1",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-dts": "^3.0.2",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-ts": "^1.4.0",
     "semantic-release": "^17.4.3",
     "storybook-readme": "^5.0.9",
-    "typescript-bundle": "^1.0.17"
+    "ts-jest": "^26.4.4",
+    "ts-loader": "^8.0.12",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.3"
   },
   "engines": {
     "node": "14.x - 16.x"
@@ -93,19 +113,20 @@
   ],
   "homepage": "https://usds.github.io/questionable",
   "keywords": [
-    "react",
-    "uswds",
-    "uswds 2.0",
-    "react component",
-    "us web design",
-    "design system",
     "component library",
-    "usds",
+    "design system",
+    "questionnaire",
+    "react component",
+    "react",
     "survey",
-    "questionnaire"
+    "us web design",
+    "usds",
+    "uswds 2.0",
+    "uswds"
   ],
   "license": "ISC",
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "name": "@usds.gov/questionable",
   "release": {
     "plugins": [
@@ -149,12 +170,8 @@
     "type": "git",
     "url": "https://github.com/usds/questionable.git"
   },
-  "resolutions": {
-    "babel-loader": "8.1.0",
-    "webpack": "4.44.2"
-  },
   "scripts": {
-    "build": "yarn type-check && tsc-bundle tsconfig.build.json",
+    "build": "tsc -p tsconfig.lint.json && rollup --config --environment NODE_ENV:production",
     "build:storybook": "build-storybook -s public",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",
@@ -162,8 +179,7 @@
     "contributors:add": "all-contributors add",
     "deploy": "gh-pages -d build",
     "deploy:storybook": "yarn clean:storybook && yarn build:storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
-    "eject": "react-scripts eject",
-    "lint": "pretty-quick --staged && yarn lint:ts",
+    "lint": "pretty-quick --staged && yarn lint:ts && yarn type-check",
     "lint:ts": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
     "postbuild": "yarn run copy-files",
     "prebuild": "yarn clean",
@@ -172,8 +188,7 @@
     "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\"",
     "semantic-release": "semantic-release",
     "start": "start-storybook -p 9009 -s public",
-    "test": "react-scripts test",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit -p tsconfig.lint.json"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.1"

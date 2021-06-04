@@ -1,5 +1,14 @@
-/* Use this file to declare any custom file extensions for importing */
-/* Use this folder to also add/extend a package d.ts file, if needed. */
+/* eslint-disable @typescript-eslint/triple-slash-reference */
+/// <reference types="node" />
+/// <reference types="react" />
+/// <reference types="react-dom" />
+
+declare namespace NodeJS {
+  interface ProcessEnv {
+    readonly NODE_ENV: 'development' | 'production' | 'test';
+    readonly PUBLIC_URL: string;
+  }
+}
 
 /* CSS MODULES */
 declare module '*.module.css' {
@@ -31,29 +40,50 @@ declare module '*.less';
 declare module '*.styl';
 
 /* IMAGES */
-declare module '*.svg' {
-  const ref: string;
-  export default ref;
+declare module '*.avif' {
+  const src: string;
+  export default src;
 }
+
 declare module '*.bmp' {
-  const ref: string;
-  export default ref;
+  const src: string;
+  export default src;
 }
+
 declare module '*.gif' {
-  const ref: string;
-  export default ref;
+  const src: string;
+  export default src;
 }
+
 declare module '*.jpg' {
-  const ref: string;
-  export default ref;
+  const src: string;
+  export default src;
 }
+
 declare module '*.jpeg' {
-  const ref: string;
-  export default ref;
+  const src: string;
+  export default src;
 }
+
 declare module '*.png' {
-  const ref: string;
-  export default ref;
+  const src: string;
+  export default src;
+}
+
+declare module '*.webp' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.svg' {
+  import * as React from 'react';
+
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement> & { title?: string }
+  >;
+
+  const src: string;
+  export default src;
 }
 
 /* Markdown */
