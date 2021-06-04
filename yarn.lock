@@ -4104,9 +4104,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^5.12.0":
-  version: 5.12.0
-  resolution: "@testing-library/jest-dom@npm:5.12.0"
+"@testing-library/jest-dom@npm:^5.13.0":
+  version: 5.13.0
+  resolution: "@testing-library/jest-dom@npm:5.13.0"
   dependencies:
     "@babel/runtime": ^7.9.2
     "@types/testing-library__jest-dom": ^5.9.1
@@ -4116,7 +4116,7 @@ __metadata:
     css.escape: ^1.5.1
     lodash: ^4.17.15
     redent: ^3.0.0
-  checksum: d6af8912a7d121dba15b9defcddb33288a637e433478e8327a9d90b95077e5142eec41b1bbc91e3fd33b0c85478e94936b09021500f2602d9c3202c5d71475f2
+  checksum: 962e47cc7e9fa6cca8a38697bb6b407962c391ed8437b819bc0361674eae6aa8d6e3d829e14ba3624b00353b4ebd4398d47e809ffd33a062c0d7d17c7728dc3a
   languageName: node
   linkType: hard
 
@@ -4434,10 +4434,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^15.9.0":
-  version: 15.9.0
-  resolution: "@types/node@npm:15.9.0"
-  checksum: 6ba9033ee00cf2fd260755d7aeeb65d6287f507473e54c1bce0dbd687c03245aff636580c8dc9215bea16cc32096d60344d00a9cb0a110c9baaca885573dc402
+"@types/node@npm:^15.12.0":
+  version: 15.12.0
+  resolution: "@types/node@npm:15.12.0"
+  checksum: c9257134343be27611523f0540184b551cf07c8c928b7c6ac09d4db2309ff77da973fc80707dd22efb26a9ca4a90509c659b6848e0446e0d298a5418cb5767b4
   languageName: node
   linkType: hard
 
@@ -4903,14 +4903,14 @@ __metadata:
     "@storybook/preset-create-react-app": ^3.1.7
     "@storybook/react": ^6.2.9
     "@storybook/storybook-deployer": ^2.8.8
-    "@testing-library/jest-dom": ^5.12.0
+    "@testing-library/jest-dom": ^5.13.0
     "@testing-library/react": ^11.2.7
     "@testing-library/user-event": ^13.1.9
     "@trussworks/react-uswds": ^1.17.0
     "@types/jest": ^26.0.23
     "@types/lodash": ^4.14.170
     "@types/luxon": ^1.26.5
-    "@types/node": ^15.9.0
+    "@types/node": ^15.12.0
     "@types/react": ^17.0.9
     "@types/react-dom": ^17.0.6
     "@typescript-eslint/eslint-plugin": ^4.26.0

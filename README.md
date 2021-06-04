@@ -88,9 +88,12 @@ Interested in contributing? See our [guidelines and dev setup here](./github/con
 
 This repository is governed by the [Contributor Covenant](./github/CODE_OF_CONDUCT.md)
 
-## Notes
+## Acknowledgements
 
 - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- This project uses the [U.S. Web Design System (USWDS)](https://designsystem.digital.gov/) and the [@trussworks](https://github.com/trussworks) [React USWDS](https://github.com/trussworks/react-uswds) component library.
+- This project uses [Luxon](https://github.com/moment/luxon) for date/time validation.
+- The React [use-wizard](https://github.com/use-wizard/use-wizard) provides essential hooks for navigation
 
 ## Contributors ✨
 

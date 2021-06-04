@@ -43,13 +43,13 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
     "@storybook/storybook-deployer": "^2.8.8",
-    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.170",
     "@types/luxon": "^1.26.5",
-    "@types/node": "^15.9.0",
+    "@types/node": "^15.12.0",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
@@ -137,7 +137,7 @@
           "CHANGELOG.md",
           "README.md"
         ],
-        "message": "release: ${version} [skip ci]nn${notes}",
+        "message": "release: ${nextRelease.version} [skip ci]nn${nextRelease.notes}",
         "path": "@semantic-release/git"
       }
     ]
