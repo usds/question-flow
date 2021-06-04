@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/usds/questionable/compare/v1.0.0...v1.0.1) (2021-06-04)
+
+
+### Bug Fixes
+
+* **ci:** adds husky comment linting support ([a01a843](https://github.com/usds/questionable/commit/a01a843aee416b6999f63f185138088784d2a4f3))
+* **ci:** drops release folder from vcs ([2363f03](https://github.com/usds/questionable/commit/2363f03c00ca6d2031bf2abb64b9622b56241a25))
+* **ci:** releases single JavaScript and TypeScript file for publication ([293cc9b](https://github.com/usds/questionable/commit/293cc9bee5be956fcadaceb075812de52b981edc))
+
 # 1.0.0 (2021-06-04)
 
 
