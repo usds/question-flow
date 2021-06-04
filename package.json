@@ -28,6 +28,8 @@
   },
   "description": "Create user friendly workflows for complex requirements, like eligibility or screener questionnaires",
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@mdx-js/react": "^1.6.22",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
@@ -137,7 +139,7 @@
           "CHANGELOG.md",
           "README.md"
         ],
-        "message": "release: ${nextRelease.version} [skip ci]nn${nextRelease.notes}",
+        "message": "release: ${nextRelease.version} [skip ci] nn${nextRelease.notes}",
         "path": "@semantic-release/git"
       }
     ]
