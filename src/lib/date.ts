@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon';
-import moment       from 'moment';
-import { TAge }     from './types';
+import { TAge } from './types';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const moment = require('moment');
 
 /**
  * Determines if a string can be parsed into a valid Date
@@ -36,15 +38,15 @@ export const getDateTime = (dt: string): DateTime | undefined => {
 export const getDateTimeAge = (dob: DateTime): TAge => {
   const now = DateTime.now();
 
-  const yearNow  = now.year;
+  const yearNow = now.year;
   const monthNow = now.month;
-  const dateNow  = now.day;
+  const dateNow = now.day;
 
-  const yearDob  = dob.year;
+  const yearDob = dob.year;
   const monthDob = dob.month;
-  const dateDob  = dob.day;
+  const dateDob = dob.day;
 
-  let years  = yearNow - yearDob;
+  let years = yearNow - yearDob;
   let months = 0;
 
   if (monthNow >= monthDob) {
@@ -59,7 +61,7 @@ export const getDateTimeAge = (dob: DateTime): TAge => {
     days = dateNow - dateDob;
   } else {
     // eslint-disable-next-line no-multi-spaces
-    days    = 31 + dateNow - dateDob;
+    days = 31 + dateNow - dateDob;
     months += -1;
     if (months < 0) {
       months = 11;

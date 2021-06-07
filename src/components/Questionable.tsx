@@ -1,11 +1,11 @@
-import { useReducer }                         from 'react';
-import { useWizard }                          from 'use-wizard';
-import { stepReducer }                        from '../state/stepReducer';
-import { Answer }                             from '../survey/Answer';
-import { StepFactory }                        from './wizard/StepFactory';
-import { DevPanel }                           from './wizard/DevPanel';
-import { ProgressBar }                        from './wizard/ProgressBar';
+import { useReducer } from 'react';
+import { useWizard } from 'use-wizard';
+import { Answer } from '../state/Answer';
 import { GlobalStateProvider, IQuestionable } from '../state/GlobalState';
+import { stepReducer } from '../state/stepReducer';
+import { DevPanel } from './wizard/DevPanel';
+import { ProgressBar } from './wizard/ProgressBar';
+import { StepFactory } from './wizard/StepFactory';
 
 export const Questionable = (q: IQuestionable): JSX.Element => {
   const { questionnaire } = q;

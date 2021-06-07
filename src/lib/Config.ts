@@ -1,4 +1,4 @@
-import { MODE } from '../lib';
+import { MODE } from './enums';
 
 export interface IQuestionableConfig {
   dev: boolean;

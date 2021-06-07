@@ -1,7 +1,7 @@
-import { merge }       from 'lodash';
+import { merge } from 'lodash';
 import { ACTION_TYPE } from '../lib/enums';
-import { Answer }      from '../survey/Answer';
-import { IAnswer }     from '../survey/IAnswer';
+import { IAnswer } from '../survey/IAnswer';
+import { Answer } from './Answer';
 
 /**
  * Merges the form's answer state as the user progresses through the survey

@@ -9,6 +9,7 @@ export type TAge = {
 
 /**
  * Lambda that can be called to compute an age requirement
+ * @hidden
  */
 export type TAgeCalc = (birthdate: string) => boolean;
 

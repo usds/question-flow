@@ -1,7 +1,5 @@
-import { Questionnaire }                          from '../../survey/Questionnaire';
-import {
-  questions, results, actions, sections, pages,
-} from './data';
+import { Questionnaire } from '../../state/Questionnaire';
+import { actions, pages, questions, results, sections } from './data';
 
 const header = 'Complex Eligibility Survey';
 

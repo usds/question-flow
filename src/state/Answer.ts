@@ -1,5 +1,5 @@
-import { TAge }                 from '../lib/types';
-import { IAnswer, IAnswerList } from './IAnswer';
+import { TAge } from '../lib/types';
+import { IAnswer, IAnswerList } from '../survey/IAnswer';
 
 export class Answer implements IAnswer {
   public readonly started: Date;

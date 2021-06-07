@@ -2,7 +2,8 @@ import { Meta, Story } from '@storybook/react';
 import '@trussworks/react-uswds/lib/index.css';
 import '@trussworks/react-uswds/lib/uswds.css';
 import { Questionable } from '../components/Questionable';
-import { complexFlow } from '../flows/complex/complex.flow';
+import { simpleFlow } from '../flows/simple/simple.flow';
+import { MODE } from '../lib';
 import { QuestionableConfig } from '../lib/Config';
 import { IQuestionable } from '../state/GlobalState';
 import '../styles';
@@ -12,16 +13,17 @@ export default {
     config: { control: { type: 'object' } },
   },
   component: Questionable,
-  title: 'Questionable/Complex',
+  title: 'Questionable/Design',
 } as Meta;
 
 const Template: Story<IQuestionable> = (args) => <Questionable {...args} />;
 
-export const Complex = Template.bind({});
-Complex.args = {
+export const Design = Template.bind({});
+Design.args = {
   config: new QuestionableConfig({
     dev: false,
+    mode: MODE.EDIT,
     showSteps: false,
   }),
-  questionnaire: complexFlow,
+  questionnaire: simpleFlow,
 };

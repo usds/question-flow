@@ -1,10 +1,13 @@
-import { IStepData }          from '../../survey/IStepData';
-import { QuestionableConfig } from '../../survey/Config';
-import { noel }               from '../../lib/noop';
-import { ACTION_TYPE }        from '../../lib/enums';
+import { QuestionableConfig } from '../../lib/Config';
+import { ACTION_TYPE } from '../../lib/enums';
+import { noel } from '../../lib/noop';
+import { IStepData } from '../../survey/IStepData';
 
 export abstract class Wizard {
-  public static getHeader(props: IStepData, config: QuestionableConfig): JSX.Element {
+  public static getHeader(
+    props: IStepData,
+    config: QuestionableConfig,
+  ): JSX.Element {
     let text = props.step?.title;
     if (!text) {
       return noel();
@@ -21,7 +24,9 @@ export abstract class Wizard {
     if (!text) {
       return noel();
     }
-    return <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />;
+    return (
+      <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />
+    );
   }
 
   public static getQuestionHelp(props: IStepData): JSX.Element {
@@ -37,7 +42,9 @@ export abstract class Wizard {
     if (!text) {
       return noel();
     }
-    return <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />;
+    return (
+      <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />
+    );
   }
 
   public static resetQuestionable(props: IStepData): void {

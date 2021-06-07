@@ -1,8 +1,8 @@
-import { ReactNode }               from 'react';
-import { IWizard }                 from 'use-wizard/lib/cjs/useWizard/types/IWizard';
-import { TStep }                   from 'use-wizard/lib/cjs/useWizard/types/TStep';
-import { TReducer }                from '../lib/types';
-import { IAnswer }                 from './IAnswer';
+import { ReactNode } from 'react';
+import { IWizard } from 'use-wizard/lib/cjs/useWizard/types/IWizard';
+import { TStep } from 'use-wizard/lib/cjs/useWizard/types/TStep';
+import { TReducer } from '../lib/types';
+import { IAnswer } from './IAnswer';
 import { IPage, IQuestion, IStep } from './IStep';
 
 /**
@@ -23,10 +23,19 @@ export interface IPageData extends IStepData {
  * Data defintion for base wizard step
  */
 export interface IStepData {
+  /**
+   * @hidden
+   */
   children?: ReactNode;
+  /**
+   * @hidden
+   */
   dispatchForm: TReducer;
   form: IAnswer;
   step?: IStep;
   stepId: TStep;
+  /**
+   * @hidden
+   */
   wizard: IWizard;
 }
