@@ -4,7 +4,7 @@ import '@trussworks/react-uswds/lib/uswds.css';
 import { Questionable } from '../components/Questionable';
 import { simpleFlow } from '../flows/simple/simple.flow';
 import { MODE } from '../lib';
-import { QuestionableConfig } from '../lib/Config';
+import { QuestionableConfig } from '../state/Config';
 import { IQuestionable } from '../state/GlobalState';
 import '../styles';
 

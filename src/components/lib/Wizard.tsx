@@ -1,7 +1,9 @@
-import { QuestionableConfig } from '../../lib/Config';
-import { ACTION_TYPE } from '../../lib/enums';
-import { noel } from '../../lib/noop';
-import { IStepData } from '../../survey/IStepData';
+import FileSaver              from 'file-saver';
+import { QuestionableConfig } from '../../state/Config';
+import { ACTION_TYPE }        from '../../lib/enums';
+import { noel }               from '../../lib/noop';
+import { IStepData }          from '../../survey/IStepData';
+import { log }                from '../../lib';
 
 export abstract class Wizard {
   public static getHeader(
@@ -52,5 +54,12 @@ export abstract class Wizard {
       type: ACTION_TYPE.RESET,
     });
     props.wizard.goToStep('A');
+  }
+
+  /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any */
+  public static saveAsJson(data: any, fileName = 'questionable.json'): void {
+    log(fileName);
+    const blob = new Blob([data], { type: 'text/plain;charset=utf-8' });
+    FileSaver.saveAs(blob, fileName);
   }
 }

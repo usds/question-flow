@@ -1,33 +1,26 @@
-import { ArrayUnique } from 'class-validator';
-import { DEFAULT_PAGES } from '../lib/DefaultPages';
+import { ArrayUnique }   from 'class-validator';
+import { DEFAULT_PAGES } from '../lib/defaultPages';
 import {
   DIRECTION,
   isEnum,
+  MODE,
   PAGE_TYPE,
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import { TAge, TAgeCalc, TAnswers } from '../lib/types';
-import { IAction } from '../survey/IAction';
-import { IAnswer } from '../survey/IAnswer';
-import { IRequirement } from '../survey/IRequirement';
-import { IResult } from '../survey/IResult';
-import { ISection } from '../survey/ISection';
-import { IPage, IPages, IQuestion, IStep } from '../survey/IStep';
-import { IStepData } from '../survey/IStepData';
-
-/**
- * Definition for survey data input
- */
-export interface IQuestionnaire {
-  readonly actions: IAction[];
-  readonly header: string;
-  readonly pages: IPages;
-  readonly questions: IQuestion[];
-  readonly results: IResult[];
-  readonly sections: ISection[];
-}
+import { TAge, TAgeCalc, TAnswers }  from '../lib/types';
+import { IAction }                   from '../survey/IAction';
+import { IAnswer }                   from '../survey/IAnswer';
+import { IRequirement }              from '../survey/IRequirement';
+import { IResult }                   from '../survey/IResult';
+import { ISection }                  from '../survey/ISection';
+import {
+  IPage, IPages, IQuestion, IStep,
+} from '../survey/IStep';
+import { IStepData }          from '../survey/IStepData';
+import { IQuestionnaire }     from '../survey/IQuestionnaire';
+import { QuestionableConfig } from './Config';
 
 /**
  * Utility wrapper for survey state
@@ -106,14 +99,23 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
-  getStep(thisStep: string, form: IAnswer, direction: DIRECTION): string {
-    const nextStep =
-      this.flow.indexOf(thisStep) !== -1
-        ? this.flow[this.flow.indexOf(thisStep) + direction]
-        : undefined;
+  getStep(
+    thisStep: string,
+    form: IAnswer,
+    direction: DIRECTION,
+    config = new QuestionableConfig(),
+  ): string {
+    const nextStep = this.flow.indexOf(thisStep) !== -1
+      ? this.flow[this.flow.indexOf(thisStep) + direction]
+      : undefined;
     // If there are no more steps, stay on current
-    if (!nextStep) return thisStep;
+    if (!nextStep) {
+      return thisStep;
+    }
 
+    if (config.mode === MODE.EDIT) {
+      return nextStep;
+    }
     // Special handling for results
     if (nextStep === STEP_TYPE.RESULTS && this.getResults(form).length === 0) {
       return STEP_TYPE.NO_RESULTS;
@@ -123,7 +125,6 @@ export class Questionnaire implements IQuestionnaire {
     }
 
     const nextQuestion = this.getStepById(nextStep);
-
     if (!nextQuestion?.requirements) {
       return nextStep;
     }
@@ -154,14 +155,14 @@ export class Questionnaire implements IQuestionnaire {
     return thisStep;
   }
 
-  getNextStep(props: IStepData): string {
+  getNextStep(props: IStepData, config = new QuestionableConfig()): string {
     const thisStep = props.stepId as string;
-    return this.getStep(thisStep, props.form, DIRECTION.FORWARD);
+    return this.getStep(thisStep, props.form, DIRECTION.FORWARD, config);
   }
 
-  getPreviousStep(props: IStepData): string {
+  getPreviousStep(props: IStepData, config = new QuestionableConfig()): string {
     const thisStep = props.stepId as string;
-    return this.getStep(thisStep, props.form, DIRECTION.BACKWARD);
+    return this.getStep(thisStep, props.form, DIRECTION.BACKWARD, config);
   }
 
   /**
@@ -175,17 +176,17 @@ export class Questionnaire implements IQuestionnaire {
     }
 
     // Get all sections that meet the requirements based on current answers
-    const sections = this.sections.filter(
+    const sections        = this.sections.filter(
       (s) =>
-        s.requirements.length === 0 ||
-        s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
+        s.requirements.length === 0
+        || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
     );
-    const thisStep = props.stepId as string;
-    const thisQuestion = this.getStepById(thisStep);
+    const thisStep        = props.stepId as string;
+    const thisQuestion    = this.getStepById(thisStep);
     const thisQuestionIdx = this.steps.indexOf(thisQuestion);
 
     return sections.map((s) => {
-      const section = { ...s };
+      const section    = { ...s };
       section.lastStep = this.questions.reduce(
         (acc, q, index) => (q.sectionId === s.id ? index : acc),
         -1,
@@ -213,8 +214,7 @@ export class Questionnaire implements IQuestionnaire {
           return true;
         }
         return false;
-      }),
-    );
+      }));
   }
 
   /**
@@ -284,14 +284,16 @@ export class Questionnaire implements IQuestionnaire {
   }
 
   private meetsAllRequirements(requirement: IRequirement, form: IAnswer) {
-    const { minAge, maxAge, answers, ageCalc } = requirement;
+    const {
+      minAge, maxAge, answers, ageCalc,
+    } = requirement;
     // Internal to each requirement, all evaluations are `AND`
     // This safely handles cases where requirement parameters are undefined
     return (
-      Questionnaire.meetsMinAgeRequirements(form, minAge) &&
-      Questionnaire.meetsMaxAgeRequirements(form, maxAge) &&
-      Questionnaire.meetsAgeCalcRequirements(form, ageCalc) &&
-      this.meetsAnswerRequirements(answers)
+      Questionnaire.meetsMinAgeRequirements(form, minAge)
+      && Questionnaire.meetsMaxAgeRequirements(form, maxAge)
+      && Questionnaire.meetsAgeCalcRequirements(form, ageCalc)
+      && this.meetsAnswerRequirements(answers)
     );
   }
 
@@ -315,8 +317,8 @@ export class Questionnaire implements IQuestionnaire {
     } = form;
 
     return (
-      years > minAge?.years ||
-      (years >= minAge?.years && months >= minAge?.months)
+      years > minAge?.years
+      || (years >= minAge?.years && months >= minAge?.months)
     );
   }
 
@@ -339,8 +341,8 @@ export class Questionnaire implements IQuestionnaire {
     } = form;
 
     return (
-      years < maxAge?.years ||
-      (years <= maxAge?.years && months <= maxAge?.months)
+      years < maxAge?.years
+      || (years <= maxAge?.years && months <= maxAge?.months)
     );
   }
 
@@ -377,8 +379,8 @@ export class Questionnaire implements IQuestionnaire {
         // Allowed answers are an array. Any matched answer makes the response valid.
         return answers[a].some(
           (i) =>
-            question.answer !== undefined &&
-            question.answer === question.answers[i],
+            question.answer !== undefined
+            && question.answer === question.answers[i],
         );
       }
       // If no answers are defined, this passes

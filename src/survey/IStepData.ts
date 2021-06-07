@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
-import { IWizard } from 'use-wizard/lib/cjs/useWizard/types/IWizard';
-import { TStep } from 'use-wizard/lib/cjs/useWizard/types/TStep';
-import { TReducer } from '../lib/types';
-import { IAnswer } from './IAnswer';
+import { ReactNode }               from 'react';
+import { IWizard }                 from 'use-wizard/lib/cjs/useWizard/types/IWizard';
+import { TStep }                   from 'use-wizard/lib/cjs/useWizard/types/TStep';
+import { TReducer }                from '../lib/types';
+import { IAnswer }                 from './IAnswer';
 import { IPage, IQuestion, IStep } from './IStep';
 
 /**
@@ -17,6 +17,13 @@ export interface IQuestionData extends IStepData {
  */
 export interface IPageData extends IStepData {
   step: IPage;
+}
+
+/**
+ * Data defintion for design step
+ */
+export interface IDesignData extends IStepData {
+  step: IStep;
 }
 
 /**

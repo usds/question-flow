@@ -1,5 +1,7 @@
 export * from './IAction';
 export * from './IAnswer';
+export * from './IQuestionnaire';
+export * from './IQuestionableConfig';
 export * from './IRequirement';
 export * from './IResult';
 export * from './ISection';

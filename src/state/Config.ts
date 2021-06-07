@@ -1,10 +1,5 @@
-import { MODE } from './enums';
-
-export interface IQuestionableConfig {
-  dev: boolean;
-  mode: MODE;
-  showSteps: boolean;
-}
+import { MODE }                from '../lib/enums';
+import { IQuestionableConfig } from '../survey/IQuestionableConfig';
 
 export class QuestionableConfig implements IQuestionableConfig {
   dev = false;

@@ -1,10 +1,12 @@
-import { isEnum, MODE, PAGE_TYPE, QUESTION_TYPE } from '../../lib/enums';
-import { noel } from '../../lib/noop';
-import { useGlobal } from '../../state/GlobalState';
-import { IStep } from '../../survey/IStep';
-import { IStepData } from '../../survey/IStepData';
-import { DesignFactory } from './DesignFactory';
-import { PageFactory } from './PageFactory';
+import {
+  isEnum, MODE, PAGE_TYPE, QUESTION_TYPE,
+} from '../../lib/enums';
+import { noel }            from '../../lib/noop';
+import { useGlobal }       from '../../state/GlobalState';
+import { IStep }           from '../../survey/IStep';
+import { IStepData }       from '../../survey/IStepData';
+import { DesignFactory }   from './DesignFactory';
+import { PageFactory }     from './PageFactory';
 import { QuestionFactory } from './QuestionFactory';
 
 const viewFactory = (props: IStepData, step: IStep): JSX.Element => {
@@ -23,9 +25,9 @@ const viewFactory = (props: IStepData, step: IStep): JSX.Element => {
  * @returns
  */
 export const StepFactory = (props: IStepData): JSX.Element => {
-  const { stepId } = props;
+  const { stepId }                = props;
   const { questionnaire, config } = useGlobal();
-  const step = questionnaire.getStepById(`${stepId}`);
+  const step                      = questionnaire.getStepById(`${stepId}`);
 
   if (config.mode === MODE.EDIT) {
     return DesignFactory(props, step);

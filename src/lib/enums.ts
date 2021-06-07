@@ -18,10 +18,17 @@ export enum PAGE_TYPE {
 }
 
 /**
+ * Defines the known component types for design
+ */
+export enum DESIGN_TYPE {
+  EDIT = 'Edit',
+}
+
+/**
  * Defines the type of step for UI rendering
  */
-export const STEP_TYPE = { ...PAGE_TYPE, ...QUESTION_TYPE };
-export type TStepType = PAGE_TYPE | QUESTION_TYPE;
+export const STEP_TYPE = { ...PAGE_TYPE, ...QUESTION_TYPE, ...DESIGN_TYPE };
+export type TStepType = PAGE_TYPE | QUESTION_TYPE | DESIGN_TYPE;
 
 /**
  * Navigation direction for steps by array index (+1 or -1)

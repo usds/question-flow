@@ -1,1 +1,608 @@
-{}
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ACTION": {
+      "enum": [
+        "call",
+        "hybrid",
+        "online"
+      ],
+      "type": "string"
+    },
+    "DESIGN_TYPE": {
+      "const": "Edit",
+      "description": "Defines the known component types for design",
+      "type": "string"
+    },
+    "IAction": {
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/ACTION"
+        }
+      },
+      "required": [
+        "action",
+        "description",
+        "name",
+        "title",
+        "type"
+      ],
+      "type": "object"
+    },
+    "IAnswer": {
+      "properties": {
+        "age": {
+          "$ref": "#/definitions/TAge"
+        },
+        "answers": {
+          "$ref": "#/definitions/IAnswerList"
+        },
+        "birthdate": {
+          "type": "string"
+        },
+        "finished": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "started": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "answers",
+        "started"
+      ],
+      "type": "object"
+    },
+    "IAnswerList": {
+      "additionalProperties": {
+        "$ref": "#/definitions/IQuestion"
+      },
+      "type": "object"
+    },
+    "IDesignData": {
+      "description": "Data defintion for design step",
+      "properties": {
+        "form": {
+          "$ref": "#/definitions/IAnswer"
+        },
+        "step": {
+          "$ref": "#/definitions/IStep"
+        },
+        "stepId": {
+          "$ref": "#/definitions/TStep"
+        }
+      },
+      "required": [
+        "form",
+        "step",
+        "stepId"
+      ],
+      "type": "object"
+    },
+    "INavButton": {
+      "properties": {
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "label"
+      ],
+      "type": "object"
+    },
+    "IPage": {
+      "description": "Defines page content",
+      "properties": {
+        "body": {
+          "description": "Defines the body content of the page",
+          "title": "Body",
+          "type": "string"
+        },
+        "bodyHeader": {
+          "type": "string"
+        },
+        "bodySubHeader": {
+          "type": "string"
+        },
+        "buttons": {
+          "properties": {
+            "next": {
+              "$ref": "#/definitions/INavButton"
+            },
+            "prev": {
+              "$ref": "#/definitions/INavButton"
+            }
+          },
+          "type": "object"
+        },
+        "footer": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "internalNotes": {
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "type": "array"
+        },
+        "sectionId": {
+          "type": "string"
+        },
+        "subTitle": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/PAGE_TYPE"
+        }
+      },
+      "required": [
+        "id",
+        "sectionId",
+        "title",
+        "type"
+      ],
+      "type": "object"
+    },
+    "IPageData": {
+      "description": "Data defintion for page step",
+      "properties": {
+        "form": {
+          "$ref": "#/definitions/IAnswer"
+        },
+        "step": {
+          "$ref": "#/definitions/IPage"
+        },
+        "stepId": {
+          "$ref": "#/definitions/TStep"
+        }
+      },
+      "required": [
+        "form",
+        "step",
+        "stepId"
+      ],
+      "type": "object"
+    },
+    "IPages": {
+      "properties": {
+        "landingPage": {
+          "$ref": "#/definitions/IPage"
+        },
+        "noResultsPage": {
+          "$ref": "#/definitions/IPage"
+        },
+        "resultsPage": {
+          "$ref": "#/definitions/IPage"
+        },
+        "summaryPage": {
+          "$ref": "#/definitions/IPage"
+        }
+      },
+      "required": [
+        "landingPage",
+        "noResultsPage",
+        "resultsPage",
+        "summaryPage"
+      ],
+      "type": "object"
+    },
+    "IQuestion": {
+      "properties": {
+        "answer": {
+          "type": "string"
+        },
+        "answers": {
+          "$ref": "#/definitions/TAnswerMap"
+        },
+        "buttons": {
+          "properties": {
+            "next": {
+              "$ref": "#/definitions/INavButton"
+            },
+            "prev": {
+              "$ref": "#/definitions/INavButton"
+            }
+          },
+          "type": "object"
+        },
+        "footer": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "internalNotes": {
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "type": "array"
+        },
+        "sectionId": {
+          "type": "string"
+        },
+        "subTitle": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/QUESTION_TYPE"
+        }
+      },
+      "required": [
+        "answers",
+        "id",
+        "sectionId",
+        "title",
+        "type"
+      ],
+      "type": "object"
+    },
+    "IQuestionData": {
+      "description": "Data defintion for question step",
+      "properties": {
+        "form": {
+          "$ref": "#/definitions/IAnswer"
+        },
+        "step": {
+          "$ref": "#/definitions/IQuestion"
+        },
+        "stepId": {
+          "$ref": "#/definitions/TStep"
+        }
+      },
+      "required": [
+        "form",
+        "step",
+        "stepId"
+      ],
+      "type": "object"
+    },
+    "IQuestionableConfig": {
+      "properties": {
+        "dev": {
+          "type": "boolean"
+        },
+        "mode": {
+          "$ref": "#/definitions/MODE"
+        },
+        "showSteps": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "dev",
+        "mode",
+        "showSteps"
+      ],
+      "type": "object"
+    },
+    "IQuestionnaire": {
+      "description": "Definition for survey data input",
+      "properties": {
+        "actions": {
+          "items": {
+            "$ref": "#/definitions/IAction"
+          },
+          "type": "array"
+        },
+        "header": {
+          "type": "string"
+        },
+        "pages": {
+          "$ref": "#/definitions/IPages"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/definitions/IQuestion"
+          },
+          "type": "array"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/definitions/IResult"
+          },
+          "type": "array"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/definitions/ISection"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "actions",
+        "header",
+        "pages",
+        "questions",
+        "results",
+        "sections"
+      ],
+      "type": "object"
+    },
+    "IRequirement": {
+      "description": "Defines an individual requirement for accessing a step",
+      "properties": {
+        "answers": {
+          "$ref": "#/definitions/TAnswers"
+        },
+        "explanation": {
+          "type": "string"
+        },
+        "maxAge": {
+          "$ref": "#/definitions/TAge"
+        },
+        "minAge": {
+          "$ref": "#/definitions/TAge"
+        }
+      },
+      "required": [
+        "answers"
+      ],
+      "type": "object"
+    },
+    "IResult": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "match": {
+          "$ref": "#/definitions/IRequirement"
+        },
+        "name": {
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "name",
+        "requirements"
+      ],
+      "type": "object"
+    },
+    "ISection": {
+      "description": "Defines a survey section",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "lastStep": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/definitions/PROGRESS_BAR_STATUS"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "requirements"
+      ],
+      "type": "object"
+    },
+    "IStep": {
+      "description": "Question/step data definition",
+      "properties": {
+        "buttons": {
+          "properties": {
+            "next": {
+              "$ref": "#/definitions/INavButton"
+            },
+            "prev": {
+              "$ref": "#/definitions/INavButton"
+            }
+          },
+          "type": "object"
+        },
+        "footer": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "internalNotes": {
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "type": "array"
+        },
+        "sectionId": {
+          "type": "string"
+        },
+        "subTitle": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TStepType"
+        }
+      },
+      "required": [
+        "id",
+        "sectionId",
+        "title",
+        "type"
+      ],
+      "type": "object"
+    },
+    "IStepData": {
+      "description": "Data defintion for base wizard step",
+      "properties": {
+        "form": {
+          "$ref": "#/definitions/IAnswer"
+        },
+        "step": {
+          "$ref": "#/definitions/IStep"
+        },
+        "stepId": {
+          "$ref": "#/definitions/TStep"
+        }
+      },
+      "required": [
+        "form",
+        "stepId"
+      ],
+      "type": "object"
+    },
+    "MODE": {
+      "enum": [
+        "edit",
+        "view"
+      ],
+      "type": "string"
+    },
+    "PAGE_TYPE": {
+      "description": "Defines the known component types for pages",
+      "enum": [
+        "Landing",
+        "No Results",
+        "Results",
+        "Summary"
+      ],
+      "type": "string"
+    },
+    "PROGRESS_BAR_STATUS": {
+      "description": "Progress Bar status",
+      "enum": [
+        "complete",
+        "current"
+      ],
+      "type": "string"
+    },
+    "QUESTION_TYPE": {
+      "description": "Defines the known component types for questions",
+      "enum": [
+        "dob",
+        "multiple_choice",
+        "multiple_select"
+      ],
+      "type": "string"
+    },
+    "TAge": {
+      "properties": {
+        "days": {
+          "default": 0,
+          "maximum": 31,
+          "minimum": 0,
+          "title": "Days",
+          "type": "number"
+        },
+        "months": {
+          "default": 0,
+          "maximum": 31,
+          "minimum": 0,
+          "title": "Months",
+          "type": "number"
+        },
+        "years": {
+          "default": 0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Years",
+          "type": "number"
+        }
+      },
+      "required": [
+        "months",
+        "years"
+      ],
+      "type": "object"
+    },
+    "TAnswerMap": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "List of possible answers to the question. Maps answer as string value to index number of question",
+      "type": "object"
+    },
+    "TAnswers": {
+      "additionalProperties": {
+        "items": {
+          "type": "number"
+        },
+        "type": "array"
+      },
+      "description": "Expresses a collection of answer requirements. Unique keys are joined together by `AND`. Keys represent a collection of allowed answer values joined by `OR`.",
+      "type": "object"
+    },
+    "TStep": {
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "TStepType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PAGE_TYPE"
+        },
+        {
+          "$ref": "#/definitions/QUESTION_TYPE"
+        },
+        {
+          "$ref": "#/definitions/DESIGN_TYPE"
+        }
+      ]
+    }
+  }
+}

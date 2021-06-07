@@ -1,4 +1,4 @@
-import { TAge } from '../lib/types';
+import { TAge }                 from '../lib/types';
 import { IAnswer, IAnswerList } from '../survey/IAnswer';
 
 export class Answer implements IAnswer {

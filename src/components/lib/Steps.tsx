@@ -1,7 +1,8 @@
-import { kebabCase, values } from 'lodash';
+import { kebabCase, values }        from 'lodash';
+import { QuestionableConfig }       from '../../lib';
 import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
-import { Questionnaire } from '../../state/Questionnaire';
-import { IAnswer } from '../../survey/IAnswer';
+import { Questionnaire }            from '../../state/Questionnaire';
+import { IAnswer }                  from '../../survey/IAnswer';
 import { IQuestionData, IStepData } from '../../survey/IStepData';
 
 export abstract class Steps {
@@ -12,15 +13,17 @@ export abstract class Steps {
   public static goToNextStep(
     props: IStepData,
     questionnaire: Questionnaire,
+    config: QuestionableConfig,
   ): void {
-    Steps.goToStep(questionnaire.getNextStep(props), props);
+    Steps.goToStep(questionnaire.getNextStep(props, config), props);
   }
 
   public static goToPrevStep(
     props: IStepData,
     questionnaire: Questionnaire,
+    config: QuestionableConfig,
   ): void {
-    Steps.goToStep(questionnaire.getPreviousStep(props), props);
+    Steps.goToStep(questionnaire.getPreviousStep(props, config), props);
   }
 
   /**
@@ -45,7 +48,7 @@ export abstract class Steps {
 
   public static isValid(form: IAnswer, question: string): boolean {
     if (!form.answers[question]) return false;
-    const q = form.answers[question];
+    const q       = form.answers[question];
     const answers = values(q.answers);
     switch (q.type) {
       case STEP_TYPE.DOB:

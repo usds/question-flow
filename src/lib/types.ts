@@ -1,9 +1,28 @@
 /*
  * Defines an age relative to a date
+ * @title Age Type
  */
 export type TAge = {
+  /**
+   * @minimum 0
+   * @maximum 31
+   * @default 0
+   * @title Days
+   */
   days?: number;
+  /**
+   * @minimum 0
+   * @maximum 31
+   * @default 0
+   * @title Months
+   */
   months: number;
+  /**
+   * @minimum 0
+   * @maximum 100
+   * @default 0
+   * @title Years
+   */
   years: number;
 };
 

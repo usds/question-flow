@@ -1,6 +1,8 @@
-import { PAGE_TYPE, QUESTION_TYPE, TStepType } from '../lib/enums';
-import { TAnswerMap }                          from '../lib/types';
-import { IRequirement }                        from './IRequirement';
+import {
+  PAGE_TYPE, QUESTION_TYPE, TStepType,
+} from '../lib/enums';
+import { TAnswerMap }   from '../lib/types';
+import { IRequirement } from './IRequirement';
 
 export interface IPages {
   readonly landingPage: IPage;
@@ -9,7 +11,14 @@ export interface IPages {
   readonly summaryPage: IPage;
 }
 
+/**
+ * Defines page content
+ */
 export interface IPage extends IStep {
+  /**
+   * @title Body
+   * @description Defines the body content of the page
+   */
   body?: string;
   bodyHeader?: string;
   bodySubHeader?: string;

@@ -5,8 +5,8 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import { QuestionableConfig } from '../lib/Config';
-import { Questionnaire } from './Questionnaire';
+import { QuestionableConfig } from './Config';
+import { Questionnaire }      from './Questionnaire';
 
 export interface IQuestionable {
   config?: QuestionableConfig;
@@ -15,7 +15,7 @@ export interface IQuestionable {
 
 const GlobalStateContext = createContext({
   setState: {} as Dispatch<SetStateAction<Partial<IQuestionable>>>,
-  state: {} as Partial<IQuestionable>,
+  state:    {} as Partial<IQuestionable>,
 });
 
 type TGlobalStateContext = {
@@ -70,6 +70,6 @@ export interface IGlobalState {
 }
 
 export const useGlobal = (): IGlobalState => ({
-  config: useConfig(),
+  config:        useConfig(),
   questionnaire: useQuestionnaire(),
 });

@@ -76,13 +76,16 @@ declare module '*.webp' {
 }
 
 declare module '*.svg' {
-  export const ReactComponent: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement> & { title?: string }
-  >;
+  const src: string;
+  export default src;
+}
 
+declare module '*.json' {
   const src: string;
   export default src;
 }
 
 /* Markdown */
 declare module '*.md';
+
+declare module '@rjsf/semantic-ui';
