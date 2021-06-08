@@ -1,39 +1,26 @@
-import { ArrayUnique } from 'class-validator';
+import { ArrayUnique }   from 'class-validator';
+import { DEFAULT_PAGES } from '../lib/defaultPages';
 import {
   DIRECTION,
   isEnum,
+  MODE,
   PAGE_TYPE,
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import {
-  TAge,
-  TAgeCalc,
-  TAnswers,
-} from '../lib/types';
-import { DEFAULT_PAGES }             from './DefaultPages';
-import { IAction }                   from './IAction';
-import { IAnswer }                   from './IAnswer';
+import { TAge, TAgeCalc, TAnswers }  from '../lib/types';
+import { IAction }                   from '../survey/IAction';
+import { IAnswer }                   from '../survey/IAnswer';
+import { IRequirement }              from '../survey/IRequirement';
+import { IResult }                   from '../survey/IResult';
+import { ISection }                  from '../survey/ISection';
 import {
   IPage, IPages, IQuestion, IStep,
-} from './IStep';
-import { IRequirement } from './IRequirement';
-import { IResult }      from './IResult';
-import { ISection }     from './ISection';
-import { IStepData }    from './IStepData';
-
-/**
- * Definition for survey data input
- */
-export interface IQuestionnaire {
-  readonly actions: IAction[];
-  readonly header: string;
-  readonly pages: IPages;
-  readonly questions: IQuestion[];
-  readonly results: IResult[];
-  readonly sections: ISection[];
-}
+} from '../survey/IStep';
+import { IStepData }          from '../survey/IStepData';
+import { IQuestionnaire }     from '../survey/IQuestionnaire';
+import { QuestionableConfig } from './Config';
 
 /**
  * Utility wrapper for survey state
@@ -112,13 +99,23 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
-  getStep(thisStep: string, form: IAnswer, direction: DIRECTION): string {
+  getStep(
+    thisStep: string,
+    form: IAnswer,
+    direction: DIRECTION,
+    config = new QuestionableConfig(),
+  ): string {
     const nextStep = this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
       : undefined;
     // If there are no more steps, stay on current
-    if (!nextStep) return thisStep;
+    if (!nextStep) {
+      return thisStep;
+    }
 
+    if (config.mode === MODE.EDIT) {
+      return nextStep;
+    }
     // Special handling for results
     if (nextStep === STEP_TYPE.RESULTS && this.getResults(form).length === 0) {
       return STEP_TYPE.NO_RESULTS;
@@ -128,7 +125,6 @@ export class Questionnaire implements IQuestionnaire {
     }
 
     const nextQuestion = this.getStepById(nextStep);
-
     if (!nextQuestion?.requirements) {
       return nextStep;
     }
@@ -159,14 +155,14 @@ export class Questionnaire implements IQuestionnaire {
     return thisStep;
   }
 
-  getNextStep(props: IStepData): string {
+  getNextStep(props: IStepData, config = new QuestionableConfig()): string {
     const thisStep = props.stepId as string;
-    return this.getStep(thisStep, props.form, DIRECTION.FORWARD);
+    return this.getStep(thisStep, props.form, DIRECTION.FORWARD, config);
   }
 
-  getPreviousStep(props: IStepData): string {
+  getPreviousStep(props: IStepData, config = new QuestionableConfig()): string {
     const thisStep = props.stepId as string;
-    return this.getStep(thisStep, props.form, DIRECTION.BACKWARD);
+    return this.getStep(thisStep, props.form, DIRECTION.BACKWARD, config);
   }
 
   /**
@@ -180,9 +176,11 @@ export class Questionnaire implements IQuestionnaire {
     }
 
     // Get all sections that meet the requirements based on current answers
-    const sections        = this.sections.filter((s) =>
-      s.requirements.length === 0
-      || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)));
+    const sections        = this.sections.filter(
+      (s) =>
+        s.requirements.length === 0
+        || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
+    );
     const thisStep        = props.stepId as string;
     const thisQuestion    = this.getStepById(thisStep);
     const thisQuestionIdx = this.steps.indexOf(thisQuestion);
@@ -252,9 +250,7 @@ export class Questionnaire implements IQuestionnaire {
     if (this.steps[0].type !== PAGE_TYPE.LANDING) {
       this.steps.unshift(this.pages.landingPage);
     }
-    if (
-      this.steps.filter((q) => q.type === PAGE_TYPE.LANDING).length !== 1
-    ) {
+    if (this.steps.filter((q) => q.type === PAGE_TYPE.LANDING).length !== 1) {
       throw new Error(`${PAGE_TYPE.LANDING} ${error}.`);
     }
 
@@ -264,8 +260,7 @@ export class Questionnaire implements IQuestionnaire {
       this.steps.push(this.pages.noResultsPage);
     }
     if (
-      this.steps.filter((q) => q.type === PAGE_TYPE.NO_RESULTS).length
-    !== 1
+      this.steps.filter((q) => q.type === PAGE_TYPE.NO_RESULTS).length !== 1
     ) {
       throw new Error(`${PAGE_TYPE.NO_RESULTS} ${error}.`);
     }
@@ -274,20 +269,16 @@ export class Questionnaire implements IQuestionnaire {
     if (this.steps[this.steps.length - 2].type !== PAGE_TYPE.RESULTS) {
       this.steps.splice(this.steps.length - 1, 0, this.pages.resultsPage);
     }
-    if (
-      this.steps.filter((q) => q.type === PAGE_TYPE.RESULTS).length !== 1
-    ) {
+    if (this.steps.filter((q) => q.type === PAGE_TYPE.RESULTS).length !== 1) {
       throw new Error(`${PAGE_TYPE.RESULTS} ${error}.`);
     }
 
     // Ensure the wizard has a summary step before results
     if (this.steps[this.steps.length - 3].type !== PAGE_TYPE.SUMMARY) {
-    // Create wizard's summary step as the default step
+      // Create wizard's summary step as the default step
       this.steps.splice(this.steps.length - 2, 0, this.pages.summaryPage);
     }
-    if (
-      this.steps.filter((q) => q.type === PAGE_TYPE.SUMMARY).length !== 1
-    ) {
+    if (this.steps.filter((q) => q.type === PAGE_TYPE.SUMMARY).length !== 1) {
       throw new Error(`${PAGE_TYPE.SUMMARY} ${error}.`);
     }
   }

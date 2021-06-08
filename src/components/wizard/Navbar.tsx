@@ -1,7 +1,7 @@
-import { Button }    from '@trussworks/react-uswds';
-import { STEP_TYPE } from '../../lib/enums';
-import { useGlobal } from '../../state/GlobalState';
-import { IStepData } from '../../survey/IStepData';
+import { Button }          from '@trussworks/react-uswds';
+import { MODE, STEP_TYPE } from '../../lib/enums';
+import { useGlobal }       from '../../state/GlobalState';
+import { IStepData }       from '../../survey/IStepData';
 // eslint-disable-next-line import/no-cycle
 import { Steps } from '../lib/Steps';
 
@@ -11,8 +11,8 @@ import { Steps } from '../lib/Steps';
  * @returns
  */
 export const Navbar = (props: IStepData): JSX.Element => {
-  const { questionnaire } = useGlobal();
-  const { step }          = props;
+  const { questionnaire, config } = useGlobal();
+  const { step }                  = props;
   // We can go back only once past the Landing step and the first actual step.
   // Once past Summary, back is disabled
   const showPrevStep = props.stepId !== STEP_TYPE.LANDING
@@ -25,9 +25,9 @@ export const Navbar = (props: IStepData): JSX.Element => {
 
   const backLabel = step?.buttons?.prev?.label || 'Previous';
   const nextLabel = step?.buttons?.next?.label || 'Next';
-  const next      = () => Steps.goToNextStep(props, questionnaire);
-  const prev      = () => Steps.goToPrevStep(props, questionnaire);
-  const disabled  = () => !Steps.isNextEnabled(props);
+  const next      = () => Steps.goToNextStep(props, questionnaire, config);
+  const prev      = () => Steps.goToPrevStep(props, questionnaire, config);
+  const disabled  = () => config.mode === MODE.VIEW && !Steps.isNextEnabled(props);
 
   return (
     <nav className="wizard-layout__navbar">

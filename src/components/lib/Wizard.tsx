@@ -1,10 +1,15 @@
-import { IStepData }          from '../../survey/IStepData';
-import { QuestionableConfig } from '../../survey/Config';
-import { noel }               from '../../lib/noop';
+import FileSaver              from 'file-saver';
+import { QuestionableConfig } from '../../composable/Config';
 import { ACTION_TYPE }        from '../../lib/enums';
+import { noel }               from '../../lib/noop';
+import { IStepData }          from '../../survey/IStepData';
+import { log }                from '../../lib';
 
 export abstract class Wizard {
-  public static getHeader(props: IStepData, config: QuestionableConfig): JSX.Element {
+  public static getHeader(
+    props: IStepData,
+    config: QuestionableConfig,
+  ): JSX.Element {
     let text = props.step?.title;
     if (!text) {
       return noel();
@@ -21,7 +26,9 @@ export abstract class Wizard {
     if (!text) {
       return noel();
     }
-    return <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />;
+    return (
+      <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />
+    );
   }
 
   public static getQuestionHelp(props: IStepData): JSX.Element {
@@ -37,7 +44,9 @@ export abstract class Wizard {
     if (!text) {
       return noel();
     }
-    return <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />;
+    return (
+      <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />
+    );
   }
 
   public static resetQuestionable(props: IStepData): void {
@@ -45,5 +54,12 @@ export abstract class Wizard {
       type: ACTION_TYPE.RESET,
     });
     props.wizard.goToStep('A');
+  }
+
+  /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any */
+  public static saveAsJson(data: any, fileName = 'questionable.json'): void {
+    log(fileName);
+    const blob = new Blob([data], { type: 'text/plain;charset=utf-8' });
+    FileSaver.saveAs(blob, fileName);
   }
 }

@@ -37,7 +37,7 @@ const webpackConfig = (config) => {
   return config
 }
 
-module.exports = {
+const main = {
   "stories": [
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(ts|tsx)"
@@ -49,7 +49,6 @@ module.exports = {
        options: { configureJSX: true }
     },
     "@storybook/addon-essentials",
-    "@storybook/preset-create-react-app",
     "@storybook/addon-actions",
     '@storybook/addon-controls',
     'storybook-readme',
@@ -61,7 +60,9 @@ module.exports = {
     // reactDocgen: 'react-docgen-typescript',
     reactDocgen: 'none',
     reactDocgenTypescriptOptions: {
-      tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
+      tsconfigPath: path.resolve(__dirname, '../tsconfig.lint.json'),
     },
   }
 }
+
+module.exports = main;

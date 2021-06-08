@@ -18,11 +18,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "dist",
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules"
-      }
-    ],
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -36,10 +31,9 @@
     "node_modules",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "**/*.stories.tsx",
+    
     "./src/setupTests.ts",
     "./**.flow.ts"
   ],
-  "files": ["./src/index.ts"],
   "include": ["src"]
 }

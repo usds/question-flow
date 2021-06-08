@@ -1,4 +1,4 @@
-# State
+# State (React State)
 
 Two items are tracked using React's state.
 

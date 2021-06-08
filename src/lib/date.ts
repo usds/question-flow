@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon';
-import moment       from 'moment';
 import { TAge }     from './types';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const moment = require('moment');
 
 /**
  * Determines if a string can be parsed into a valid Date

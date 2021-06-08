@@ -1,20 +1,29 @@
 import { kebabCase, values }        from 'lodash';
+import { QuestionableConfig }       from '../../composable/Config';
 import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
+import { Questionnaire }            from '../../composable/Questionnaire';
 import { IAnswer }                  from '../../survey/IAnswer';
 import { IQuestionData, IStepData } from '../../survey/IStepData';
-import { Questionnaire }            from '../../survey/Questionnaire';
 
 export abstract class Steps {
   public static goToStep(step: string, props: IStepData): void {
     props.wizard.goToStep(step);
   }
 
-  public static goToNextStep(props: IStepData, questionnaire: Questionnaire): void {
-    Steps.goToStep(questionnaire.getNextStep(props), props);
+  public static goToNextStep(
+    props: IStepData,
+    questionnaire: Questionnaire,
+    config: QuestionableConfig,
+  ): void {
+    Steps.goToStep(questionnaire.getNextStep(props, config), props);
   }
 
-  public static goToPrevStep(props: IStepData, questionnaire: Questionnaire): void {
-    Steps.goToStep(questionnaire.getPreviousStep(props), props);
+  public static goToPrevStep(
+    props: IStepData,
+    questionnaire: Questionnaire,
+    config: QuestionableConfig,
+  ): void {
+    Steps.goToStep(questionnaire.getPreviousStep(props, config), props);
   }
 
   /**

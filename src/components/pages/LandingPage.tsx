@@ -3,7 +3,7 @@ import { IPageData }  from '../../survey/IStepData';
 import { StepLayout } from '../wizard/StepLayout';
 
 /**
- * Generates the first page of the Wizard, "aka Landing"
+ * Generates the first/initial/landing page of the Wizard
  * @param props
  * @returns
  */

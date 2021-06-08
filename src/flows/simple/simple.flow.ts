@@ -1,6 +1,6 @@
-import { Questionnaire }                          from '../../survey/Questionnaire';
+import { Questionnaire }                          from '../../composable/Questionnaire';
 import {
-  questions, results, actions, sections, pages,
+  actions, pages, questions, results, sections,
 } from './data';
 
 const header = 'Simple Eligibility Survey';
