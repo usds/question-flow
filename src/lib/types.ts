@@ -6,21 +6,21 @@ export type TAge = {
   /**
    * @minimum 0
    * @maximum 31
-   * @default 0
+   * @nullable
    * @title Days
    */
   days?: number;
   /**
    * @minimum 0
    * @maximum 31
-   * @default 0
+   * @nullable
    * @title Months
    */
   months: number;
   /**
    * @minimum 0
    * @maximum 100
-   * @default 0
+   * @nullable
    * @title Years
    */
   years: number;

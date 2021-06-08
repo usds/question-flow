@@ -6,7 +6,6 @@ import { IPages, IQuestion } from './IStep';
 /**
  * Definition for survey data input
  */
-
 export interface IQuestionnaire {
   readonly actions: IAction[];
   readonly header: string;

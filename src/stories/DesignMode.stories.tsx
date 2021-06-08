@@ -4,7 +4,7 @@ import '@trussworks/react-uswds/lib/uswds.css';
 import { Questionable } from '../components/Questionable';
 import { simpleFlow } from '../flows/simple/simple.flow';
 import { MODE } from '../lib';
-import { QuestionableConfig } from '../state/Config';
+import { QuestionableConfig } from '../composable/Config';
 import { IQuestionable } from '../state/GlobalState';
 import '../styles';
 
@@ -13,7 +13,7 @@ export default {
     config: { control: { type: 'object' } },
   },
   component: Questionable,
-  title: 'Questionable/Design',
+  title: 'Questionable/Design Mode',
 } as Meta;
 
 const Template: Story<IQuestionable> = (args) => <Questionable {...args} />;

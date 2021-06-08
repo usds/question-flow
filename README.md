@@ -94,6 +94,8 @@ This repository is governed by the [Contributor Covenant](./github/CODE_OF_CONDU
 - This project uses the [U.S. Web Design System (USWDS)](https://designsystem.digital.gov/) and the [@trussworks](https://github.com/trussworks) [React USWDS](https://github.com/trussworks/react-uswds) component library.
 - This project uses [Luxon](https://github.com/moment/luxon) for date/time validation.
 - The React [use-wizard](https://github.com/use-wizard/use-wizard) provides essential hooks for navigation
+- JSON Schema is generated thanks to [ts-json-schema-generator](https://github.com/vega/ts-json-schema-generator)
+- JSON to Form edit mode is powered by [react-jsonschema-form](https://github.com/rjsf-team/react-jsonschema-form)
 
 ## Contributors ✨
 

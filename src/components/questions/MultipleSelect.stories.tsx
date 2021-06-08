@@ -7,7 +7,7 @@ import '@trussworks/react-uswds/lib/index.css';
 import '@trussworks/react-uswds/lib/uswds.css';
 import { QUESTION_TYPE } from '../../lib';
 import { stepReducer } from '../../state';
-import { Answer } from '../../state/Answer';
+import { Answer } from '../../composable/Answer';
 import '../../styles';
 import { IQuestionData } from '../../survey/IStepData';
 import { MultipleSelect } from './MultiSelect';

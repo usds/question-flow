@@ -1,10 +1,12 @@
 import 'semantic-ui-css/semantic.min.css';
 import Form                         from '@rjsf/semantic-ui';
 import { Button }                   from '@trussworks/react-uswds';
+import { kebabCase }                from 'lodash';
 import { IPageData, IQuestionData } from '../../survey/IStepData';
-import { StepLayout }               from '../wizard/StepLayout';
+import { DesignLayout }             from '../wizard/DesignLayout';
 import { getStepSchema }            from '../../schema/edit';
 import { Wizard }                   from '../lib';
+import { useGlobal }                from '../../state/GlobalState';
 
 /**
  * Renders a question and a radio list of allowed answers
@@ -12,14 +14,31 @@ import { Wizard }                   from '../lib';
  * @returns
  */
 export const Edit = (props: IQuestionData | IPageData): JSX.Element => {
-  const schema = getStepSchema(props);
-  /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any */
+  const { questionnaire } = useGlobal();
+  const schema            = getStepSchema(props);
+  const fileName          = kebabCase(questionnaire.header);
+
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const onSubmit = ({ formData }: any) => {
-    Wizard.saveAsJson(formData);
+    Wizard.saveAsJson(formData, `${fileName}.json`);
   };
   return (
       <Form
         schema={schema}
+        uiSchema={{
+          step: {
+            'ui:order': [
+              'title',
+              'subTitle',
+              'bodyHeader',
+              'bodySubHeader',
+              'body',
+              'info',
+              'footer',
+              '*',
+            ],
+          },
+        }}
         onSubmit={onSubmit}
         formData={{ step: props.step }}
       >
@@ -36,7 +55,7 @@ export const Edit = (props: IQuestionData | IPageData): JSX.Element => {
  * @returns
  */
 export const EditStep = (props: IQuestionData | IPageData): JSX.Element => (
-  <StepLayout {...props}>
+  <DesignLayout {...props}>
     <Edit {...props} />
-  </StepLayout>
+  </DesignLayout>
 );

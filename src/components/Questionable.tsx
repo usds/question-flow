@@ -1,6 +1,6 @@
 import { useReducer }                         from 'react';
 import { useWizard }                          from 'use-wizard';
-import { Answer }                             from '../state/Answer';
+import { Answer }                             from '../composable/Answer';
 import { GlobalStateProvider, IQuestionable } from '../state/GlobalState';
 import { stepReducer }                        from '../state/stepReducer';
 import { DevPanel }                           from './wizard/DevPanel';

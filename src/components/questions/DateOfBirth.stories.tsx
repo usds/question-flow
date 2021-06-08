@@ -6,7 +6,7 @@ import { Meta, Story } from '@storybook/react';
 import '@trussworks/react-uswds/lib/index.css';
 import '@trussworks/react-uswds/lib/uswds.css';
 import { QUESTION_TYPE } from '../../lib';
-import { Answer } from '../../state/Answer';
+import { Answer } from '../../composable/Answer';
 import { stepReducer } from '../../state/stepReducer';
 import '../../styles';
 import { IQuestionData } from '../../survey/IStepData';

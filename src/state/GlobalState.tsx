@@ -5,8 +5,8 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import { QuestionableConfig } from './Config';
-import { Questionnaire }      from './Questionnaire';
+import { QuestionableConfig } from '../composable/Config';
+import { Questionnaire }      from '../composable/Questionnaire';
 
 export interface IQuestionable {
   config?: QuestionableConfig;

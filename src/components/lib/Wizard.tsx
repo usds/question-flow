@@ -1,5 +1,5 @@
 import FileSaver              from 'file-saver';
-import { QuestionableConfig } from '../../state/Config';
+import { QuestionableConfig } from '../../composable/Config';
 import { ACTION_TYPE }        from '../../lib/enums';
 import { noel }               from '../../lib/noop';
 import { IStepData }          from '../../survey/IStepData';
