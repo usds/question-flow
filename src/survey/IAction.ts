@@ -13,6 +13,13 @@ export interface IAction {
    */
   description: string;
   /**
+   * Unique Identifier
+   *
+   * @title Id
+   * @hidden
+   */
+  id: string;
+  /**
    * @ttitle Name
    */
   name: string;
