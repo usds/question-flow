@@ -1,15 +1,22 @@
-import { isString, merge }                  from 'lodash';
-import { isEnum, MODE }                     from '../lib/enums';
-import { IQuestionableConfig, IStepConfig } from '../survey/IQuestionableConfig';
+import { isString, merge }                                from 'lodash';
+import { isEnum, MODE }                                   from '../lib/enums';
+import {
+  IProgressBarConfig, IQuestionableConfig, IStepConfig,
+} from '../survey/IQuestionableConfig';
 
 export class QuestionableConfig implements IQuestionableConfig {
   #mode = MODE.VIEW;
 
   #steps: Partial<IStepConfig> = {
-    borderClass:  'border-0',
-    showProgress: true,
-    showStepId:   false,
-    titleClass:   '',
+    borderClass: 'border-0',
+    showStepId:  false,
+    titleClass:  '',
+  }
+
+  #progressBar: Partial<IProgressBarConfig> = {
+    hide:     false,
+    position: 'top',
+    type:     'progress-bar',
   }
 
   constructor(config: Partial<IQuestionableConfig> = {}) {
@@ -45,5 +52,13 @@ export class QuestionableConfig implements IQuestionableConfig {
 
   set steps(val: Partial<IStepConfig>) {
     merge(this.#steps, val);
+  }
+
+  get progressBar(): Partial<IProgressBarConfig> {
+    return { ...this.#progressBar };
+  }
+
+  set progressBar(val: Partial<IProgressBarConfig>) {
+    merge(this.#progressBar, val);
   }
 }

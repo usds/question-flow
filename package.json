@@ -17,6 +17,7 @@
     "Tom Neilsen <thomas.a.nielsen@omb.eop.gov>"
   ],
   "dependencies": {
+    "@ramonak/react-progress-bar": "^3.1.0",
     "@rjsf/core": "^2.5.1",
     "@rjsf/semantic-ui": "^2.5.1",
     "@trussworks/react-uswds": "^1.17.0",

@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "wwm.better-align",
+    "dbaeumer.vscode-eslint",
+    "visualstudioexptteam.vscodeintellicode",
+    "github.vscode-codeql",
+    "github.vscode-pull-request-github",
+    "donjayamanne.git-extension-pack"
+  ]
+}

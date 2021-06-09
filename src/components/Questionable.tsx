@@ -4,8 +4,8 @@ import { Answer }                             from '../composable/Answer';
 import { GlobalStateProvider, IQuestionable } from '../state/GlobalState';
 import { stepReducer }                        from '../state/stepReducer';
 import { DevPanel }                           from './wizard/DevPanel';
-import { ProgressBar }                        from './wizard/ProgressBar';
-import { StepFactory }                        from './wizard/StepFactory';
+import { ProgressFactory }                    from './factories/ProgressFactory';
+import { StepFactory }                        from './factories/StepFactory';
 
 export const Questionable = (q: IQuestionable): JSX.Element => {
   const { questionnaire } = q;
@@ -33,15 +33,16 @@ export const Questionable = (q: IQuestionable): JSX.Element => {
         </div>
       </Header> */}
 
-      <section>
-        <ProgressBar
-          {...{
+      <section className="section">
+        <ProgressFactory {...{
+          position: 'top',
+          props:    {
             dispatchForm,
             form,
             stepId: step,
             wizard,
-          }}
-        ></ProgressBar>
+          },
+        }}/>
       </section>
 
       <section className="section">
@@ -53,6 +54,18 @@ export const Questionable = (q: IQuestionable): JSX.Element => {
             wizard,
           }}
         />
+      </section>
+
+      <section className="section">
+        <ProgressFactory {...{
+          position: 'bottom',
+          props:    {
+            dispatchForm,
+            form,
+            stepId: step,
+            wizard,
+          },
+        }}/>
       </section>
 
       <section className="section">

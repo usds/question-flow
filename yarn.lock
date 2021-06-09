@@ -2913,6 +2913,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ramonak/react-progress-bar@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@ramonak/react-progress-bar@npm:3.1.0"
+  peerDependencies:
+    react: ^16.0.0 || ^17
+    react-dom: ^16.0.0 || ^17
+  checksum: 506525ffce1d2aa5b710f52f0a8b9b6bb2b30d134290179618b48743dde759d6232f27a672d33d186a2c9a66ab61da1ab1b2116e67744dc96cdab40610f22457
+  languageName: node
+  linkType: hard
+
 "@reach/router@npm:^1.3.4":
   version: 1.3.4
   resolution: "@reach/router@npm:1.3.4"
@@ -5004,6 +5014,7 @@ __metadata:
     "@commitlint/cli": ^12.1.4
     "@commitlint/config-conventional": ^12.1.4
     "@mdx-js/react": ^1.6.22
+    "@ramonak/react-progress-bar": ^3.1.0
     "@rjsf/core": ^2.5.1
     "@rjsf/semantic-ui": ^2.5.1
     "@rollup/plugin-commonjs": ^19.0.0
