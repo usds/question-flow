@@ -23,7 +23,9 @@ Design.args = {
   config: new QuestionableConfig({
     dev: false,
     mode: MODE.EDIT,
-    showSteps: false,
+    steps: {
+      showStepId: false,
+    }
   }),
   questionnaire: simpleFlow,
 };

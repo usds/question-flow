@@ -12,7 +12,8 @@ import { useGlobal } from '../../state/GlobalState';
  * @returns
  */
 export const StepLayout = (props: IStepData): JSX.Element => {
-  const { config } = useGlobal();
+  const { config }                  = useGlobal();
+  const { borderClass, titleClass } = config.steps;
 
   return (
     <div>
@@ -21,14 +22,16 @@ export const StepLayout = (props: IStepData): JSX.Element => {
           <Card
             headerFirst
             gridLayout={{ tablet: { col: 12 } }}
-            containerProps={{ className: 'border-ink' }}
+            containerProps={{ className: borderClass }}
           >
-            <CardHeader className="bg-base-lightest">
+            <CardHeader className={titleClass}>
               {Wizard.getHeader(props, config)}
-              {Wizard.getSupportingDetails(props)}
-              {Wizard.getQuestionHelp(props)}
             </CardHeader>
-            <CardBody className="padding-top-3">{props.children}</CardBody>
+            <CardBody>
+              {Wizard.getSubtitle(props)}
+              {props.children}
+              {Wizard.getInfoBox(props)}
+            </CardBody>
             <CardFooter>
               {Wizard.getFooter(props)}
             </CardFooter>

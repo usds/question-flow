@@ -21,7 +21,9 @@ export const Complex = Template.bind({});
 Complex.args = {
   config: new QuestionableConfig({
     dev: false,
-    showSteps: false,
+    steps: {
+      showStepId: false,
+    }
   }),
   questionnaire: complexFlow,
 };

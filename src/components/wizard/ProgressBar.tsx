@@ -9,7 +9,11 @@ const getIndicatorStep = (s: ISection) => (
 );
 
 export const ProgressBar = (props: IStepData): JSX.Element => {
-  const { questionnaire } = useGlobal();
+  const { config, questionnaire } = useGlobal();
+
+  if (!config.steps.showProgress) {
+    return noel();
+  }
 
   const sections = questionnaire.getSections(props);
   if (sections.length === 0) {

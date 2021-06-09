@@ -6,8 +6,11 @@ import { MODE } from '../lib/enums';
 export interface IQuestionableConfig {
   /**
    * Enables all developer tools (NOT for production use!)
+   *
+   * @title Developer Mode
+   * @hidden
    */
-  dev: boolean;
+  readonly dev: boolean;
   /**
    * View or edit mode
    *
@@ -15,7 +18,36 @@ export interface IQuestionableConfig {
    */
   mode: MODE;
   /**
-   * Toggles whether steps' ids are show in the UI
+   * Step configuration
+   *
+   * @title Step Configuration
    */
-  showSteps: boolean;
+  steps?: Partial<IStepConfig>;
+}
+
+export interface IStepConfig {
+  /**
+   * Class determines whether cards have borders
+   *
+   * @title Border Class
+   */
+  borderClass: 'border-ink' | 'border-0';
+  /**
+   * Toggles whether to show progress bar
+   *
+   * @title Show Progress Bar
+   */
+  showProgress: boolean;
+  /**
+   * Toggles whether steps' ids are shown next to the question text
+   *
+   * @title Show Step Id
+   */
+  showStepId: boolean;
+  /**
+   * Class to apply to title. Use to add background to question text
+   *
+   * @title Title Class
+   */
+  titleClass: 'bg-base-lightest' | '';
 }

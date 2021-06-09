@@ -51,6 +51,7 @@ export abstract class Questions {
         className={'multipleChoice'}
         onChange={handler}
         onClick={handler}
+        tile={true}
       />
     );
   }

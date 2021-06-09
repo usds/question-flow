@@ -11,6 +11,8 @@ export const noop = (): void => { };
  * @returns empty element
  */
 export const noel = (message = '', context = ''): JSX.Element => {
-  log('Created an empty element', message, context);
+  if (message || context) {
+    log('Created an empty element', message, context);
+  }
   return (<>{message}</>);
 };

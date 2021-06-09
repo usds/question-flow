@@ -5,8 +5,8 @@
 */
 
 /**
- * Logs to the console. All arguments logged as an array.
+ * Logs to the console. All arguments logged as an object.
  * @param params
  * @returns
  */
-export const log = (...params: any) => console.log([...params]);
+export const log = (...params: any) => console.log({ ...params });

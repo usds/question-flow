@@ -21,7 +21,9 @@ export const Simple = Template.bind({});
 Simple.args = {
   config: new QuestionableConfig({
     dev: false,
-    showSteps: false,
+    steps: {
+      showStepId: false,
+    }
   }),
   questionnaire: simpleFlow,
 };

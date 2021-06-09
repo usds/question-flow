@@ -64,6 +64,7 @@ export enum DATE_UNIT {
 }
 
 export enum MODE {
+  DEV = 'dev',
   EDIT = 'edit',
   VIEW = 'view'
 }

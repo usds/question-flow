@@ -4660,12 +4660,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.6":
-  version: 17.0.6
-  resolution: "@types/react-dom@npm:17.0.6"
+"@types/react-dom@npm:^17.0.7":
+  version: 17.0.7
+  resolution: "@types/react-dom@npm:17.0.7"
   dependencies:
     "@types/react": "*"
-  checksum: cc167c24a77cef2be8dcabd1bbe8b95c0d713b943b2f1c8a1468c8009c50daad51a46859a217a8383b89bb4ea499937d405699ce8db164f70c871f9d22d703f0
+  checksum: 9b2eb0d86dd00bff5e4a9a4d1892f6ef3dd79434acb5d38a45a8bda8a383cff0a3d7bb58d662c2a5352ab7c92145d5736f56f1bd12e1e3a482727c274bf09434
   languageName: node
   linkType: hard
 
@@ -4706,14 +4706,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17.0.9":
-  version: 17.0.9
-  resolution: "@types/react@npm:17.0.9"
+"@types/react@npm:^17.0.11":
+  version: 17.0.11
+  resolution: "@types/react@npm:17.0.11"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: c626e3ca42b6173b0617102af6c1c8c6068f69fafeba51f5d614962cabaf98a5706295081941ece93da04117268cb0aad471be87e76dde7e0d5f79a46280c586
+  checksum: 89e80ee8e08988abca0266e5e131f57b2e18f326bebfa0ed0a06b0bca29621a5a8202d617254a053f659b9c18090c52cae0aa475a6c6036b8858030f1d448e47
   languageName: node
   linkType: hard
 
@@ -5030,8 +5030,8 @@ __metadata:
     "@types/lodash": ^4.14.170
     "@types/luxon": ^1.26.5
     "@types/node": ^15.12.2
-    "@types/react": ^17.0.9
-    "@types/react-dom": ^17.0.6
+    "@types/react": ^17.0.11
+    "@types/react-dom": ^17.0.7
     "@types/react-jsonschema-form": ^1.7.5
     "@typescript-eslint/eslint-plugin": ^4.26.1
     "@typescript-eslint/parser": ^4.26.1
@@ -5057,7 +5057,7 @@ __metadata:
     eslint-plugin-sort-keys-fix: ^1.1.1
     eslint-plugin-testing-library: ^4.6.0
     eslint-plugin-typescript-sort-keys: ^1.6.0
-    eslint-plugin-yaml: ^0.4.3
+    eslint-plugin-yaml: ^0.5.0
     file-saver: ^2.0.5
     gh-pages: ^3.2.0
     husky: ^6.0.0
@@ -5073,7 +5073,7 @@ __metadata:
     react-docgen-typescript-loader: ^3.7.2
     react-dom: ^17.0.2
     rimraf: ^3.0.2
-    rollup: ^2.51.0
+    rollup: ^2.51.1
     rollup-plugin-copy: ^3.4.0
     rollup-plugin-dts: ^3.0.2
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -9408,13 +9408,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yaml@npm:^0.4.3":
-  version: 0.4.3
-  resolution: "eslint-plugin-yaml@npm:0.4.3"
+"eslint-plugin-yaml@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "eslint-plugin-yaml@npm:0.5.0"
   dependencies:
     js-yaml: ^4.1.0
     jshint: ^2.13.0
-  checksum: 4a468bebec1e862b1a732deedc1d57cb6fe18e3a660da6221844bc32389f425bbb04a178b771e443f611261f70a985557f886a9f4be569756c575671d4e9e5cc
+  checksum: d2a35c7e2fe6fb9531581a3702d750b7aa6ecfadf72b033507e15d30768f153500f69239eec34536be0bbe568abb8282d65b13198889516ab1d48b3e0e54c449
   languageName: node
   linkType: hard
 
@@ -18112,7 +18112,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.51.0":
+"rollup@npm:^2.51.1":
   version: 2.51.1
   resolution: "rollup@npm:2.51.1"
   dependencies:

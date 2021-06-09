@@ -1,3 +1,4 @@
+import { SiteAlert }          from '@trussworks/react-uswds';
 import FileSaver              from 'file-saver';
 import { QuestionableConfig } from '../../composable/Config';
 import { ACTION_TYPE }        from '../../lib/enums';
@@ -15,28 +16,32 @@ export abstract class Wizard {
       return noel();
     }
 
-    if (config.showSteps) {
+    if (config.steps.showStepId) {
       text = `${props.step?.id}: ${text}`;
     }
     return <h3 className="usa-card__heading">{text}</h3>;
   }
 
-  public static getSupportingDetails(props: IStepData): JSX.Element {
+  public static getSubtitle(props: IStepData): JSX.Element {
     const text = props.step?.subTitle;
     if (!text) {
       return noel();
     }
     return (
-      <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />
+      <p dangerouslySetInnerHTML={{ __html: text }} />
     );
   }
 
-  public static getQuestionHelp(props: IStepData): JSX.Element {
+  public static getInfoBox(props: IStepData): JSX.Element {
     const text = props.step?.info;
     if (!text) {
       return noel();
     }
-    return <p className="font-sans-6">{text}</p>;
+    return (
+      <SiteAlert variant="info" showIcon={false} className={'outline-1px'}>
+        {text}
+      </SiteAlert>
+    );
   }
 
   public static getFooter(props: IStepData): JSX.Element {
