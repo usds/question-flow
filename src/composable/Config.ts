@@ -7,16 +7,18 @@ import {
 export class QuestionableConfig implements IQuestionableConfig {
   #mode = MODE.VIEW;
 
-  #steps: Partial<IStepConfig> = {
+  #steps: IStepConfig = {
     borderClass: 'border-0',
     showStepId:  false,
     titleClass:  '',
   }
 
-  #progressBar: Partial<IProgressBarConfig> = {
-    hide:     false,
-    position: 'top',
-    type:     'progress-bar',
+  #progressBar: IProgressBarConfig = {
+    baseBgColor: '#f0f0f0',
+    bgColor:     '#005ea2',
+    hide:        false,
+    position:    'bottom',
+    type:        'progress-bar',
   }
 
   constructor(config: Partial<IQuestionableConfig> = {}) {
@@ -46,7 +48,7 @@ export class QuestionableConfig implements IQuestionableConfig {
     }
   }
 
-  get steps(): Partial<IStepConfig> {
+  get steps(): IStepConfig {
     return { ...this.#steps };
   }
 
@@ -54,7 +56,7 @@ export class QuestionableConfig implements IQuestionableConfig {
     merge(this.#steps, val);
   }
 
-  get progressBar(): Partial<IProgressBarConfig> {
+  get progressBar(): IProgressBarConfig {
     return { ...this.#progressBar };
   }
 

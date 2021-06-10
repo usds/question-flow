@@ -66,6 +66,18 @@ export interface IStepConfig {
  */
 export interface IProgressBarConfig {
   /**
+   * Color of the non-completed pb
+   *
+   * @title Base Background Color
+   */
+  baseBgColor: string;
+  /**
+   * Color of the completed pb
+   *
+   * @title Background Color
+   */
+  bgColor: string;
+  /**
    * Toggles whether to show progress bar
    *
    * @title Show Progress Bar

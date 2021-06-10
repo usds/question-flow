@@ -261,6 +261,16 @@
     "IProgressBarConfig": {
       "description": "Configuration options for the progress bar",
       "properties": {
+        "baseBgColor": {
+          "description": "Color of the non-completed pb",
+          "title": "Base Background Color",
+          "type": "string"
+        },
+        "bgColor": {
+          "description": "Color of the completed pb",
+          "title": "Background Color",
+          "type": "string"
+        },
         "hide": {
           "default": false,
           "description": "Toggles whether to show progress bar",
@@ -279,6 +289,8 @@
         }
       },
       "required": [
+        "baseBgColor",
+        "bgColor",
         "hide",
         "position",
         "type"
@@ -392,6 +404,16 @@
         "progressBar": {
           "description": "Progress Bar configuration",
           "properties": {
+            "baseBgColor": {
+              "description": "Color of the non-completed pb",
+              "title": "Base Background Color",
+              "type": "string"
+            },
+            "bgColor": {
+              "description": "Color of the completed pb",
+              "title": "Background Color",
+              "type": "string"
+            },
             "hide": {
               "default": false,
               "description": "Toggles whether to show progress bar",

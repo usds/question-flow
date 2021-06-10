@@ -14,7 +14,7 @@ export const ProgressFactory = ({ props, position }:
   }
   switch (config.progressBar.type) {
     case 'progress-bar':
-      return <ProgressBar />;
+      return <ProgressBar {...props}/>;
     case 'step-indicator':
       return <StepIndicator {...props} />;
     default:

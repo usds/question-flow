@@ -5,7 +5,7 @@ import { ISection }                               from '../../survey/ISection';
 import { noel }                                   from '../../lib/noop';
 
 const getIndicatorStep = (s: ISection) => (
-    <StepIndicatorStep key={s.id} label={s.name} status={s.status} />
+    <StepIndicatorStep key={s.id} label={s.name} status={s.status || 'incomplete'} />
 );
 
 export const StepIndicator = (props: IStepData): JSX.Element => {
@@ -15,14 +15,14 @@ export const StepIndicator = (props: IStepData): JSX.Element => {
     return noel();
   }
 
-  const sections = questionnaire.getSections(props);
+  const sections = questionnaire.getSections(props, config);
   if (sections.length === 0) {
     return noel();
   }
 
   return (
     <SI centered counters="small">
-      {questionnaire.getSections(props).map(getIndicatorStep)}
+      {sections.map(getIndicatorStep)}
     </SI>
   );
 };

@@ -11,6 +11,11 @@
   animation: fade-in 0.5s forwards;
 }
 
+.usa-progress-bar {
+  margin: 10px 0px 10px 0px;
+  padding: 10px 0px 10px 0px;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
