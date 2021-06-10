@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { DateTime }                  from 'luxon';
-import { ACTION_TYPE }               from '../../lib/enums';
+import { ACTION_TYPE, CSS_CLASS }               from '../../lib/enums';
 import { IQuestionData }             from '../../survey/IStepData';
 import { Steps }                     from './Steps';
 import { getDateTime }               from '../../lib/date';
@@ -48,7 +48,7 @@ export abstract class Questions {
         label={answer}
         value={answer}
         checked={Questions.isSelected(answer, props) === true}
-        className={'multipleChoice'}
+        className={CSS_CLASS.MULTI_CHOICE}
         onChange={handler}
         onClick={handler}
         tile={true}
@@ -78,7 +78,7 @@ export abstract class Questions {
   public static getRadios(props: IQuestionData): JSX.Element {
     return (<Fieldset
       legend={props.step.title}
-      className="multipleChoice"
+      className={CSS_CLASS.MULTI_CHOICE_GROUP}
       legendStyle="srOnly"
     >
       {
@@ -106,7 +106,7 @@ export abstract class Questions {
         label={answer}
         value={answer}
         checked={Questions.isSelected(answer, props) === true}
-        className={'multipleSelect'}
+        className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
       />
@@ -122,7 +122,7 @@ export abstract class Questions {
     return (
       <Fieldset
         legend={props.step.title}
-        className="multipleChoice"
+        className={CSS_CLASS.MULTI_SELECT_GROUP}
         legendStyle="srOnly"
       >
       {

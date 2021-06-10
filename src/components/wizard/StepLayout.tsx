@@ -5,6 +5,7 @@ import { IStepData } from '../../survey/IStepData';
 import { Navbar }    from './Navbar';
 import { Wizard }    from '../lib/Wizard';
 import { useGlobal } from '../../state/GlobalState';
+import { CSS_CLASS } from '../../lib';
 
 /**
  * Generates the Card layout for each step's contents
@@ -17,7 +18,7 @@ export const StepLayout = (props: IStepData): JSX.Element => {
 
   return (
     <div>
-      <section>
+      <section className={CSS_CLASS.STEP_LAYOUT}>
         <CardGroup>
           <Card
             headerFirst

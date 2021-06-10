@@ -1,7 +1,7 @@
-import { Button }          from '@trussworks/react-uswds';
-import { MODE, STEP_TYPE } from '../../lib/enums';
-import { useGlobal }       from '../../state/GlobalState';
-import { IStepData }       from '../../survey/IStepData';
+import { Button }                     from '@trussworks/react-uswds';
+import { CSS_CLASS, MODE, STEP_TYPE } from '../../lib/enums';
+import { useGlobal }                  from '../../state/GlobalState';
+import { IStepData }                  from '../../survey/IStepData';
 // eslint-disable-next-line import/no-cycle
 import { Steps } from '../lib/Steps';
 
@@ -30,7 +30,7 @@ export const Navbar = (props: IStepData): JSX.Element => {
   const disabled  = () => config.mode === MODE.VIEW && !Steps.isNextEnabled(props);
 
   return (
-    <nav className="wizard-layout__navbar">
+    <nav className={CSS_CLASS.NAVBAR}>
       {/* Previous step */}
       {showPrevStep && (
         <Button

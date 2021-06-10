@@ -1,4 +1,4 @@
-.wizard-layout__navbar {
+.usds-q-navbar {
   height: 30px;
   display: flex;
   flex-flow: row nowrap;
@@ -11,9 +11,17 @@
   animation: fade-in 0.5s forwards;
 }
 
-.usa-progress-bar {
+.usds-q-progress-bar {
   margin: 10px 0px 10px 0px;
   padding: 10px 0px 10px 0px;
+}
+
+.usds-q-results-summary-box {
+  text-align: left;
+}
+
+.usds-q-results-summary-header {
+  padding-top: 20px;
 }
 
 @keyframes fade-in {

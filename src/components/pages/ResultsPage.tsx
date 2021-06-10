@@ -4,6 +4,7 @@ import { StepLayout } from '../wizard/StepLayout';
 import { Pages }      from '../lib';
 import { useGlobal }  from '../../state/GlobalState';
 import { noel }       from '../../lib/noop';
+import { CSS_CLASS }  from '../../lib';
 
 /**
  * Displays the wizard results
@@ -23,11 +24,10 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
 
   return (
     <StepLayout {...props}>
-      <SummaryBox heading={step.bodyHeader || ''} style={{ paddingTop: '20px' }}>
+      <SummaryBox heading={step.bodyHeader || ''} className={CSS_CLASS.RESULTS_SUMMARY_HEADER}>
         <p>{step.bodySubHeader}</p>
         <ul
-          className="usa-list usa-list--unstyled"
-          style={{ textAlign: 'left' }}
+          className={`usa-list usa-list--unstyled ${CSS_CLASS.RESULTS_SUMMARY_BOX}`}
         >
           {Pages.getResults(props, global)}
         </ul>
