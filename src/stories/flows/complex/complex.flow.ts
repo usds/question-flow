@@ -1,4 +1,4 @@
-import { Questionnaire }                          from '../../composable/Questionnaire';
+import { Questionnaire }                          from '../../../composable/Questionnaire';
 import {
   actions, pages, questions, results, sections,
 } from './data';

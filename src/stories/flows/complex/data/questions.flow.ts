@@ -2,8 +2,8 @@
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
  */
-import { QUESTION_TYPE }   from '../../../lib/enums';
-import { IQuestion }       from '../../../survey/IStep';
+import { QUESTION_TYPE }   from '../../../../lib/enums';
+import { IQuestion }       from '../../../../survey/IStep';
 import { isFraCalculator } from './calculator.flow';
 
 /**

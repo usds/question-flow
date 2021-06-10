@@ -258,6 +258,33 @@
       ],
       "type": "object"
     },
+    "IProgressBarConfig": {
+      "description": "Configuration options for the progress bar",
+      "properties": {
+        "hide": {
+          "default": false,
+          "description": "Toggles whether to show progress bar",
+          "title": "Show Progress Bar",
+          "type": "boolean"
+        },
+        "position": {
+          "$ref": "#/definitions/TProgressBarPosition",
+          "description": "Vertical orientation of the progress bar",
+          "title": "Position"
+        },
+        "type": {
+          "$ref": "#/definitions/TProgressBarType",
+          "description": "Component type\n\nCan be one of two types: (1) The USWDS Step Indicator @see https://trussworks.github.io/react-uswds/?path=/docs/components-step-indicator (2) React progress bar @see https://katerinalupacheva.github.io/react-progress-bar/",
+          "title": "Type"
+        }
+      },
+      "required": [
+        "hide",
+        "position",
+        "type"
+      ],
+      "type": "object"
+    },
     "IQuestion": {
       "description": "Defines step content for Question type",
       "properties": {
@@ -357,24 +384,68 @@
     "IQuestionableConfig": {
       "description": "Configuration for customized behavior of Questionable",
       "properties": {
-        "dev": {
-          "description": "Enables all developer tools (NOT for production use!)",
-          "type": "boolean"
-        },
         "mode": {
           "$ref": "#/definitions/MODE",
           "description": "View or edit mode",
           "title": "Mode"
         },
-        "showSteps": {
-          "description": "Toggles whether steps' ids are show in the UI",
-          "type": "boolean"
+        "progressBar": {
+          "description": "Progress Bar configuration",
+          "properties": {
+            "hide": {
+              "default": false,
+              "description": "Toggles whether to show progress bar",
+              "title": "Show Progress Bar",
+              "type": "boolean"
+            },
+            "position": {
+              "$ref": "#/definitions/TProgressBarPosition",
+              "description": "Vertical orientation of the progress bar",
+              "title": "Position"
+            },
+            "type": {
+              "$ref": "#/definitions/TProgressBarType",
+              "description": "Component type\n\nCan be one of two types: (1) The USWDS Step Indicator @see https://trussworks.github.io/react-uswds/?path=/docs/components-step-indicator (2) React progress bar @see https://katerinalupacheva.github.io/react-progress-bar/",
+              "title": "Type"
+            }
+          },
+          "title": "Progress Bar",
+          "type": "object"
+        },
+        "steps": {
+          "description": "Step configuration",
+          "properties": {
+            "borderClass": {
+              "description": "Class determines whether cards have borders",
+              "enum": [
+                "border-ink",
+                "border-0"
+              ],
+              "title": "Border Class",
+              "type": "string"
+            },
+            "showStepId": {
+              "default": false,
+              "description": "Toggles whether steps' ids are shown next to the question text",
+              "title": "Show Step Id",
+              "type": "boolean"
+            },
+            "titleClass": {
+              "description": "Class to apply to title. Use to add background to question text",
+              "enum": [
+                "bg-base-lightest",
+                ""
+              ],
+              "title": "Title Class",
+              "type": "string"
+            }
+          },
+          "title": "Step Configuration",
+          "type": "object"
         }
       },
       "required": [
-        "dev",
-        "mode",
-        "showSteps"
+        "mode"
       ],
       "type": "object"
     },
@@ -574,6 +645,41 @@
       ],
       "type": "object"
     },
+    "IStepConfig": {
+      "description": "Customizations for styling and formatting of the steps",
+      "properties": {
+        "borderClass": {
+          "description": "Class determines whether cards have borders",
+          "enum": [
+            "border-ink",
+            "border-0"
+          ],
+          "title": "Border Class",
+          "type": "string"
+        },
+        "showStepId": {
+          "default": false,
+          "description": "Toggles whether steps' ids are shown next to the question text",
+          "title": "Show Step Id",
+          "type": "boolean"
+        },
+        "titleClass": {
+          "description": "Class to apply to title. Use to add background to question text",
+          "enum": [
+            "bg-base-lightest",
+            ""
+          ],
+          "title": "Title Class",
+          "type": "string"
+        }
+      },
+      "required": [
+        "borderClass",
+        "showStepId",
+        "titleClass"
+      ],
+      "type": "object"
+    },
     "IStepData": {
       "description": "Data defintion for base wizard step",
       "properties": {
@@ -595,6 +701,7 @@
     },
     "MODE": {
       "enum": [
+        "dev",
         "edit",
         "view"
       ],
@@ -622,25 +729,31 @@
     "TAge": {
       "properties": {
         "days": {
-          "default": 0,
           "maximum": 31,
           "minimum": 0,
           "title": "Days",
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         },
         "months": {
-          "default": 0,
           "maximum": 31,
           "minimum": 0,
           "title": "Months",
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         },
         "years": {
-          "default": 0,
           "maximum": 100,
           "minimum": 0,
           "title": "Years",
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         }
       },
       "required": [
@@ -665,6 +778,20 @@
       },
       "description": "Expresses a collection of answer requirements. Unique keys are joined together by `AND`. Keys represent a collection of allowed answer values joined by `OR`.",
       "type": "object"
+    },
+    "TProgressBarPosition": {
+      "enum": [
+        "top",
+        "bottom"
+      ],
+      "type": "string"
+    },
+    "TProgressBarType": {
+      "enum": [
+        "step-indicator",
+        "progress-bar"
+      ],
+      "type": "string"
     },
     "TStepType": {
       "anyOf": [

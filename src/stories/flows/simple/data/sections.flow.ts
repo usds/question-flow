@@ -1,4 +1,4 @@
-import { ISection } from '../../../survey/ISection';
+import { ISection } from '../../../../survey/ISection';
 
 export const sections: ISection[] = [
   {

@@ -2,7 +2,7 @@
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
  */
-import { IResult } from '../../../survey/IResult';
+import { IResult } from '../../../../survey/IResult';
 
 const name = 'Badge name';
 

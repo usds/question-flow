@@ -2,8 +2,8 @@
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
  */
-import { ACTION }  from '../../../lib/enums';
-import { IAction } from '../../../survey/IAction';
+import { ACTION }  from '../../../../lib/enums';
+import { IAction } from '../../../../survey/IAction';
 
 export const actions: IAction[] = [
   {

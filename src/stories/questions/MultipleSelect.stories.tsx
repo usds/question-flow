@@ -3,14 +3,12 @@
   eslint-disable import/no-extraneous-dependencies
 */
 import { Meta, Story } from '@storybook/react';
-import '@trussworks/react-uswds/lib/index.css';
-import '@trussworks/react-uswds/lib/uswds.css';
 import { QUESTION_TYPE } from '../../lib';
 import { stepReducer } from '../../state';
 import { Answer } from '../../composable/Answer';
-import '../../styles';
+import '../../stories/styles';
 import { IQuestionData } from '../../survey/IStepData';
-import { MultipleSelect } from './MultiSelect';
+import { MultipleSelect } from '../../components/questions/MultiSelect';
 
 export default {
   argTypes: {

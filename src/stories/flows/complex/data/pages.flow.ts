@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
-import { PAGE_TYPE } from '../../../lib';
-import { IPages }    from '../../../survey';
+import { PAGE_TYPE } from '../../../../lib';
+import { IPages }    from '../../../../survey';
 
 export const pages: IPages = {
   landingPage: {

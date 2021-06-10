@@ -1,4 +1,3 @@
-import 'semantic-ui-css/semantic.min.css';
 import Form                         from '@rjsf/semantic-ui';
 import { Button }                   from '@trussworks/react-uswds';
 import { kebabCase }                from 'lodash';

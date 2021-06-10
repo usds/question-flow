@@ -193,8 +193,8 @@
     "deploy": "gh-pages -d build",
     "deploy:storybook": "yarn clean:storybook && yarn build:storybook && yarn storybook-to-ghpages -- --existing-output-dir=storybook-static",
     "lint": "yarn lint:ts && yarn type-check",
-    "lint:fix": "pretty-quick --staged && eslint --cache --fix \"src/**/*.{ts,tsx}\"",
-    "lint:ts": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "pretty-quick --staged && eslint --cache --fix \"src/**/*.{ts,tsx,json,js}\"",
+    "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
     "postbuild": "yarn run copy-files",
     "prebuild": "yarn clean",
     "predeploy": "npm run build",
@@ -202,7 +202,7 @@
     "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\"",
     "semantic-release": "semantic-release",
     "start": "start-storybook -p 9009 -s public",
-    "type-check": "tsc --noEmit -p tsconfig.lint.json"
+    "type-check": "tsc --noEmit -p tsconfig.json"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.2"
