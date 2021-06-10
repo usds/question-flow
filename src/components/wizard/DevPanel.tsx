@@ -1,5 +1,5 @@
 import { Accordion, Button } from '@trussworks/react-uswds';
-import { CSS_CLASS } from '../../lib';
+import { CSS_CLASS }         from '../../lib';
 import { noel }              from '../../lib/noop';
 import { useGlobal }         from '../../state/GlobalState';
 import { IStepData }         from '../../survey/IStepData';

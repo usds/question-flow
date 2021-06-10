@@ -67,4 +67,8 @@ export type TDateOfBirth = {
 
 export type TProgressBarType = 'step-indicator' | 'progress-bar';
 
-export type TProgressBarPosition = 'top' | 'bottom';
+export type TVerticalPosition = 'top' | 'bottom';
+
+export type THorizontalPosition = 'left' | 'right';
+
+export type TButtonMode = 'link' | 'button';

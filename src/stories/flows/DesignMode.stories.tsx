@@ -23,7 +23,17 @@ Design.args = {
     mode: MODE.EDIT,
     steps: {
       showStepId: false,
-    }
+    },
+    nav: {
+      next: {
+        verticalPos: 'top',
+        mode: 'button',
+      },
+      prev: {
+        verticalPos: 'top',
+        mode: 'button',
+      },
+    },
   }),
   questionnaire: simpleFlow,
 };

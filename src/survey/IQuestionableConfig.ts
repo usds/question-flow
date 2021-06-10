@@ -1,5 +1,7 @@
-import { TProgressBarPosition, TProgressBarType } from '../lib/types';
-import { MODE }                                   from '../lib/enums';
+import {
+  TVerticalPosition, TProgressBarType, THorizontalPosition, TButtonMode,
+} from '../lib/types';
+import { MODE } from '../lib/enums';
 
 /**
  * Configuration for customized behavior of Questionable
@@ -21,11 +23,23 @@ export interface IQuestionableConfig {
    */
   mode: MODE;
   /**
+   * Navigation configuration
+   *
+   * @title Navigation
+   */
+  nav: Partial<INavigationConfig>;
+  /**
    * Progress Bar configuration
    *
    * @title Progress Bar
    */
   progressBar?: Partial<IProgressBarConfig>;
+  /**
+   * Question configuration
+   *
+   * @title Question Configuration
+   */
+  questions?: Partial<IQuestionConfig>;
   /**
    * Step configuration
    *
@@ -90,7 +104,7 @@ export interface IProgressBarConfig {
    * @title Position
    * @default 'bottom'
    */
-  position: TProgressBarPosition;
+  position: TVerticalPosition;
   /**
    * Component type
    *
@@ -102,4 +116,60 @@ export interface IProgressBarConfig {
    * @default 'progress-bar'
    */
   type: TProgressBarType
+}
+
+/**
+ * Configuration for question display
+ */
+export interface IQuestionConfig {
+  /**
+   * Determines whether to show border on radios and checkboxes
+   *
+   * @title Show Answer Border
+   * @default true
+   */
+  showAnswerBorder: boolean;
+}
+
+/**
+ * Configuration for buttons
+ */
+export interface IButtonConfig {
+  /**
+   * Default text to display if none is defined
+   */
+  defaultLabel: string;
+  /**
+   * Horizontal orientation (left or right)
+   *
+   * @title Horizontal Position
+   * @default left
+   */
+  horizontalPos: THorizontalPosition;
+  /**
+   * Render mode (link or button)
+   *
+   * @title Mode
+   */
+  mode: TButtonMode;
+  /**
+   * Vertical orientation (top or bottom)
+   *
+   * @title Vertical Position
+   */
+  verticalPos: TVerticalPosition;
+}
+
+/**
+ * Configuration for navigation
+ */
+export interface INavigationConfig {
+  /**
+   * Next/Forward button
+   */
+  next: Partial<IButtonConfig>;
+  /**
+   * Previous/Go back button
+   */
+  prev: Partial<IButtonConfig>;
 }

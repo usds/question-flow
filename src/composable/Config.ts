@@ -1,16 +1,31 @@
-import { isString, merge }                                from 'lodash';
-import { isEnum, MODE }                                   from '../lib/enums';
+import { isString, merge }                                                 from 'lodash';
+import { isEnum, MODE }                                                    from '../lib/enums';
 import {
-  IProgressBarConfig, IQuestionableConfig, IStepConfig,
+  INavigationConfig,
+  IProgressBarConfig, IQuestionableConfig, IQuestionConfig, IStepConfig,
 } from '../survey/IQuestionableConfig';
 
+/**
+ * Configuration class for customizing the Questionable components
+ *
+ * The config has opinionated defaults, but is easily modified using Partial updates
+ */
 export class QuestionableConfig implements IQuestionableConfig {
   #mode = MODE.VIEW;
 
-  #steps: IStepConfig = {
-    borderClass: 'border-0',
-    showStepId:  false,
-    titleClass:  '',
+  #nav: INavigationConfig = {
+    next: {
+      defaultLabel:  'Next',
+      horizontalPos: 'left',
+      mode:          'button',
+      verticalPos:   'bottom',
+    },
+    prev: {
+      defaultLabel:  'Go back...',
+      horizontalPos: 'left',
+      mode:          'link',
+      verticalPos:   'top',
+    },
   }
 
   #progressBar: IProgressBarConfig = {
@@ -19,6 +34,16 @@ export class QuestionableConfig implements IQuestionableConfig {
     hide:        false,
     position:    'bottom',
     type:        'progress-bar',
+  }
+
+  #questions: IQuestionConfig = {
+    showAnswerBorder: true,
+  }
+
+  #steps: IStepConfig = {
+    borderClass: 'border-0',
+    showStepId:  false,
+    titleClass:  '',
   }
 
   constructor(config: Partial<IQuestionableConfig> = {}) {
@@ -48,12 +73,12 @@ export class QuestionableConfig implements IQuestionableConfig {
     }
   }
 
-  get steps(): IStepConfig {
-    return { ...this.#steps };
+  get nav(): INavigationConfig {
+    return { ...this.#nav };
   }
 
-  set steps(val: Partial<IStepConfig>) {
-    merge(this.#steps, val);
+  set nav(val: Partial<INavigationConfig>) {
+    merge(this.#nav, val);
   }
 
   get progressBar(): IProgressBarConfig {
@@ -62,5 +87,21 @@ export class QuestionableConfig implements IQuestionableConfig {
 
   set progressBar(val: Partial<IProgressBarConfig>) {
     merge(this.#progressBar, val);
+  }
+
+  get questions(): IQuestionConfig {
+    return { ...this.#questions };
+  }
+
+  set questions(val: Partial<IQuestionConfig>) {
+    merge(this.#questions, val);
+  }
+
+  get steps(): IStepConfig {
+    return { ...this.#steps };
+  }
+
+  set steps(val: Partial<IStepConfig>) {
+    merge(this.#steps, val);
   }
 }

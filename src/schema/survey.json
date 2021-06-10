@@ -374,6 +374,20 @@
       ],
       "type": "object"
     },
+    "IQuestionConfig": {
+      "description": "Configuration for question display",
+      "properties": {
+        "showAnswerBorder": {
+          "description": "Determines whether to show border on radios and checkboxes",
+          "title": "Show Answer Border",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "showAnswerBorder"
+      ],
+      "type": "object"
+    },
     "IQuestionData": {
       "description": "Data defintion for question step",
       "properties": {
@@ -432,6 +446,18 @@
             }
           },
           "title": "Progress Bar",
+          "type": "object"
+        },
+        "questions": {
+          "description": "Question configuration",
+          "properties": {
+            "showAnswerBorder": {
+              "description": "Determines whether to show border on radios and checkboxes",
+              "title": "Show Answer Border",
+              "type": "boolean"
+            }
+          },
+          "title": "Question Configuration",
           "type": "object"
         },
         "steps": {
