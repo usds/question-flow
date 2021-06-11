@@ -44,6 +44,7 @@ export enum DIRECTION {
 export enum PROGRESS_BAR_STATUS {
   COMPLETE = 'complete',
   CURRENT = 'current',
+  INCOMPLETE = 'incomplete',
 }
 
 export enum ACTION {
@@ -66,7 +67,7 @@ export enum DATE_UNIT {
 export enum MODE {
   DEV = 'dev',
   EDIT = 'edit',
-  VIEW = 'view'
+  VIEW = 'view',
 }
 
 export enum CSS_CLASS {
@@ -89,7 +90,7 @@ export enum CSS_CLASS {
   STEP_INFO = 'usds-q-step-info',
   STEP_LAYOUT = 'usds-q-step-layout',
   STEP_LAYOUT_SECTION = 'usds-q-step-layout-section',
-  STEP_SUBTITLE = 'usds-q-step-subtitle'
+  STEP_SUBTITLE = 'usds-q-step-subtitle',
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -4496,9 +4496,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^5.13.0":
-  version: 5.13.0
-  resolution: "@testing-library/jest-dom@npm:5.13.0"
+"@testing-library/jest-dom@npm:^5.14.1":
+  version: 5.14.1
+  resolution: "@testing-library/jest-dom@npm:5.14.1"
   dependencies:
     "@babel/runtime": ^7.9.2
     "@types/testing-library__jest-dom": ^5.9.1
@@ -4506,9 +4506,10 @@ __metadata:
     chalk: ^3.0.0
     css: ^3.0.0
     css.escape: ^1.5.1
+    dom-accessibility-api: ^0.5.6
     lodash: ^4.17.15
     redent: ^3.0.0
-  checksum: 962e47cc7e9fa6cca8a38697bb6b407962c391ed8437b819bc0361674eae6aa8d6e3d829e14ba3624b00353b4ebd4398d47e809ffd33a062c0d7d17c7728dc3a
+  checksum: eeba37ba10be550bd9ab7dd0dda77d9011a96d9a4f75c70ed57d7bf120fe4126b251ccfb1444da1746c19773bbe4efbd96a0408f970d98c9cd1d399b2455d2c1
   languageName: node
   linkType: hard
 
@@ -5301,7 +5302,7 @@ __metadata:
     "@storybook/node-logger": ^6.2.9
     "@storybook/react": ^6.2.9
     "@storybook/storybook-deployer": ^2.8.8
-    "@testing-library/jest-dom": ^5.13.0
+    "@testing-library/jest-dom": ^5.14.1
     "@testing-library/react": ^11.2.7
     "@testing-library/user-event": ^13.1.9
     "@trussworks/react-uswds": ^1.17.0
