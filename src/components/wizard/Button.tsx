@@ -1,6 +1,10 @@
-import { Button as B }                               from '@trussworks/react-uswds';
+import { Button as B } from '@trussworks/react-uswds';
 import {
-  MODE, STEP_TYPE, TButtonMode, TVerticalPosition,
+  CSS_CLASS,
+  MODE,
+  STEP_TYPE,
+  TButtonMode,
+  TVerticalPosition,
 } from '../../lib';
 import { noel }      from '../../lib/noop';
 import { useGlobal } from '../../state/GlobalState';
@@ -18,11 +22,13 @@ type TButtonConfig = {
 
 const Button = (props: TButtonConfig): JSX.Element => (
   <B
-    type="button"
-    onClick={props.onClick}
+    className={`${CSS_CLASS.NAVBAR_BUTTON} ${CSS_CLASS.NAVBAR_BUTTON}-${props.dir}`}
     data-testid={`${props.dir}-button-${props.stepId}`}
-    unstyled={props.mode === 'link'}
     disabled={props.disabled()}
+    onClick={props.onClick}
+    type="button"
+    unstyled={props.mode === 'link'}
+    outline={props.mode !== 'link' && props.dir === 'prev'}
   >
     {props.label}
   </B>
@@ -35,14 +41,18 @@ interface INavBar extends IStepData {
 export const PreviousButton = (props: INavBar): JSX.Element => {
   const { questionnaire, config } = useGlobal();
 
-  const { step } = props;
-  // We can go back only once past the Landing step and the first actual step.
-  // Once past Summary, back is disabled
-  const doNotRender = props.verticalPos !== config.nav.prev.verticalPos
-    || props.stepId === STEP_TYPE.LANDING
-    || props.stepId === STEP_TYPE.RESULTS
-    || props.stepId === STEP_TYPE.NO_RESULTS
+  const { step }       = props;
+  const layoutMismatch = props.verticalPos !== config.nav.prev.verticalPos;
+  const surveyStart    = props.stepId === STEP_TYPE.LANDING
     || props.stepId === questionnaire.flow[1];
+  const surveyEnd      = props.stepId === STEP_TYPE.RESULTS
+    || props.stepId === STEP_TYPE.NO_RESULTS;
+  const notEditMode    = config.mode !== MODE.EDIT
+    || (props.stepId === questionnaire.flow[0]
+    && config.mode === MODE.EDIT);
+  const doNotRender    = layoutMismatch
+    || ((surveyStart || surveyEnd)
+    && notEditMode);
 
   if (doNotRender) {
     return noel();
@@ -68,12 +78,15 @@ export const PreviousButton = (props: INavBar): JSX.Element => {
 
 export const NextButton = (props: INavBar): JSX.Element => {
   const { questionnaire, config } = useGlobal();
-
-  const { step } = props;
-
-  const doNotRender = props.verticalPos !== config.nav.next.verticalPos
-    || props.stepId === STEP_TYPE.RESULTS
+  const { step }                  = props;
+  const layoutMismatch            = props.verticalPos !== config.nav.next.verticalPos;
+  const surveyEnd                 = props.stepId === STEP_TYPE.RESULTS
     || props.stepId === STEP_TYPE.NO_RESULTS;
+  const notEditMode               = config.mode !== MODE.EDIT
+    || (props.stepId === questionnaire.flow[questionnaire.flow.length - 1]
+      && config.mode === MODE.EDIT);
+  const doNotRender               = layoutMismatch
+    || ((surveyEnd) && notEditMode);
 
   if (doNotRender) {
     return noel();

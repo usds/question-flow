@@ -78,6 +78,7 @@ export enum CSS_CLASS {
   MULTI_SELECT = 'usds-q-multi-select',
   MULTI_SELECT_GROUP = 'usds-q-multi-select-group',
   NAVBAR = 'usds-q-navbar',
+  NAVBAR_BUTTON = 'usds-q-navbar-button',
   PROGRESS_BAR = 'usds-q-progress-bar',
   PROGRESS_BAR_BOTTOM_SECTION = 'usds-q-progress-bar-bottom-section',
   PROGRESS_BAR_TOP_SECTION = 'usds-q-progress-bar-top-section',

@@ -21,7 +21,7 @@ export class QuestionableConfig implements IQuestionableConfig {
       verticalPos:   'bottom',
     },
     prev: {
-      defaultLabel:  'Go back...',
+      defaultLabel:  'Go back',
       horizontalPos: 'left',
       mode:          'link',
       verticalPos:   'top',

@@ -13,7 +13,7 @@ interface INavBar extends IStepData {
  * @returns
  */
 export const NavBar = (props: INavBar): JSX.Element => (
-  <nav className={CSS_CLASS.NAVBAR}>
+  <nav className={`${CSS_CLASS.NAVBAR} ${CSS_CLASS.NAVBAR}-${props.verticalPos}`}>
     <PreviousButton {...props} />
     <NextButton {...props} />
   </nav>

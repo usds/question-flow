@@ -2,7 +2,7 @@ import {
   Card, CardBody, CardFooter, CardGroup, CardHeader,
 } from '@trussworks/react-uswds';
 import { IStepData } from '../../survey/IStepData';
-import { NavBar }    from './Navbar';
+import { NavBar }    from './NavBar';
 import { Wizard }    from '../lib/Wizard';
 import { useGlobal } from '../../state/GlobalState';
 import { CSS_CLASS } from '../../lib';
