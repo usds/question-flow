@@ -55,8 +55,6 @@ export abstract class Steps {
         return undefined !== form?.age?.years && form.age.years > 0;
       case STEP_TYPE.MULTIPLE_CHOICE:
         return q.answer !== undefined && answers?.indexOf(q.answer) !== -1;
-      // case STEP_TYPE.LANDING || STEP_TYPE.RESULTS || STEP_TYPE.SUMMARY:
-      //   return true;
       default:
         return true;
     }

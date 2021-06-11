@@ -51,7 +51,11 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  private static getRadio(answer: string, props: IQuestionData, config: IQuestionableConfig): JSX.Element {
+  private static getRadio(
+    answer: string,
+    props: IQuestionData,
+    config: IQuestionableConfig,
+  ): JSX.Element {
     const handler = () => Questions.updateForm(answer, props);
     const id      = Steps.getDomId(answer, props);
 
@@ -95,7 +99,11 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  private static getCheckbox(answer: string, props: IQuestionData, config: IQuestionableConfig): JSX.Element {
+  private static getCheckbox(
+    answer: string,
+    props: IQuestionData,
+    config: IQuestionableConfig,
+  ): JSX.Element {
     const handler = () => Questions.updateForm(answer, props);
     const id      = Steps.getDomId(answer, props);
 

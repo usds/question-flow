@@ -84,8 +84,12 @@ export enum CSS_CLASS {
   PROGRESS_BAR_TOP_SECTION = 'usds-q-progress-bar-top-section',
   RESULTS_SUMMARY_BOX = 'usds-q-results-summary-box',
   RESULTS_SUMMARY_HEADER = 'usds-q-results-summary-header',
+  STEP_FOOTER = 'usds-q-step-footer',
+  STEP_HEADER = 'usds-q-step-header',
+  STEP_INFO = 'usds-q-step-info',
   STEP_LAYOUT = 'usds-q-step-layout',
-  STEP_LAYOUT_SECTION = 'usds-q-step-layout-section'
+  STEP_LAYOUT_SECTION = 'usds-q-step-layout-section',
+  STEP_SUBTITLE = 'usds-q-step-subtitle'
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
