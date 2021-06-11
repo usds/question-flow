@@ -1,4 +1,5 @@
 import { Accordion, Button } from '@trussworks/react-uswds';
+import { CSS_CLASS }         from '../../lib';
 import { noel }              from '../../lib/noop';
 import { useGlobal }         from '../../state/GlobalState';
 import { IStepData }         from '../../survey/IStepData';
@@ -30,7 +31,7 @@ export const DevPanel = (props: IStepData): JSX.Element => {
         ]}
       />
       <br></br>
-      <nav className="wizard-layout__navbar">
+      <nav className={CSS_CLASS.NAVBAR}>
         <Button type="reset" secondary onClick={reset}>
           Reset
         </Button>

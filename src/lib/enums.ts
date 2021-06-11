@@ -64,8 +64,32 @@ export enum DATE_UNIT {
 }
 
 export enum MODE {
+  DEV = 'dev',
   EDIT = 'edit',
   VIEW = 'view'
+}
+
+export enum CSS_CLASS {
+  BASE = 'usds-q',
+  DEV_PANEL_SECTION = 'usds-q-dev-panel',
+  DOB = 'usds-q-dob',
+  MULTI_CHOICE = 'usds-q-multi-choice',
+  MULTI_CHOICE_GROUP = 'usds-q-multi-choice-group',
+  MULTI_SELECT = 'usds-q-multi-select',
+  MULTI_SELECT_GROUP = 'usds-q-multi-select-group',
+  NAVBAR = 'usds-q-navbar',
+  NAVBAR_BUTTON = 'usds-q-navbar-button',
+  PROGRESS_BAR = 'usds-q-progress-bar',
+  PROGRESS_BAR_BOTTOM_SECTION = 'usds-q-progress-bar-bottom-section',
+  PROGRESS_BAR_TOP_SECTION = 'usds-q-progress-bar-top-section',
+  RESULTS_SUMMARY_BOX = 'usds-q-results-summary-box',
+  RESULTS_SUMMARY_HEADER = 'usds-q-results-summary-header',
+  STEP_FOOTER = 'usds-q-step-footer',
+  STEP_HEADER = 'usds-q-step-header',
+  STEP_INFO = 'usds-q-step-info',
+  STEP_LAYOUT = 'usds-q-step-layout',
+  STEP_LAYOUT_SECTION = 'usds-q-step-layout-section',
+  STEP_SUBTITLE = 'usds-q-step-subtitle'
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

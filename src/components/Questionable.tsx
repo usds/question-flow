@@ -4,8 +4,9 @@ import { Answer }                             from '../composable/Answer';
 import { GlobalStateProvider, IQuestionable } from '../state/GlobalState';
 import { stepReducer }                        from '../state/stepReducer';
 import { DevPanel }                           from './wizard/DevPanel';
-import { ProgressBar }                        from './wizard/ProgressBar';
-import { StepFactory }                        from './wizard/StepFactory';
+import { ProgressFactory }                    from './factories/ProgressFactory';
+import { StepFactory }                        from './factories/StepFactory';
+import { CSS_CLASS }                          from '../lib/enums';
 
 export const Questionable = (q: IQuestionable): JSX.Element => {
   const { questionnaire } = q;
@@ -19,52 +20,53 @@ export const Questionable = (q: IQuestionable): JSX.Element => {
   const [form, dispatchForm] = useReducer(stepReducer, new Answer());
   return (
     <GlobalStateProvider value={q}>
-      {/*
-      // Remove header for now
-      <Header basic>
-        <div className="usa-nav-container">
-          <div className="usa-navbar">
-            <Title id="basic-logo">
-              <a href="/" title="Home" aria-label="Home">
-                {questionnaire.header}
-              </a>
-            </Title>
-          </div>
-        </div>
-      </Header> */}
+      <div className={CSS_CLASS.BASE}>
+        <section className={`section ${CSS_CLASS.PROGRESS_BAR_TOP_SECTION}`}>
+          <ProgressFactory {...{
+            position: 'top',
+            props:    {
+              dispatchForm,
+              form,
+              stepId: step,
+              wizard,
+            },
+          }}/>
+        </section>
 
-      <section>
-        <ProgressBar
-          {...{
-            dispatchForm,
-            form,
-            stepId: step,
-            wizard,
-          }}
-        ></ProgressBar>
-      </section>
+        <section className={`section ${CSS_CLASS.STEP_LAYOUT_SECTION}`}>
+          <StepFactory
+            {...{
+              dispatchForm,
+              form,
+              stepId: step,
+              wizard,
+            }}
+          />
+        </section>
 
-      <section className="section">
-        <StepFactory
-          {...{
-            dispatchForm,
-            form,
-            stepId: step,
-            wizard,
-          }}
-        />
-      </section>
+        <section className={`section ${CSS_CLASS.PROGRESS_BAR_BOTTOM_SECTION}`}>
+          <ProgressFactory {...{
+            position: 'bottom',
+            props:    {
+              dispatchForm,
+              form,
+              stepId: step,
+              wizard,
+            },
+          }}/>
+        </section>
 
-      <section className="section">
-        <DevPanel
-          {...{
-            dispatchForm,
-            form,
-            stepId: step,
-            wizard,
-          }}
-        />
-      </section>
+        <section className={`section ${CSS_CLASS.DEV_PANEL_SECTION}`}>
+          <DevPanel
+            {...{
+              dispatchForm,
+              form,
+              stepId: step,
+              wizard,
+            }}
+          />
+        </section>
+      </div>
     </GlobalStateProvider>
   );
 };

@@ -18,9 +18,10 @@ import { ISection }                  from '../survey/ISection';
 import {
   IPage, IPages, IQuestion, IStep,
 } from '../survey/IStep';
-import { IStepData }          from '../survey/IStepData';
-import { IQuestionnaire }     from '../survey/IQuestionnaire';
-import { QuestionableConfig } from './Config';
+import { IStepData }           from '../survey/IStepData';
+import { IQuestionnaire }      from '../survey/IQuestionnaire';
+import { QuestionableConfig }  from './Config';
+import { IQuestionableConfig } from '../survey';
 
 /**
  * Utility wrapper for survey state
@@ -166,25 +167,54 @@ export class Questionnaire implements IQuestionnaire {
   }
 
   /**
+   * Calculate the percent of survey completed
+   * @param props
+   * @returns
+   */
+  getProgressPercent(props: IStepData, config: IQuestionableConfig): number {
+    const sections = this.getSections(props, config);
+    const lastStep = sections[sections.length - 1];
+    // if there is no step, the questionnaire has just started
+    if (!lastStep?.lastStep) {
+      // Always show a little progress
+      return 1;
+    }
+    const thisStepIdx = this.flow.indexOf(`${props.stepId}`);
+    // add 2 to account for the summary and result steps
+    let lastStepIdx = lastStep.lastStep + 2;
+    if (config.mode === MODE.EDIT) {
+      // if in design mode, every step will be iterated
+      lastStepIdx = this.flow.length;
+    }
+    // To calculate the percent, divide the index of this step
+    //   by the index of the last step multiplied by 100.
+    return Math.round((thisStepIdx / lastStepIdx) * 100);
+  }
+
+  /**
    * Gets all of the currently available sections
    * @param props
    * @returns
    */
-  getSections(props: IStepData): ISection[] {
+  getSections(props: IStepData, config: IQuestionableConfig): ISection[] {
     if (!props) {
       return [];
     }
 
-    // Get all sections that meet the requirements based on current answers
-    const sections        = this.sections.filter(
-      (s) =>
-        s.requirements.length === 0
-        || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
-    );
     const thisStep        = props.stepId as string;
     const thisQuestion    = this.getStepById(thisStep);
     const thisQuestionIdx = this.steps.indexOf(thisQuestion);
 
+    // Get all sections that meet the requirements based on current answers
+    let sections = this.sections.filter(
+      (s) =>
+        s.requirements.length === 0
+        || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
+    );
+    if (config.mode === MODE.EDIT) {
+      // In design mode, all sections are valid
+      sections = [...this.sections];
+    }
     return sections.map((s) => {
       const section    = { ...s };
       section.lastStep = this.questions.reduce(

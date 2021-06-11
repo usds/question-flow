@@ -2,7 +2,7 @@ import {
   Card, CardBody, CardFooter, CardGroup, CardHeader,
 } from '@trussworks/react-uswds';
 import { IStepData } from '../../survey/IStepData';
-import { Navbar }    from './Navbar';
+import { NavBar }    from './NavBar';
 import { useGlobal } from '../../state/GlobalState';
 
 /**
@@ -15,6 +15,7 @@ export const DesignLayout = (props: IStepData): JSX.Element => {
 
   return (
     <div>
+      <NavBar {...{ ...props, verticalPos: 'top' }} />
       <section>
         <CardGroup>
           <Card
@@ -32,7 +33,6 @@ export const DesignLayout = (props: IStepData): JSX.Element => {
           </Card>
         </CardGroup>
       </section>
-      <Navbar {...props} />
     </div>
   );
 };

@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { DateTime }                  from 'luxon';
-import { ACTION_TYPE }               from '../../lib/enums';
+import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
 import { IQuestionData }             from '../../survey/IStepData';
 import { Steps }                     from './Steps';
 import { getDateTime }               from '../../lib/date';
 import { TDateOfBirth }              from '../../lib/types';
+import { IQuestionableConfig }       from '../../survey';
 
 /**
  * Static utility methods for question components
@@ -31,31 +32,6 @@ export abstract class Questions {
   }
 
   /**
-   * Generates a radio button given a question definition
-   * @param answer
-   * @param props
-   * @returns
-   */
-  private static getRadio(answer: string, props: IQuestionData): JSX.Element {
-    const handler = () => Questions.updateForm(answer, props);
-    const id      = Steps.getDomId(answer, props);
-
-    return (
-      <Radio
-        id={id}
-        key={id}
-        name={Steps.getFieldSetName(props)}
-        label={answer}
-        value={answer}
-        checked={Questions.isSelected(answer, props) === true}
-        className={'multipleChoice'}
-        onChange={handler}
-        onClick={handler}
-      />
-    );
-  }
-
-  /**
    * Determines if the answer is valid and selected
    * @param answer
    * @param props
@@ -70,19 +46,49 @@ export abstract class Questions {
   }
 
   /**
+   * Generates a radio button given a question definition
+   * @param answer
+   * @param props
+   * @returns
+   */
+  private static getRadio(
+    answer: string,
+    props: IQuestionData,
+    config: IQuestionableConfig,
+  ): JSX.Element {
+    const handler = () => Questions.updateForm(answer, props);
+    const id      = Steps.getDomId(answer, props);
+
+    return (
+      <Radio
+        id={id}
+        key={id}
+        name={Steps.getFieldSetName(props)}
+        label={answer}
+        value={answer}
+        checked={Questions.isSelected(answer, props) === true}
+        className={CSS_CLASS.MULTI_CHOICE}
+        onChange={handler}
+        onClick={handler}
+        tile={config.questions?.showAnswerBorder === true}
+      />
+    );
+  }
+
+  /**
    * Gets a collection of radio buttons
    * @param props
    * @returns
    */
-  public static getRadios(props: IQuestionData): JSX.Element {
+  public static getRadios(props: IQuestionData, config: IQuestionableConfig): JSX.Element {
     return (<Fieldset
       legend={props.step.title}
-      className="multipleChoice"
+      className={CSS_CLASS.MULTI_CHOICE_GROUP}
       legendStyle="srOnly"
     >
       {
         Object.keys(props.step.answers).map((a) =>
-          Questions.getRadio(props.step.answers[+a], props))
+          Questions.getRadio(props.step.answers[+a], props, config))
       }
     </Fieldset>);
   }
@@ -93,7 +99,11 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  private static getCheckbox(answer: string, props: IQuestionData): JSX.Element {
+  private static getCheckbox(
+    answer: string,
+    props: IQuestionData,
+    config: IQuestionableConfig,
+  ): JSX.Element {
     const handler = () => Questions.updateForm(answer, props);
     const id      = Steps.getDomId(answer, props);
 
@@ -105,9 +115,10 @@ export abstract class Questions {
         label={answer}
         value={answer}
         checked={Questions.isSelected(answer, props) === true}
-        className={'multipleSelect'}
+        className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
+        tile={config.questions?.showAnswerBorder === true}
       />
     );
   }
@@ -117,16 +128,16 @@ export abstract class Questions {
  * @param props
  * @returns
  */
-  public static getCheckboxes(props: IQuestionData): JSX.Element {
+  public static getCheckboxes(props: IQuestionData, config: IQuestionableConfig): JSX.Element {
     return (
       <Fieldset
         legend={props.step.title}
-        className="multipleChoice"
+        className={CSS_CLASS.MULTI_SELECT_GROUP}
         legendStyle="srOnly"
       >
       {
         Object.keys(props.step.answers).map((a) =>
-          Questions.getCheckbox(props.step.answers[+a], props))
+          Questions.getCheckbox(props.step.answers[+a], props, config))
       }
       </Fieldset>
     );

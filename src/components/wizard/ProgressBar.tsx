@@ -1,24 +1,27 @@
-import { StepIndicator, StepIndicatorStep } from '@trussworks/react-uswds';
-import { useGlobal }                        from '../../state/GlobalState';
-import { IStepData }                        from '../../survey/IStepData';
-import { ISection }                         from '../../survey/ISection';
-import { noel }                             from '../../lib/noop';
-
-const getIndicatorStep = (s: ISection) => (
-    <StepIndicatorStep key={s.id} label={s.name} status={s.status} />
-);
+import PB            from '@ramonak/react-progress-bar';
+import { useGlobal } from '../../state/GlobalState';
+import { IStepData } from '../../survey/IStepData';
+import { noel }      from '../../lib/noop';
+import { CSS_CLASS } from '../../lib';
 
 export const ProgressBar = (props: IStepData): JSX.Element => {
-  const { questionnaire } = useGlobal();
+  const { config, questionnaire } = useGlobal();
 
-  const sections = questionnaire.getSections(props);
-  if (sections.length === 0) {
+  if (config.progressBar.hide) {
     return noel();
   }
 
+  const completed = questionnaire.getProgressPercent(props, config);
+
   return (
-    <StepIndicator centered counters="small">
-      {questionnaire.getSections(props).map(getIndicatorStep)}
-    </StepIndicator>
+    <div className={CSS_CLASS.PROGRESS_BAR}>
+      <PB
+        completed={completed}
+        bgColor={config.progressBar.bgColor}
+        baseBgColor={config.progressBar.baseBgColor}
+        isLabelVisible={false}
+        borderRadius={'0px'}
+      />
+    </div>
   );
 };

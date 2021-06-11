@@ -64,3 +64,11 @@ export type TDateOfBirth = {
   month?: string | undefined;
   year?: string | undefined;
 };
+
+export type TProgressBarType = 'step-indicator' | 'progress-bar';
+
+export type TVerticalPosition = 'top' | 'bottom';
+
+export type THorizontalPosition = 'left' | 'right';
+
+export type TButtonMode = 'link' | 'button';

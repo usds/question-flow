@@ -1,1 +1,1 @@
-'.{js,ts,tsx}': 'yarn eslint --fix'
+'.{js,ts,tsx,json}': 'yarn eslint --fix'

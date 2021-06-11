@@ -1,9 +1,9 @@
-import FileSaver              from 'file-saver';
-import { QuestionableConfig } from '../../composable/Config';
-import { ACTION_TYPE }        from '../../lib/enums';
-import { noel }               from '../../lib/noop';
-import { IStepData }          from '../../survey/IStepData';
-import { log }                from '../../lib';
+import { SiteAlert }              from '@trussworks/react-uswds';
+import FileSaver                  from 'file-saver';
+import { QuestionableConfig }     from '../../composable/Config';
+import { ACTION_TYPE, CSS_CLASS } from '../../lib/enums';
+import { noel }                   from '../../lib/noop';
+import { IStepData }              from '../../survey/IStepData';
 
 export abstract class Wizard {
   public static getHeader(
@@ -15,28 +15,32 @@ export abstract class Wizard {
       return noel();
     }
 
-    if (config.showSteps) {
+    if (config.steps.showStepId) {
       text = `${props.step?.id}: ${text}`;
     }
-    return <h3 className="usa-card__heading">{text}</h3>;
+    return <h3 className={`usa-card__heading ${CSS_CLASS.STEP_HEADER}`}>{text}</h3>;
   }
 
-  public static getSupportingDetails(props: IStepData): JSX.Element {
+  public static getSubtitle(props: IStepData): JSX.Element {
     const text = props.step?.subTitle;
     if (!text) {
       return noel();
     }
     return (
-      <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />
+      <p className={CSS_CLASS.STEP_SUBTITLE} dangerouslySetInnerHTML={{ __html: text }} />
     );
   }
 
-  public static getQuestionHelp(props: IStepData): JSX.Element {
+  public static getInfoBox(props: IStepData): JSX.Element {
     const text = props.step?.info;
     if (!text) {
       return noel();
     }
-    return <p className="font-sans-6">{text}</p>;
+    return (
+      <SiteAlert variant="info" showIcon={false} className={`outline-1px ${CSS_CLASS.STEP_INFO}`}>
+        {text}
+      </SiteAlert>
+    );
   }
 
   public static getFooter(props: IStepData): JSX.Element {
@@ -45,7 +49,10 @@ export abstract class Wizard {
       return noel();
     }
     return (
-      <p className="font-sans-6" dangerouslySetInnerHTML={{ __html: text }} />
+      <p
+        className={`font-sans-6 ${CSS_CLASS.STEP_FOOTER}`}
+        dangerouslySetInnerHTML={{ __html: text }}
+       />
     );
   }
 
@@ -56,9 +63,9 @@ export abstract class Wizard {
     props.wizard.goToStep('A');
   }
 
-  /* eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any */
+  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   public static saveAsJson(data: any, fileName = 'questionable.json'): void {
-    log(fileName);
     const blob = new Blob([data], { type: 'text/plain;charset=utf-8' });
     FileSaver.saveAs(blob, fileName);
   }

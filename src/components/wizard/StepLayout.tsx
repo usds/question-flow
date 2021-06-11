@@ -2,9 +2,10 @@ import {
   Card, CardBody, CardFooter, CardGroup, CardHeader,
 } from '@trussworks/react-uswds';
 import { IStepData } from '../../survey/IStepData';
-import { Navbar }    from './Navbar';
+import { NavBar }    from './NavBar';
 import { Wizard }    from '../lib/Wizard';
 import { useGlobal } from '../../state/GlobalState';
+import { CSS_CLASS } from '../../lib';
 
 /**
  * Generates the Card layout for each step's contents
@@ -12,30 +13,34 @@ import { useGlobal } from '../../state/GlobalState';
  * @returns
  */
 export const StepLayout = (props: IStepData): JSX.Element => {
-  const { config } = useGlobal();
+  const { config }                  = useGlobal();
+  const { borderClass, titleClass } = config.steps;
 
   return (
     <div>
-      <section>
+      <NavBar {...{ ...props, verticalPos: 'top' }} />
+      <section className={CSS_CLASS.STEP_LAYOUT}>
         <CardGroup>
           <Card
             headerFirst
             gridLayout={{ tablet: { col: 12 } }}
-            containerProps={{ className: 'border-ink' }}
+            containerProps={{ className: borderClass }}
           >
-            <CardHeader className="bg-base-lightest">
+            <CardHeader className={titleClass}>
               {Wizard.getHeader(props, config)}
-              {Wizard.getSupportingDetails(props)}
-              {Wizard.getQuestionHelp(props)}
             </CardHeader>
-            <CardBody className="padding-top-3">{props.children}</CardBody>
+            <CardBody>
+              {Wizard.getSubtitle(props)}
+              {props.children}
+              {Wizard.getInfoBox(props)}
+            </CardBody>
             <CardFooter>
               {Wizard.getFooter(props)}
             </CardFooter>
           </Card>
         </CardGroup>
       </section>
-      <Navbar {...props} />
+      <NavBar {...{ ...props, verticalPos: 'bottom' }} />
     </div>
   );
 };
