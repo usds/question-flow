@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/usds/questionable/compare/v1.1.0...v1.1.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* **progress-bar:** percentage calculation is correct ([#50](https://github.com/usds/questionable/issues/50)) ([a5b22e1](https://github.com/usds/questionable/commit/a5b22e193de10d3d64d57a19eed0492a2198ba60)), closes [#46](https://github.com/usds/questionable/issues/46)
+
 # [1.1.0](https://github.com/usds/questionable/compare/v1.0.2...v1.1.0) (2021-06-11)
 
 

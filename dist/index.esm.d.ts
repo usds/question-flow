@@ -38,7 +38,8 @@ declare enum DIRECTION {
  */
 declare enum PROGRESS_BAR_STATUS {
     COMPLETE = "complete",
-    CURRENT = "current"
+    CURRENT = "current",
+    INCOMPLETE = "incomplete"
 }
 declare enum ACTION {
     CALL = "call",
@@ -635,6 +636,17 @@ interface ISection {
     status?: PROGRESS_BAR_STATUS;
 }
 /**
+ * Definition for survey data input
+ */
+interface IQuestionnaire {
+    readonly actions: IAction[];
+    readonly header: string;
+    readonly pages: IPages;
+    readonly questions: IQuestion[];
+    readonly results: IResult[];
+    readonly sections: ISection[];
+}
+/**
  * Data defintion for question step
  */
 interface IQuestionData extends IStepData {
@@ -694,17 +706,6 @@ interface IStepData {
      * @hidden Not viewable/editable in Design Mode
      */
     wizard: IWizard;
-}
-/**
- * Definition for survey data input
- */
-interface IQuestionnaire {
-    readonly actions: IAction[];
-    readonly header: string;
-    readonly pages: IPages;
-    readonly questions: IQuestion[];
-    readonly results: IResult[];
-    readonly sections: ISection[];
 }
 /**
  * Utility wrapper for survey state
