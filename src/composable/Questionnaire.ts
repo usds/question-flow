@@ -9,19 +9,20 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
+import { matches }                   from '../lib/string';
 import { TAge, TAgeCalc, TAnswers }  from '../lib/types';
+import { IQuestionableConfig }       from '../survey';
 import { IAction }                   from '../survey/IAction';
 import { IAnswer }                   from '../survey/IAnswer';
+import { IQuestionnaire }            from '../survey/IQuestionnaire';
 import { IRequirement }              from '../survey/IRequirement';
 import { IResult }                   from '../survey/IResult';
 import { ISection }                  from '../survey/ISection';
 import {
   IPage, IPages, IQuestion, IStep,
 } from '../survey/IStep';
-import { IStepData }           from '../survey/IStepData';
-import { IQuestionnaire }      from '../survey/IQuestionnaire';
-import { QuestionableConfig }  from './Config';
-import { IQuestionableConfig } from '../survey';
+import { IStepData }          from '../survey/IStepData';
+import { QuestionableConfig } from './Config';
 
 /**
  * Utility wrapper for survey state
@@ -106,7 +107,7 @@ export class Questionnaire implements IQuestionnaire {
     direction: DIRECTION,
     config = new QuestionableConfig(),
   ): string {
-    const nextStep = this.flow.indexOf(thisStep) !== -1
+    const nextStep =      this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
       : undefined;
     // If there are no more steps, stay on current
@@ -172,19 +173,22 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   getProgressPercent(props: IStepData, config: IQuestionableConfig): number {
+    if (matches(props.step?.sectionId, PAGE_TYPE.RESULTS)) {
+      return 100;
+    }
     const sections = this.getSections(props, config);
     const lastStep = sections[sections.length - 1];
     // if there is no step, the questionnaire has just started
     if (!lastStep?.lastStep) {
       // Always show a little progress
-      return 1;
+      return 0.5;
     }
     const thisStepIdx = this.flow.indexOf(`${props.stepId}`);
     // add 2 to account for the summary and result steps
     let lastStepIdx = lastStep.lastStep + 2;
     if (config.mode === MODE.EDIT) {
       // if in design mode, every step will be iterated
-      lastStepIdx = this.flow.length;
+      lastStepIdx = this.flow.length - 1;
     }
     // To calculate the percent, divide the index of this step
     //   by the index of the last step multiplied by 100.
@@ -221,10 +225,16 @@ export class Questionnaire implements IQuestionnaire {
         (acc, q, index) => (q.sectionId === s.id ? index : acc),
         -1,
       );
-      if (section.id === thisQuestion.sectionId) {
-        section.status = PROGRESS_BAR_STATUS.CURRENT;
+      if (matches(section.id, PAGE_TYPE.RESULTS)) {
+        section.lastStep = this.questions.length - 2;
+      } else if (matches(section.id, PAGE_TYPE.LANDING)) {
+        section.lastStep = 0;
       }
-      if (section.lastStep < thisQuestionIdx) {
+      if (section.lastStep < 0) {
+        section.status = PROGRESS_BAR_STATUS.INCOMPLETE;
+      } else if (matches(section.id, thisQuestion.sectionId)) {
+        section.status = PROGRESS_BAR_STATUS.CURRENT;
+      } else if (section.lastStep < thisQuestionIdx) {
         section.status = PROGRESS_BAR_STATUS.COMPLETE;
       }
       return section;

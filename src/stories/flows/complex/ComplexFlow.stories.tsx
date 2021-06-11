@@ -1,9 +1,9 @@
 import { Meta, Story } from '@storybook/react';
 import { Questionable } from '../../../components/Questionable';
-import { complexFlow } from './complex.flow';
 import { QuestionableConfig } from '../../../composable/Config';
 import { IQuestionable } from '../../../state/GlobalState';
 import '../../styles';
+import { complexFlow } from './complex.flow';
 
 export default {
   argTypes: {
@@ -21,7 +21,10 @@ Complex.args = {
     dev: false,
     steps: {
       showStepId: false,
-    }
+    },
+    progressBar: {
+      bgColor: '#1DC2AE',
+    },
   }),
   questionnaire: complexFlow,
 };
