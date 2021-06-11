@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/usds/questionable/compare/v1.0.2...v1.1.0) (2021-06-11)
+
+
+### Features
+
+* **design:** make design configuration more flexible ([#47](https://github.com/usds/questionable/issues/47)) ([a756123](https://github.com/usds/questionable/commit/a756123af474b3aa18de7f579ddb6a8fa92e3763)), closes [#46](https://github.com/usds/questionable/issues/46) [#41](https://github.com/usds/questionable/issues/41) [#42](https://github.com/usds/questionable/issues/42) [#41](https://github.com/usds/questionable/issues/41) [#46](https://github.com/usds/questionable/issues/46) [#46](https://github.com/usds/questionable/issues/46)
+
 ## [1.0.2](https://github.com/usds/questionable/compare/v1.0.1...v1.0.2) (2021-06-04)
 
 
