@@ -17,9 +17,9 @@ export const results: IResult[] = [
     name:         'Retirement',
     requirements: [
       {
-        answers: {
-          E: [0], // Has worked for >= 10 years
-        },
+        answers: [
+          { answers: [{ id: '0' }], question: { id: 'E' } },
+        ],
         explanation:
           "You've worked for 10 years or more and meet our age requirements.",
         minAge: {
@@ -37,9 +37,9 @@ export const results: IResult[] = [
     requirements: [
       {
         ageCalc: (birthday) => !isFraCalculator(birthday, 12),
-        answers: {
-          G: [0], // Is between 18 to FRA and is disabled
-        },
+        answers: [
+          { answers: [{ id: '0' }], question: { id: 'G' } },
+        ],
         explanation:
           'You expect a condition, illness, or injury to affect your ability to work for a year or more.',
         minAge: {
@@ -55,12 +55,9 @@ export const results: IResult[] = [
     name:         'Supplemental Security Income (SSI)',
     requirements: [
       {
-        answers: {
-          V: [
-            1, // Has trouble paying bills
-            2, // Cannot make ends meet
-          ],
-        },
+        answers: [
+          { answers: [{ id: '1' }, { id: '2' }], question: { id: 'V' } },
+        ],
         explanation:
           "You're 65 or older and said you have difficulty paying for food and a home.",
         minAge: {
@@ -69,13 +66,10 @@ export const results: IResult[] = [
         },
       },
       {
-        answers: {
-          G: [0], // Is disabled
-          V: [
-            1, // Has trouble paying bills
-            2, // Cannot make ends meet
-          ],
-        },
+        answers: [
+          { answers: [{ id: '0' }], question: { id: 'G' } },
+          { answers: [{ id: '1' }, { id: '2' }], question: { id: 'V' } },
+        ],
         explanation:
           'You said you have difficulty paying for food and a home. And, a disability affects your ability to work.',
         minAge: {
@@ -84,10 +78,10 @@ export const results: IResult[] = [
         },
       },
       {
-        answers: {
-          A: [1], // is under 18
-          X: [1], // Is disabled
-        },
+        answers: [
+          { answers: [{ id: '1' }], question: { id: 'A' } },
+          { answers: [{ id: '1' }], question: { id: 'X' } },
+        ],
         explanation:
           "You expect a condition or illness to significantly affect the child's daily activities for a year or more. And, their parent(s) have difficulty paying for food and a home.",
       },
@@ -99,7 +93,7 @@ export const results: IResult[] = [
     name:         'Medicare',
     requirements: [
       {
-        answers:     {},
+        answers:     [],
         explanation: 'You are between 64 years and 65 years and 3 months old.',
         maxAge:      {
           months: 3,
@@ -118,13 +112,18 @@ export const results: IResult[] = [
     name:         'Spouse',
     requirements: [
       {
-        answers: {
-          I: [
-            0, // Is married
-            1, // Is married but separated
-          ],
-          J: [0], // Spouse has benefits
-        },
+        answers: [
+          {
+            answers: [
+              // Married
+              { id: '0' },
+              // Married but separated
+              { id: '1' }],
+            question: { id: 'I' },
+          },
+          // Spouse has benefits
+          { answers: [{ id: '0' }], question: { id: 'J' } },
+        ],
         explanation:
           "You're 62 or older and your spouse gets benefits checks every month.",
         minAge: {
@@ -141,15 +140,23 @@ export const results: IResult[] = [
     requirements: [
       {
         ageCalc: (birthday) => !isFraCalculator(birthday),
-        answers: {
-          I: [0], // Is married
-          J: [0], // Spouse has benefits
-          Q: [0], // Has children < 16
-          R: [
-            0, // Children are not disabled
-            1, // Children are disabled
-          ],
-        },
+        answers: [
+          // Married
+          { answers: [{ id: '0' }], question: { id: 'I' } },
+          // Spouse has benefits
+          { answers: [{ id: '0' }], question: { id: 'J' } },
+          // Has children < 16
+          { answers: [{ id: '0' }], question: { id: 'Q' } },
+          {
+            answers: [
+              // Children are not disabled
+              { id: '0' },
+              // Children are disabled
+              { id: '1' },
+            ],
+            question: { id: 'R' },
+          },
+        ],
         explanation:
           'Your spouse gets benefits checks every month and you take care of kids under the age of 16.',
         minAge: {
@@ -159,12 +166,16 @@ export const results: IResult[] = [
       },
       {
         ageCalc: (birthday) => !isFraCalculator(birthday),
-        answers: {
-          I: [0], // Is married
-          J: [0], // Spouse has benefits
-          Q: [1], // Has children >= 16
-          R: [1], // Children are disabled
-        },
+        answers: [
+          // Married
+          { answers: [{ id: '0' }], question: { id: 'I' } },
+          // Spouse has benefits
+          { answers: [{ id: '0' }], question: { id: 'J' } },
+          // Has children >= 16
+          { answers: [{ id: '1' }], question: { id: 'Q' } },
+          // Children are disabled
+          { answers: [{ id: '1' }], question: { id: 'R' } },
+        ],
         explanation:
           'Your spouse gets benefits checks every month and you take care of disabled kids over the age of 16.',
         minAge: {
@@ -174,18 +185,30 @@ export const results: IResult[] = [
       },
       {
         ageCalc: (birthday) => !isFraCalculator(birthday),
-        answers: {
-          I: [2], // Not married, but was in past
-          N: [
-            0, // Divorced after >= 10 years && ex-spouse has benefits
-            2, // Divorced after >= 10 years && unknown if ex-spouse has benefits
-          ],
-          Q: [0], // Has children < 16
-          R: [
-            0, // Children are not disabled
-            1, // Children are disabled
-          ],
-        },
+        answers: [
+          // Not married, but was in the past
+          { answers: [{ id: '2' }], question: { id: 'I' } },
+          {
+            answers: [
+              // Divorced after >= 10 years and ex-spouse has benefits
+              { id: '0' },
+              // Divorced after >= 10 years and ex-spouse might have benefits
+              { id: '2' },
+            ],
+            question: { id: 'N' },
+          },
+          // Has children < 16
+          { answers: [{ id: '0' }], question: { id: 'Q' } },
+          {
+            answers: [
+              // Children are disabled
+              { id: '0' },
+              // Children are not disabled
+              { id: '1' },
+            ],
+            question: { id: 'R' },
+          },
+        ],
         explanation:
           'You were married for 10 years or more in the past and your former spouse worked. And, you take care of kids under the age of 16.',
         minAge: {
@@ -195,15 +218,23 @@ export const results: IResult[] = [
       },
       {
         ageCalc: (birthday) => !isFraCalculator(birthday),
-        answers: {
-          I: [2], // Not married, but was in past
-          N: [
-            0, // Divorced after >= 10 years && ex-spouse has benefits
-            2, // Divorced after >= 10 years && unknown if ex-spouse has benefits
-          ],
-          Q: [1], // Has children >= 16
-          R: [1], // Children are disabled
-        },
+        answers: [
+          // Not married, but was in past
+          { answers: [{ id: '2' }], question: { id: 'I' } },
+          {
+            answers: [
+              // Divorced after >= 10 years and ex-spouse has benefits
+              { id: '0' },
+              // Divorced after >= 10 years and ex-spouse might have benefits
+              { id: '2' },
+            ],
+            question: { id: 'N' },
+          },
+          // Has children >= 16
+          { answers: [{ id: '1' }], question: { id: 'Q' } },
+          // Children are disabled
+          { answers: [{ id: '1' }], question: { id: 'Q' } },
+        ],
         explanation:
           'You were married for 10 years or more in the past and your former spouse worked. And, you take care of disabled kids over the age of 16.',
         minAge: {
@@ -219,18 +250,30 @@ export const results: IResult[] = [
     name:         'Divorced Spouse',
     requirements: [
       {
-        answers: {
-          I: [2], // Not married, but was in past
-          N: [
-            0, // Divorced after >= 10 years && ex-spouse has benefits
-            2, // Divorced after >= 10 years && unknown if ex-spouse has benefits
-          ],
-          Q: [0], // Has children < 16
-          R: [
-            0, // Children are not disabled
-            1, // Children are disabled
-          ],
-        },
+        answers: [
+          // Not married, but was in the past
+          { answers: [{ id: '2' }], question: { id: 'I' } },
+          {
+            answers: [
+              // Divorced after >= 10 years and ex-spouse has benefits
+              { id: '0' },
+              // Divorced after >= 10 years and ex-spouse might have benefits
+              { id: '2' },
+            ],
+            question: { id: 'N' },
+          },
+          // Has children < 16
+          { answers: [{ id: '0' }], question: { id: 'Q' } },
+          {
+            answers: [
+              // Children are disabled
+              { id: '0' },
+              // Children are not disabled
+              { id: '1' },
+            ],
+            question: { id: 'R' },
+          },
+        ],
         explanation:
           "You're 62 or older, were married for 10 years or more in the past, and your former spouse worked.",
         minAge: {
@@ -246,11 +289,14 @@ export const results: IResult[] = [
     name:         'Widowers',
     requirements: [
       {
-        answers: {
-          I: [2], // Not married, but was in past
-          O: [0], // Spouse is deceased
-          P: [0], // Deceased spouse worked
-        },
+        answers: [
+          // Not married, but was in past
+          { answers: [{ id: '2' }], question: { id: 'I' } },
+          // Spouse is deceased
+          { answers: [{ id: '0' }], question: { id: 'O' } },
+          // Spouse worked
+          { answers: [{ id: '0' }], question: { id: 'P' } },
+        ],
         explanation:
           "You're 60 or older and lost your spouse.  And, your spouse worked before they passed away.",
         minAge: {
@@ -266,12 +312,16 @@ export const results: IResult[] = [
     name:         'Disabled Widowers',
     requirements: [
       {
-        answers: {
-          G: [0], // Disabled
-          I: [2], // Not married, but was in past
-          O: [0], // Spouse is deceased
-          P: [0], // Deceased spouse worked
-        },
+        answers: [
+          // Disabled
+          { answers: [{ id: '0' }], question: { id: 'G' } },
+          // Not married, but was in past
+          { answers: [{ id: '2' }], question: { id: 'I' } },
+          // Spouse is deceased
+          { answers: [{ id: '0' }], question: { id: 'O' } },
+          // Spouse worked
+          { answers: [{ id: '0' }], question: { id: 'P' } },
+        ],
         explanation:
           "You're between the ages of 50 and 60 and lost your spouse. And, you expect a condition, illness, or injury to affect your ability to work for a year or more.",
         maxAge: {
@@ -291,17 +341,21 @@ export const results: IResult[] = [
     name:         'Lump Sum Death Payment, a one-time payment',
     requirements: [
       {
-        answers: {
-          A: [1], // Childer under 18
-          Y: [0], // Child has experienced loss of parent
-        },
+        answers: [
+          // Is under 18
+          { answers: [{ id: '1' }], question: { id: 'A' } },
+          // Child has experienced loss of parent
+          { answers: [{ id: '0' }], question: { id: 'Y' } },
+        ],
         explanation: 'The child lost a parent.',
       },
       {
-        answers: {
-          O: [0], // Spouse is deceased
-          P: [0], // Deceased spouse worked
-        },
+        answers: [
+          // Spouse is deceased
+          { answers: [{ id: '0' }], question: { id: 'O' } },
+          // Spouse worked
+          { answers: [{ id: '0' }], question: { id: 'P' } },
+        ],
         explanation: 'You lost your spouse.',
         minAge:      {
           months: 0,
@@ -309,9 +363,10 @@ export const results: IResult[] = [
         },
       },
       {
-        answers: {
-          S: [0], // Has lost a parent
-        },
+        answers: [
+          // Has lost a parent
+          { answers: [{ id: '0' }], question: { id: 'S' } },
+        ],
         explanation: 'You lost a parent.',
         minAge:      {
           months: 0,
@@ -326,24 +381,36 @@ export const results: IResult[] = [
     name:         "Child's Auxiliary",
     requirements: [
       {
-        answers: {
-          A:  [1], // Child under 18
-          AA: [
-            0, // Parents receive SS
-            2, // Unknown if parents receive SS
-          ],
-        },
+        answers: [
+          // Is under 18
+          { answers: [{ id: '1' }], question: { id: 'A' } },
+          {
+            answers: [
+              // Parents receive SS
+              { id: '0' },
+              // Parents might receive SS
+              { id: '2' },
+            ],
+            question: { id: 'AA' },
+          },
+        ],
         explanation:
           "The child's parent(s) may get benefits checks every month.",
       },
       {
-        answers: {
-          C: [1], // Is in high school
-          U: [
-            0, // Parents receive SS
-            2, // Unknown if parents receive SS
-          ],
-        },
+        answers: [
+          // Is in high school
+          { answers: [{ id: '1' }], question: { id: 'C' } },
+          {
+            answers: [
+              // Parents receive SS
+              { id: '0' },
+              // Parents might receive SS
+              { id: '2' },
+            ],
+            question: { id: 'U' },
+          },
+        ],
         explanation:
           'You go to high school full time and your parent(s) may get benefits checks every month.',
         maxAge: {
@@ -356,14 +423,21 @@ export const results: IResult[] = [
         },
       },
       {
-        answers: {
-          G: [0], // Disabled
-          H: [0], // Disabled before 22
-          U: [
-            0, // Parents receive SS
-            2, // Unknown if parents receive SS
-          ],
-        },
+        answers: [
+          // Disabled
+          { answers: [{ id: '0' }], question: { id: 'G' } },
+          // Disabled before 22
+          { answers: [{ id: '0' }], question: { id: 'H' } },
+          {
+            answers: [
+              // Parents receive SS
+              { id: '0' },
+              // Parents might receive SS
+              { id: '2' },
+            ],
+            question: { id: 'U' },
+          },
+        ],
         explanation:
           'You expect a condition, illness, or injury to affect your ability to work for a year or more. And it started to affect you before your 22nd birthday. Your parent(s) may get benefits checks every month.',
         minAge: {
@@ -379,10 +453,12 @@ export const results: IResult[] = [
     name:         "Child's Survivor",
     requirements: [
       {
-        answers: {
-          C: [1], // Is in high school
-          S: [0], // Has lost a parent
-        },
+        answers: [
+          // In high school
+          { answers: [{ id: '1' }], question: { id: 'C' } },
+          // Has lost a parent
+          { answers: [{ id: '0' }], question: { id: 'S' } },
+        ],
         explanation: 'The child lost a parent.',
         maxAge:      {
           months: 1,
@@ -394,18 +470,23 @@ export const results: IResult[] = [
         },
       },
       {
-        answers: {
-          A: [1], // Child under 18
-          Y: [0], // Child has experienced loss of parent
-        },
+        answers: [
+          // Child under 18
+          { answers: [{ id: '1' }], question: { id: 'A' } },
+          // Has lost a parent
+          { answers: [{ id: '0' }], question: { id: 'Y' } },
+        ],
         explanation: 'The child lost a parent.',
       },
       {
-        answers: {
-          G: [0], // Disabled
-          H: [0], // Disabled before 22
-          S: [0], // Has lost a parent
-        },
+        answers: [
+          // Disabled
+          { answers: [{ id: '0' }], question: { id: 'G' } },
+          // Disabled before 22
+          { answers: [{ id: '0' }], question: { id: 'H' } },
+          // Has lost a parent
+          { answers: [{ id: '0' }], question: { id: 'S' } },
+        ],
         explanation:
           'You expect a condition, illness, or injury to affect your ability to work for a year or more. And it started to affect you before your 22nd birthday. You also lost a parent.',
         minAge: {
@@ -421,10 +502,12 @@ export const results: IResult[] = [
     name:         'Childhood Disability',
     requirements: [
       {
-        answers: {
-          A: [1], // Child under 18
-          X: [0], // Child is disabled
-        },
+        answers: [
+          // Under 18
+          { answers: [{ id: '1' }], question: { id: 'A' } },
+          // Child is disabled
+          { answers: [{ id: '0' }], question: { id: 'X' } },
+        ],
         explanation:
           "A condition or illness is expected to significantly affect the child's daily activities for a year or more.",
       },
@@ -436,13 +519,19 @@ export const results: IResult[] = [
     name:         'Student Auxiliary',
     requirements: [
       {
-        answers: {
-          C: [1], // Is in high school
-          U: [
-            0, // Parents receive SS
-            2, // Unknown if parents receive SS
-          ],
-        },
+        answers: [
+          // In high school
+          { answers: [{ id: '1' }], question: { id: 'C' } },
+          {
+            answers: [
+              // Parents receive SS
+              { id: '0' },
+              // Parents might receive SS
+              { id: '2' },
+            ],
+            question: { id: 'U' },
+          },
+        ],
         explanation:
           'You go to high school full time and your parent(s) may get benefits checks every month.',
         maxAge: {
@@ -462,10 +551,12 @@ export const results: IResult[] = [
     name:         'Student Survivor',
     requirements: [
       {
-        answers: {
-          C: [1], // Is in high school
-          S: [0], // Has lost a parent
-        },
+        answers: [
+          // In high school
+          { answers: [{ id: '1' }], question: { id: 'C' } },
+          // Has lost a parent
+          { answers: [{ id: '0' }], question: { id: 'S' } },
+        ],
         explanation: 'You go to high school full time and lost a parent.',
         maxAge:      {
           months: 1,
@@ -484,10 +575,12 @@ export const results: IResult[] = [
     name:         "Mothers and Father's",
     requirements: [
       {
-        answers: {
-          P: [0], // Spouse is deceased and worked
-          Q: [0], // Has children < 16
-        },
+        answers: [
+          // Deceased spouse worked
+          { answers: [{ id: '0' }], question: { id: 'P' } },
+          // Has children < 16
+          { answers: [{ id: '0' }], question: { id: 'Q' } },
+        ],
         explanation:
           'You lost your spouse and they worked before they passed away. And, you take care of disabled kids over the age of 16.',
         minAge: {

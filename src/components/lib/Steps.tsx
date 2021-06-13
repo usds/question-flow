@@ -3,7 +3,8 @@ import { QuestionableConfig }       from '../../composable/Config';
 import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
 import { Questionnaire }            from '../../composable/Questionnaire';
 import { IAnswer }                  from '../../survey/IAnswer';
-import { IQuestionData, IStepData } from '../../survey/IStepData';
+import { IStepData }                from '../../survey/IStepData';
+import { IQuestionData }            from '../../survey/IQuestionData';
 
 export abstract class Steps {
   public static goToStep(step: string, props: IStepData): void {

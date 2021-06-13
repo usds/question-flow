@@ -1,6 +1,6 @@
 import { TAge }      from '../lib/types';
 import { IAnswer }   from '../survey/IAnswer';
-import { IQuestion } from '../survey/IStep';
+import { IQuestion } from '../survey/IQuestion';
 
 export class Answer implements IAnswer {
   public readonly started: Date;

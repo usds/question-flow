@@ -1,11 +1,12 @@
-import Form                         from '@rjsf/semantic-ui';
-import { Button }                   from '@trussworks/react-uswds';
-import { kebabCase }                from 'lodash';
-import { getStepSchema }            from '../../schema/editStepSchema';
-import { useGlobal }                from '../../state/GlobalState';
-import { IPageData, IQuestionData } from '../../survey/IStepData';
-import { Wizard }                   from '../lib';
-import { DesignLayout }             from '../wizard/DesignLayout';
+import Form              from '@rjsf/semantic-ui';
+import { Button }        from '@trussworks/react-uswds';
+import { kebabCase }     from 'lodash';
+import { getStepSchema } from '../../schema/editStepSchema';
+import { useGlobal }     from '../../state/GlobalState';
+import { IPageData }     from '../../survey/IPageData';
+import { IQuestionData } from '../../survey/IQuestionData';
+import { Wizard }        from '../lib';
+import { DesignLayout }  from '../wizard/DesignLayout';
 
 /**
  * Renders a question and a radio list of allowed answers

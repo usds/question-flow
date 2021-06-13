@@ -1,4 +1,5 @@
-import { TAge, TAgeCalc, TAnswers } from '../lib/types';
+import { TAge, TAgeCalc }  from '../lib/types';
+import { IRequiredAnswer } from './IRequiredAnswer';
 
 /**
  * Defines an individual requirement for accessing a step
@@ -14,7 +15,7 @@ export interface IRequirement {
    *
    * @title Answers
    */
-  answers: TAnswers;
+  answers: IRequiredAnswer[];
   /**
    * User facing description of this requirement
    *

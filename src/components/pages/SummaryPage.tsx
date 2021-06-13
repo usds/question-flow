@@ -1,6 +1,6 @@
 import { ReactNode }  from 'react';
 import { noel }       from '../../lib/noop';
-import { IPageData }  from '../../survey/IStepData';
+import { IPageData }  from '../../survey/IPageData';
 import { StepLayout } from '../wizard/StepLayout';
 
 /**

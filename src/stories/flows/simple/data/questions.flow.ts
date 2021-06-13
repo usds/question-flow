@@ -3,7 +3,7 @@
                 sonarjs/no-duplicate-string,
  */
 import { QUESTION_TYPE } from '../../../../lib/enums';
-import { IQuestion }     from '../../../../survey/IStep';
+import { IQuestion }     from '../../../../survey/IQuestion';
 
 /**
  * All of the questions, their answers and dependencies
@@ -31,9 +31,12 @@ export const questions: IQuestion[] = [
     internalNotes: 'users who don\'t like surveys',
     requirements:  [
       {
-        answers: {
-          A: [1], // no
-        },
+        answers: [
+          {
+            answers:  [{ id: '1' }],
+            question: { id: 'A' },
+          },
+        ],
       },
     ],
     section:  { id: 'confirmation' },
@@ -50,9 +53,12 @@ export const questions: IQuestion[] = [
     internalNotes: 'users who do like surveys',
     requirements:  [
       {
-        answers: {
-          A: [0],
-        },
+        answers: [
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'A' },
+          },
+        ],
       },
     ],
     section:  { id: 'confirmation' },
@@ -69,14 +75,20 @@ export const questions: IQuestion[] = [
     internalNotes: 'users who do like surveys',
     requirements:  [
       {
-        answers: {
-          C: [0, 1],
-        },
+        answers: [
+          {
+            answers:  [{ id: '0' }, { id: '1' }],
+            question: { id: 'C' },
+          },
+        ],
       },
       {
-        answers: {
-          B: [0, 1],
-        },
+        answers: [
+          {
+            answers:  [{ id: '0' }, { id: '1' }],
+            question: { id: 'B' },
+          },
+        ],
       },
     ],
     section:  { id: 'satisfaction' },

@@ -1,9 +1,11 @@
-import { isEnum, PAGE_TYPE, QUESTION_TYPE }    from '../../lib/enums';
-import { noel }                                from '../../lib/noop';
-import { useGlobal }                           from '../../state/GlobalState';
-import { IStep }                               from '../../survey/IStep';
-import { IPageData, IQuestionData, IStepData } from '../../survey/IStepData';
-import { EditStep }                            from '../design/Edit';
+import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '../../lib/enums';
+import { noel }                             from '../../lib/noop';
+import { useGlobal }                        from '../../state/GlobalState';
+import { IStep }                            from '../../survey/IStep';
+import { IStepData }                        from '../../survey/IStepData';
+import { IPageData }                        from '../../survey/IPageData';
+import { IQuestionData }                    from '../../survey/IQuestionData';
+import { EditStep }                         from '../design/Edit';
 /**
  * Given a step of a known question type, generates a question component
  * @param props

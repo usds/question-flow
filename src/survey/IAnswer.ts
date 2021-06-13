@@ -1,5 +1,5 @@
 import { TAge }      from '../lib/types';
-import { IQuestion } from './IStep';
+import { IQuestion } from './IQuestion';
 
 /**
  * Represents the survey as completed by the user

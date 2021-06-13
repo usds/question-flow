@@ -1,5 +1,6 @@
-import { IPage, IPages } from '../survey/IStep';
-import { PAGE_TYPE }     from './enums';
+import { IPage }     from '../survey/IPage';
+import { IPages }    from '../survey/IPages';
+import { PAGE_TYPE } from './enums';
 
 /**
  * Default landing step if none is defined

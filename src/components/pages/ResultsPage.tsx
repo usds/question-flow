@@ -1,5 +1,5 @@
 import { SummaryBox } from '@trussworks/react-uswds';
-import { IPageData }  from '../../survey/IStepData';
+import { IPageData }  from '../../survey/IPageData';
 import { StepLayout } from '../wizard/StepLayout';
 import { Pages }      from '../lib';
 import { useGlobal }  from '../../state/GlobalState';

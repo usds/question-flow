@@ -1,6 +1,7 @@
 import { merge }                            from 'lodash';
 import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '../lib/enums';
-import { IPageData, IQuestionData }         from '../survey/IStepData';
+import { IPageData }                        from '../survey/IPageData';
+import { IQuestionData }                    from '../survey/IQuestionData';
 import { surveySchema as survey }           from './index';
 
 const schemaPart = {

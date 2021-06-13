@@ -9,20 +9,22 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import { Helpers }                   from '../lib/helpers';
-import { TAge, TAgeCalc, TAnswers }  from '../lib/types';
-import { IQuestionableConfig }       from '../survey';
-import { IAction }                   from '../survey/IAction';
-import { IAnswer }                   from '../survey/IAnswer';
-import { IQuestionnaire }            from '../survey/IQuestionnaire';
-import { IRequirement }              from '../survey/IRequirement';
-import { IResult }                   from '../survey/IResult';
-import { ISection }                  from '../survey/ISection';
-import {
-  IPage, IPages, IQuestion, IStep,
-} from '../survey/IStep';
-import { IStepData }          from '../survey/IStepData';
-import { QuestionableConfig } from './Config';
+import { Helpers }             from '../lib/helpers';
+import { TAge, TAgeCalc }      from '../lib/types';
+import { IQuestionableConfig } from '../survey';
+import { IAction }             from '../survey/IAction';
+import { IAnswer }             from '../survey/IAnswer';
+import { IQuestionnaire }      from '../survey/IQuestionnaire';
+import { IRequirement }        from '../survey/IRequirement';
+import { IResult }             from '../survey/IResult';
+import { ISection }            from '../survey/ISection';
+import { IStep }               from '../survey/IStep';
+import { IQuestion }           from '../survey/IQuestion';
+import { IPage }               from '../survey/IPage';
+import { IPages }              from '../survey/IPages';
+import { IStepData }           from '../survey/IStepData';
+import { QuestionableConfig }  from './Config';
+import { IRequiredAnswer }     from '../survey/IRequiredAnswer';
 
 /**
  * Utility wrapper for survey state
@@ -83,6 +85,18 @@ export class Questionnaire implements IQuestionnaire {
       throw new Error(`Step id: ${id} is not a page`);
     }
     return ret as IPage;
+  }
+
+  /**
+   * Fetches a question by its id
+   * @param id unique identifier of the question
+   * @returns
+   */
+  getQuestion(q: Partial<IQuestion>): IQuestion {
+    if (!q.id) {
+      throw new Error(`Question ${q} is not defined`);
+    }
+    return this.getQuestionById(q.id);
   }
 
   /**
@@ -410,17 +424,17 @@ export class Questionnaire implements IQuestionnaire {
    * @param answers Collection of required answer Helpers.matches
    * @returns true if all answers are valid or if no answers are required
    */
-  private meetsAnswerRequirements(answers?: TAnswers): boolean {
-    if (!answers) return true;
+  private meetsAnswerRequirements(answers?: IRequiredAnswer[]): boolean {
+    if (!answers || answers.length <= 0) return true;
 
-    return Object.keys(answers).every((a) => {
-      const question = this.getQuestionById(a);
+    return answers.every((a) => {
+      const question = this.getQuestion(a.question);
       if (question.answers?.length > 0) {
         // Allowed answers are an array. Any matched answer makes the response valid.
-        return answers[a].some(
+        return a.answers.some(
           (i) =>
             question.answer !== undefined
-            && question.answer === question.answers.find((x) => x.id === `${i}`)?.title,
+            && question.answer === question.answers.find((x) => x.id === i.id)?.title,
         );
       }
       // If no answers are defined, this passes

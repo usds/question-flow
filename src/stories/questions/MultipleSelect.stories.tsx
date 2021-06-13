@@ -7,7 +7,7 @@ import { QUESTION_TYPE } from '../../lib';
 import { stepReducer } from '../../state';
 import { Answer } from '../../composable/Answer';
 import '../../stories/styles';
-import { IQuestionData } from '../../survey/IStepData';
+import { IQuestionData } from "../../survey/IQuestionData";
 import { MultipleSelect } from '../../components/questions/MultiSelect';
 
 export default {

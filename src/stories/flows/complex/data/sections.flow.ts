@@ -1,25 +1,24 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { ISection } from '../../../../survey/ISection';
 
 export const sections: ISection[] = [
   {
     id:           'introduction',
     name:         'Introduction',
-    requirements: [
-      {
-        answers: {
-          A: [0, 1], // All
-        },
-      },
-    ],
+    requirements: [],
   },
   {
     id:           'a0_work',
     name:         'Work',
     requirements: [
       {
-        answers: {
-          A: [0], // Only for adults
-        },
+        answers: [
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'A' },
+          },
+        ],
+        explanation: '18 or older',
       },
     ],
   },
@@ -28,9 +27,13 @@ export const sections: ISection[] = [
     name:         'Family',
     requirements: [
       {
-        answers: {
-          A: [0], // Adults
-        },
+        answers: [
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'A' },
+          },
+        ],
+        explanation: '18 or older',
       },
     ],
   },
@@ -39,9 +42,13 @@ export const sections: ISection[] = [
     name:         'Finances',
     requirements: [
       {
-        answers: {
-          A: [0], // Only for adults
-        },
+        answers: [
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'A' },
+          },
+        ],
+        explanation: '18 or older',
       },
     ],
   },
@@ -50,9 +57,13 @@ export const sections: ISection[] = [
     name:         'Disability',
     requirements: [
       {
-        answers: {
-          A: [1], // < 18
-        },
+        answers: [
+          {
+            answers:  [{ id: '1' }],
+            question: { id: 'A' },
+          },
+        ],
+        explanation: 'Is younger than 18',
       },
     ],
   },
@@ -61,9 +72,13 @@ export const sections: ISection[] = [
     name:         'Family',
     requirements: [
       {
-        answers: {
-          A: [1], // < 18
-        },
+        answers: [
+          {
+            answers:  [{ id: '1' }],
+            question: { id: 'A' },
+          },
+        ],
+        explanation: 'Is younger than 18',
       },
     ],
   },
@@ -72,9 +87,13 @@ export const sections: ISection[] = [
     name:         'Results',
     requirements: [
       {
-        answers: {
-          A: [0, 1], // All ages
-        },
+        answers: [
+          {
+            answers:  [{ id: '0' }, { id: '1' }],
+            question: { id: 'A' },
+          },
+        ],
+        explanation: 'Has answered the age question',
       },
     ],
   },

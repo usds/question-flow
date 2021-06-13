@@ -7,7 +7,7 @@ import { QUESTION_TYPE } from '../../lib';
 import { Answer } from '../../composable/Answer';
 import { stepReducer } from '../../state/stepReducer';
 import '../styles';
-import { IQuestionData } from '../../survey/IStepData';
+import { IQuestionData } from "../../survey/IQuestionData";
 import { DateOfBirth } from '../../components/questions/DateOfBirth';
 
 export default {
