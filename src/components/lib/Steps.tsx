@@ -46,9 +46,9 @@ export abstract class Steps {
     return Steps.isValid(props.form, props.step.id);
   }
 
-  public static isValid(form: IAnswer, question: string): boolean {
-    if (!form.answers[question]) return false;
-    const q       = form.answers[question];
+  public static isValid(form: IAnswer, questionId: string): boolean {
+    const q = form.answers.find((a) => a.id === questionId);
+    if (!q) return false;
     const answers = values(q.answers);
     switch (q.type) {
       case STEP_TYPE.DOB:

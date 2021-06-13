@@ -9,7 +9,7 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import { matches }                   from '../lib/string';
+import { Helpers }                   from '../lib/helpers';
 import { TAge, TAgeCalc, TAnswers }  from '../lib/types';
 import { IQuestionableConfig }       from '../survey';
 import { IAction }                   from '../survey/IAction';
@@ -173,7 +173,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   getProgressPercent(props: IStepData, config: IQuestionableConfig): number {
-    if (matches(props.step?.sectionId, PAGE_TYPE.RESULTS)) {
+    if (Helpers.matches(props.step?.sectionId, PAGE_TYPE.RESULTS)) {
       return 100;
     }
     const sections = this.getSections(props, config);
@@ -225,14 +225,14 @@ export class Questionnaire implements IQuestionnaire {
         (acc, q, index) => (q.sectionId === s.id ? index : acc),
         -1,
       );
-      if (matches(section.id, PAGE_TYPE.RESULTS)) {
+      if (Helpers.matches(section.id, PAGE_TYPE.RESULTS)) {
         section.lastStep = this.questions.length - 2;
-      } else if (matches(section.id, PAGE_TYPE.LANDING)) {
+      } else if (Helpers.matches(section.id, PAGE_TYPE.LANDING)) {
         section.lastStep = 0;
       }
       if (section.lastStep < 0) {
         section.status = PROGRESS_BAR_STATUS.INCOMPLETE;
-      } else if (matches(section.id, thisQuestion.sectionId)) {
+      } else if (Helpers.matches(section.id, thisQuestion.sectionId)) {
         section.status = PROGRESS_BAR_STATUS.CURRENT;
       } else if (section.lastStep < thisQuestionIdx) {
         section.status = PROGRESS_BAR_STATUS.COMPLETE;
@@ -407,7 +407,7 @@ export class Questionnaire implements IQuestionnaire {
 
   /**
    * Determines if current answers in the form meet the step's requirements
-   * @param answers Collection of required answer matches
+   * @param answers Collection of required answer Helpers.matches
    * @returns true if all answers are valid or if no answers are required
    */
   private meetsAnswerRequirements(answers?: TAnswers): boolean {

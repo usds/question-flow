@@ -1,5 +1,6 @@
-import { TAge }                 from '../lib/types';
-import { IAnswer, IAnswerList } from '../survey/IAnswer';
+import { TAge }      from '../lib/types';
+import { IAnswer }   from '../survey/IAnswer';
+import { IQuestion } from '../survey/IStep';
 
 export class Answer implements IAnswer {
   public readonly started: Date;
@@ -10,7 +11,7 @@ export class Answer implements IAnswer {
 
   public age?: TAge;
 
-  public answers: IAnswerList = {};
+  public answers: IQuestion[] = [];
 
   constructor(form: Partial<Answer> = {}) {
     Object.assign(this, form);

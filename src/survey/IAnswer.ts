@@ -1,10 +1,6 @@
 import { TAge }      from '../lib/types';
 import { IQuestion } from './IStep';
 
-export interface IAnswerList {
-  [key: string]: IQuestion;
-}
-
 /**
  * Represents the survey as completed by the user
  */
@@ -20,7 +16,7 @@ export interface IAnswer {
    *
    * @title Answers
    */
-  answers: IAnswerList;
+  answers: IQuestion[];
   /**
    * Customer's entered birthdate
    *

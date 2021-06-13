@@ -55,9 +55,12 @@
           "title": "Age"
         },
         "answers": {
-          "$ref": "#/definitions/IAnswerList",
           "description": "All currently provided answers",
-          "title": "Answers"
+          "items": {
+            "$ref": "#/definitions/IQuestion"
+          },
+          "title": "Answers",
+          "type": "array"
         },
         "birthdate": {
           "description": "Customer's entered birthdate",
@@ -83,10 +86,35 @@
       ],
       "type": "object"
     },
-    "IAnswerList": {
-      "additionalProperties": {
-        "$ref": "#/definitions/IQuestion"
+    "IButtonConfig": {
+      "description": "Configuration for buttons",
+      "properties": {
+        "defaultLabel": {
+          "description": "Default text to display if none is defined",
+          "type": "string"
+        },
+        "horizontalPos": {
+          "$ref": "#/definitions/THorizontalPosition",
+          "description": "Horizontal orientation (left or right)",
+          "title": "Horizontal Position"
+        },
+        "mode": {
+          "$ref": "#/definitions/TButtonMode",
+          "description": "Render mode (link or button)",
+          "title": "Mode"
+        },
+        "verticalPos": {
+          "$ref": "#/definitions/TVerticalPosition",
+          "description": "Vertical orientation (top or bottom)",
+          "title": "Vertical Position"
+        }
       },
+      "required": [
+        "defaultLabel",
+        "horizontalPos",
+        "mode",
+        "verticalPos"
+      ],
       "type": "object"
     },
     "IDesignData": {
@@ -118,6 +146,66 @@
       },
       "required": [
         "label"
+      ],
+      "type": "object"
+    },
+    "INavigationConfig": {
+      "description": "Configuration for navigation",
+      "properties": {
+        "next": {
+          "description": "Next/Forward button",
+          "properties": {
+            "defaultLabel": {
+              "description": "Default text to display if none is defined",
+              "type": "string"
+            },
+            "horizontalPos": {
+              "$ref": "#/definitions/THorizontalPosition",
+              "description": "Horizontal orientation (left or right)",
+              "title": "Horizontal Position"
+            },
+            "mode": {
+              "$ref": "#/definitions/TButtonMode",
+              "description": "Render mode (link or button)",
+              "title": "Mode"
+            },
+            "verticalPos": {
+              "$ref": "#/definitions/TVerticalPosition",
+              "description": "Vertical orientation (top or bottom)",
+              "title": "Vertical Position"
+            }
+          },
+          "type": "object"
+        },
+        "prev": {
+          "description": "Previous/Go back button",
+          "properties": {
+            "defaultLabel": {
+              "description": "Default text to display if none is defined",
+              "type": "string"
+            },
+            "horizontalPos": {
+              "$ref": "#/definitions/THorizontalPosition",
+              "description": "Horizontal orientation (left or right)",
+              "title": "Horizontal Position"
+            },
+            "mode": {
+              "$ref": "#/definitions/TButtonMode",
+              "description": "Render mode (link or button)",
+              "title": "Mode"
+            },
+            "verticalPos": {
+              "$ref": "#/definitions/TVerticalPosition",
+              "description": "Vertical orientation (top or bottom)",
+              "title": "Vertical Position"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "next",
+        "prev"
       ],
       "type": "object"
     },
@@ -278,7 +366,7 @@
           "type": "boolean"
         },
         "position": {
-          "$ref": "#/definitions/TProgressBarPosition",
+          "$ref": "#/definitions/TVerticalPosition",
           "description": "Vertical orientation of the progress bar",
           "title": "Position"
         },
@@ -378,6 +466,7 @@
       "description": "Configuration for question display",
       "properties": {
         "showAnswerBorder": {
+          "default": true,
           "description": "Determines whether to show border on radios and checkboxes",
           "title": "Show Answer Border",
           "type": "boolean"
@@ -415,6 +504,63 @@
           "description": "View or edit mode",
           "title": "Mode"
         },
+        "nav": {
+          "description": "Navigation configuration",
+          "properties": {
+            "next": {
+              "description": "Next/Forward button",
+              "properties": {
+                "defaultLabel": {
+                  "description": "Default text to display if none is defined",
+                  "type": "string"
+                },
+                "horizontalPos": {
+                  "$ref": "#/definitions/THorizontalPosition",
+                  "description": "Horizontal orientation (left or right)",
+                  "title": "Horizontal Position"
+                },
+                "mode": {
+                  "$ref": "#/definitions/TButtonMode",
+                  "description": "Render mode (link or button)",
+                  "title": "Mode"
+                },
+                "verticalPos": {
+                  "$ref": "#/definitions/TVerticalPosition",
+                  "description": "Vertical orientation (top or bottom)",
+                  "title": "Vertical Position"
+                }
+              },
+              "type": "object"
+            },
+            "prev": {
+              "description": "Previous/Go back button",
+              "properties": {
+                "defaultLabel": {
+                  "description": "Default text to display if none is defined",
+                  "type": "string"
+                },
+                "horizontalPos": {
+                  "$ref": "#/definitions/THorizontalPosition",
+                  "description": "Horizontal orientation (left or right)",
+                  "title": "Horizontal Position"
+                },
+                "mode": {
+                  "$ref": "#/definitions/TButtonMode",
+                  "description": "Render mode (link or button)",
+                  "title": "Mode"
+                },
+                "verticalPos": {
+                  "$ref": "#/definitions/TVerticalPosition",
+                  "description": "Vertical orientation (top or bottom)",
+                  "title": "Vertical Position"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "title": "Navigation",
+          "type": "object"
+        },
         "progressBar": {
           "description": "Progress Bar configuration",
           "properties": {
@@ -435,7 +581,7 @@
               "type": "boolean"
             },
             "position": {
-              "$ref": "#/definitions/TProgressBarPosition",
+              "$ref": "#/definitions/TVerticalPosition",
               "description": "Vertical orientation of the progress bar",
               "title": "Position"
             },
@@ -452,6 +598,7 @@
           "description": "Question configuration",
           "properties": {
             "showAnswerBorder": {
+              "default": true,
               "description": "Determines whether to show border on radios and checkboxes",
               "title": "Show Answer Border",
               "type": "boolean"
@@ -493,7 +640,8 @@
         }
       },
       "required": [
-        "mode"
+        "mode",
+        "nav"
       ],
       "type": "object"
     },
@@ -827,10 +975,17 @@
       "description": "Expresses a collection of answer requirements. Unique keys are joined together by `AND`. Keys represent a collection of allowed answer values joined by `OR`.",
       "type": "object"
     },
-    "TProgressBarPosition": {
+    "TButtonMode": {
       "enum": [
-        "top",
-        "bottom"
+        "link",
+        "button"
+      ],
+      "type": "string"
+    },
+    "THorizontalPosition": {
+      "enum": [
+        "left",
+        "right"
       ],
       "type": "string"
     },
@@ -853,6 +1008,13 @@
           "$ref": "#/definitions/DESIGN_TYPE"
         }
       ]
+    },
+    "TVerticalPosition": {
+      "enum": [
+        "top",
+        "bottom"
+      ],
+      "type": "string"
     }
   }
 }

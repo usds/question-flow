@@ -21,9 +21,7 @@ export abstract class Questions {
   private static updateForm(answer: string, props: IQuestionData): void {
     Object.assign(props.step, { answer });
     const value = {
-      answers: {
-        [props.step.id]: props.step,
-      },
+      answers: [props.step],
     };
     return props.dispatchForm({
       type: ACTION_TYPE.UPDATE,
@@ -41,7 +39,10 @@ export abstract class Questions {
     if (!props?.form) {
       return undefined;
     }
-    const q = props.form.answers[props.step.id];
+    const q = props.form.answers.find((a) => a.id === props.step.id);
+    if (!q) {
+      return undefined;
+    }
     return Steps.isValid(props.form, props.step.id) && q.answer === answer;
   }
 
