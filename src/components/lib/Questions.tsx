@@ -6,7 +6,7 @@ import { IQuestionData }             from '../../survey/IStepData';
 import { Steps }                     from './Steps';
 import { getDateTime }               from '../../lib/date';
 import { TDateOfBirth }              from '../../lib/types';
-import { IQuestionableConfig }       from '../../survey';
+import { IQuestionableConfig, IQuestionAnswer }       from '../../survey';
 
 /**
  * Static utility methods for question components
@@ -53,21 +53,21 @@ export abstract class Questions {
    * @returns
    */
   private static getRadio(
-    answer: string,
+    answer: IQuestionAnswer,
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
-    const handler = () => Questions.updateForm(answer, props);
-    const id      = Steps.getDomId(answer, props);
+    const handler = () => Questions.updateForm(answer.title, props);
+    const id      = Steps.getDomId(answer.title, props);
 
     return (
       <Radio
         id={id}
         key={id}
         name={Steps.getFieldSetName(props)}
-        label={answer}
-        value={answer}
-        checked={Questions.isSelected(answer, props) === true}
+        label={answer.title}
+        value={answer.title}
+        checked={Questions.isSelected(answer.title, props) === true}
         className={CSS_CLASS.MULTI_CHOICE}
         onChange={handler}
         onClick={handler}
@@ -88,8 +88,8 @@ export abstract class Questions {
       legendStyle="srOnly"
     >
       {
-        Object.keys(props.step.answers).map((a) =>
-          Questions.getRadio(props.step.answers[+a], props, config))
+        props.step.answers.map((a) =>
+          Questions.getRadio(a, props, config))
       }
     </Fieldset>);
   }
@@ -101,21 +101,21 @@ export abstract class Questions {
    * @returns
    */
   private static getCheckbox(
-    answer: string,
+    answer: IQuestionAnswer,
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
-    const handler = () => Questions.updateForm(answer, props);
-    const id      = Steps.getDomId(answer, props);
+    const handler = () => Questions.updateForm(answer.title, props);
+    const id      = Steps.getDomId(answer.title, props);
 
     return (
       <Checkbox
         id={id}
         key={id}
         name={Steps.getFieldSetName(props)}
-        label={answer}
-        value={answer}
-        checked={Questions.isSelected(answer, props) === true}
+        label={answer.title}
+        value={answer.title}
+        checked={Questions.isSelected(answer.title, props) === true}
         className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
@@ -137,8 +137,7 @@ export abstract class Questions {
         legendStyle="srOnly"
       >
       {
-        Object.keys(props.step.answers).map((a) =>
-          Questions.getCheckbox(props.step.answers[+a], props, config))
+        props.step.answers.map((a) => Questions.getCheckbox(a, props, config))
       }
       </Fieldset>
     );

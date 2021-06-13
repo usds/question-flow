@@ -415,12 +415,12 @@ export class Questionnaire implements IQuestionnaire {
 
     return Object.keys(answers).every((a) => {
       const question = this.getQuestionById(a);
-      if (Object.keys(question.answers)?.length > 0) {
+      if (question.answers?.length > 0) {
         // Allowed answers are an array. Any matched answer makes the response valid.
         return answers[a].some(
           (i) =>
             question.answer !== undefined
-            && question.answer === question.answers[i],
+            && question.answer === question.answers.find((x) => x.id === `${i}`)?.title,
         );
       }
       // If no answers are defined, this passes

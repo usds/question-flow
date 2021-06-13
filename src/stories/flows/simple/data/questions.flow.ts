@@ -10,10 +10,10 @@ import { IQuestion }     from '../../../../survey/IStep';
  */
 export const questions: IQuestion[] = [
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', title: 'Yes' },
+      { id: '1', title: 'No' },
+    ],
     id:            'A',
     info:          'It is a yes or no question',
     internalNotes: 'everone',
@@ -23,10 +23,10 @@ export const questions: IQuestion[] = [
     type:          QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', title: 'Yes' },
+      { id: '1', title: 'No' },
+    ],
     id:            'B',
     internalNotes: 'users who don\'t like surveys',
     requirements:  [
@@ -42,10 +42,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', title: 'Yes' },
+      { id: '1', title: 'No' },
+    ],
     id:            'C',
     internalNotes: 'users who do like surveys',
     requirements:  [
@@ -61,10 +61,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', title: 'Yes' },
+      { id: '1', title: 'No' },
+    ],
     id:            'D',
     internalNotes: 'users who do like surveys',
     requirements:  [

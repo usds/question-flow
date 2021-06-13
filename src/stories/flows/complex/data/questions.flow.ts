@@ -11,10 +11,10 @@ import { isFraCalculator } from './calculator.flow';
  */
 export const questions: IQuestion[] = [
   {
-    answers: {
-      0: 'An adult (age 18 and over)',
-      1: 'A child (under age 18)',
-    },
+    answers: [
+      { id: '0', title: 'An adult (age 18 and over)' },
+      { id: '1', title: 'A child (under age 18)' },
+    ],
     id:            'A',
     internalNotes: 'Anyone',
     sectionId:     'introduction',
@@ -23,7 +23,7 @@ export const questions: IQuestion[] = [
     type:          QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers:       {},
+    answers:       [],
     id:            'B',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -39,10 +39,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.DOB,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'C',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -65,10 +65,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'D',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -84,10 +84,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'E',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -107,10 +107,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'F',
     info:          'If your answer is "Yes", you may have heard doctors, social workers, and others say you have a disability.',
     internalNotes: 'Adults age 18 and over, but below FRA + 12 months',
@@ -131,10 +131,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'G',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -150,10 +150,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Before my 22nd birthday',
-      1: 'After my 22nd birthday',
-    },
+    answers: [
+      { id: '0', title: 'Before my 22nd birthday' },
+      { id: '1', title: 'After my 22nd birthday' },
+    ],
     id:            'H',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -173,12 +173,12 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: "Yes, but I'm separated from my spouse.",
-      2: 'No, but I was in the past.',
-      3: "No, I've never been married.",
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: "Yes, but I'm separated from my spouse." },
+      { id: '2', order: 3, title: 'No, but I was in the past.' },
+      { id: '3', order: 4, title: "No, I've never been married." },
+    ],
     id:            'I',
     info:          "You may be eligible for certain benefits if you're legally married now or were in the past.",
     internalNotes: 'Adults age 18 and over',
@@ -195,10 +195,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'J',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -215,10 +215,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'K',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -238,10 +238,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'L',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -258,10 +258,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'M',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -277,11 +277,11 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-      2: "I don't know",
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+      { id: '2', title: "I don't know" },
+    ],
     id:            'N',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -297,10 +297,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'O',
     info:          '"Widowed" may not be a term you use to describe yourself. It means that your spouse passed away during your marriage. This may have happened recently or a long time ago.',
     internalNotes: 'Adults age 18 and over',
@@ -334,10 +334,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'P',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -353,11 +353,11 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes, I have kids under the age of 16 who I take care of.',
-      1: 'Yes, I have kids over the age of 16 who I take care of.',
-      2: "No, I don't have kids who I take care of.",
-    },
+    answers: [
+      { id: '0', title: 'Yes, I have kids under the age of 16 who I take care of.' },
+      { id: '1', title: 'Yes, I have kids over the age of 16 who I take care of.' },
+      { id: '2', title: "No, I don't have kids who I take care of." },
+    ],
     id:            'Q',
     info:          'Some benefits consider your role as a birth, adoptive, or step parent.',
     internalNotes: 'Adults age 18 and over',
@@ -373,10 +373,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'R',
     info:          'If your answer is "Yes", you may have heard doctors, social workers, and others say they have a disability.',
     internalNotes: 'Adults age 18 and over',
@@ -395,10 +395,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'S',
     info:          'They may have been your birth, adoptive, or step parent. And, it may have happened recently or a long time ago.',
     internalNotes: 'Adults age 18 and over',
@@ -445,10 +445,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'T',
     info:          'Choose "No" if a grandparent, aunt, uncle, or someone else who isn\'t your parent takes care of you.',
     internalNotes: 'Adults age 18 and over',
@@ -464,11 +464,11 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-      2: "I don't know",
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+      { id: '2', title: "I don't know" },
+    ],
     id:            'U',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -489,11 +489,11 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: "Yes. I'm able to pay for food and my home without difficulty.",
-      1: "No. I make some money, but it's still difficult to pay for food and my home.",
-      2: "No. I don't make any money, so it's difficult to pay for food and my home.",
-    },
+    answers: [
+      { id: '0', title: "Yes. I'm able to pay for food and my home without difficulty." },
+      { id: '1', title: "No. I make some money, but it's still difficult to pay for food and my home." },
+      { id: '2', title: "No. I don't make any money, so it's difficult to pay for food and my home." },
+    ],
     id:            'V',
     internalNotes: 'Adults age 18 and over',
     requirements:  [
@@ -509,10 +509,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'W',
     info:          'If your answer is "Yes", you may have heard doctors, social workers, and others say they have a disability.',
     internalNotes: 'Children under 18',
@@ -528,10 +528,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'X',
     internalNotes: 'Children under 18',
     requirements:  [
@@ -548,10 +548,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'Y',
     info:          'The parent may have been their birth, adoptive, or step parent. And, it may have happened recently or a long time ago.',
     internalNotes: 'Children under 18',
@@ -567,10 +567,10 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+    ],
     id:            'Z',
     internalNotes: 'Children under 18',
     requirements:  [
@@ -586,11 +586,11 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: 'Yes',
-      1: 'No',
-      2: "I don't know",
-    },
+    answers: [
+      { id: '0', order: 1, title: 'Yes' },
+      { id: '1', order: 2, title: 'No' },
+      { id: '2', title: "I don't know" },
+    ],
     id:            'AA',
     internalNotes: 'Children under 18',
     requirements:  [
@@ -606,12 +606,12 @@ export const questions: IQuestion[] = [
     type:      QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
-    answers: {
-      0: "Yes, they're able to pay for food and a home without difficulty.",
-      1: "No, they make some money but it's difficult for them to pay for food and a home.",
-      2: "No, they don't make any money and it's very difficult for them to pay for food and a home.",
-      3: "I don't know if it's difficult for them to pay for food and a home.",
-    },
+    answers: [
+      { id: '0', title: "Yes, they're able to pay for food and a home without difficulty." },
+      { id: '1', title: "No, they make some money but it's difficult for them to pay for food and a home." },
+      { id: '2', title: "No, they don't make any money and it's very difficult for them to pay for food and a home." },
+      { id: '3', title: "I don't know if it's difficult for them to pay for food and a home." },
+    ],
     id:            'AB',
     internalNotes: 'Children under 18',
     requirements:  [

@@ -33,14 +33,6 @@ export type TAge = {
 export type TAgeCalc = (birthdate: string) => boolean;
 
 /**
- * List of possible answers to the question.
- * Maps answer as string value to index number of question
- */
-export type TAnswerMap = {
-  [key: number]: string;
-};
-
-/**
  * Expresses a collection of answer requirements.
  * Unique keys are joined together by `AND`.
  * Keys represent a collection of allowed answer values joined by `OR`.

@@ -25,7 +25,7 @@ DoB.args = {
   dispatchForm: stepReducer,
   form: new Answer(),
   step: {
-    answers: {},
+    answers: [],
     id: 'B',
     internalNotes: 'Adults age 18 and over',
     requirements: [],

@@ -1,5 +1,4 @@
 import { PAGE_TYPE, QUESTION_TYPE, TStepType } from '../lib/enums';
-import { TAnswerMap }                          from '../lib/types';
 import { IRequirement }                        from './IRequirement';
 
 /**
@@ -63,6 +62,15 @@ export interface IPage extends IStep {
 }
 
 /**
+ * Definition for answers to questions
+ */
+export interface IQuestionAnswer {
+  id: string;
+  order?: number;
+  title: string;
+}
+
+/**
  * Defines step content for Question type
  */
 export interface IQuestion extends IStep {
@@ -78,7 +86,7 @@ export interface IQuestion extends IStep {
    *
    * @title Answers
    */
-  answers: TAnswerMap;
+  answers: IQuestionAnswer[];
   /**
    * Type of question
    *

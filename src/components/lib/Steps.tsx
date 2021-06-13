@@ -54,7 +54,7 @@ export abstract class Steps {
       case STEP_TYPE.DOB:
         return undefined !== form?.age?.years && form.age.years > 0;
       case STEP_TYPE.MULTIPLE_CHOICE:
-        return q.answer !== undefined && answers?.indexOf(q.answer) !== -1;
+        return q.answer !== undefined && answers?.find((x) => x.title === q.answer) !== undefined;
       default:
         return true;
     }

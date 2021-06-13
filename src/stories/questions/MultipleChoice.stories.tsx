@@ -25,12 +25,12 @@ Radiolist.args = {
   dispatchForm: stepReducer,
   form: new Answer(),
   step: {
-    answers: {
-      0: 'Yes',
-      1: "Yes, but I'm separated from my spouse.",
-      2: 'No, but I was in the past.',
-      3: "No, I've never been married.",
-    },
+    answers: [
+      { id: '0', title: 'Yes' },
+      { id: '1', title: "Yes, but I'm separated from my spouse." },
+      { id: '2', title: 'No, but I was in the past.' },
+      { id: '3', title: "No, I've never been married." },
+    ],
     id: 'I',
     info: "You may be eligible for certain benefits if you're legally married now or were in the past.",
     internalNotes: 'Adults age 18 and over',
