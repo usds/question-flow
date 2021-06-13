@@ -29,7 +29,7 @@ DoB.args = {
     id: 'B',
     internalNotes: 'Adults age 18 and over',
     requirements: [],
-    sectionId: 'introduction',
+    section: { id: 'introduction' },
     subTitle:
       "Most Social Security benefits have age requirements, so we'll use your birthday to see how old you are.",
     title: 'Enter your birthday.',

@@ -173,7 +173,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   getProgressPercent(props: IStepData, config: IQuestionableConfig): number {
-    if (Helpers.matches(props.step?.sectionId, PAGE_TYPE.RESULTS)) {
+    if (Helpers.matches(props.step?.section?.id, PAGE_TYPE.RESULTS)) {
       return 100;
     }
     const sections = this.getSections(props, config);
@@ -222,7 +222,7 @@ export class Questionnaire implements IQuestionnaire {
     return sections.map((s) => {
       const section    = { ...s };
       section.lastStep = this.questions.reduce(
-        (acc, q, index) => (q.sectionId === s.id ? index : acc),
+        (acc, q, index) => (q.section.id === s.id ? index : acc),
         -1,
       );
       if (Helpers.matches(section.id, PAGE_TYPE.RESULTS)) {
@@ -232,7 +232,7 @@ export class Questionnaire implements IQuestionnaire {
       }
       if (section.lastStep < 0) {
         section.status = PROGRESS_BAR_STATUS.INCOMPLETE;
-      } else if (Helpers.matches(section.id, thisQuestion.sectionId)) {
+      } else if (Helpers.matches(section.id, thisQuestion.section.id)) {
         section.status = PROGRESS_BAR_STATUS.CURRENT;
       } else if (section.lastStep < thisQuestionIdx) {
         section.status = PROGRESS_BAR_STATUS.COMPLETE;

@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
-import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
-import { DateTime }                  from 'luxon';
-import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
-import { IQuestionData }             from '../../survey/IStepData';
-import { Steps }                     from './Steps';
-import { getDateTime }               from '../../lib/date';
-import { TDateOfBirth }              from '../../lib/types';
-import { IQuestionableConfig, IQuestionAnswer }       from '../../survey';
+import { Checkbox, Fieldset, Radio }            from '@trussworks/react-uswds';
+import { DateTime }                             from 'luxon';
+import { ACTION_TYPE, CSS_CLASS }               from '../../lib/enums';
+import { IQuestionData }                        from '../../survey/IStepData';
+import { Steps }                                from './Steps';
+import { getDateTime }                          from '../../lib/date';
+import { TDateOfBirth }                         from '../../lib/types';
+import { IQuestionableConfig, IQuestionAnswer } from '../../survey';
 
 /**
  * Static utility methods for question components

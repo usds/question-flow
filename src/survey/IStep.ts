@@ -1,5 +1,6 @@
 import { PAGE_TYPE, QUESTION_TYPE, TStepType } from '../lib/enums';
 import { IRequirement }                        from './IRequirement';
+import { ISection }                            from './ISection';
 
 /**
  * Defines required pages for the survey flow
@@ -164,10 +165,9 @@ export interface IStep {
   /**
    * Section to which this step belongs
    *
-   * @title Section Id
-   * @see {ISection}
+   * @title Section
    */
-  sectionId: string;
+  section: Partial<ISection>;
   /**
    * Text to display below the title
    *

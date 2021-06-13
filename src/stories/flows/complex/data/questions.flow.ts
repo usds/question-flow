@@ -17,7 +17,7 @@ export const questions: IQuestion[] = [
     ],
     id:            'A',
     internalNotes: 'Anyone',
-    sectionId:     'introduction',
+    section:       { id: 'introduction' },
     subTitle:      'To check eligibility for someone else, answer the questions based on their situation.',
     title:         'Who do you want to check eligibility for?',
     type:          QUESTION_TYPE.MULTIPLE_CHOICE,
@@ -33,10 +33,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'introduction',
-    subTitle:  "Most benefits have age requirements, so we'll use your birthday to see how old you are.",
-    title:     'Enter your birthday.',
-    type:      QUESTION_TYPE.DOB,
+    section:  { id: 'introduction' },
+    subTitle: "Most benefits have age requirements, so we'll use your birthday to see how old you are.",
+    title:    'Enter your birthday.',
+    type:     QUESTION_TYPE.DOB,
   },
   {
     answers: [
@@ -60,9 +60,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_work',
-    title:     'Do you attend high school full time?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_work' },
+    title:   'Do you attend high school full time?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -78,10 +78,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_work',
-    subTitle:  "When you work, part of your paycheck goes into benefits. That's why your work history is a primary consideration.",
-    title:     'Have you ever had a job in the United States?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_work' },
+    subTitle: "When you work, part of your paycheck goes into benefits. That's why your work history is a primary consideration.",
+    title:    'Have you ever had a job in the United States?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -101,10 +101,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_work',
-    subTitle:  "How long you've worked is also important. Ten years is often the magic number that's required.",
-    title:     "Think about the jobs you've had in the past. Have you worked for a total of 10 years or more?",
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_work' },
+    subTitle: "How long you've worked is also important. Ten years is often the magic number that's required.",
+    title:    "Think about the jobs you've had in the past. Have you worked for a total of 10 years or more?",
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -126,9 +126,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_work',
-    title:     'Do you have a condition, illness, or injury that limits the type of work you can do, or prevents you from working altogether? ',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_work' },
+    title:   'Do you have a condition, illness, or injury that limits the type of work you can do, or prevents you from working altogether? ',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -144,10 +144,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_work',
-    subTitle:  'benefits are there for you when your work is impacted for a long period of time.',
-    title:     'Do you expect the condition, illness, or injury to affect your ability to work for a year or more, or be terminal?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_work' },
+    subTitle: 'benefits are there for you when your work is impacted for a long period of time.',
+    title:    'Do you expect the condition, illness, or injury to affect your ability to work for a year or more, or be terminal?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -167,10 +167,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_work',
-    subTitle:  'Some benefits consider if it started to affect you when you were a kid, teenager, or young adult.',
-    title:     'When did the condition, illness, or injury start to affect your daily activities and ability to work?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_work' },
+    subTitle: 'Some benefits consider if it started to affect you when you were a kid, teenager, or young adult.',
+    title:    'When did the condition, illness, or injury start to affect your daily activities and ability to work?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -189,10 +189,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    subTitle:  'Long-term partnerships often resemble marriage, but our benefits require legal recognition in your state.',
-    title:     'Are you married?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_family' },
+    subTitle: 'Long-term partnerships often resemble marriage, but our benefits require legal recognition in your state.',
+    title:    'Are you married?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -209,10 +209,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    subTitle:  'Your own eligibility for certain benefits depends on whether your spouse gets payments right now.',
-    title:     'Does your spouse get benefits checks every month?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_family' },
+    subTitle: 'Your own eligibility for certain benefits depends on whether your spouse gets payments right now.',
+    title:    'Does your spouse get benefits checks every month?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -233,9 +233,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    title:     'Did you marry your spouse before you turned 60?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_family' },
+    title:   'Did you marry your spouse before you turned 60?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -252,10 +252,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    subTitle:  "You may be eligible for benefits based on a former spouse's work history even though you're no longer connected to them through marriage.",
-    title:     'Are you divorced?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_family' },
+    subTitle: "You may be eligible for benefits based on a former spouse's work history even though you're no longer connected to them through marriage.",
+    title:    'Are you divorced?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -271,10 +271,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    subTitle:  'How long you were married is an important factor. If you\'ve gotten divorced more than once, choose "Yes" if one of your marriages lasted for 10 years or more.',
-    title:     'Were you married for 10 years or more before you got divorced?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_family' },
+    subTitle: 'How long you were married is an important factor. If you\'ve gotten divorced more than once, choose "Yes" if one of your marriages lasted for 10 years or more.',
+    title:    'Were you married for 10 years or more before you got divorced?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -291,10 +291,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    subTitle:  "How long they've worked is also important. Ten years is often the magic number that's required.",
-    title:     'Has your former spouse worked for 10 years or more in the United States?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_family' },
+    subTitle: "How long they've worked is also important. Ten years is often the magic number that's required.",
+    title:    'Has your former spouse worked for 10 years or more in the United States?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -329,9 +329,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    title:     'Are you widowed?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_family' },
+    title:   'Are you widowed?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -347,10 +347,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    subTitle:  "You may be eligible for benefits based on your former spouse's work history.",
-    title:     'Did your spouse ever have a job in the United States before they passed away?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_family' },
+    subTitle: "You may be eligible for benefits based on your former spouse's work history.",
+    title:    'Did your spouse ever have a job in the United States before they passed away?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -368,9 +368,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    title:     'Do you have kids who you take care of?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_family' },
+    title:   'Do you have kids who you take care of?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -390,9 +390,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    title:     'Do any of your kids have a condition or illness that significantly affects their daily activities?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_family' },
+    title:   'Do any of your kids have a condition or illness that significantly affects their daily activities?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -440,9 +440,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    title:     'Have you experienced the loss of a parent?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_family' },
+    title:   'Have you experienced the loss of a parent?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -459,9 +459,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_family',
-    title:     "We're sorry you lost a loved one. Do you have one or multiple surviving parents who take care of you?",
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a0_family' },
+    title:   "We're sorry you lost a loved one. Do you have one or multiple surviving parents who take care of you?",
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -483,10 +483,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a1_family',
-    subTitle:  'Your own eligibility depends on whether your parent(s) get payments right now.',
-    title:     'Do your parent(s) receive benefits checks every month?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a1_family' },
+    subTitle: 'Your own eligibility depends on whether your parent(s) get payments right now.',
+    title:    'Do your parent(s) receive benefits checks every month?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -503,10 +503,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a0_finances',
-    subTitle:  "One of our benefits considers whether it's difficult to cover basic daily needs.",
-    title:     'Are you able to pay for food and a home without difficulty?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a0_finances' },
+    subTitle: "One of our benefits considers whether it's difficult to cover basic daily needs.",
+    title:    'Are you able to pay for food and a home without difficulty?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -523,9 +523,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a1_disability',
-    title:     'Does the child have a condition or illness that significantly affects their daily activities?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a1_disability' },
+    title:   'Does the child have a condition or illness that significantly affects their daily activities?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -542,10 +542,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a1_disability',
-    subTitle:  "benefits are there for you when the child's daily activities are affected for a long period of time.",
-    title:     'Do you expect the condition or illness to significantly affect their daily activities for a year or longer, or be terminal?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a1_disability' },
+    subTitle: "benefits are there for you when the child's daily activities are affected for a long period of time.",
+    title:    'Do you expect the condition or illness to significantly affect their daily activities for a year or longer, or be terminal?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -562,9 +562,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a1_family',
-    title:     'Has the child experienced the loss of a birth, adoptive, or step parent?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section: { id: 'a1_family' },
+    title:   'Has the child experienced the loss of a birth, adoptive, or step parent?',
+    type:    QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -580,10 +580,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a1_family',
-    subTitle:  'We realize you may be the surviving parent if you experienced the loss of your spouse.',
-    title:     "We're sorry they've lost a loved one. Do they have one or multiple surviving parents who take care of them?",
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a1_family' },
+    subTitle: 'We realize you may be the surviving parent if you experienced the loss of your spouse.',
+    title:    "We're sorry they've lost a loved one. Do they have one or multiple surviving parents who take care of them?",
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -600,10 +600,10 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a1_family',
-    subTitle:  "The child's eligibility depends on whether their parent(s) get payments right now.",
-    title:     'Do their parent(s) get benefits checks every month?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a1_family' },
+    subTitle: "The child's eligibility depends on whether their parent(s) get payments right now.",
+    title:    'Do their parent(s) get benefits checks every month?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
@@ -630,9 +630,9 @@ export const questions: IQuestion[] = [
         },
       },
     ],
-    sectionId: 'a1_family',
-    subTitle:  "One of our benefits considers whether it's difficult to cover basic daily needs.",
-    title:     'Are the parent(s) who take care of them able to pay for food and a home without difficulty?',
-    type:      QUESTION_TYPE.MULTIPLE_CHOICE,
+    section:  { id: 'a1_family' },
+    subTitle: "One of our benefits considers whether it's difficult to cover basic daily needs.",
+    title:    'Are the parent(s) who take care of them able to pay for food and a home without difficulty?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   },
 ];

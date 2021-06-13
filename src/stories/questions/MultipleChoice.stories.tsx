@@ -35,7 +35,7 @@ Radiolist.args = {
     info: "You may be eligible for certain benefits if you're legally married now or were in the past.",
     internalNotes: 'Adults age 18 and over',
     requirements: [],
-    sectionId: 'a0_family',
+    section: { id: 'a0_family'},
     subTitle:
       'Long-term partnerships often resemble marriage, but our benefits require legal recognition in your state.',
     title: 'Are you married?',
