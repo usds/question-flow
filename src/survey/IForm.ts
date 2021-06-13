@@ -4,19 +4,13 @@ import { IQuestion } from './IQuestion';
 /**
  * Represents the survey as completed by the user
  */
-export interface IAnswer {
+export interface IForm {
   /**
    * Customer's age in years/months/days
    *
    * @title Age
    */
   age?: TAge;
-  /**
-   * All currently provided answers
-   *
-   * @title Answers
-   */
-  answers: IQuestion[];
   /**
    * Customer's entered birthdate
    *
@@ -29,6 +23,12 @@ export interface IAnswer {
    * @title Finished
    */
   finished?: Date;
+  /**
+   * All currently provided responses
+   *
+   * @title Responses
+   */
+  responses: IQuestion[];
   /**
    * Time the survey was started
    *

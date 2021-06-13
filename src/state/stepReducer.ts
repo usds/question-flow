@@ -1,6 +1,6 @@
 import { merge }       from 'lodash';
 import { ACTION_TYPE } from '../lib/enums';
-import { IAnswer }     from '../survey/IAnswer';
+import { IForm }       from '../survey/IForm';
 import { Answer }      from '../composable/Answer';
 
 /**
@@ -10,10 +10,10 @@ import { Answer }      from '../composable/Answer';
  * @returns
  */
 export const stepReducer = (
-  previousState: IAnswer,
+  previousState: IForm,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: { type: ACTION_TYPE; value: any },
-): IAnswer => {
+): IForm => {
   // Action should never be null,
   // except when we attempt to storybook/test individual components in isolation
   switch (action?.type) {

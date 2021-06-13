@@ -31,7 +31,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'users who don\'t like surveys',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '1' }],
             question: { id: 'A' },
@@ -53,7 +53,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'users who do like surveys',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
@@ -75,7 +75,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'users who do like surveys',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }, { id: '1' }],
             question: { id: 'C' },
@@ -83,7 +83,7 @@ export const questions: IQuestion[] = [
         ],
       },
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }, { id: '1' }],
             question: { id: 'B' },

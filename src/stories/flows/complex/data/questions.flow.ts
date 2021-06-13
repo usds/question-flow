@@ -27,13 +27,13 @@ export const questions: IQuestion[] = [
     id:           'B',
     requirements: [
       {
-        answers: [
+        explanation: 'Is 18 or older',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
           },
         ],
-        explanation: 'Is 18 or older',
       },
     ],
     section:  { id: 'introduction' },
@@ -49,12 +49,6 @@ export const questions: IQuestion[] = [
     id:           'C',
     requirements: [
       {
-        answers: [
-          {
-            answers:  [{ id: '0' }],
-            question: { id: 'A' },
-          },
-        ],
         explanation: 'Is 18 or older',
         maxAge:      {
           months: 1,
@@ -64,6 +58,12 @@ export const questions: IQuestion[] = [
           months: 0,
           years:  18,
         },
+        responses: [
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'A' },
+          },
+        ],
       },
     ],
     section: { id: 'a0_work' },
@@ -79,13 +79,13 @@ export const questions: IQuestion[] = [
 
     requirements: [
       {
-        answers: [
+        explanation: 'Is 18 or older',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
           },
         ],
-        explanation: 'Is 18 or older',
       },
     ],
     section:  { id: 'a0_work' },
@@ -102,17 +102,17 @@ export const questions: IQuestion[] = [
 
     requirements: [
       {
-        answers: [
-          {
-            answers:  [{ id: '0' }],
-            question: { id: 'D' },
-          },
-        ],
         explanation: 'Has worked at all',
         minAge:      {
           months: 8,
           years:  61,
         },
+        responses: [
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'D' },
+          },
+        ],
       },
     ],
     section:  { id: 'a0_work' },
@@ -131,12 +131,12 @@ export const questions: IQuestion[] = [
     requirements:  [
       {
         ageCalc:     (birthday) => !isFraCalculator(birthday, 12),
-        answers:     [],
         explanation: 'Younger than FRA + 12 months',
         minAge:      {
           months: 0,
           years:  18,
         },
+        responses: [],
       },
     ],
     section: { id: 'a0_work' },
@@ -151,13 +151,13 @@ export const questions: IQuestion[] = [
     id:           'G',
     requirements: [
       {
-        answers: [
+        explanation: 'Is disabled and youger than FRA+ 12',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'F' },
           },
         ],
-        explanation: 'Is disabled and youger than FRA+ 12',
       },
     ],
     section:  { id: 'a0_work' },
@@ -173,17 +173,17 @@ export const questions: IQuestion[] = [
     id:           'H',
     requirements: [
       {
-        answers: [
-          {
-            answers:  [{ id: '0' }],
-            question: { id: 'G' },
-          },
-        ],
         explanation: 'Has disability',
         minAge:      {
           months: 0,
           years:  22,
         },
+        responses: [
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'G' },
+          },
+        ],
       },
     ],
     section:  { id: 'a0_work' },
@@ -202,13 +202,13 @@ export const questions: IQuestion[] = [
     info:         "You may be eligible for certain benefits if you're legally married now or were in the past.",
     requirements: [
       {
-        answers: [
+        explanation: 'Adult age 18 and over',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
           },
         ],
-        explanation: 'Adult age 18 and over',
       },
     ],
     section:  { id: 'a0_family' },
@@ -224,7 +224,8 @@ export const questions: IQuestion[] = [
     id:           'J',
     requirements: [
       {
-        answers: [
+        explanation: 'Married',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
@@ -234,7 +235,6 @@ export const questions: IQuestion[] = [
             question: { id: 'I' },
           },
         ],
-        explanation: 'Married',
       },
     ],
     section:  { id: 'a0_family' },
@@ -250,7 +250,12 @@ export const questions: IQuestion[] = [
     id:           'K',
     requirements: [
       {
-        answers: [
+        explanation: 'Spouse does not receive benefits',
+        minAge:      {
+          months: 0,
+          years:  60,
+        },
+        responses: [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
@@ -260,11 +265,6 @@ export const questions: IQuestion[] = [
             question: { id: 'J' },
           },
         ],
-        explanation: 'Spouse does not receive benefits',
-        minAge:      {
-          months: 0,
-          years:  60,
-        },
       },
     ],
     section: { id: 'a0_family' },
@@ -279,7 +279,8 @@ export const questions: IQuestion[] = [
     id:           'L',
     requirements: [
       {
-        answers: [
+        explanation: 'Not currently married but was in the past',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
@@ -289,7 +290,6 @@ export const questions: IQuestion[] = [
             question: { id: 'I' },
           },
         ],
-        explanation: 'Not currently married but was in the past',
       },
     ],
     section:  { id: 'a0_family' },
@@ -305,13 +305,13 @@ export const questions: IQuestion[] = [
     id:           'M',
     requirements: [
       {
-        answers: [
+        explanation: 'Divorced',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'L' },
           },
         ],
-        explanation: 'Divorced',
       },
     ],
     section:  { id: 'a0_family' },
@@ -328,13 +328,13 @@ export const questions: IQuestion[] = [
     id:           'N',
     requirements: [
       {
-        answers: [
+        explanation: 'Married 10 years or more before divorce',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'M' },
           },
         ],
-        explanation: 'Married 10 years or more before divorce',
       },
     ],
     section:  { id: 'a0_family' },
@@ -351,34 +351,35 @@ export const questions: IQuestion[] = [
     info:         '"Widowed" may not be a term you use to describe yourself. It means that your spouse passed away during your marriage. This may have happened recently or a long time ago.',
     requirements: [
       {
-        answers: [
+        explanation: 'Married before 60',
+        responses:   [
           {
             answers:  [{ id: '1' }],
             question: { id: 'K' },
           },
         ],
-        explanation: 'Married before 60',
       },
       {
-        answers: [
+        explanation: 'Not divorced',
+        responses:   [
           {
             answers:  [{ id: '1' }],
             question: { id: 'L' },
           },
         ],
-        explanation: 'Not divorced',
       },
       {
-        answers: [
+        explanation: 'Married >= 10 years before divorce',
+        responses:   [
           {
             answers:  [{ id: '1' }],
             question: { id: 'M' },
           },
         ],
-        explanation: 'Married >= 10 years before divorce',
       },
       {
-        answers: [
+        explanation: 'Former spouse worked',
+        responses:   [
           {
             answers: [
               // Former spouse worked >= 10 years
@@ -389,7 +390,6 @@ export const questions: IQuestion[] = [
             question: { id: 'N' },
           },
         ],
-        explanation: 'Former spouse worked',
       },
     ],
     section: { id: 'a0_family' },
@@ -404,7 +404,7 @@ export const questions: IQuestion[] = [
     id:           'P',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Widowed
@@ -428,7 +428,7 @@ export const questions: IQuestion[] = [
     info:         'Some benefits consider your role as a birth, adoptive, or step parent.',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Applying for someone who is >= 18
@@ -450,7 +450,7 @@ export const questions: IQuestion[] = [
     info:         'If your answer is "Yes", you may have heard doctors, social workers, and others say they have a disability.',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Have children < 16
@@ -477,13 +477,6 @@ export const questions: IQuestion[] = [
     info:         'They may have been your birth, adoptive, or step parent. And, it may have happened recently or a long time ago.',
     requirements: [
       {
-        answers: [
-          {
-            answers:  [{ id: '0' }],
-            // Attends high school
-            question: { id: 'C' },
-          },
-        ],
         maxAge: {
           months: 1,
           years:  19,
@@ -492,9 +485,24 @@ export const questions: IQuestion[] = [
           months: 0,
           years:  18,
         },
+        responses: [
+          {
+            answers:  [{ id: '0' }],
+            // Attends high school
+            question: { id: 'C' },
+          },
+        ],
       },
       {
-        answers: [
+        maxAge: {
+          months: 1,
+          years:  19,
+        },
+        minAge: {
+          months: 0,
+          years:  18,
+        },
+        responses: [
           {
             answers:  [{ id: '1' }],
             // Does not attend high school
@@ -506,27 +514,19 @@ export const questions: IQuestion[] = [
             question: { id: 'G' },
           },
         ],
-        maxAge: {
-          months: 1,
-          years:  19,
-        },
-        minAge: {
-          months: 0,
-          years:  18,
-        },
       },
       {
-        answers: [
+        minAge: {
+          months: 0,
+          years:  19,
+        },
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Disabled before 22nd birthday
             question: { id: 'H' },
           },
         ],
-        minAge: {
-          months: 0,
-          years:  19,
-        },
       },
     ],
     section: { id: 'a0_family' },
@@ -542,7 +542,7 @@ export const questions: IQuestion[] = [
     info:         'Choose "No" if a grandparent, aunt, uncle, or someone else who isn\'t your parent takes care of you.',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Has not lost a parent
@@ -564,7 +564,7 @@ export const questions: IQuestion[] = [
     id:           'U',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Has surving parent
@@ -573,7 +573,7 @@ export const questions: IQuestion[] = [
         ],
       },
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '1' }],
             // Has not lost a parent
@@ -596,7 +596,7 @@ export const questions: IQuestion[] = [
     id:           'V',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Applying for someone who is > 18
@@ -620,7 +620,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'Children under 18',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '1' }],
             // Applying for someone who is <= 18
@@ -642,7 +642,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'Children under 18',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '1' }],
             // Applying for someone who is <= 18
@@ -671,7 +671,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'Children under 18',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '1' }],
             // Applying for someone who is <= 18
@@ -693,7 +693,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'Children under 18',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }],
             // Child has lost parent
@@ -717,7 +717,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'Children under 18',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
 
             answers:  [{ id: '0' }],
@@ -743,7 +743,7 @@ export const questions: IQuestion[] = [
     internalNotes: 'Children under 18',
     requirements:  [
       {
-        answers: [
+        responses: [
           {
             answers: [
               // Parents do get SS
@@ -758,7 +758,7 @@ export const questions: IQuestion[] = [
         ],
       },
       {
-        answers: [
+        responses: [
           {
 
             answers:  [{ id: '0' }],

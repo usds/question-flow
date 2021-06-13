@@ -2,7 +2,7 @@ import { kebabCase, values }        from 'lodash';
 import { QuestionableConfig }       from '../../composable/Config';
 import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
 import { Questionnaire }            from '../../composable/Questionnaire';
-import { IAnswer }                  from '../../survey/IAnswer';
+import { IForm }                    from '../../survey/IForm';
 import { IStepData }                from '../../survey/IStepData';
 import { IQuestionData }            from '../../survey/IQuestionData';
 
@@ -47,8 +47,8 @@ export abstract class Steps {
     return Steps.isValid(props.form, props.step.id);
   }
 
-  public static isValid(form: IAnswer, questionId: string): boolean {
-    const q = form.answers.find((a) => a.id === questionId);
+  public static isValid(form: IForm, questionId: string): boolean {
+    const q = form.responses.find((a) => a.id === questionId);
     if (!q) return false;
     const answers = values(q.answers);
     switch (q.type) {

@@ -1,5 +1,5 @@
-import { TAge, TAgeCalc }  from '../lib/types';
-import { IRequiredAnswer } from './IRequiredAnswer';
+import { TAge, TAgeCalc } from '../lib/types';
+import { IResponse }      from './IResponse';
 
 /**
  * Defines an individual requirement for accessing a step
@@ -10,12 +10,6 @@ export interface IRequirement {
    * @hidden JSON schema does not support functions
    */
   ageCalc?: TAgeCalc;
-  /**
-   * Map of step id to required answer values
-   *
-   * @title Answers
-   */
-  answers: IRequiredAnswer[];
   /**
    * User facing description of this requirement
    *
@@ -34,4 +28,10 @@ export interface IRequirement {
    * @title Minimum Age
    */
   minAge?: TAge;
+  /**
+   * Map of step id to required answer values
+   *
+   * @title Answers
+   */
+  responses: IResponse[];
 }

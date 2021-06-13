@@ -40,7 +40,7 @@ export abstract class Questions {
     if (!props?.form) {
       return undefined;
     }
-    const q = props.form.answers.find((a) => a.id === props.step.id);
+    const q = props.form.responses.find((a) => a.id === props.step.id);
     if (!q) {
       return undefined;
     }

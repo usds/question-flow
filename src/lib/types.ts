@@ -32,22 +32,6 @@ export type TAge = {
  */
 export type TAgeCalc = (birthdate: string) => boolean;
 
-/**
- * Expresses a collection of answer requirements.
- * Unique keys are joined together by `AND`.
- * Keys represent a collection of allowed answer values joined by `OR`.
- */
-export type TAnswers = {
-  [key: string]: number[];
-};
-
-/**
- * Map sections to their last step by index
- */
-export type TSectionMap = {
-  [key: string]: number;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TReducer = (...params: any) => void;
 

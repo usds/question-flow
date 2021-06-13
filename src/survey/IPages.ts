@@ -3,7 +3,6 @@ import { IPage } from './IPage';
 /**
  * Defines required pages for the survey flow
  */
-
 export interface IPages {
   /**
    * First step of the survey

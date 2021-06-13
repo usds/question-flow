@@ -13,7 +13,7 @@ import { Helpers }             from '../lib/helpers';
 import { TAge, TAgeCalc }      from '../lib/types';
 import { IQuestionableConfig } from '../survey';
 import { IAction }             from '../survey/IAction';
-import { IAnswer }             from '../survey/IAnswer';
+import { IForm }               from '../survey/IForm';
 import { IQuestionnaire }      from '../survey/IQuestionnaire';
 import { IRequirement }        from '../survey/IRequirement';
 import { IResult }             from '../survey/IResult';
@@ -24,7 +24,7 @@ import { IPage }               from '../survey/IPage';
 import { IPages }              from '../survey/IPages';
 import { IStepData }           from '../survey/IStepData';
 import { QuestionableConfig }  from './Config';
-import { IRequiredAnswer }     from '../survey/IRequiredAnswer';
+import { IResponse }           from '../survey/IResponse';
 
 /**
  * Utility wrapper for survey state
@@ -117,7 +117,7 @@ export class Questionnaire implements IQuestionnaire {
    */
   getStep(
     thisStep: string,
-    form: IAnswer,
+    form: IForm,
     direction: DIRECTION,
     config = new QuestionableConfig(),
   ): string {
@@ -260,7 +260,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param form
    * @returns
    */
-  getResults(form: IAnswer): IResult[] {
+  getResults(form: IForm): IResult[] {
     return this.results.filter((r) =>
       r.requirements.some((match) => {
         if (this.meetsAllRequirements(match, form)) {
@@ -337,9 +337,9 @@ export class Questionnaire implements IQuestionnaire {
     }
   }
 
-  private meetsAllRequirements(requirement: IRequirement, form: IAnswer) {
+  private meetsAllRequirements(requirement: IRequirement, form: IForm) {
     const {
-      minAge, maxAge, answers, ageCalc,
+      minAge, maxAge, responses: answers, ageCalc,
     } = requirement;
     // Internal to each requirement, all evaluations are `AND`
     // This safely handles cases where requirement parameters are undefined
@@ -358,7 +358,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns true if no min age, else true if age is >= min age
    */
   private static meetsMinAgeRequirements(
-    form: IAnswer,
+    form: IForm,
     minAge?: TAge,
   ): boolean {
     if (!minAge) return true;
@@ -383,7 +383,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns true if no max age, else true if age is <= max age
    */
   private static meetsMaxAgeRequirements(
-    form: IAnswer,
+    form: IForm,
     maxAge?: TAge,
   ): boolean {
     if (!maxAge) return true;
@@ -407,7 +407,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   private static meetsAgeCalcRequirements(
-    form: IAnswer,
+    form: IForm,
     ageCalc?: TAgeCalc,
   ): boolean {
     if (!ageCalc) return true;
@@ -424,7 +424,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param answers Collection of required answer Helpers.matches
    * @returns true if all answers are valid or if no answers are required
    */
-  private meetsAnswerRequirements(answers?: IRequiredAnswer[]): boolean {
+  private meetsAnswerRequirements(answers?: IResponse[]): boolean {
     if (!answers || answers.length <= 0) return true;
 
     return answers.every((a) => {

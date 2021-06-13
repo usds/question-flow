@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { IWizard }   from 'use-wizard/lib/cjs/useWizard/types/IWizard';
 import { TStep }     from 'use-wizard/lib/cjs/useWizard/types/TStep';
 import { TReducer }  from '../lib/types';
-import { IAnswer }   from './IAnswer';
+import { IForm }     from './IForm';
 import { IStep }     from './IStep';
 
 /**
@@ -26,7 +26,7 @@ export interface IStepData {
    *
    * @title Form
    */
-  form: IAnswer;
+  form: IForm;
   /**
    * Current step
    *

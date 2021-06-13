@@ -12,13 +12,13 @@ export const sections: ISection[] = [
     name:         'Work',
     requirements: [
       {
-        answers: [
+        explanation: '18 or older',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
           },
         ],
-        explanation: '18 or older',
       },
     ],
   },
@@ -27,13 +27,13 @@ export const sections: ISection[] = [
     name:         'Family',
     requirements: [
       {
-        answers: [
+        explanation: '18 or older',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
           },
         ],
-        explanation: '18 or older',
       },
     ],
   },
@@ -42,13 +42,13 @@ export const sections: ISection[] = [
     name:         'Finances',
     requirements: [
       {
-        answers: [
+        explanation: '18 or older',
+        responses:   [
           {
             answers:  [{ id: '0' }],
             question: { id: 'A' },
           },
         ],
-        explanation: '18 or older',
       },
     ],
   },
@@ -57,13 +57,13 @@ export const sections: ISection[] = [
     name:         'Disability',
     requirements: [
       {
-        answers: [
+        explanation: 'Is younger than 18',
+        responses:   [
           {
             answers:  [{ id: '1' }],
             question: { id: 'A' },
           },
         ],
-        explanation: 'Is younger than 18',
       },
     ],
   },
@@ -72,13 +72,13 @@ export const sections: ISection[] = [
     name:         'Family',
     requirements: [
       {
-        answers: [
+        explanation: 'Is younger than 18',
+        responses:   [
           {
             answers:  [{ id: '1' }],
             question: { id: 'A' },
           },
         ],
-        explanation: 'Is younger than 18',
       },
     ],
   },
@@ -87,13 +87,13 @@ export const sections: ISection[] = [
     name:         'Results',
     requirements: [
       {
-        answers: [
+        explanation: 'Has answered the age question',
+        responses:   [
           {
             answers:  [{ id: '0' }, { id: '1' }],
             question: { id: 'A' },
           },
         ],
-        explanation: 'Has answered the age question',
       },
     ],
   },

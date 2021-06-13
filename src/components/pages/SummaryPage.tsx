@@ -9,7 +9,7 @@ import { StepLayout } from '../wizard/StepLayout';
  * @returns
  */
 const getAnswers = (props: IPageData): ReactNode => {
-  const answers = props.form.answers.map((question) => (
+  const answers = props.form.responses.map((question) => (
       <li key={question.id} className="padding-bottom-2">
         <span className="text-light">
           {question.title}:&nbsp;&nbsp;

@@ -11,7 +11,7 @@ export const sections: ISection[] = [
     name:         'Confirmation',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }, { id: '1' }],
             question: { id: 'C' },
@@ -25,7 +25,7 @@ export const sections: ISection[] = [
     name:         'Satisfaction',
     requirements: [
       {
-        answers: [
+        responses: [
           {
             answers:  [{ id: '0' }, { id: '1' }],
             question: { id: 'A' },
