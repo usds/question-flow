@@ -809,5 +809,5 @@ interface IQuestionData extends IStepData {
     step: IQuestion;
 }
 declare const surveySchema: any;
-export { Questionable, IAction, IForm, IDesignData, INavButton, IPageData, IPages, IQuestionAnswer, IQuestionData, IQuestionableConfig, IStepConfig, IProgressBarConfig, IQuestionConfig, IButtonConfig, INavigationConfig, IQuestionnaire, IResult, IResponse, IStep, IQuestion, IPage, IRequirement, ISection, IStepData, surveySchema };
+export { Questionable, QuestionableConfig, Questionnaire, IAction, IForm, IDesignData, INavButton, IPageData, IPages, IQuestionAnswer, IQuestionData, IQuestionableConfig, IStepConfig, IProgressBarConfig, IQuestionConfig, IButtonConfig, INavigationConfig, IQuestionnaire, IResult, IResponse, IStep, IQuestion, IPage, IRequirement, ISection, IStepData, surveySchema };
 //# sourceMappingURL=index.d.ts.map

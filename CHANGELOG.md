@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/usds/questionable/compare/v1.1.2...v1.1.3) (2021-06-14)
+
+
+### Bug Fixes
+
+* **exports:** correctly exports configurable classes ([#53](https://github.com/usds/questionable/issues/53)) ([1476e30](https://github.com/usds/questionable/commit/1476e30bf600bc6ddd59051c0b6f71fbd9e3a96c))
+
 ## [1.1.2](https://github.com/usds/questionable/compare/v1.1.1...v1.1.2) (2021-06-14)
 
 
