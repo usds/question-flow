@@ -46,54 +46,42 @@
       ],
       "type": "object"
     },
-    "IAnswer": {
-      "description": "Represents the survey as completed by the user",
+    "IButtonConfig": {
+      "description": "Configuration for buttons",
       "properties": {
-        "age": {
-          "$ref": "#/definitions/TAge",
-          "description": "Customer's age in years/months/days",
-          "title": "Age"
-        },
-        "answers": {
-          "$ref": "#/definitions/IAnswerList",
-          "description": "All currently provided answers",
-          "title": "Answers"
-        },
-        "birthdate": {
-          "description": "Customer's entered birthdate",
-          "title": "Birthdate",
+        "defaultLabel": {
+          "description": "Default text to display if none is defined",
           "type": "string"
         },
-        "finished": {
-          "description": "Time the survey was completed",
-          "format": "date-time",
-          "title": "Finished",
-          "type": "string"
+        "horizontalPos": {
+          "$ref": "#/definitions/THorizontalPosition",
+          "description": "Horizontal orientation (left or right)",
+          "title": "Horizontal Position"
         },
-        "started": {
-          "description": "Time the survey was started",
-          "format": "date-time",
-          "title": "Started",
-          "type": "string"
+        "mode": {
+          "$ref": "#/definitions/TButtonMode",
+          "description": "Render mode (link or button)",
+          "title": "Mode"
+        },
+        "verticalPos": {
+          "$ref": "#/definitions/TVerticalPosition",
+          "description": "Vertical orientation (top or bottom)",
+          "title": "Vertical Position"
         }
       },
       "required": [
-        "answers",
-        "started"
+        "defaultLabel",
+        "horizontalPos",
+        "mode",
+        "verticalPos"
       ],
-      "type": "object"
-    },
-    "IAnswerList": {
-      "additionalProperties": {
-        "$ref": "#/definitions/IQuestion"
-      },
       "type": "object"
     },
     "IDesignData": {
       "description": "Data defintion for design step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -108,6 +96,46 @@
       ],
       "type": "object"
     },
+    "IForm": {
+      "description": "Represents the survey as completed by the user",
+      "properties": {
+        "age": {
+          "$ref": "#/definitions/TAge",
+          "description": "Customer's age in years/months/days",
+          "title": "Age"
+        },
+        "birthdate": {
+          "description": "Customer's entered birthdate",
+          "title": "Birthdate",
+          "type": "string"
+        },
+        "finished": {
+          "description": "Time the survey was completed",
+          "format": "date-time",
+          "title": "Finished",
+          "type": "string"
+        },
+        "responses": {
+          "description": "All currently provided responses",
+          "items": {
+            "$ref": "#/definitions/IQuestion"
+          },
+          "title": "Responses",
+          "type": "array"
+        },
+        "started": {
+          "description": "Time the survey was started",
+          "format": "date-time",
+          "title": "Started",
+          "type": "string"
+        }
+      },
+      "required": [
+        "responses",
+        "started"
+      ],
+      "type": "object"
+    },
     "INavButton": {
       "description": "Represents a navigation button",
       "properties": {
@@ -118,6 +146,66 @@
       },
       "required": [
         "label"
+      ],
+      "type": "object"
+    },
+    "INavigationConfig": {
+      "description": "Configuration for navigation",
+      "properties": {
+        "next": {
+          "description": "Next/Forward button",
+          "properties": {
+            "defaultLabel": {
+              "description": "Default text to display if none is defined",
+              "type": "string"
+            },
+            "horizontalPos": {
+              "$ref": "#/definitions/THorizontalPosition",
+              "description": "Horizontal orientation (left or right)",
+              "title": "Horizontal Position"
+            },
+            "mode": {
+              "$ref": "#/definitions/TButtonMode",
+              "description": "Render mode (link or button)",
+              "title": "Mode"
+            },
+            "verticalPos": {
+              "$ref": "#/definitions/TVerticalPosition",
+              "description": "Vertical orientation (top or bottom)",
+              "title": "Vertical Position"
+            }
+          },
+          "type": "object"
+        },
+        "prev": {
+          "description": "Previous/Go back button",
+          "properties": {
+            "defaultLabel": {
+              "description": "Default text to display if none is defined",
+              "type": "string"
+            },
+            "horizontalPos": {
+              "$ref": "#/definitions/THorizontalPosition",
+              "description": "Horizontal orientation (left or right)",
+              "title": "Horizontal Position"
+            },
+            "mode": {
+              "$ref": "#/definitions/TButtonMode",
+              "description": "Render mode (link or button)",
+              "title": "Mode"
+            },
+            "verticalPos": {
+              "$ref": "#/definitions/TVerticalPosition",
+              "description": "Vertical orientation (top or bottom)",
+              "title": "Vertical Position"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "next",
+        "prev"
       ],
       "type": "object"
     },
@@ -179,10 +267,25 @@
           "title": "Requirements",
           "type": "array"
         },
-        "sectionId": {
+        "section": {
           "description": "Section to which this step belongs",
-          "title": "Section Id",
-          "type": "string"
+          "properties": {
+            "name": {
+              "description": "The display name of this section",
+              "title": "Name",
+              "type": "string"
+            },
+            "requirements": {
+              "description": "Collection of requirements to enable display of this status",
+              "items": {
+                "$ref": "#/definitions/IRequirement"
+              },
+              "title": "Requirements",
+              "type": "array"
+            }
+          },
+          "title": "Section",
+          "type": "object"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -201,7 +304,7 @@
         }
       },
       "required": [
-        "sectionId",
+        "section",
         "title",
         "type"
       ],
@@ -211,7 +314,7 @@
       "description": "Data defintion for page step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -278,7 +381,7 @@
           "type": "boolean"
         },
         "position": {
-          "$ref": "#/definitions/TProgressBarPosition",
+          "$ref": "#/definitions/TVerticalPosition",
           "description": "Vertical orientation of the progress bar",
           "title": "Position"
         },
@@ -301,9 +404,12 @@
       "description": "Defines step content for Question type",
       "properties": {
         "answers": {
-          "$ref": "#/definitions/TAnswerMap",
           "description": "Collection of allowed answers",
-          "title": "Answers"
+          "items": {
+            "$ref": "#/definitions/IQuestionAnswer"
+          },
+          "title": "Answers",
+          "type": "array"
         },
         "buttons": {
           "description": "Collection of navigation buttons",
@@ -345,10 +451,25 @@
           "title": "Requirements",
           "type": "array"
         },
-        "sectionId": {
+        "section": {
           "description": "Section to which this step belongs",
-          "title": "Section Id",
-          "type": "string"
+          "properties": {
+            "name": {
+              "description": "The display name of this section",
+              "title": "Name",
+              "type": "string"
+            },
+            "requirements": {
+              "description": "Collection of requirements to enable display of this status",
+              "items": {
+                "$ref": "#/definitions/IRequirement"
+              },
+              "title": "Requirements",
+              "type": "array"
+            }
+          },
+          "title": "Section",
+          "type": "object"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -368,9 +489,28 @@
       },
       "required": [
         "answers",
-        "sectionId",
+        "section",
         "title",
         "type"
+      ],
+      "type": "object"
+    },
+    "IQuestionAnswer": {
+      "description": "Definition for answers to questions",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title"
       ],
       "type": "object"
     },
@@ -378,6 +518,7 @@
       "description": "Configuration for question display",
       "properties": {
         "showAnswerBorder": {
+          "default": true,
           "description": "Determines whether to show border on radios and checkboxes",
           "title": "Show Answer Border",
           "type": "boolean"
@@ -392,7 +533,7 @@
       "description": "Data defintion for question step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -415,6 +556,63 @@
           "description": "View or edit mode",
           "title": "Mode"
         },
+        "nav": {
+          "description": "Navigation configuration",
+          "properties": {
+            "next": {
+              "description": "Next/Forward button",
+              "properties": {
+                "defaultLabel": {
+                  "description": "Default text to display if none is defined",
+                  "type": "string"
+                },
+                "horizontalPos": {
+                  "$ref": "#/definitions/THorizontalPosition",
+                  "description": "Horizontal orientation (left or right)",
+                  "title": "Horizontal Position"
+                },
+                "mode": {
+                  "$ref": "#/definitions/TButtonMode",
+                  "description": "Render mode (link or button)",
+                  "title": "Mode"
+                },
+                "verticalPos": {
+                  "$ref": "#/definitions/TVerticalPosition",
+                  "description": "Vertical orientation (top or bottom)",
+                  "title": "Vertical Position"
+                }
+              },
+              "type": "object"
+            },
+            "prev": {
+              "description": "Previous/Go back button",
+              "properties": {
+                "defaultLabel": {
+                  "description": "Default text to display if none is defined",
+                  "type": "string"
+                },
+                "horizontalPos": {
+                  "$ref": "#/definitions/THorizontalPosition",
+                  "description": "Horizontal orientation (left or right)",
+                  "title": "Horizontal Position"
+                },
+                "mode": {
+                  "$ref": "#/definitions/TButtonMode",
+                  "description": "Render mode (link or button)",
+                  "title": "Mode"
+                },
+                "verticalPos": {
+                  "$ref": "#/definitions/TVerticalPosition",
+                  "description": "Vertical orientation (top or bottom)",
+                  "title": "Vertical Position"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "title": "Navigation",
+          "type": "object"
+        },
         "progressBar": {
           "description": "Progress Bar configuration",
           "properties": {
@@ -435,7 +633,7 @@
               "type": "boolean"
             },
             "position": {
-              "$ref": "#/definitions/TProgressBarPosition",
+              "$ref": "#/definitions/TVerticalPosition",
               "description": "Vertical orientation of the progress bar",
               "title": "Position"
             },
@@ -452,6 +650,7 @@
           "description": "Question configuration",
           "properties": {
             "showAnswerBorder": {
+              "default": true,
               "description": "Determines whether to show border on radios and checkboxes",
               "title": "Show Answer Border",
               "type": "boolean"
@@ -493,7 +692,8 @@
         }
       },
       "required": [
-        "mode"
+        "mode",
+        "nav"
       ],
       "type": "object"
     },
@@ -544,11 +744,6 @@
     "IRequirement": {
       "description": "Defines an individual requirement for accessing a step",
       "properties": {
-        "answers": {
-          "$ref": "#/definitions/TAnswers",
-          "description": "Map of step id to required answer values",
-          "title": "Answers"
-        },
         "explanation": {
           "description": "User facing description of this requirement",
           "title": "Exlanation",
@@ -563,10 +758,79 @@
           "$ref": "#/definitions/TAge",
           "description": "Optional minimum age allowed for this requirement",
           "title": "Minimum Age"
+        },
+        "responses": {
+          "description": "Map of step id to required answer values",
+          "items": {
+            "$ref": "#/definitions/IResponse"
+          },
+          "title": "Answers",
+          "type": "array"
         }
       },
       "required": [
-        "answers"
+        "responses"
+      ],
+      "type": "object"
+    },
+    "IResponse": {
+      "description": "Acceptable responses",
+      "properties": {
+        "answers": {
+          "items": {
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "order": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "question": {
+          "properties": {
+            "answers": {
+              "description": "Collection of allowed answers",
+              "items": {
+                "$ref": "#/definitions/IQuestionAnswer"
+              },
+              "title": "Answers",
+              "type": "array"
+            },
+            "buttons": {
+            },
+            "footer": {
+            },
+            "info": {
+            },
+            "internalNotes": {
+            },
+            "requirements": {
+            },
+            "section": {
+            },
+            "subTitle": {
+            },
+            "title": {
+            },
+            "type": {
+              "$ref": "#/definitions/QUESTION_TYPE",
+              "description": "Type of question",
+              "title": "Question Type"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "answers",
+        "question"
       ],
       "type": "object"
     },
@@ -665,10 +929,25 @@
           "title": "Requirements",
           "type": "array"
         },
-        "sectionId": {
+        "section": {
           "description": "Section to which this step belongs",
-          "title": "Section Id",
-          "type": "string"
+          "properties": {
+            "name": {
+              "description": "The display name of this section",
+              "title": "Name",
+              "type": "string"
+            },
+            "requirements": {
+              "description": "Collection of requirements to enable display of this status",
+              "items": {
+                "$ref": "#/definitions/IRequirement"
+              },
+              "title": "Requirements",
+              "type": "array"
+            }
+          },
+          "title": "Section",
+          "type": "object"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -687,7 +966,7 @@
         }
       },
       "required": [
-        "sectionId",
+        "section",
         "title",
         "type"
       ],
@@ -732,7 +1011,7 @@
       "description": "Data defintion for base wizard step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -810,27 +1089,17 @@
       ],
       "type": "object"
     },
-    "TAnswerMap": {
-      "additionalProperties": {
-        "type": "string"
-      },
-      "description": "List of possible answers to the question. Maps answer as string value to index number of question",
-      "type": "object"
-    },
-    "TAnswers": {
-      "additionalProperties": {
-        "items": {
-          "type": "number"
-        },
-        "type": "array"
-      },
-      "description": "Expresses a collection of answer requirements. Unique keys are joined together by `AND`. Keys represent a collection of allowed answer values joined by `OR`.",
-      "type": "object"
-    },
-    "TProgressBarPosition": {
+    "TButtonMode": {
       "enum": [
-        "top",
-        "bottom"
+        "link",
+        "button"
+      ],
+      "type": "string"
+    },
+    "THorizontalPosition": {
+      "enum": [
+        "left",
+        "right"
       ],
       "type": "string"
     },
@@ -853,6 +1122,13 @@
           "$ref": "#/definitions/DESIGN_TYPE"
         }
       ]
+    },
+    "TVerticalPosition": {
+      "enum": [
+        "top",
+        "bottom"
+      ],
+      "type": "string"
     }
   }
 }

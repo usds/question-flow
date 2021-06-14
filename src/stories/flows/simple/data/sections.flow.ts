@@ -1,31 +1,37 @@
-import { ISection } from '../../../../survey/ISection';
+import { ISection } from '../../../../survey/IStep';
 
 export const sections: ISection[] = [
   {
     id:           'introduction',
     name:         'Introduction',
-    requirements: [{
-      answers: {
-        A: [0, 1],
-      },
-    }],
+    requirements: [],
   },
   {
     id:           'confirmation',
     name:         'Confirmation',
-    requirements: [{
-      answers: {
-        A: [0, 1],
+    requirements: [
+      {
+        responses: [
+          {
+            answers:  [{ id: '0' }, { id: '1' }],
+            question: { id: 'C' },
+          },
+        ],
       },
-    }],
+    ],
   },
   {
     id:           'satisfaction',
     name:         'Satisfaction',
-    requirements: [{
-      answers: {
-        A: [0, 1],
+    requirements: [
+      {
+        responses: [
+          {
+            answers:  [{ id: '0' }, { id: '1' }],
+            question: { id: 'A' },
+          },
+        ],
       },
-    }],
+    ],
   },
 ];

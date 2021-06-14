@@ -2,8 +2,9 @@ import { kebabCase, values }        from 'lodash';
 import { QuestionableConfig }       from '../../composable/Config';
 import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
 import { Questionnaire }            from '../../composable/Questionnaire';
-import { IAnswer }                  from '../../survey/IAnswer';
-import { IQuestionData, IStepData } from '../../survey/IStepData';
+import { IForm }                    from '../../survey/IForm';
+import { IStepData }                from '../../survey/IStepData';
+import { IQuestionData }            from '../../survey/IQuestionData';
 
 export abstract class Steps {
   public static goToStep(step: string, props: IStepData): void {
@@ -46,15 +47,15 @@ export abstract class Steps {
     return Steps.isValid(props.form, props.step.id);
   }
 
-  public static isValid(form: IAnswer, question: string): boolean {
-    if (!form.answers[question]) return false;
-    const q       = form.answers[question];
+  public static isValid(form: IForm, questionId: string): boolean {
+    const q = form.responses.find((a) => a.id === questionId);
+    if (!q) return false;
     const answers = values(q.answers);
     switch (q.type) {
       case STEP_TYPE.DOB:
         return undefined !== form?.age?.years && form.age.years > 0;
       case STEP_TYPE.MULTIPLE_CHOICE:
-        return q.answer !== undefined && answers?.indexOf(q.answer) !== -1;
+        return q.answer !== undefined && answers?.find((x) => x.title === q.answer) !== undefined;
       default:
         return true;
     }

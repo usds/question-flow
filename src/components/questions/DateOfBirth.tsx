@@ -5,7 +5,7 @@ import { getAge }                    from '../../lib/date';
 import { ACTION_TYPE, DATE_UNIT }    from '../../lib/enums';
 import { noel }                      from '../../lib/noop';
 import { TDateOfBirth }              from '../../lib/types';
-import { IQuestionData }             from '../../survey/IStepData';
+import { IQuestionData }             from '../../survey/IQuestionData';
 import { Questions }                 from '../lib/Questions';
 import { Steps }                     from '../lib/Steps';
 import { StepLayout }                from '../wizard/StepLayout';

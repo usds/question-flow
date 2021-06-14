@@ -1,7 +1,7 @@
 import { StepIndicator as SI, StepIndicatorStep } from '@trussworks/react-uswds';
 import { useGlobal }                              from '../../state/GlobalState';
 import { IStepData }                              from '../../survey/IStepData';
-import { ISection }                               from '../../survey/ISection';
+import { ISection }                               from '../../survey/IStep';
 import { noel }                                   from '../../lib/noop';
 
 const getIndicatorStep = (s: ISection) => (

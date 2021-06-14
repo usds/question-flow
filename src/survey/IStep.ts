@@ -1,100 +1,17 @@
-import { PAGE_TYPE, QUESTION_TYPE, TStepType } from '../lib/enums';
-import { TAnswerMap }                          from '../lib/types';
-import { IRequirement }                        from './IRequirement';
+/* eslint-disable import/no-cycle */
+import {
+  PAGE_TYPE, PROGRESS_BAR_STATUS, QUESTION_TYPE, TStepType,
+} from '../lib/enums';
+import { TAge, TAgeCalc }  from '../lib/types';
+import { INavButton }      from './INavButton';
+import { IQuestionAnswer } from './IQuestionAnswer';
 
 /**
- * Defines required pages for the survey flow
+ * Acceptable responses
  */
-export interface IPages {
-  /**
-   * First step of the survey
-   *
-   * @title Landing Page
-   */
-  readonly landingPage: IPage;
-  /**
-   * Last step of the survey if there are 0 results
-   *
-   * @title No Results Page
-   */
-  readonly noResultsPage: IPage;
-  /**
-   * Last step of the survey if there are 1 or more results
-   *
-   * @title Results Page
-   */
-  readonly resultsPage: IPage;
-  /**
-   * Preview of survery before submitting to receive results
-   *
-   * @title Summary Page
-   */
-  readonly summaryPage: IPage;
-}
-
-/**
- * Defines step content for Page types
- */
-export interface IPage extends IStep {
-  /**
-   * Defines the body content of the page
-   *
-   * @title Body
-   */
-  body?: string;
-  /**
-   * Optional header to display above body
-   *
-   * @title Body Heading
-   */
-  bodyHeader?: string;
-  /**
-   * Optional sub header to display below Body Heading
-   *
-   * @title Body Subheading
-   */
-  bodySubHeader?: string;
-  /**
-   * Type of page
-   *
-   * @title Page Type
-   */
-  type: PAGE_TYPE;
-}
-
-/**
- * Defines step content for Question type
- */
-export interface IQuestion extends IStep {
-  /**
-   * The current answer for this question
-   *
-   * @title Answer
-   * @hidden Not viewable/editable in Design Mode
-   */
-  answer?: string;
-  /**
-   * Collection of allowed answers
-   *
-   * @title Answers
-   */
-  answers: TAnswerMap;
-  /**
-   * Type of question
-   *
-   * @title Question Type
-   */
-  type: QUESTION_TYPE;
-}
-
-/**
- * Represents a navigation button
- */
-export interface INavButton {
-  /**
-   * Text to display on button (e.g. 'Prev' or 'Next')
-   */
-  label: string;
+export interface IResponse {
+  answers: Partial<IQuestionAnswer>[];
+  question: Partial<IQuestion>;
 }
 
 /**
@@ -156,10 +73,9 @@ export interface IStep {
   /**
    * Section to which this step belongs
    *
-   * @title Section Id
-   * @see {ISection}
+   * @title Section
    */
-  sectionId: string;
+  section: Partial<ISection>;
   /**
    * Text to display below the title
    *
@@ -178,4 +94,135 @@ export interface IStep {
    * @title Step Type
    */
   type: TStepType;
+}
+
+/**
+ * Defines step content for Question type
+ */
+
+export interface IQuestion extends IStep {
+  /**
+   * The current answer for this question
+   *
+   * @title Answer
+   * @hidden Not viewable/editable in Design Mode
+   */
+  answer?: string;
+  /**
+   * Collection of allowed answers
+   *
+   * @title Answers
+   */
+  answers: IQuestionAnswer[];
+  /**
+   * Type of question
+   *
+   * @title Question Type
+   */
+  type: QUESTION_TYPE;
+}
+
+/**
+ * Defines step content for Page types
+ */
+
+export interface IPage extends IStep {
+  /**
+   * Defines the body content of the page
+   *
+   * @title Body
+   */
+  body?: string;
+  /**
+   * Optional header to display above body
+   *
+   * @title Body Heading
+   */
+  bodyHeader?: string;
+  /**
+   * Optional sub header to display below Body Heading
+   *
+   * @title Body Subheading
+   */
+  bodySubHeader?: string;
+  /**
+   * Type of page
+   *
+   * @title Page Type
+   */
+  type: PAGE_TYPE;
+}
+
+/**
+ * Defines an individual requirement for accessing a step
+ */
+export interface IRequirement {
+  /**
+   * Optional, custom calculator for performing age-specific validation
+   * @hidden JSON schema does not support functions
+   */
+  ageCalc?: TAgeCalc;
+  /**
+   * User facing description of this requirement
+   *
+   * @title Exlanation
+   */
+  explanation?: string;
+  /**
+   * Optional maximum age allowed for this requirement
+   *
+   * @title Maximum Age
+   */
+  maxAge?: TAge;
+  /**
+   * Optional minimum age allowed for this requirement
+   *
+   * @title Minimum Age
+   */
+  minAge?: TAge;
+  /**
+   * Map of step id to required answer values
+   *
+   * @title Answers
+   */
+  responses: IResponse[];
+}
+
+/**
+ * Defines a survey section, used in progress bar
+ */
+export interface ISection {
+  /**
+   * Unique identifier
+   *
+   * @title Id
+   * @hidden Not viewable/editable in Design Mode
+   */
+  id: string;
+  /**
+   * The last step id that is covered by this section
+   *
+   * @title Last Step
+   * @hidden Not viewable/editable in Design Mode
+   */
+  lastStep?: number;
+  /**
+   * The display name of this section
+   *
+   * @title Name
+   */
+  name: string;
+  /**
+   * Collection of requirements to enable display of this status
+   *
+   * @title Requirements
+   */
+  requirements: IRequirement[];
+  /**
+   * Current display status of this section
+   *
+   * @title Status
+   * @hidden Not viewable/editable in Design Mode
+   */
+  status?: PROGRESS_BAR_STATUS;
 }

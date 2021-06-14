@@ -9,18 +9,22 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import { matches }                   from '../lib/string';
-import { TAge, TAgeCalc, TAnswers }  from '../lib/types';
-import { IQuestionableConfig }       from '../survey';
-import { IAction }                   from '../survey/IAction';
-import { IAnswer }                   from '../survey/IAnswer';
-import { IQuestionnaire }            from '../survey/IQuestionnaire';
-import { IRequirement }              from '../survey/IRequirement';
-import { IResult }                   from '../survey/IResult';
-import { ISection }                  from '../survey/ISection';
+import { Helpers }             from '../lib/helpers';
+import { TAge, TAgeCalc }      from '../lib/types';
+import { IQuestionableConfig } from '../survey/IQuestionableConfig';
+import { IAction }             from '../survey/IAction';
+import { IForm }               from '../survey/IForm';
+import { IQuestionnaire }      from '../survey/IQuestionnaire';
 import {
-  IPage, IPages, IQuestion, IStep,
-} from '../survey/IStep';
+  IRequirement,
+  ISection,
+  IStep,
+  IQuestion,
+  IPage,
+  IResponse,
+}                from '../survey/IStep';
+import { IResult }            from '../survey/IResult';
+import { IPages }             from '../survey/IPages';
 import { IStepData }          from '../survey/IStepData';
 import { QuestionableConfig } from './Config';
 
@@ -90,6 +94,18 @@ export class Questionnaire implements IQuestionnaire {
    * @param id unique identifier of the question
    * @returns
    */
+  getQuestion(q: Partial<IQuestion>): IQuestion {
+    if (!q.id) {
+      throw new Error(`Question ${q} is not defined`);
+    }
+    return this.getQuestionById(q.id);
+  }
+
+  /**
+   * Fetches a question by its id
+   * @param id unique identifier of the question
+   * @returns
+   */
   getQuestionById(id: string): IQuestion {
     const ret = this.getStepById(id);
     if (!isEnum(QUESTION_TYPE, ret.type)) {
@@ -103,7 +119,7 @@ export class Questionnaire implements IQuestionnaire {
    */
   getStep(
     thisStep: string,
-    form: IAnswer,
+    form: IForm,
     direction: DIRECTION,
     config = new QuestionableConfig(),
   ): string {
@@ -173,7 +189,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   getProgressPercent(props: IStepData, config: IQuestionableConfig): number {
-    if (matches(props.step?.sectionId, PAGE_TYPE.RESULTS)) {
+    if (Helpers.matches(props.step?.section?.id, PAGE_TYPE.RESULTS)) {
       return 100;
     }
     const sections = this.getSections(props, config);
@@ -222,17 +238,17 @@ export class Questionnaire implements IQuestionnaire {
     return sections.map((s) => {
       const section    = { ...s };
       section.lastStep = this.questions.reduce(
-        (acc, q, index) => (q.sectionId === s.id ? index : acc),
+        (acc, q, index) => (q.section.id === s.id ? index : acc),
         -1,
       );
-      if (matches(section.id, PAGE_TYPE.RESULTS)) {
+      if (Helpers.matches(section.id, PAGE_TYPE.RESULTS)) {
         section.lastStep = this.questions.length - 2;
-      } else if (matches(section.id, PAGE_TYPE.LANDING)) {
+      } else if (Helpers.matches(section.id, PAGE_TYPE.LANDING)) {
         section.lastStep = 0;
       }
       if (section.lastStep < 0) {
         section.status = PROGRESS_BAR_STATUS.INCOMPLETE;
-      } else if (matches(section.id, thisQuestion.sectionId)) {
+      } else if (Helpers.matches(section.id, thisQuestion.section.id)) {
         section.status = PROGRESS_BAR_STATUS.CURRENT;
       } else if (section.lastStep < thisQuestionIdx) {
         section.status = PROGRESS_BAR_STATUS.COMPLETE;
@@ -246,7 +262,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param form
    * @returns
    */
-  getResults(form: IAnswer): IResult[] {
+  getResults(form: IForm): IResult[] {
     return this.results.filter((r) =>
       r.requirements.some((match) => {
         if (this.meetsAllRequirements(match, form)) {
@@ -323,9 +339,9 @@ export class Questionnaire implements IQuestionnaire {
     }
   }
 
-  private meetsAllRequirements(requirement: IRequirement, form: IAnswer) {
+  private meetsAllRequirements(requirement: IRequirement, form: IForm) {
     const {
-      minAge, maxAge, answers, ageCalc,
+      minAge, maxAge, responses: answers, ageCalc,
     } = requirement;
     // Internal to each requirement, all evaluations are `AND`
     // This safely handles cases where requirement parameters are undefined
@@ -344,7 +360,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns true if no min age, else true if age is >= min age
    */
   private static meetsMinAgeRequirements(
-    form: IAnswer,
+    form: IForm,
     minAge?: TAge,
   ): boolean {
     if (!minAge) return true;
@@ -369,7 +385,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns true if no max age, else true if age is <= max age
    */
   private static meetsMaxAgeRequirements(
-    form: IAnswer,
+    form: IForm,
     maxAge?: TAge,
   ): boolean {
     if (!maxAge) return true;
@@ -393,7 +409,7 @@ export class Questionnaire implements IQuestionnaire {
    * @returns
    */
   private static meetsAgeCalcRequirements(
-    form: IAnswer,
+    form: IForm,
     ageCalc?: TAgeCalc,
   ): boolean {
     if (!ageCalc) return true;
@@ -407,20 +423,20 @@ export class Questionnaire implements IQuestionnaire {
 
   /**
    * Determines if current answers in the form meet the step's requirements
-   * @param answers Collection of required answer matches
+   * @param answers Collection of required answer Helpers.matches
    * @returns true if all answers are valid or if no answers are required
    */
-  private meetsAnswerRequirements(answers?: TAnswers): boolean {
-    if (!answers) return true;
+  private meetsAnswerRequirements(answers?: IResponse[]): boolean {
+    if (!answers || answers.length <= 0) return true;
 
-    return Object.keys(answers).every((a) => {
-      const question = this.getQuestionById(a);
-      if (Object.keys(question.answers)?.length > 0) {
+    return answers.every((a) => {
+      const question = this.getQuestion(a.question);
+      if (question.answers?.length > 0) {
         // Allowed answers are an array. Any matched answer makes the response valid.
-        return answers[a].some(
+        return a.answers.some(
           (i) =>
             question.answer !== undefined
-            && question.answer === question.answers[i],
+            && question.answer === question.answers.find((x) => x.id === i.id)?.title,
         );
       }
       // If no answers are defined, this passes

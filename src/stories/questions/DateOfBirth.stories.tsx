@@ -7,7 +7,7 @@ import { QUESTION_TYPE } from '../../lib';
 import { Answer } from '../../composable/Answer';
 import { stepReducer } from '../../state/stepReducer';
 import '../styles';
-import { IQuestionData } from '../../survey/IStepData';
+import { IQuestionData } from "../../survey/IQuestionData";
 import { DateOfBirth } from '../../components/questions/DateOfBirth';
 
 export default {
@@ -25,11 +25,11 @@ DoB.args = {
   dispatchForm: stepReducer,
   form: new Answer(),
   step: {
-    answers: {},
+    answers: [],
     id: 'B',
     internalNotes: 'Adults age 18 and over',
     requirements: [],
-    sectionId: 'introduction',
+    section: { id: 'introduction' },
     subTitle:
       "Most Social Security benefits have age requirements, so we'll use your birthday to see how old you are.",
     title: 'Enter your birthday.',

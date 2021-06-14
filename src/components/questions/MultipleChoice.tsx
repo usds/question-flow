@@ -1,6 +1,6 @@
 import { noel }          from '../../lib/noop';
 import { useGlobal }     from '../../state';
-import { IQuestionData } from '../../survey/IStepData';
+import { IQuestionData } from '../../survey/IQuestionData';
 import { Questions }     from '../lib/Questions';
 import { StepLayout }    from '../wizard/StepLayout';
 

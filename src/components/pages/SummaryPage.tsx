@@ -1,6 +1,6 @@
 import { ReactNode }  from 'react';
 import { noel }       from '../../lib/noop';
-import { IPageData }  from '../../survey/IStepData';
+import { IPageData }  from '../../survey/IPageData';
 import { StepLayout } from '../wizard/StepLayout';
 
 /**
@@ -9,13 +9,13 @@ import { StepLayout } from '../wizard/StepLayout';
  * @returns
  */
 const getAnswers = (props: IPageData): ReactNode => {
-  const answers = Object.keys(props.form.answers).map((key) => (
-    <li key={key} className="padding-bottom-2">
-      <span className="text-light">
-        {props.form.answers[key].title}:&nbsp;&nbsp;
-        <b>{props.form.answers[key].answer}</b>
-      </span>
-    </li>
+  const answers = props.form.responses.map((question) => (
+      <li key={question.id} className="padding-bottom-2">
+        <span className="text-light">
+          {question.title}:&nbsp;&nbsp;
+          <b>{question.answer}</b>
+        </span>
+      </li>
   ));
 
   return <ul className="usa-list usa-list--unstyled">{answers}</ul>;

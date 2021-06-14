@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { PAGE_TYPE } from '../../../../lib';
-import { IPages }    from '../../../../survey';
+import { IPages }    from '../../../../survey/IPages';
 
 export const pages: IPages = {
   landingPage: {
@@ -10,16 +10,16 @@ export const pages: IPages = {
         label: 'Get Started',
       },
     },
-    id:        PAGE_TYPE.LANDING,
-    sectionId: PAGE_TYPE.LANDING,
-    title:     'Check eligibility for benefits',
-    type:      PAGE_TYPE.LANDING,
+    id:      PAGE_TYPE.LANDING,
+    section: { id: PAGE_TYPE.LANDING },
+    title:   'Check eligibility for benefits',
+    type:    PAGE_TYPE.LANDING,
   },
   noResultsPage: {
     footer:
       'The information you shared today tells us about your current situation. In the future, you may become eligible for benefits as you age or things in your life change.',
-    id:        PAGE_TYPE.NO_RESULTS,
-    sectionId: PAGE_TYPE.RESULTS,
+    id:       PAGE_TYPE.NO_RESULTS,
+    section:  { id: PAGE_TYPE.RESULTS },
     subTitle:
       'You can <a href="#">apply for benefits</a> but based on what you told us today, you may not be eligible at this time.',
     title: 'You may not be eligible for benefits.',
@@ -33,7 +33,7 @@ The information you shared today tells us about your current situation. In the f
     bodySubHeader: "Here's what you may be eligible for and why",
     id:            PAGE_TYPE.RESULTS,
     info:          'Each benefit we provide has an official name. You may see these names in other materials or hear our employees use them on the phone and in our offices.',
-    sectionId:     PAGE_TYPE.RESULTS,
+    section:       { id: PAGE_TYPE.RESULTS },
     title:         'You may be eligible for benefits.',
     type:          PAGE_TYPE.RESULTS,
   },
@@ -43,8 +43,8 @@ The information you shared today tells us about your current situation. In the f
         label: 'Submit',
       },
     },
-    id:        PAGE_TYPE.SUMMARY,
-    sectionId: 'results',
+    id:       PAGE_TYPE.SUMMARY,
+    section:  { id: 'results' },
     subTitle:
       'If everything looks correct, click "Submit" to view your results; otherwise, go back and change your asnwers as needed.',
     title: 'Review your answers',

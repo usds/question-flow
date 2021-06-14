@@ -31,7 +31,7 @@ export abstract class Pages {
         reason += `You are ${props.form.age?.years} years `;
         reason += `and ${props.form.age?.months} months old. `;
       }
-      Object.keys(result.match.answers).forEach((id) => {
+      Object.keys(result.match.responses).forEach((id) => {
         const q = questionnaire.getQuestionById(id);
         reason += `You answered "<b>${q.answer}</b>" to the question "<i>${q.title}.</i>" `;
       });

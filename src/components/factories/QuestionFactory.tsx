@@ -1,9 +1,10 @@
 import {
   isEnum, QUESTION_TYPE,
 } from '../../lib/enums';
-import { noel }                     from '../../lib/noop';
-import { useGlobal }                from '../../state/GlobalState';
-import { IQuestionData, IStepData } from '../../survey/IStepData';
+import { noel }          from '../../lib/noop';
+import { useGlobal }     from '../../state/GlobalState';
+import { IStepData }     from '../../survey/IStepData';
+import { IQuestionData } from '../../survey/IQuestionData';
 import {
   DateOfBirthStep,
   MultipleChoiceStep,

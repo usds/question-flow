@@ -2,11 +2,12 @@
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { DateTime }                  from 'luxon';
 import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
-import { IQuestionData }             from '../../survey/IStepData';
+import { IQuestionData }             from '../../survey/IQuestionData';
 import { Steps }                     from './Steps';
 import { getDateTime }               from '../../lib/date';
 import { TDateOfBirth }              from '../../lib/types';
-import { IQuestionableConfig }       from '../../survey';
+import { IQuestionableConfig }       from '../../survey/IQuestionableConfig';
+import { IQuestionAnswer }           from '../../survey/IQuestionAnswer';
 
 /**
  * Static utility methods for question components
@@ -21,9 +22,7 @@ export abstract class Questions {
   private static updateForm(answer: string, props: IQuestionData): void {
     Object.assign(props.step, { answer });
     const value = {
-      answers: {
-        [props.step.id]: props.step,
-      },
+      answers: [props.step],
     };
     return props.dispatchForm({
       type: ACTION_TYPE.UPDATE,
@@ -41,7 +40,10 @@ export abstract class Questions {
     if (!props?.form) {
       return undefined;
     }
-    const q = props.form.answers[props.step.id];
+    const q = props.form.responses.find((a) => a.id === props.step.id);
+    if (!q) {
+      return undefined;
+    }
     return Steps.isValid(props.form, props.step.id) && q.answer === answer;
   }
 
@@ -52,21 +54,21 @@ export abstract class Questions {
    * @returns
    */
   private static getRadio(
-    answer: string,
+    answer: IQuestionAnswer,
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
-    const handler = () => Questions.updateForm(answer, props);
-    const id      = Steps.getDomId(answer, props);
+    const handler = () => Questions.updateForm(answer.title, props);
+    const id      = Steps.getDomId(answer.title, props);
 
     return (
       <Radio
         id={id}
         key={id}
         name={Steps.getFieldSetName(props)}
-        label={answer}
-        value={answer}
-        checked={Questions.isSelected(answer, props) === true}
+        label={answer.title}
+        value={answer.title}
+        checked={Questions.isSelected(answer.title, props) === true}
         className={CSS_CLASS.MULTI_CHOICE}
         onChange={handler}
         onClick={handler}
@@ -87,8 +89,8 @@ export abstract class Questions {
       legendStyle="srOnly"
     >
       {
-        Object.keys(props.step.answers).map((a) =>
-          Questions.getRadio(props.step.answers[+a], props, config))
+        props.step.answers.map((a) =>
+          Questions.getRadio(a, props, config))
       }
     </Fieldset>);
   }
@@ -100,21 +102,21 @@ export abstract class Questions {
    * @returns
    */
   private static getCheckbox(
-    answer: string,
+    answer: IQuestionAnswer,
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
-    const handler = () => Questions.updateForm(answer, props);
-    const id      = Steps.getDomId(answer, props);
+    const handler = () => Questions.updateForm(answer.title, props);
+    const id      = Steps.getDomId(answer.title, props);
 
     return (
       <Checkbox
         id={id}
         key={id}
         name={Steps.getFieldSetName(props)}
-        label={answer}
-        value={answer}
-        checked={Questions.isSelected(answer, props) === true}
+        label={answer.title}
+        value={answer.title}
+        checked={Questions.isSelected(answer.title, props) === true}
         className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
@@ -136,8 +138,7 @@ export abstract class Questions {
         legendStyle="srOnly"
       >
       {
-        Object.keys(props.step.answers).map((a) =>
-          Questions.getCheckbox(props.step.answers[+a], props, config))
+        props.step.answers.map((a) => Questions.getCheckbox(a, props, config))
       }
       </Fieldset>
     );

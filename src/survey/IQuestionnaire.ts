@@ -1,7 +1,7 @@
-import { IAction }           from './IAction';
-import { IResult }           from './IResult';
-import { ISection }          from './ISection';
-import { IPages, IQuestion } from './IStep';
+import { IAction }             from './IAction';
+import { IResult }             from './IResult';
+import { IQuestion, ISection } from './IStep';
+import { IPages }              from './IPages';
 
 /**
  * Definition for survey data input

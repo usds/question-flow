@@ -1,9 +1,10 @@
 import {
   isEnum, PAGE_TYPE,
 } from '../../lib/enums';
-import { noel }                 from '../../lib/noop';
-import { useGlobal }            from '../../state/GlobalState';
-import { IPageData, IStepData } from '../../survey/IStepData';
+import { noel }      from '../../lib/noop';
+import { useGlobal } from '../../state/GlobalState';
+import { IStepData } from '../../survey/IStepData';
+import { IPageData } from '../../survey/IPageData';
 import {
   LandingPage,
   NoResultsPage,

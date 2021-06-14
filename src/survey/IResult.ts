@@ -1,4 +1,4 @@
-import { IRequirement } from './IRequirement';
+import { IRequirement } from './IStep';
 
 /**
  * Represents a potential result based on a customer's answers

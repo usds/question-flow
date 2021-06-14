@@ -16,11 +16,16 @@ export const results: IResult[] = [
     name:         'Participation Badge',
     requirements: [
       {
-        answers: {
-          A: [1, 0], // Answered a question
-        },
+        // Answered a question
         explanation:
           'You completed our survey.',
+
+        responses: [
+          {
+            answers:  [{ id: '1' }, { id: '0' }],
+            question: { id: 'A' },
+          },
+        ],
       },
     ],
   },
@@ -31,20 +36,30 @@ export const results: IResult[] = [
       'Confused Choices Badge',
     requirements: [
       {
-        answers: {
-          A: [0], // likes surveys,
-          C: [1], // does not like surveys
-        },
         explanation:
           'You changed your mind from liking surveys to disliking them.',
+        responses: [
+          // likes surveys,
+          {
+            answers:  [{ id: '0' }],
+            question: { id: 'A' },
+          },
+          // does not like surveys
+          {
+            answers:  [{ id: '1' }],
+            question: { id: 'C' },
+          },
+        ],
       },
       {
-        answers: {
-          A: [1], // does not like surveys,
-          B: [0], // likes surveys
-        },
         explanation:
           'You changed your mind from not liking surveys to liking them.',
+        responses: [
+          // does not like surveys,
+          { answers: [{ id: '1' }], question: { id: 'A' } },
+          // likes surveys
+          { answers: [{ id: '0' }], question: { id: 'B' } },
+        ],
       },
     ],
   },
@@ -54,13 +69,12 @@ export const results: IResult[] = [
     name:         'Daredevil Badge',
     requirements: [
       {
-        answers: {
-          D: [
-            0, // Would do it all over
-          ],
-        },
         explanation:
           'You have the guts to put it all on the line again.',
+        responses: [
+          // Would do it all over
+          { answers: [{ id: '0' }], question: { id: 'D' } },
+        ],
       },
     ],
   },

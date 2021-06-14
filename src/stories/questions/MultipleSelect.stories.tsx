@@ -7,7 +7,7 @@ import { QUESTION_TYPE } from '../../lib';
 import { stepReducer } from '../../state';
 import { Answer } from '../../composable/Answer';
 import '../../stories/styles';
-import { IQuestionData } from '../../survey/IStepData';
+import { IQuestionData } from "../../survey/IQuestionData";
 import { MultipleSelect } from '../../components/questions/MultiSelect';
 
 export default {
@@ -25,17 +25,17 @@ Checklist.args = {
   dispatchForm: stepReducer,
   form: new Answer(),
   step: {
-    answers: {
-      0: 'Hamburgers',
-      1: 'Tacos',
-      2: 'Salads',
-      3: 'Nacho cheese fountains',
-    },
+    answers: [
+      { id: '0', title: 'Hamburgers' },
+      { id: '1', title: 'Tacos' },
+      { id: '2', title: 'Salads' },
+      { id: '3', title: 'Nacho cheese fountains' },
+    ],
     id: 'I',
     info: "You may be eligible for certain benefits if you're legally married now or were in the past.",
     internalNotes: 'Adults age 18 and over',
     requirements: [],
-    sectionId: 'a0_family',
+    section: { id: 'a0_family' },
     subTitle:
       'Long-term partnerships often resemble marriage, but our benefits require legal recognition in your state.',
     title: 'What foods do you like?',
