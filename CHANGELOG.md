@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/usds/questionable/compare/v1.1.3...v1.1.4) (2021-06-14)
+
+
+### Bug Fixes
+
+* **export:** exports enums required for downstream consumption ([#55](https://github.com/usds/questionable/issues/55)) ([dbd6e5d](https://github.com/usds/questionable/commit/dbd6e5dab478e72fb2c1074fa3561fd2c06ec864))
+
 ## [1.1.3](https://github.com/usds/questionable/compare/v1.1.2...v1.1.3) (2021-06-14)
 
 

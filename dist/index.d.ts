@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import { IWizard } from "use-wizard/lib/cjs/useWizard/types/IWizard";
 import { TStep } from "use-wizard/lib/cjs/useWizard/types/TStep";
+import { DateTime } from "luxon";
 /**
  * Defines the known component types for questions
  */
@@ -25,6 +26,19 @@ declare enum PAGE_TYPE {
 declare enum DESIGN_TYPE {
     EDIT = "Edit"
 }
+/**
+ * Defines the type of step for UI rendering
+ */
+declare const STEP_TYPE: {
+    EDIT: DESIGN_TYPE.EDIT;
+    DOB: QUESTION_TYPE.DOB;
+    MULTIPLE_CHOICE: QUESTION_TYPE.MULTIPLE_CHOICE;
+    MULTIPLE_SELECT: QUESTION_TYPE.MULTIPLE_SELECT;
+    LANDING: PAGE_TYPE.LANDING;
+    NO_RESULTS: PAGE_TYPE.NO_RESULTS;
+    RESULTS: PAGE_TYPE.RESULTS;
+    SUMMARY: PAGE_TYPE.SUMMARY;
+};
 type TStepType = PAGE_TYPE | QUESTION_TYPE | DESIGN_TYPE;
 /**
  * Navigation direction for steps by array index (+1 or -1)
@@ -46,11 +60,44 @@ declare enum ACTION {
     HYBRID = "hybrid",
     ONLINE = "online"
 }
+declare enum ACTION_TYPE {
+    RESET = "RESET",
+    UPDATE = "UPDATE"
+}
+declare enum DATE_UNIT {
+    DAY = "day",
+    MONTH = "month",
+    YEAR = "year"
+}
 declare enum MODE {
     DEV = "dev",
     EDIT = "edit",
     VIEW = "view"
 }
+declare enum CSS_CLASS {
+    BASE = "usds-q",
+    DEV_PANEL_SECTION = "usds-q-dev-panel",
+    DOB = "usds-q-dob",
+    MULTI_CHOICE = "usds-q-multi-choice",
+    MULTI_CHOICE_GROUP = "usds-q-multi-choice-group",
+    MULTI_SELECT = "usds-q-multi-select",
+    MULTI_SELECT_GROUP = "usds-q-multi-select-group",
+    NAVBAR = "usds-q-navbar",
+    NAVBAR_BUTTON = "usds-q-navbar-button",
+    PROGRESS_BAR = "usds-q-progress-bar",
+    PROGRESS_BAR_BOTTOM_SECTION = "usds-q-progress-bar-bottom-section",
+    PROGRESS_BAR_TOP_SECTION = "usds-q-progress-bar-top-section",
+    RESULTS_SUMMARY_BOX = "usds-q-results-summary-box",
+    RESULTS_SUMMARY_HEADER = "usds-q-results-summary-header",
+    STEP_FOOTER = "usds-q-step-footer",
+    STEP_HEADER = "usds-q-step-header",
+    STEP_INFO = "usds-q-step-info",
+    STEP_LAYOUT = "usds-q-step-layout",
+    STEP_LAYOUT_SECTION = "usds-q-step-layout-section",
+    STEP_SUBTITLE = "usds-q-step-subtitle"
+}
+// eslint-disable-next-line @typescript-eslint/ban-types
+declare const isEnum: (enm: object, value: string) => boolean;
 /*
 * Defines an age relative to a date
 * @title Age Type
@@ -85,6 +132,11 @@ type TAge = {
 type TAgeCalc = (birthdate: string) => boolean;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TReducer = (...params: any) => void;
+type TDateOfBirth = {
+    day?: string | undefined;
+    month?: string | undefined;
+    year?: string | undefined;
+};
 type TProgressBarType = "step-indicator" | "progress-bar";
 type TVerticalPosition = "top" | "bottom";
 type THorizontalPosition = "left" | "right";
@@ -791,6 +843,42 @@ interface IQuestionable {
 }
 declare const Questionable: (q: IQuestionable) => JSX.Element;
 /**
+ * Determines if a string can be parsed into a valid Date
+ * @param dt
+ * @returns
+ */
+declare const isValidDate: (dt: string | undefined) => boolean;
+/**
+ * Gets a luxon DateTime object from a date string
+ * @param dt DateTime as string- should always be in the format `MM/DD/YYYY`
+ * @returns DateTime or undefined
+ */
+declare const getDateTime: (dt: string) => DateTime | undefined;
+/**
+ * Gets an age from a DateTime object
+ * @param dob - luxon DateTime
+ * @returns an age with years, months, days
+ */
+declare const getDateTimeAge: (dob: DateTime) => TAge;
+/**
+ * Parses a date/time string and returns an Age object
+ * @param dateOfBirth - should always be in the format `MM/DD/YYYY`
+ * @returns an age, if the date is valid
+ */
+declare const getAge: (dateOfBirth: string | undefined) => TAge | undefined;
+declare const DEFAULT_PAGES: IPages;
+/**
+ * Collection of primitive helper methods
+ */
+declare abstract class Helpers {
+    private static sanitize;
+    /**
+     * Determines if two strings are a fuzzy match
+     */
+    static matches(left?: string, right?: string): boolean;
+}
+declare const surveySchema: any;
+/**
  * Data defintion for design step
  */
 interface IDesignData extends IStepData {
@@ -808,6 +896,5 @@ interface IPageData extends IStepData {
 interface IQuestionData extends IStepData {
     step: IQuestion;
 }
-declare const surveySchema: any;
-export { Questionable, QuestionableConfig, Questionnaire, IAction, IForm, IDesignData, INavButton, IPageData, IPages, IQuestionAnswer, IQuestionData, IQuestionableConfig, IStepConfig, IProgressBarConfig, IQuestionConfig, IButtonConfig, INavigationConfig, IQuestionnaire, IResult, IResponse, IStep, IQuestion, IPage, IRequirement, ISection, IStepData, surveySchema };
+export { Questionable, QuestionableConfig, Questionnaire, isValidDate, getDateTime, getDateTimeAge, getAge, DEFAULT_PAGES, QUESTION_TYPE, PAGE_TYPE, DESIGN_TYPE, STEP_TYPE, TStepType, DIRECTION, PROGRESS_BAR_STATUS, ACTION, ACTION_TYPE, DATE_UNIT, MODE, CSS_CLASS, isEnum, Helpers, TAge, TAgeCalc, TReducer, TDateOfBirth, TProgressBarType, TVerticalPosition, THorizontalPosition, TButtonMode, surveySchema, IAction, IForm, IDesignData, INavButton, IPageData, IPages, IQuestionAnswer, IQuestionData, IQuestionableConfig, IStepConfig, IProgressBarConfig, IQuestionConfig, IButtonConfig, INavigationConfig, IQuestionnaire, IResult, IResponse, IStep, IQuestion, IPage, IRequirement, ISection, IStepData };
 //# sourceMappingURL=index.d.ts.map
