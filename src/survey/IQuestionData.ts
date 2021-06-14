@@ -1,4 +1,4 @@
-import { IQuestion } from './IQuestion';
+import { IQuestion } from './IStep';
 import { IStepData } from './IStepData';
 
 /**

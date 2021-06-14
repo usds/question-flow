@@ -46,46 +46,6 @@
       ],
       "type": "object"
     },
-    "IAnswer": {
-      "description": "Represents the survey as completed by the user",
-      "properties": {
-        "age": {
-          "$ref": "#/definitions/TAge",
-          "description": "Customer's age in years/months/days",
-          "title": "Age"
-        },
-        "answers": {
-          "description": "All currently provided answers",
-          "items": {
-            "$ref": "#/definitions/IQuestion"
-          },
-          "title": "Answers",
-          "type": "array"
-        },
-        "birthdate": {
-          "description": "Customer's entered birthdate",
-          "title": "Birthdate",
-          "type": "string"
-        },
-        "finished": {
-          "description": "Time the survey was completed",
-          "format": "date-time",
-          "title": "Finished",
-          "type": "string"
-        },
-        "started": {
-          "description": "Time the survey was started",
-          "format": "date-time",
-          "title": "Started",
-          "type": "string"
-        }
-      },
-      "required": [
-        "answers",
-        "started"
-      ],
-      "type": "object"
-    },
     "IButtonConfig": {
       "description": "Configuration for buttons",
       "properties": {
@@ -121,7 +81,7 @@
       "description": "Data defintion for design step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -133,6 +93,46 @@
       "required": [
         "form",
         "step"
+      ],
+      "type": "object"
+    },
+    "IForm": {
+      "description": "Represents the survey as completed by the user",
+      "properties": {
+        "age": {
+          "$ref": "#/definitions/TAge",
+          "description": "Customer's age in years/months/days",
+          "title": "Age"
+        },
+        "birthdate": {
+          "description": "Customer's entered birthdate",
+          "title": "Birthdate",
+          "type": "string"
+        },
+        "finished": {
+          "description": "Time the survey was completed",
+          "format": "date-time",
+          "title": "Finished",
+          "type": "string"
+        },
+        "responses": {
+          "description": "All currently provided responses",
+          "items": {
+            "$ref": "#/definitions/IQuestion"
+          },
+          "title": "Responses",
+          "type": "array"
+        },
+        "started": {
+          "description": "Time the survey was started",
+          "format": "date-time",
+          "title": "Started",
+          "type": "string"
+        }
+      },
+      "required": [
+        "responses",
+        "started"
       ],
       "type": "object"
     },
@@ -267,10 +267,25 @@
           "title": "Requirements",
           "type": "array"
         },
-        "sectionId": {
+        "section": {
           "description": "Section to which this step belongs",
-          "title": "Section Id",
-          "type": "string"
+          "properties": {
+            "name": {
+              "description": "The display name of this section",
+              "title": "Name",
+              "type": "string"
+            },
+            "requirements": {
+              "description": "Collection of requirements to enable display of this status",
+              "items": {
+                "$ref": "#/definitions/IRequirement"
+              },
+              "title": "Requirements",
+              "type": "array"
+            }
+          },
+          "title": "Section",
+          "type": "object"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -289,7 +304,7 @@
         }
       },
       "required": [
-        "sectionId",
+        "section",
         "title",
         "type"
       ],
@@ -299,7 +314,7 @@
       "description": "Data defintion for page step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -389,9 +404,12 @@
       "description": "Defines step content for Question type",
       "properties": {
         "answers": {
-          "$ref": "#/definitions/TAnswerMap",
           "description": "Collection of allowed answers",
-          "title": "Answers"
+          "items": {
+            "$ref": "#/definitions/IQuestionAnswer"
+          },
+          "title": "Answers",
+          "type": "array"
         },
         "buttons": {
           "description": "Collection of navigation buttons",
@@ -433,10 +451,25 @@
           "title": "Requirements",
           "type": "array"
         },
-        "sectionId": {
+        "section": {
           "description": "Section to which this step belongs",
-          "title": "Section Id",
-          "type": "string"
+          "properties": {
+            "name": {
+              "description": "The display name of this section",
+              "title": "Name",
+              "type": "string"
+            },
+            "requirements": {
+              "description": "Collection of requirements to enable display of this status",
+              "items": {
+                "$ref": "#/definitions/IRequirement"
+              },
+              "title": "Requirements",
+              "type": "array"
+            }
+          },
+          "title": "Section",
+          "type": "object"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -456,9 +489,28 @@
       },
       "required": [
         "answers",
-        "sectionId",
+        "section",
         "title",
         "type"
+      ],
+      "type": "object"
+    },
+    "IQuestionAnswer": {
+      "description": "Definition for answers to questions",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "order": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title"
       ],
       "type": "object"
     },
@@ -481,7 +533,7 @@
       "description": "Data defintion for question step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -692,11 +744,6 @@
     "IRequirement": {
       "description": "Defines an individual requirement for accessing a step",
       "properties": {
-        "answers": {
-          "$ref": "#/definitions/TAnswers",
-          "description": "Map of step id to required answer values",
-          "title": "Answers"
-        },
         "explanation": {
           "description": "User facing description of this requirement",
           "title": "Exlanation",
@@ -711,10 +758,79 @@
           "$ref": "#/definitions/TAge",
           "description": "Optional minimum age allowed for this requirement",
           "title": "Minimum Age"
+        },
+        "responses": {
+          "description": "Map of step id to required answer values",
+          "items": {
+            "$ref": "#/definitions/IResponse"
+          },
+          "title": "Answers",
+          "type": "array"
         }
       },
       "required": [
-        "answers"
+        "responses"
+      ],
+      "type": "object"
+    },
+    "IResponse": {
+      "description": "Acceptable responses",
+      "properties": {
+        "answers": {
+          "items": {
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "order": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "question": {
+          "properties": {
+            "answers": {
+              "description": "Collection of allowed answers",
+              "items": {
+                "$ref": "#/definitions/IQuestionAnswer"
+              },
+              "title": "Answers",
+              "type": "array"
+            },
+            "buttons": {
+            },
+            "footer": {
+            },
+            "info": {
+            },
+            "internalNotes": {
+            },
+            "requirements": {
+            },
+            "section": {
+            },
+            "subTitle": {
+            },
+            "title": {
+            },
+            "type": {
+              "$ref": "#/definitions/QUESTION_TYPE",
+              "description": "Type of question",
+              "title": "Question Type"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "answers",
+        "question"
       ],
       "type": "object"
     },
@@ -813,10 +929,25 @@
           "title": "Requirements",
           "type": "array"
         },
-        "sectionId": {
+        "section": {
           "description": "Section to which this step belongs",
-          "title": "Section Id",
-          "type": "string"
+          "properties": {
+            "name": {
+              "description": "The display name of this section",
+              "title": "Name",
+              "type": "string"
+            },
+            "requirements": {
+              "description": "Collection of requirements to enable display of this status",
+              "items": {
+                "$ref": "#/definitions/IRequirement"
+              },
+              "title": "Requirements",
+              "type": "array"
+            }
+          },
+          "title": "Section",
+          "type": "object"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -835,7 +966,7 @@
         }
       },
       "required": [
-        "sectionId",
+        "section",
         "title",
         "type"
       ],
@@ -880,7 +1011,7 @@
       "description": "Data defintion for base wizard step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IAnswer",
+          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
           "title": "Form"
         },
@@ -956,23 +1087,6 @@
         "months",
         "years"
       ],
-      "type": "object"
-    },
-    "TAnswerMap": {
-      "additionalProperties": {
-        "type": "string"
-      },
-      "description": "List of possible answers to the question. Maps answer as string value to index number of question",
-      "type": "object"
-    },
-    "TAnswers": {
-      "additionalProperties": {
-        "items": {
-          "type": "number"
-        },
-        "type": "array"
-      },
-      "description": "Expresses a collection of answer requirements. Unique keys are joined together by `AND`. Keys represent a collection of allowed answer values joined by `OR`.",
       "type": "object"
     },
     "TButtonMode": {

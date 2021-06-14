@@ -1,4 +1,4 @@
-import { IPage }     from '../survey/IPage';
+import { IPage }     from '../survey/IStep';
 import { IPages }    from '../survey/IPages';
 import { PAGE_TYPE } from './enums';
 

@@ -1,4 +1,4 @@
-import { IPage }     from './IPage';
+import { IPage }     from './IStep';
 import { IStepData } from './IStepData';
 
 /**

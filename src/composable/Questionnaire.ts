@@ -11,20 +11,22 @@ import {
 } from '../lib/enums';
 import { Helpers }             from '../lib/helpers';
 import { TAge, TAgeCalc }      from '../lib/types';
-import { IQuestionableConfig } from '../survey';
+import { IQuestionableConfig } from '../survey/IQuestionableConfig';
 import { IAction }             from '../survey/IAction';
 import { IForm }               from '../survey/IForm';
 import { IQuestionnaire }      from '../survey/IQuestionnaire';
-import { IRequirement }        from '../survey/IRequirement';
-import { IResult }             from '../survey/IResult';
-import { ISection }            from '../survey/ISection';
-import { IStep }               from '../survey/IStep';
-import { IQuestion }           from '../survey/IQuestion';
-import { IPage }               from '../survey/IPage';
-import { IPages }              from '../survey/IPages';
-import { IStepData }           from '../survey/IStepData';
-import { QuestionableConfig }  from './Config';
-import { IResponse }           from '../survey/IResponse';
+import {
+  IRequirement,
+  ISection,
+  IStep,
+  IQuestion,
+  IPage,
+  IResponse,
+}                from '../survey/IStep';
+import { IResult }            from '../survey/IResult';
+import { IPages }             from '../survey/IPages';
+import { IStepData }          from '../survey/IStepData';
+import { QuestionableConfig } from './Config';
 
 /**
  * Utility wrapper for survey state
