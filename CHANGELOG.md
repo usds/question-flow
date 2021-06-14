@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/usds/questionable/compare/v1.1.1...v1.1.2) (2021-06-14)
+
+
+### Bug Fixes
+
+* **data-model:** uses reference types ([#52](https://github.com/usds/questionable/issues/52)) ([4d10aa8](https://github.com/usds/questionable/commit/4d10aa87d7bb96c4d58b0ea5920c836c675ee60c)), closes [#51](https://github.com/usds/questionable/issues/51)
+
 ## [1.1.1](https://github.com/usds/questionable/compare/v1.1.0...v1.1.1) (2021-06-11)
 
 
