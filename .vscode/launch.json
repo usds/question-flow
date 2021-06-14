@@ -5,16 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-node",
+      // Requires the extension Debugger for Chrome: https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
+      "type": "edge",
       "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/src/wizard/steps/MultipleChoice.tsx",
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+      "name": "Storybook Debug",
+      "url": "http://localhost:9009",
+      "sourceMaps": true,
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${webRoot}/*",
+        "webpack:///./*": "${webRoot}/*",
+        "webpack:///src/*": "${webRoot}/*",
+        "webpack:///./~/*": "${webRoot}/node_modules/*"
+      }
     }
   ]
 }

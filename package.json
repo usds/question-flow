@@ -184,7 +184,7 @@
   "scripts": {
     "build": "yarn lint && yarn build:rollup && yarn build:schema",
     "build:rollup": "rollup --config --environment NODE_ENV:production",
-    "build:schema": "ts-json-schema-generator -p './src/survey/*.ts' -o './src/schema/survey.json' --additional-properties true",
+    "build:schema": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true && node ./scripts/parseSchema.js",
     "build:storybook": "build-storybook -s public",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",

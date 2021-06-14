@@ -1,13 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { DateTime }                  from 'luxon';
-import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
-import { IQuestionData }             from '../../survey/IQuestionData';
-import { Steps }                     from './Steps';
 import { getDateTime }               from '../../lib/date';
+import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
 import { TDateOfBirth }              from '../../lib/types';
+import { IQuestion }                 from '../../survey';
 import { IQuestionableConfig }       from '../../survey/IQuestionableConfig';
 import { IQuestionAnswer }           from '../../survey/IQuestionAnswer';
+import { IQuestionData }             from '../../survey/IQuestionData';
+import { Steps }                     from './Steps';
 
 /**
  * Static utility methods for question components
@@ -22,7 +23,7 @@ export abstract class Questions {
   private static updateForm(answer: string, props: IQuestionData): void {
     Object.assign(props.step, { answer });
     const value = {
-      answers: [props.step],
+      responses: [props.step],
     };
     return props.dispatchForm({
       type: ACTION_TYPE.UPDATE,
@@ -36,11 +37,16 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  private static isSelected(answer: string, props: IQuestionData): boolean | undefined {
+  private static isSelected(
+    answer: string,
+    props: IQuestionData,
+  ): boolean | undefined {
     if (!props?.form) {
       return undefined;
     }
-    const q = props.form.responses.find((a) => a.id === props.step.id);
+    const q: IQuestion | undefined = props.form.responses.find(
+      (a: IQuestion) => a.id === props.step.id,
+    );
     if (!q) {
       return undefined;
     }
@@ -82,17 +88,19 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  public static getRadios(props: IQuestionData, config: IQuestionableConfig): JSX.Element {
-    return (<Fieldset
-      legend={props.step.title}
-      className={CSS_CLASS.MULTI_CHOICE_GROUP}
-      legendStyle="srOnly"
-    >
-      {
-        props.step.answers.map((a) =>
-          Questions.getRadio(a, props, config))
-      }
-    </Fieldset>);
+  public static getRadios(
+    props: IQuestionData,
+    config: IQuestionableConfig,
+  ): JSX.Element {
+    return (
+      <Fieldset
+        legend={props.step.title}
+        className={CSS_CLASS.MULTI_CHOICE_GROUP}
+        legendStyle="srOnly"
+      >
+        {props.step.answers.map((a) => Questions.getRadio(a, props, config))}
+      </Fieldset>
+    );
   }
 
   /**
@@ -126,20 +134,21 @@ export abstract class Questions {
   }
 
   /**
- * Gets a collection of checkboxes
- * @param props
- * @returns
- */
-  public static getCheckboxes(props: IQuestionData, config: IQuestionableConfig): JSX.Element {
+   * Gets a collection of checkboxes
+   * @param props
+   * @returns
+   */
+  public static getCheckboxes(
+    props: IQuestionData,
+    config: IQuestionableConfig,
+  ): JSX.Element {
     return (
       <Fieldset
         legend={props.step.title}
         className={CSS_CLASS.MULTI_SELECT_GROUP}
         legendStyle="srOnly"
       >
-      {
-        props.step.answers.map((a) => Questions.getCheckbox(a, props, config))
-      }
+        {props.step.answers.map((a) => Questions.getCheckbox(a, props, config))}
       </Fieldset>
     );
   }
