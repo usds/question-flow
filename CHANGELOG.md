@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/usds/questionable/compare/v1.1.4...v1.1.5) (2021-06-14)
+
+
+### Bug Fixes
+
+* **exports:** exports JSON schema as TypeScript ([#56](https://github.com/usds/questionable/issues/56)) ([330b7f4](https://github.com/usds/questionable/commit/330b7f41a954039c30a6f1df7bee9b2fc9e5c8b0))
+
 ## [1.1.4](https://github.com/usds/questionable/compare/v1.1.3...v1.1.4) (2021-06-14)
 
 

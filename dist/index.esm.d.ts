@@ -842,6 +842,14 @@ interface IQuestionable {
     questionnaire?: Questionnaire;
 }
 declare const Questionable: (q: IQuestionable) => JSX.Element;
+declare class Answer implements IForm {
+    readonly started: Date;
+    finished?: Date;
+    birthdate?: string;
+    age?: TAge;
+    responses: IQuestion[];
+    constructor(form?: Partial<Answer>);
+}
 /**
  * Determines if a string can be parsed into a valid Date
  * @param dt
@@ -866,7 +874,6 @@ declare const getDateTimeAge: (dob: DateTime) => TAge;
  * @returns an age, if the date is valid
  */
 declare const getAge: (dateOfBirth: string | undefined) => TAge | undefined;
-declare const DEFAULT_PAGES: IPages;
 /**
  * Collection of primitive helper methods
  */
@@ -877,7 +884,988 @@ declare abstract class Helpers {
      */
     static matches(left?: string, right?: string): boolean;
 }
-declare const surveySchema: any;
+// This files is code generated. Do not edit.
+/* eslint-disable */
+declare const survey: {
+    $schema: string;
+    definitions: {
+        ACTION: {
+            enum: string[];
+            type: string;
+        };
+        DESIGN_TYPE: {
+            const: string;
+            description: string;
+            type: string;
+        };
+        IAction: {
+            description: string;
+            properties: {
+                action: {
+                    title: string;
+                    type: string;
+                };
+                description: {
+                    title: string;
+                    type: string;
+                };
+                name: {
+                    type: string;
+                };
+                title: {
+                    title: string;
+                    type: string;
+                };
+                type: {
+                    $ref: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IButtonConfig: {
+            description: string;
+            properties: {
+                defaultLabel: {
+                    description: string;
+                    type: string;
+                };
+                horizontalPos: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                mode: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                verticalPos: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IDesignData: {
+            description: string;
+            properties: {
+                form: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                step: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IForm: {
+            description: string;
+            properties: {
+                age: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                birthdate: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                finished: {
+                    description: string;
+                    format: string;
+                    title: string;
+                    type: string;
+                };
+                responses: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+                started: {
+                    description: string;
+                    format: string;
+                    title: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        INavButton: {
+            description: string;
+            properties: {
+                label: {
+                    description: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        INavigationConfig: {
+            description: string;
+            properties: {
+                next: {
+                    description: string;
+                    properties: {
+                        defaultLabel: {
+                            description: string;
+                            type: string;
+                        };
+                        horizontalPos: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        mode: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        verticalPos: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                    };
+                    type: string;
+                };
+                prev: {
+                    description: string;
+                    properties: {
+                        defaultLabel: {
+                            description: string;
+                            type: string;
+                        };
+                        horizontalPos: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        mode: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        verticalPos: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                    };
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IPage: {
+            description: string;
+            properties: {
+                body: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                bodyHeader: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                bodySubHeader: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                buttons: {
+                    description: string;
+                    properties: {
+                        next: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        prev: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                footer: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                info: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                internalNotes: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                requirements: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+                section: {
+                    description: string;
+                    properties: {
+                        name: {
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                        requirements: {
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                            title: string;
+                            type: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                subTitle: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                title: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                type: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IPageData: {
+            description: string;
+            properties: {
+                form: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                step: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IPages: {
+            description: string;
+            properties: {
+                landingPage: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                noResultsPage: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                resultsPage: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                summaryPage: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IProgressBarConfig: {
+            description: string;
+            properties: {
+                baseBgColor: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                bgColor: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                hide: {
+                    default: boolean;
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                position: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                type: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IQuestion: {
+            description: string;
+            properties: {
+                answers: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+                buttons: {
+                    description: string;
+                    properties: {
+                        next: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        prev: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                footer: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                info: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                internalNotes: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                requirements: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+                section: {
+                    description: string;
+                    properties: {
+                        name: {
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                        requirements: {
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                            title: string;
+                            type: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                subTitle: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                title: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                type: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IQuestionAnswer: {
+            description: string;
+            properties: {
+                id: {
+                    type: string;
+                };
+                order: {
+                    type: string;
+                };
+                title: {
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IQuestionConfig: {
+            description: string;
+            properties: {
+                showAnswerBorder: {
+                    default: boolean;
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IQuestionData: {
+            description: string;
+            properties: {
+                form: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                step: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IQuestionableConfig: {
+            description: string;
+            properties: {
+                mode: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                nav: {
+                    description: string;
+                    properties: {
+                        next: {
+                            description: string;
+                            properties: {
+                                defaultLabel: {
+                                    description: string;
+                                    type: string;
+                                };
+                                horizontalPos: {
+                                    $ref: string;
+                                    description: string;
+                                    title: string;
+                                };
+                                mode: {
+                                    $ref: string;
+                                    description: string;
+                                    title: string;
+                                };
+                                verticalPos: {
+                                    $ref: string;
+                                    description: string;
+                                    title: string;
+                                };
+                            };
+                            type: string;
+                        };
+                        prev: {
+                            description: string;
+                            properties: {
+                                defaultLabel: {
+                                    description: string;
+                                    type: string;
+                                };
+                                horizontalPos: {
+                                    $ref: string;
+                                    description: string;
+                                    title: string;
+                                };
+                                mode: {
+                                    $ref: string;
+                                    description: string;
+                                    title: string;
+                                };
+                                verticalPos: {
+                                    $ref: string;
+                                    description: string;
+                                    title: string;
+                                };
+                            };
+                            type: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                progressBar: {
+                    description: string;
+                    properties: {
+                        baseBgColor: {
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                        bgColor: {
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                        hide: {
+                            default: boolean;
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                        position: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        type: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                questions: {
+                    description: string;
+                    properties: {
+                        showAnswerBorder: {
+                            default: boolean;
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                steps: {
+                    description: string;
+                    properties: {
+                        borderClass: {
+                            description: string;
+                            enum: string[];
+                            title: string;
+                            type: string;
+                        };
+                        showStepId: {
+                            default: boolean;
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                        titleClass: {
+                            description: string;
+                            enum: string[];
+                            title: string;
+                            type: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IQuestionnaire: {
+            description: string;
+            properties: {
+                actions: {
+                    items: {
+                        $ref: string;
+                    };
+                    type: string;
+                };
+                header: {
+                    type: string;
+                };
+                pages: {
+                    $ref: string;
+                };
+                questions: {
+                    items: {
+                        $ref: string;
+                    };
+                    type: string;
+                };
+                results: {
+                    items: {
+                        $ref: string;
+                    };
+                    type: string;
+                };
+                sections: {
+                    items: {
+                        $ref: string;
+                    };
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IRequirement: {
+            description: string;
+            properties: {
+                explanation: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                maxAge: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                minAge: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                responses: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IResponse: {
+            description: string;
+            properties: {
+                answers: {
+                    items: {
+                        properties: {
+                            id: {
+                                type: string;
+                            };
+                            order: {
+                                type: string;
+                            };
+                            title: {
+                                type: string;
+                            };
+                        };
+                        type: string;
+                    };
+                    type: string;
+                };
+                question: {
+                    properties: {
+                        answers: {
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                            title: string;
+                            type: string;
+                        };
+                        buttons: {};
+                        footer: {};
+                        info: {};
+                        internalNotes: {};
+                        requirements: {};
+                        section: {};
+                        subTitle: {};
+                        title: {};
+                        type: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                    };
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IResult: {
+            description: string;
+            properties: {
+                label: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                name: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                requirements: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        ISection: {
+            description: string;
+            properties: {
+                name: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                requirements: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IStep: {
+            description: string;
+            properties: {
+                buttons: {
+                    description: string;
+                    properties: {
+                        next: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                        prev: {
+                            $ref: string;
+                            description: string;
+                            title: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                footer: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                info: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                internalNotes: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                requirements: {
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    title: string;
+                    type: string;
+                };
+                section: {
+                    description: string;
+                    properties: {
+                        name: {
+                            description: string;
+                            title: string;
+                            type: string;
+                        };
+                        requirements: {
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                            title: string;
+                            type: string;
+                        };
+                    };
+                    title: string;
+                    type: string;
+                };
+                subTitle: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                title: {
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                type: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IStepConfig: {
+            description: string;
+            properties: {
+                borderClass: {
+                    description: string;
+                    enum: string[];
+                    title: string;
+                    type: string;
+                };
+                showStepId: {
+                    default: boolean;
+                    description: string;
+                    title: string;
+                    type: string;
+                };
+                titleClass: {
+                    description: string;
+                    enum: string[];
+                    title: string;
+                    type: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        IStepData: {
+            description: string;
+            properties: {
+                form: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+                step: {
+                    $ref: string;
+                    description: string;
+                    title: string;
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        MODE: {
+            enum: string[];
+            type: string;
+        };
+        PAGE_TYPE: {
+            description: string;
+            enum: string[];
+            type: string;
+        };
+        QUESTION_TYPE: {
+            description: string;
+            enum: string[];
+            type: string;
+        };
+        TAge: {
+            properties: {
+                days: {
+                    maximum: number;
+                    minimum: number;
+                    title: string;
+                    type: string[];
+                };
+                months: {
+                    maximum: number;
+                    minimum: number;
+                    title: string;
+                    type: string[];
+                };
+                years: {
+                    maximum: number;
+                    minimum: number;
+                    title: string;
+                    type: string[];
+                };
+            };
+            required: string[];
+            type: string;
+        };
+        TButtonMode: {
+            enum: string[];
+            type: string;
+        };
+        THorizontalPosition: {
+            enum: string[];
+            type: string;
+        };
+        TProgressBarType: {
+            enum: string[];
+            type: string;
+        };
+        TStepType: {
+            anyOf: {
+                $ref: string;
+            }[];
+        };
+        TVerticalPosition: {
+            enum: string[];
+            type: string;
+        };
+    };
+};
 /**
  * Data defintion for design step
  */
@@ -896,5 +1884,5 @@ interface IPageData extends IStepData {
 interface IQuestionData extends IStepData {
     step: IQuestion;
 }
-export { Questionable, QuestionableConfig, Questionnaire, isValidDate, getDateTime, getDateTimeAge, getAge, DEFAULT_PAGES, QUESTION_TYPE, PAGE_TYPE, DESIGN_TYPE, STEP_TYPE, TStepType, DIRECTION, PROGRESS_BAR_STATUS, ACTION, ACTION_TYPE, DATE_UNIT, MODE, CSS_CLASS, isEnum, Helpers, TAge, TAgeCalc, TReducer, TDateOfBirth, TProgressBarType, TVerticalPosition, THorizontalPosition, TButtonMode, surveySchema, IAction, IForm, IDesignData, INavButton, IPageData, IPages, IQuestionAnswer, IQuestionData, IQuestionableConfig, IStepConfig, IProgressBarConfig, IQuestionConfig, IButtonConfig, INavigationConfig, IQuestionnaire, IResult, IResponse, IStep, IQuestion, IPage, IRequirement, ISection, IStepData };
+export { Questionable, Answer, QuestionableConfig, Questionnaire, isValidDate, getDateTime, getDateTimeAge, getAge, QUESTION_TYPE, PAGE_TYPE, DESIGN_TYPE, STEP_TYPE, TStepType, DIRECTION, PROGRESS_BAR_STATUS, ACTION, ACTION_TYPE, DATE_UNIT, MODE, CSS_CLASS, isEnum, Helpers, TAge, TAgeCalc, TReducer, TDateOfBirth, TProgressBarType, TVerticalPosition, THorizontalPosition, TButtonMode, survey, IAction, IForm, IDesignData, INavButton, IPageData, IPages, IQuestionAnswer, IQuestionData, IQuestionableConfig, IStepConfig, IProgressBarConfig, IQuestionConfig, IButtonConfig, INavigationConfig, IQuestionnaire, IResult, IResponse, IStep, IQuestion, IPage, IRequirement, ISection, IStepData };
 //# sourceMappingURL=index.esm.d.ts.map
