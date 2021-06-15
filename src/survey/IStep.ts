@@ -23,22 +23,7 @@ export interface IStep {
    *
    * @title Buttons
    */
-  buttons?: {
-    /**
-     * Next button
-     *
-     * @title Next Button
-     * @default { label: 'Next' }
-     */
-    next?: INavButton;
-    /**
-     * Previous / Back button
-     *
-     * @title Prev Button
-     * @default { label: 'Prev' }
-     */
-    prev?: INavButton;
-  };
+  buttons?: INavButton[];
   /**
    * Optional footer text to display at the bottom of the step
    *

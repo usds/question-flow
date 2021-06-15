@@ -5,6 +5,7 @@ export enum QUESTION_TYPE {
   DOB = 'dob',
   MULTIPLE_CHOICE = 'multiple_choice',
   MULTIPLE_SELECT = 'multiple_select',
+  UNKNOWN = 'unknown',
 }
 
 /**
@@ -15,6 +16,7 @@ export enum PAGE_TYPE {
   NO_RESULTS = 'No Results',
   RESULTS = 'Results',
   SUMMARY = 'Summary',
+  UNKNOWN = 'unknown',
 }
 
 /**
