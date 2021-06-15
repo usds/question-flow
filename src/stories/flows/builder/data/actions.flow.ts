@@ -4,6 +4,9 @@
  */
 import { ACTION }  from '../../../../lib/enums';
 import { IAction } from '../../../../survey/IAction';
+import { SurveyBuilder } from '../../../../composable/SurveyBuilder';
+import { Action } from 'src/composable/lib/Action';
+
 
 export const actions: IAction[] = [
   {
@@ -31,3 +34,13 @@ export const actions: IAction[] = [
     type:  ACTION.HYBRID,
   },
 ];
+
+export type TActions = {
+  online: Action;
+  call: Action;
+  hybrid: Action;
+}
+
+export const buildActions = (builder: SurveyBuilder): TActions => {
+  const online = builder.
+}

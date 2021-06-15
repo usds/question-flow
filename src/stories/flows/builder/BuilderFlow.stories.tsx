@@ -3,7 +3,7 @@ import { Questionable } from '../../../components/Questionable';
 import { QuestionableConfig } from '../../../composable/Config';
 import { IQuestionable } from '../../../state/GlobalState';
 import '../../styles';
-import { complexFlow } from './builder.flow';
+import { builderFlow } from './builder.flow';
 
 export default {
   argTypes: {
@@ -26,5 +26,5 @@ Complex.args = {
       bgColor: '#1DC2AE',
     },
   }),
-  questionnaire: complexFlow,
+  questionnaire: builderFlow,
 };

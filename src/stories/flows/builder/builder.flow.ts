@@ -1,15 +1,10 @@
-import { Questionnaire }                          from '../../../composable/Questionnaire';
-import {
-  actions, pages, questions, results, sections,
-} from './data';
+import { SurveyBuilder }             from '../../../composable/SurveyBuilder';
+import { buildPages, buildSections } from './data';
 
-const header = 'Complex Eligibility Survey';
+const builder = new SurveyBuilder('Complex Eligibility Survey');
 
-export const complexFlow = new Questionnaire({
-  actions,
-  header,
-  pages,
-  questions,
-  results,
-  sections,
-});
+const sections = buildSections(builder);
+
+const pages = buildPages(builder, sections);
+
+export const builderFlow = builder.toQuestionnaire();
