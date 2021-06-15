@@ -1,10 +1,10 @@
 import { kebabCase, values }        from 'lodash';
 import { QuestionableConfig }       from '../../composable/Config';
-import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
 import { Questionnaire }            from '../../composable/Questionnaire';
+import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
 import { IForm }                    from '../../survey/IForm';
-import { IStepData }                from '../../survey/IStepData';
 import { IQuestionData }            from '../../survey/IQuestionData';
+import { IStepData }                from '../../survey/IStepData';
 
 export abstract class Steps {
   public static goToStep(step: string, props: IStepData): void {
@@ -44,18 +44,21 @@ export abstract class Steps {
     if (props.step?.type === QUESTION_TYPE.DOB) {
       return undefined !== props.form?.age?.years && props.form.age.years >= 0;
     }
-    return Steps.isValid(props.form, props.step.id);
+    return Steps.isValid(props.form, props.step?.id);
   }
 
   public static isValid(form: IForm, questionId: string): boolean {
-    const q = form.responses.find((a) => a.id === questionId);
+    const q = form.responses.find((a) => a?.id === questionId);
     if (!q) return false;
     const answers = values(q.answers);
     switch (q.type) {
       case STEP_TYPE.DOB:
         return undefined !== form?.age?.years && form.age.years > 0;
       case STEP_TYPE.MULTIPLE_CHOICE:
-        return q.answer !== undefined && answers?.find((x) => x.title === q.answer) !== undefined;
+        return (
+          q.answer !== undefined
+          && answers?.find((x) => x.title === q.answer) !== undefined
+        );
       default:
         return true;
     }

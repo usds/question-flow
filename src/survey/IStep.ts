@@ -1,6 +1,9 @@
 /* eslint-disable import/no-cycle */
 import {
-  PAGE_TYPE, PROGRESS_BAR_STATUS, QUESTION_TYPE, TStepType,
+  PAGE_TYPE,
+  PROGRESS_BAR_STATUS,
+  QUESTION_TYPE,
+  TStepType,
 } from '../lib/enums';
 import { TAge, TAgeCalc }  from '../lib/types';
 import { INavButton }      from './INavButton';
@@ -64,6 +67,13 @@ export interface IStep {
    * @title Internal Notes
    */
   internalNotes?: string;
+  /**
+   * Display order of the Step. Determined at runtime.
+   *
+   * @title Order
+   * @hidden
+   */
+  order?: number;
   /**
    * Collection of requirements to view this step
    *
