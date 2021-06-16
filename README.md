@@ -1,14 +1,38 @@
 # @usds.gov/questionable
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+<p align="center">
+  <a href="https://github.com/usds/questionable/discussions">
+    <img alt="Join the community on GitHub Discussions" src="https://img.shields.io/badge/Join%20the%20community-on%20GitHub%20Discussions-blue">
+  </a>
+  <a href="https://github.com/usds/questionable/actions?query=workflow%3ARelease+branch%3Amain">
+    <img alt="Build states" src="https://github.com/usds/questionable/actions/workflows/release.yml/badge.svg">
+  </a>
+  <a href="#badge">
+    <img alt="semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@usds.gov/questionable">
+    <img alt="npm latest version" src="https://img.shields.io/npm/v/@usds.gov/questionable/latest.svg">
+  </a>
+  <a href="https://www.npmjs.com/package/uswds">
+    <img alt="uswds" src="https://img.shields.io/github/package-json/dependency-version/trussworks/react-uswds/dev/uswds" />
+  </a>
+  <a href="https://www.npmjs.com/package/@trussworks/react-uswds">
+    <img alt="react-uswds" src="https://img.shields.io/github/package-json/dependency-version/usds/questionable/@trussworks/react-uswds" />
+  </a>
+  <a href="https://www.npmjs.com/package/react">
+    <img alt="react-uswds" src="https://img.shields.io/github/package-json/dependency-version/usds/questionable/react" />
+  </a>
+</p>
 
 If you have questions, you have questionable content. Questionable is a USDS React component that transforms complex workflows into a simple, linear wizard.
 
-![q](https://user-images.githubusercontent.com/73488661/120005468-d9d42480-bfa5-11eb-9fc2-c940bfd473ea.gif)
+![q](https://user-images.githubusercontent.com/73488661/122292423-fb993b00-cec3-11eb-91c6-ddb37a4ec7c7.gif)
 
 ## Install
 
