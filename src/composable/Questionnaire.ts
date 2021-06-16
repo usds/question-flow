@@ -11,20 +11,20 @@ import {
 } from '../lib/enums';
 import { Helpers }             from '../lib/helpers';
 import { TAge, TAgeCalc }      from '../lib/types';
-import { IQuestionableConfig } from '../survey/IQuestionableConfig';
 import { IAction }             from '../survey/IAction';
 import { IForm }               from '../survey/IForm';
+import { IPages }              from '../survey/IPages';
+import { IQuestionableConfig } from '../survey/IQuestionableConfig';
 import { IQuestionnaire }      from '../survey/IQuestionnaire';
+import { IResult }             from '../survey/IResult';
 import {
+  IPage,
+  IQuestion,
   IRequirement,
+  IResponse,
   ISection,
   IStep,
-  IQuestion,
-  IPage,
-  IResponse,
-}                from '../survey/IStep';
-import { IResult }            from '../survey/IResult';
-import { IPages }             from '../survey/IPages';
+} from '../survey/IStep';
 import { IStepData }          from '../survey/IStepData';
 import { QuestionableConfig } from './Config';
 
@@ -55,7 +55,10 @@ export class Questionnaire implements IQuestionnaire {
     Object.assign(this, data);
 
     // Create a new collection for our flow logic
-    this.steps = [...this.questions];
+    this.steps = this.questions.map((q, i) => ({
+      order: i,
+      ...q,
+    }));
 
     this.init();
 
@@ -359,10 +362,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param minAge a TAge object or undefined
    * @returns true if no min age, else true if age is >= min age
    */
-  private static meetsMinAgeRequirements(
-    form: IForm,
-    minAge?: TAge,
-  ): boolean {
+  private static meetsMinAgeRequirements(form: IForm, minAge?: TAge): boolean {
     if (!minAge) return true;
 
     if (form.age === undefined) {
@@ -384,10 +384,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param maxAge a TAge object or undefined
    * @returns true if no max age, else true if age is <= max age
    */
-  private static meetsMaxAgeRequirements(
-    form: IForm,
-    maxAge?: TAge,
-  ): boolean {
+  private static meetsMaxAgeRequirements(form: IForm, maxAge?: TAge): boolean {
     if (!maxAge) return true;
     if (form.age === undefined) {
       return false;
@@ -436,7 +433,8 @@ export class Questionnaire implements IQuestionnaire {
         return a.answers.some(
           (i) =>
             question.answer !== undefined
-            && question.answer === question.answers.find((x) => x.id === i.id)?.title,
+            && question.answer
+              === question.answers.find((x) => x.id === i.id)?.title,
         );
       }
       // If no answers are defined, this passes

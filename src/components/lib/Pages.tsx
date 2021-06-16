@@ -13,7 +13,11 @@ export abstract class Pages {
    * @param result
    * @returns
    */
-  static getReason(props: IStepData, result: IResult, global: IGlobalState): string {
+  static getReason(
+    props: IStepData,
+    result: IResult,
+    global: IGlobalState,
+  ): string {
     let reason                      = result.match?.explanation;
     const { questionnaire, config } = global;
 
@@ -31,8 +35,11 @@ export abstract class Pages {
         reason += `You are ${props.form.age?.years} years `;
         reason += `and ${props.form.age?.months} months old. `;
       }
-      Object.keys(result.match.responses).forEach((id) => {
-        const q = questionnaire.getQuestionById(id);
+      result.match.responses.forEach((r) => {
+        if (!r.question.id) {
+          return;
+        }
+        const q = questionnaire.getQuestionById(r.question.id);
         reason += `You answered "<b>${q.answer}</b>" to the question "<i>${q.title}.</i>" `;
       });
     }
@@ -46,7 +53,7 @@ export abstract class Pages {
    */
   static getResults(props: IStepData, global: IGlobalState): ReactNode {
     const { questionnaire } = global;
-    return (questionnaire.getResults(props.form).map((result) => (
+    return questionnaire.getResults(props.form).map((result) => (
       <li key={`${props.stepId}_${result.id}`} className="padding-bottom-2">
         <span>
           {result.label}:{'  '}
@@ -54,9 +61,11 @@ export abstract class Pages {
         </span>
         <div
           className="text-light"
-          dangerouslySetInnerHTML={{ __html: Pages.getReason(props, result, global) }}
+          dangerouslySetInnerHTML={{
+            __html: Pages.getReason(props, result, global),
+          }}
         />
       </li>
-    )));
+    ));
   }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
+import { merge }                     from 'lodash';
 import { DateTime }                  from 'luxon';
 import { getDateTime }               from '../../lib/date';
 import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
@@ -22,12 +23,19 @@ export abstract class Questions {
    */
   private static updateForm(answer: string, props: IQuestionData): void {
     Object.assign(props.step, { answer });
-    const value = {
-      responses: [props.step],
-    };
+    // TODO: circle back and fix this logic. The problem is that our reducer is merging by KEY,
+    // which in the case of arrays is the index, and the index will always be 0 if we're passing in new arrays
+    // There are cleaner ways to do this.
+    props.form.responses = props.form.responses || [];
+    const value          = props.form.responses.find((r) => r.id === props.step.id);
+    if (!value) {
+      props.form.responses.push(props.step);
+    } else {
+      merge(value, props.step);
+    }
     return props.dispatchForm({
-      type: ACTION_TYPE.UPDATE,
-      value,
+      type:  ACTION_TYPE.UPDATE,
+      value: { ...props.form },
     });
   }
 
