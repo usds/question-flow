@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/usds/questionable/compare/v1.1.5...v1.1.6) (2021-06-16)
+
+
+### Bug Fixes
+
+* **Summary Page:** displays all answered questions ([#61](https://github.com/usds/questionable/issues/61)) ([269415f](https://github.com/usds/questionable/commit/269415f6ff64a61f846b1eb5c56ca112bde0ef6e)), closes [#60](https://github.com/usds/questionable/issues/60)
+
 ## [1.1.5](https://github.com/usds/questionable/compare/v1.1.4...v1.1.5) (2021-06-14)
 
 

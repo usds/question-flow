@@ -426,6 +426,13 @@ interface IStep {
      */
     internalNotes?: string;
     /**
+     * Display order of the Step. Determined at runtime.
+     *
+     * @title Order
+     * @hidden
+     */
+    order?: number;
+    /**
      * Collection of requirements to view this step
      *
      * @title Requirements
@@ -617,6 +624,35 @@ interface IForm {
     readonly started: Date;
 }
 /**
+ * Defines required pages for the survey flow
+ */
+interface IPages {
+    /**
+     * First step of the survey
+     *
+     * @title Landing Page
+     */
+    readonly landingPage: IPage;
+    /**
+     * Last step of the survey if there are 0 results
+     *
+     * @title No Results Page
+     */
+    readonly noResultsPage: IPage;
+    /**
+     * Last step of the survey if there are 1 or more results
+     *
+     * @title Results Page
+     */
+    readonly resultsPage: IPage;
+    /**
+     * Preview of survery before submitting to receive results
+     *
+     * @title Summary Page
+     */
+    readonly summaryPage: IPage;
+}
+/**
  * Represents a potential result based on a customer's answers
  */
 interface IResult {
@@ -653,35 +689,6 @@ interface IResult {
      * @title Requirements
      */
     requirements: IRequirement[];
-}
-/**
- * Defines required pages for the survey flow
- */
-interface IPages {
-    /**
-     * First step of the survey
-     *
-     * @title Landing Page
-     */
-    readonly landingPage: IPage;
-    /**
-     * Last step of the survey if there are 0 results
-     *
-     * @title No Results Page
-     */
-    readonly noResultsPage: IPage;
-    /**
-     * Last step of the survey if there are 1 or more results
-     *
-     * @title Results Page
-     */
-    readonly resultsPage: IPage;
-    /**
-     * Preview of survery before submitting to receive results
-     *
-     * @title Summary Page
-     */
-    readonly summaryPage: IPage;
 }
 /**
  * Definition for survey data input
