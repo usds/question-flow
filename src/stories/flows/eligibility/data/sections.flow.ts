@@ -1,11 +1,19 @@
-/* eslint-disable sonarjs/no-duplicate-string */
-import { ISection } from '../../../../survey/IStep';
+/* eslint-disable sonarjs/no-duplicate-string  */
+import { ISection } from '../../../../survey';
 
 export const sections: ISection[] = [
   {
     id:           'introduction',
     name:         'Introduction',
-    requirements: [],
+    requirements: [{
+      explanation: 'Answered the first question',
+      responses:   [
+        {
+          answers:  [{ id: '0' }, { id: '1' }],
+          question: { id: 'A' },
+        },
+      ],
+    }],
   },
   {
     id:           'a0_work',

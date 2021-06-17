@@ -1,5 +1,7 @@
-import { isValidElement, ReactNode } from 'react';
-import { noel }                      from '../../lib/noop';
+import {
+  createElement, isValidElement, ReactHTML, ReactNode,
+} from 'react';
+import { noel } from '../../lib/noop';
 
 type TEl = {
   className?: string;
@@ -7,8 +9,6 @@ type TEl = {
 };
 
 type TParam = ReactNode | string | undefined;
-
-type TNodeType = 'div' | 'p' | 'span' | 'h2';
 
 abstract class NodeFactory {
   private static element(node: TParam): JSX.Element | null {
@@ -30,39 +30,28 @@ abstract class NodeFactory {
     }
   }
 
-  private static node(node: TParam, type: TNodeType, className = ''): JSX.Element {
+  public static P({ node, className }: TEl): JSX.Element {
+    return NodeFactory.Node(node, 'p', className);
+  }
+
+  public static Div({ node, className }: TEl): JSX.Element {
+    return NodeFactory.Node(node, 'div', className);
+  }
+
+  public static Span({ node, className }: TEl): JSX.Element {
+    return NodeFactory.Node(node, 'span', className);
+  }
+
+  public static H2({ node, className }: TEl): JSX.Element {
+    return NodeFactory.Node(node, 'h2', className);
+  }
+
+  static Node(node: TParam, type: keyof ReactHTML, className = ''): JSX.Element {
     const el = NodeFactory.element(node);
     if (!el) {
       return noel();
     }
-    switch (type) {
-      case 'p':
-        return (<p className={className}>{el}</p>);
-      case 'div':
-        return (<div className={className}>{el}</div>);
-      case 'span':
-        return (<span className={className}>{el}</span>);
-      case 'h2':
-        return (<h2 className={className}>{el}</h2>);
-      default:
-        return noel();
-    }
-  }
-
-  public static P({ node, className }: TEl): JSX.Element {
-    return NodeFactory.node(node, 'p', className);
-  }
-
-  public static Div({ node, className }: TEl): JSX.Element {
-    return NodeFactory.node(node, 'div', className);
-  }
-
-  public static Span({ node, className }: TEl): JSX.Element {
-    return NodeFactory.node(node, 'span', className);
-  }
-
-  public static H2({ node, className }: TEl): JSX.Element {
-    return NodeFactory.node(node, 'h2', className);
+    return createElement(type, { ...{ className } }, el);
   }
 }
 
@@ -71,4 +60,5 @@ export const {
   H2,
   P,
   Span,
+  Node,
 } = NodeFactory;

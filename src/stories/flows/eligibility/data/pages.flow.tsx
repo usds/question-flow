@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { PAGE_TYPE } from '../../../../lib';
-import { IPages }    from '../../../../survey/IPages';
+import { IPages }    from '../../../../survey';
 
 export const pages: IPages = {
   landingPage: {
@@ -26,8 +26,8 @@ export const pages: IPages = {
   },
   resultsPage: {
     body: (<>This gives you an idea of what you may be eligible for, but we can{"'"}t guarantee you{"'"}ll get these benefits. We{"'"}ll analyze more details during the application process to provide a definite answer.
-<p/>
-The information you shared today tells us about your current situation. In the future, you may become eligible for other benefits as you age or things in your life change.</>),
+      <p />
+      The information you shared today tells us about your current situation. In the future, you may become eligible for other benefits as you age or things in your life change.</>),
     bodyHeader:    'Benefits you may be eligible for',
     bodySubHeader: "Here's what you may be eligible for and why",
     id:            PAGE_TYPE.RESULTS,
@@ -45,7 +45,7 @@ The information you shared today tells us about your current situation. In the f
     id:       PAGE_TYPE.SUMMARY,
     section:  { id: 'results' },
     subTitle:
-      'If everything looks correct, click "Submit" to view your results; otherwise, go back and change your asnwers as needed.',
+      'If everything looks correct, click "Submit" to view your results; otherwise, go back and change your answers as needed.',
     title: 'Review your answers',
     type:  PAGE_TYPE.SUMMARY,
   },

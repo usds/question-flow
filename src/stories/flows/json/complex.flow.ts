@@ -1,15 +1,8 @@
 import { Questionnaire }                          from '../../../composable/Questionnaire';
 import {
-  actions, pages, questions, results, sections,
+  json,
 } from './data';
 
 const header = 'Complex Eligibility Survey';
 
-export const complexFlow = new Questionnaire({
-  actions,
-  header,
-  pages,
-  questions,
-  results,
-  sections,
-});
+export const complexFlow = new Questionnaire(json);

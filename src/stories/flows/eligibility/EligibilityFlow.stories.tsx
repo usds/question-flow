@@ -1,22 +1,23 @@
 import { Meta, Story } from '@storybook/react';
+import { Questionnaire } from '../../../composable/Questionnaire';
 import { Questionable } from '../../../components/Questionable';
 import { QuestionableConfig } from '../../../composable/Config';
 import { IQuestionable } from '../../../state/GlobalState';
 import '../../styles';
-import { complexFlow } from './complex.flow';
+import { eligibility } from './eligibility.flow';
 
 export default {
   argTypes: {
     config: { control: { type: 'object' } },
   },
   component: Questionable,
-  title: 'Questionable/Complex Flow',
+  title: 'Questionable/Eligibility Flow',
 } as Meta;
 
 const Template: Story<IQuestionable> = (args) => <Questionable {...args} />;
 
-export const Complex = Template.bind({});
-Complex.args = {
+export const Eligibility = Template.bind({});
+Eligibility.args = {
   config: new QuestionableConfig({
     dev: false,
     steps: {
@@ -26,5 +27,5 @@ Complex.args = {
       bgColor: '#1DC2AE',
     },
   }),
-  questionnaire: complexFlow,
+  questionnaire: new Questionnaire(eligibility),
 };
