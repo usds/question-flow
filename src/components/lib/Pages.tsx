@@ -2,6 +2,7 @@ import { ReactNode }    from 'react';
 import { IGlobalState } from '../../state/GlobalState';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';
+import { Div }          from '../factories/NodeFactory';
 
 /**
  * Static utility methods for page components
@@ -59,11 +60,9 @@ export abstract class Pages {
           {result.label}:{'  '}
           <b>{result.name}</b>
         </span>
-        <div
+        <Div
           className="text-light"
-          dangerouslySetInnerHTML={{
-            __html: Pages.getReason(props, result, global),
-          }}
+          node={Pages.getReason(props, result, global)}
         />
       </li>
     ));

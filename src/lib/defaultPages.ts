@@ -6,9 +6,12 @@ import { PAGE_TYPE } from './enums';
  * Default landing step if none is defined
  */
 const landingPage: IPage = {
-  buttons: {
+  body:          '',
+  bodyHeader:    '',
+  bodySubHeader: '',
+  buttons:       {
     next: {
-      label: 'Get Started',
+      label: 'Start',
     },
   },
   id:      PAGE_TYPE.LANDING,

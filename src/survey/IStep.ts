@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { ReactNode } from 'react';
 import {
   PAGE_TYPE,
   PROGRESS_BAR_STATUS,
@@ -91,7 +92,7 @@ export interface IStep {
    *
    * @title Subtitle
    */
-  subTitle?: string;
+  subTitle?: ReactNode;
   /**
    * Display name of the step
    *
@@ -142,7 +143,7 @@ export interface IPage extends IStep {
    *
    * @title Body
    */
-  body?: string;
+  body?: ReactNode;
   /**
    * Optional header to display above body
    *
@@ -154,7 +155,7 @@ export interface IPage extends IStep {
    *
    * @title Body Subheading
    */
-  bodySubHeader?: string;
+  bodySubHeader?: ReactNode;
   /**
    * Type of page
    *

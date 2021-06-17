@@ -4,6 +4,7 @@ import { QuestionableConfig }     from '../../composable/Config';
 import { ACTION_TYPE, CSS_CLASS } from '../../lib/enums';
 import { noel }                   from '../../lib/noop';
 import { IStepData }              from '../../survey/IStepData';
+import { P }                      from '../factories/NodeFactory';
 
 export abstract class Wizard {
   public static getHeader(
@@ -27,7 +28,7 @@ export abstract class Wizard {
       return noel();
     }
     return (
-      <p className={CSS_CLASS.STEP_SUBTITLE} dangerouslySetInnerHTML={{ __html: text }} />
+      <P className={CSS_CLASS.STEP_SUBTITLE} node={text}/>
     );
   }
 
@@ -49,9 +50,9 @@ export abstract class Wizard {
       return noel();
     }
     return (
-      <p
+      <P
         className={`font-sans-6 ${CSS_CLASS.STEP_FOOTER}`}
-        dangerouslySetInnerHTML={{ __html: text }}
+        node={text}
        />
     );
   }
