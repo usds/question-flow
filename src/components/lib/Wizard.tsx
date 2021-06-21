@@ -64,7 +64,6 @@ export abstract class Wizard {
     props.wizard.goToStep('A');
   }
 
-  // eslint-disable-next-line max-len
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   public static saveAsJson(data: any, fileName = 'questionable.json'): void {
     const blob = new Blob([data], { type: 'text/plain;charset=utf-8' });

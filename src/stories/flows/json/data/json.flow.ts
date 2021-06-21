@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import { IQuestionnaire } from '../../../../survey';
 
 export const json: IQuestionnaire = {

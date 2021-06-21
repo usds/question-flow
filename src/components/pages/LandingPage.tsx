@@ -17,6 +17,7 @@ export const LandingPage = (props: IPageData): JSX.Element => {
   return (
     <StepLayout {...props}>
       <P node={step.body} />
+      <P node={step.children} />
     </StepLayout>
   );
 };

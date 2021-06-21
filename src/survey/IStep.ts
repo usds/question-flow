@@ -44,6 +44,12 @@ export interface IStep {
     prev?: INavButton;
   };
   /**
+   * React children to append to the title area
+   *
+   * @hidden
+   */
+  children?: ReactNode;
+  /**
    * Optional footer text to display at the bottom of the step
    *
    * @title Footer
@@ -92,7 +98,7 @@ export interface IStep {
    *
    * @title Subtitle
    */
-  subTitle?: ReactNode;
+  subTitle?: string;
   /**
    * Display name of the step
    *
@@ -143,7 +149,7 @@ export interface IPage extends IStep {
    *
    * @title Body
    */
-  body?: ReactNode;
+  body?: string;
   /**
    * Optional header to display above body
    *
@@ -155,7 +161,7 @@ export interface IPage extends IStep {
    *
    * @title Body Subheading
    */
-  bodySubHeader?: ReactNode;
+  bodySubHeader?: string;
   /**
    * Type of page
    *

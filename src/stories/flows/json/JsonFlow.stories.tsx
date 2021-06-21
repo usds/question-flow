@@ -3,7 +3,7 @@ import { Questionable } from '../../../components/Questionable';
 import { QuestionableConfig } from '../../../composable/Config';
 import { IQuestionable } from '../../../state/GlobalState';
 import '../../styles';
-import { complexFlow } from './complex.flow';
+import { jsonFlow } from './json.flow';
 
 export default {
   argTypes: {
@@ -26,5 +26,5 @@ JSON.args = {
       bgColor: '#1DC2AE',
     },
   }),
-  questionnaire: complexFlow,
+  questionnaire: jsonFlow,
 };

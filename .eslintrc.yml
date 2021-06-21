@@ -66,8 +66,10 @@ rules:
     - error
     - always
   max-len:
-    - 1
+    - 2
     - code: 100
+      ignoreComments: true
+      ignoreUrls: true
   no-multi-spaces:
     - warn
     - exceptions:

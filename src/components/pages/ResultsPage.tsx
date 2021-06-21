@@ -33,6 +33,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
           {Pages.getResults(props, global)}
         </ul>
         <P node={step.body} />
+        <P node={step.children} />
         <H2 node={action.title}/>
         <P node={action.description} />
         <P node={action.action} />
