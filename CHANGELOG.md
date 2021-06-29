@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/usds/questionable/compare/v1.1.6...v1.1.7) (2021-06-29)
+
+
+### Bug Fixes
+
+* **react-props:** Supports React nodes as content ([#73](https://github.com/usds/questionable/issues/73)) ([060b1fe](https://github.com/usds/questionable/commit/060b1fe44e90bc76d875615a888868684c6e038c)), closes [#64](https://github.com/usds/questionable/issues/64)
+
 ## [1.1.6](https://github.com/usds/questionable/compare/v1.1.5...v1.1.6) (2021-06-16)
 
 
