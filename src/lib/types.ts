@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 /*
  * Defines an age relative to a date
  * @title Age Type
@@ -48,3 +50,29 @@ export type TVerticalPosition = 'top' | 'bottom';
 export type THorizontalPosition = 'left' | 'right';
 
 export type TButtonMode = 'link' | 'button';
+
+/**
+ * Content type for blocks of copy
+ */
+export type TContent = {
+  /**
+   * React component to append to the parent
+   * @hidden
+   */
+  children?: ReactNode;
+  /**
+   * Main body content
+   * @title Content
+   */
+  content?: string;
+  /**
+   * Text to display below the title
+   * @title Subtitle
+   */
+  subTitle?: string;
+  /**
+   * Title or Header text
+   * @title Title
+   */
+  title?: string;
+}

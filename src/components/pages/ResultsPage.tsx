@@ -5,6 +5,7 @@ import { Pages }      from '../lib';
 import { useGlobal }  from '../../state/GlobalState';
 import { noel }       from '../../lib/noop';
 import { CSS_CLASS }  from '../../lib';
+import { H2, P }      from '../factories/NodeFactory';
 
 /**
  * Displays the wizard results
@@ -25,16 +26,17 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
   return (
     <StepLayout {...props}>
       <SummaryBox heading={step.bodyHeader || ''} className={CSS_CLASS.RESULTS_SUMMARY_HEADER}>
-        <p>{step.bodySubHeader}</p>
+        <P node={step.bodyHeader} />
         <ul
           className={`usa-list usa-list--unstyled ${CSS_CLASS.RESULTS_SUMMARY_BOX}`}
         >
           {Pages.getResults(props, global)}
         </ul>
-        <p dangerouslySetInnerHTML={{ __html: step?.body || '' }} />
-        <h2>{action.title}</h2>
-        <p>{action.description}</p>
-        <p dangerouslySetInnerHTML={{ __html: action.action }} />.
+        <P node={step.body} />
+        <P node={step.children} />
+        <H2 node={action.title}/>
+        <P node={action.description} />
+        <P node={action.action} />
       </SummaryBox>
     </StepLayout>
   );

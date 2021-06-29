@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { ReactNode } from 'react';
 import {
   PAGE_TYPE,
   PROGRESS_BAR_STATUS,
@@ -42,6 +43,12 @@ export interface IStep {
      */
     prev?: INavButton;
   };
+  /**
+   * React children to append to the title area
+   *
+   * @hidden
+   */
+  children?: ReactNode;
   /**
    * Optional footer text to display at the bottom of the step
    *
