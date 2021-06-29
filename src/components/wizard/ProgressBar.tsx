@@ -13,6 +13,11 @@ export const ProgressBar = (props: IStepData): JSX.Element => {
 
   const completed = questionnaire.getProgressPercent(props, config);
 
+  // Do not display the progress bar if there is no progress
+  if (completed <= 0) {
+    return noel();
+  }
+
   return (
     <div className={CSS_CLASS.PROGRESS_BAR}>
       <PB

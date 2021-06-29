@@ -5,7 +5,8 @@ import { Pages }      from '../lib';
 import { useGlobal }  from '../../state/GlobalState';
 import { noel }       from '../../lib/noop';
 import { CSS_CLASS }  from '../../lib';
-import { H2, P }      from '../factories/NodeFactory';
+import { P }          from '../factories/NodeFactory';
+import { Action }     from '../wizard/Action';
 
 /**
  * Displays the wizard results
@@ -21,7 +22,8 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
     return noel();
   }
 
-  const action = questionnaire.getAction();
+  const results = questionnaire.getResults(props.form);
+  const action  = questionnaire.getAction(results);
 
   return (
     <StepLayout {...props}>
@@ -34,9 +36,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
         </ul>
         <P node={step.body} />
         <P node={step.children} />
-        <H2 node={action.title}/>
-        <P node={action.description} />
-        <P node={action.action} />
+        <Action {...action} />
       </SummaryBox>
     </StepLayout>
   );

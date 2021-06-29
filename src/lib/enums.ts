@@ -72,6 +72,8 @@ export enum MODE {
 
 export enum CSS_CLASS {
   BASE = 'usds-q',
+  CALL_TO_ACTION = 'usds-q-cta',
+  CALL_TO_ACTION_BUTTON = 'usds-q-cta-button',
   DEV_PANEL_SECTION = 'usds-q-dev-panel',
   DOB = 'usds-q-dob',
   MULTI_CHOICE = 'usds-q-multi-choice',

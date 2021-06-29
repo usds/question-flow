@@ -44400,21 +44400,21 @@ export const json: IQuestionnaire = {
   "actions": [
     {
       "action": "<a href=\"#\">Start application</a>",
-      "description": "Answer more questions and upload documents to apply for the benefits you may be eligible for.",
+      "subTitle": "Answer more questions and upload documents to apply for the benefits you may be eligible for.",
       "name": "Apply Online",
       "title": "How to apply",
       "type": "online"
     },
     {
       "action": "Call <a href=\"#\">1-800-772-1213</a> to schedule an appointment",
-      "description": "Call us to schedule an appointment to apply for the benefits you may be eligible for. When it's time for your appointment, we'll call you to complete your application over the phone.",
+      "subTitle": "Call us to schedule an appointment to apply for the benefits you may be eligible for. When it's time for your appointment, we'll call you to complete your application over the phone.",
       "name": "Technician Assisted",
       "title": "How to apply",
       "type": "call"
     },
     {
       "action": "<a href=\"#\">Start application</a>",
-      "description": "Answer more questions and upload documents to apply for the benefits you may be eligible for. After you submit the application here on the website, we'll call you to get more information and finalize your application.",
+      "subTitle": "Answer more questions and upload documents to apply for the benefits you may be eligible for. After you submit the application here on the website, we'll call you to get more information and finalize your application.",
       "name": "Apply Online & Technician Assisted",
       "title": "How to apply",
       "type": "hybrid"

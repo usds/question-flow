@@ -1,6 +1,8 @@
 import { ArrayUnique }   from 'class-validator';
+import { groupBy }       from 'lodash';
 import { DEFAULT_PAGES } from '../lib/defaultPages';
 import {
+  ACTION,
   DIRECTION,
   isEnum,
   MODE,
@@ -199,8 +201,8 @@ export class Questionnaire implements IQuestionnaire {
     const lastStep = sections[sections.length - 1];
     // if there is no step, the questionnaire has just started
     if (!lastStep?.lastStep) {
-      // Always show a little progress
-      return 0.5;
+      // 0% progress can be interpretted as 'do not display'
+      return 0;
     }
     const thisStepIdx = this.flow.indexOf(`${props.stepId}`);
     // add 2 to account for the summary and result steps
@@ -277,12 +279,22 @@ export class Questionnaire implements IQuestionnaire {
   }
 
   /**
-   * Get a randomized action
+   * Gets the appropriate action given a set of results
    * @returns
    */
-  getAction(): IAction {
-    const idx = Math.floor(Math.random() * this.actions.length);
-    return this.actions[idx];
+  getAction(results: IResult[]): IAction {
+    const groupedByAction = groupBy(results, 'action.id');
+    const hybrid          = this.actions.find((a) => a.type === ACTION.HYBRID);
+    // If group above has more than one type of action, the resolved action will be a hybrid
+    let match     = hybrid;
+    const actions = Object.keys(groupedByAction);
+    if (actions.length === 1) {
+      match = this.actions.find((a) => a.id === actions[0]);
+    }
+    if (!match) {
+      throw new Error('Could not find a Call to Action for these results');
+    }
+    return match;
   }
 
   /**

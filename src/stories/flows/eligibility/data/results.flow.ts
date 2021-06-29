@@ -14,6 +14,8 @@ import {
   SIXTY,
   IDK,
   SIXTY_FIVE,
+  APPLY_BY_PHONE_ACTION,
+  APPLY_ONLINE_ACTION,
 } from './constants';
 
 const {
@@ -49,6 +51,7 @@ const {
 const name = 'Benefit name';
 
 const RETIREMENT: IResult = {
+  action:       APPLY_ONLINE_ACTION,
   id:           'RS.00201.001',
   label:        name,
   name:         'Retirement',
@@ -65,9 +68,10 @@ const RETIREMENT: IResult = {
   ],
 };
 
-const SSDI = {
-  id:    'DI.10105.060',
-  label: name,
+const SSDI: IResult = {
+  action: APPLY_ONLINE_ACTION,
+  id:     'DI.10105.060',
+  label:  name,
   name:
       'Disability, also referred to as benefits Disability Insurance (SSDI)',
   requirements: [
@@ -85,6 +89,7 @@ const SSDI = {
 };
 
 const SSI: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'SI.00501.001',
   label:        name,
   name:         'Supplemental Security Income (SSI)',
@@ -305,6 +310,7 @@ const SSI: IResult = {
 };
 
 const MEDICARE: IResult = {
+  action:       APPLY_ONLINE_ACTION,
   id:           'HI.00801.006 / .191 / .146, HI.00805.005',
   label:        name,
   name:         'Medicare',
@@ -325,6 +331,7 @@ const MEDICARE: IResult = {
 };
 
 const SPOUSE: IResult = {
+  action:       APPLY_ONLINE_ACTION,
   id:           'RS.00202.001',
   label:        name,
   name:         'Spouse',
@@ -353,6 +360,7 @@ const SPOUSE: IResult = {
 };
 
 const SPOUSE_WITH_CHILD: IResult = {
+  action:       APPLY_ONLINE_ACTION,
   id:           'RS.01310.001, RS. 00208.005',
   label:        name,
   name:         'Spouse with Child in Care',
@@ -381,6 +389,7 @@ const SPOUSE_WITH_CHILD: IResult = {
 };
 
 const DIVORCED_SPOUSE: IResult = {
+  action:       APPLY_ONLINE_ACTION,
   id:           'RS.00202.005',
   label:        name,
   name:         'Divorced Spouse',
@@ -404,6 +413,7 @@ const DIVORCED_SPOUSE: IResult = {
 };
 
 const WIDOWERS: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00207.001',
   label:        name,
   name:         'Widowers',
@@ -425,6 +435,7 @@ const WIDOWERS: IResult = {
 };
 
 const DISABLED_WIDOWERS: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00207.001',
   label:        name,
   name:         'Disabled Widowers',
@@ -453,6 +464,7 @@ const DISABLED_WIDOWERS: IResult = {
 };
 
 const LUMP_SUM: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00210.001',
   label:        name,
   name:         'Lump Sum Death Payment, a one-time payment',
@@ -488,6 +500,7 @@ const LUMP_SUM: IResult = {
 };
 
 const CHILD_AUX: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00203.001',
   label:        name,
   name:         "Child's Auxiliary",
@@ -528,6 +541,7 @@ const CHILD_AUX: IResult = {
 };
 
 const CHILD_SURVIVOR: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00203.001',
   label:        name,
   name:         "Child's Survivor",
@@ -547,6 +561,7 @@ const CHILD_SURVIVOR: IResult = {
 };
 
 const CHILD_DISABILITY: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'DI.10115.001',
   label:        name,
   name:         'Childhood Disability',
@@ -573,6 +588,7 @@ const CHILD_DISABILITY: IResult = {
 };
 
 const STUDENT_AUX: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00205.001',
   label:        name,
   name:         'Student Auxiliary',
@@ -592,6 +608,7 @@ const STUDENT_AUX: IResult = {
 };
 
 const STUDENT_SURVIVOR: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00205.001',
   label:        name,
   name:         'Student Survivor',
@@ -611,6 +628,7 @@ const STUDENT_SURVIVOR: IResult = {
 };
 
 const MOTHER_FATHER: IResult = {
+  action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00208.001',
   label:        name,
   name:         "Mother/Father's",

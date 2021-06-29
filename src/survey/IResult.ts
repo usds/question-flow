@@ -1,9 +1,17 @@
+import { IAction }      from './IAction';
 import { IRequirement } from './IStep';
 
 /**
  * Represents a potential result based on a customer's answers
  */
 export interface IResult {
+  /**
+   * Defines the call to action for this result
+   *
+   * @title Call to Action
+   * @hidden
+   */
+  action: Partial<IAction>;
   /**
    * Unique identifier
    *

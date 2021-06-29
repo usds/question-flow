@@ -80,3 +80,7 @@ export const NINETEEN_ONE = {
  * Work
  */
 export const WORK = { id: 'a0_work' };
+
+export const APPLY_BY_PHONE_ACTION = { id: '1' };
+
+export const APPLY_ONLINE_ACTION = { id: '0' };

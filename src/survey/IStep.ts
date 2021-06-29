@@ -7,7 +7,7 @@ import {
   TStepType,
 } from '../lib/enums';
 import { TAge, TAgeCalc }  from '../lib/types';
-import { INavButton }      from './INavButton';
+import { IButton }      from './IButton';
 import { IQuestionAnswer } from './IQuestionAnswer';
 
 /**
@@ -34,14 +34,14 @@ export interface IStep {
      * @title Next Button
      * @default { label: 'Next' }
      */
-    next?: INavButton;
+    next?: IButton;
     /**
      * Previous / Back button
      *
      * @title Prev Button
      * @default { label: 'Prev' }
      */
-    prev?: INavButton;
+    prev?: IButton;
   };
   /**
    * React children to append to the title area
