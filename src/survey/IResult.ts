@@ -7,7 +7,7 @@ import { IRequirement } from './IStep';
  */
 export interface IResult extends IRef {
   /**
-   * Defines the call to action for this result
+   * Defines the primary call to action for this result
    *
    * @title Call to Action
    * @hidden
@@ -33,4 +33,11 @@ export interface IResult extends IRef {
    * @title Requirements
    */
   requirements: IRequirement[];
+  /**
+   * Additional action which may follow after the primary
+   *
+   * @title Secondary Action
+   * @hidden
+   */
+  secondaryAction?: Partial<IAction>;
 }

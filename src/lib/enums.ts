@@ -89,6 +89,7 @@ export enum CSS_CLASS {
   PROGRESS_BAR = 'usds-q-progress-bar',
   PROGRESS_BAR_BOTTOM_SECTION = 'usds-q-progress-bar-bottom-section',
   PROGRESS_BAR_TOP_SECTION = 'usds-q-progress-bar-top-section',
+  RESULTS_SECONDARY_ACTIONS = 'usds-q-results-secondary-actions',
   RESULTS_SUMMARY_BOX = 'usds-q-results-summary-box',
   RESULTS_SUMMARY_HEADER = 'usds-q-results-summary-header',
   STEP_FOOTER = 'usds-q-step-footer',

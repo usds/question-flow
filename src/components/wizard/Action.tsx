@@ -1,11 +1,11 @@
 import { Link }      from '@trussworks/react-uswds';
-import { noel }      from '../../lib/noop';
 import { CSS_CLASS } from '../../lib';
+import { noel }      from '../../lib/noop';
 import { IAction }   from '../../survey/IAction';
 import { H2, H3, P } from '../factories/NodeFactory';
 
-export const Action = (action: IAction): JSX.Element => {
-  const buttons = action.buttons.map((a) => {
+export const Action = (action: Partial<IAction>): JSX.Element => {
+  const buttons = action.buttons?.map((a) => {
     if (!a.link) {
       return noel();
     }
@@ -22,7 +22,7 @@ export const Action = (action: IAction): JSX.Element => {
           variant={variant}
           href={a.link}
         >
-        {a.label}
+          {a.label}
         </Link>
       </li>
     );
@@ -31,12 +31,14 @@ export const Action = (action: IAction): JSX.Element => {
     <section className={CSS_CLASS.CALL_TO_ACTION_SECTION}>
       <div className={CSS_CLASS.CALL_TO_ACTION}>
         <H2 node={action.label} />
-        <div className={`fa-4x ${CSS_CLASS.CALL_TO_ACTION_ICON}`} >
+        <div className={`fa-4x ${CSS_CLASS.CALL_TO_ACTION_ICON}`}>
           <i className={action.icon} />
         </div>
-        <H3 node={action.title}/>
+        <H3 node={action.title} />
         <P node={action.subTitle} />
-        <ul className={`usa-list usa-list--unstyled ${CSS_CLASS.CALL_TO_ACTION_LIST}`}>
+        <ul
+          className={`usa-list usa-list--unstyled ${CSS_CLASS.CALL_TO_ACTION_LIST}`}
+        >
           {buttons}
         </ul>
       </div>
