@@ -7,7 +7,6 @@ import { IAction } from '../../../../survey';
 
 export const actions: IAction[] = [
   {
-    action:  'Start an application online and complete it by phone',
     buttons: [
       {
         label: 'Start Application',
@@ -15,14 +14,15 @@ export const actions: IAction[] = [
         mode:  'button',
       },
     ],
+    icon:     'fas fa-desktop',
     id:       '0',
+    label:    'How to apply',
     subTitle:
       'First, enter your personal information to start an application online. Then, we\'ll call you to get more details and complete your application over the phone.',
-    title: 'How to apply',
+    title: 'Start an application online and complete it by phone',
     type:  ACTION.ONLINE,
   },
   {
-    action:  'Complete an application by phone',
     buttons: [
       {
         label: '1-800-772-1213',
@@ -35,14 +35,15 @@ export const actions: IAction[] = [
         mode:  'link',
       },
     ],
+    icon:     'fas fa-phone fa-flip-horizontal',
     id:       '1',
+    label:    'How to apply',
     subTitle:
       "Call us to schedule an appointment. When it's time for your appointment, we'll call you and complete your application over the phone.",
-    title: 'How to apply',
+    title: 'Complete an application by phone',
     type:  ACTION.CALL,
   },
   {
-    action:  'Start online, then schedule an appointment by phone',
     buttons: [
       {
         label: 'Start Application',
@@ -60,10 +61,38 @@ export const actions: IAction[] = [
         mode:  'link',
       },
     ],
+    icon:     'fas fa-phone fa-flip-horizontal',
     id:       '2',
+    label:    'How to apply',
     subTitle:
       "Answer more questions and upload documents to apply for the benefits you may be eligible for. After you submit the application here on the website, we'll call you to get more information and finalize your application.",
-    title: 'How to apply',
+    title: 'Start online, then schedule an appointment by phone',
     type:  ACTION.HYBRID,
+  },
+  {
+    buttons: [
+      {
+        label: 'Start Application',
+        link:  'https://www.ssa.gov',
+        mode:  'button',
+      },
+      {
+        label: '1-800-772-1213',
+        link:  'tel:+18007721213',
+        mode:  'link',
+      },
+      {
+        label: 'TTY 1-800-325-0778',
+        link:  'tel:+18003250778',
+        mode:  'link',
+      },
+    ],
+    icon:     'fas fa-phone fa-flip-horizontal',
+    id:       '2',
+    label:    'How to apply',
+    subTitle:
+      "Answer more questions and upload documents to apply for the benefits you may be eligible for. After you submit the application here on the website, we'll call you to get more information and finalize your application.",
+    title: '',
+    type:  ACTION.NONE,
   },
 ];

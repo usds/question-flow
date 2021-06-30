@@ -1,7 +1,7 @@
 import {
   TVerticalPosition, TProgressBarType, THorizontalPosition, TButtonMode,
 } from '../lib/types';
-import { MODE } from '../lib/enums';
+import { MODE }    from '../lib/enums';
 import { IButton } from './IButton';
 
 /**

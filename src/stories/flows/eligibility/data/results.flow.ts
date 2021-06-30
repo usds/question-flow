@@ -54,7 +54,6 @@ const RETIREMENT: IResult = {
   action:       APPLY_ONLINE_ACTION,
   id:           'RS.00201.001',
   label:        name,
-  name:         'Retirement',
   requirements: [
     {
       explanation:
@@ -66,14 +65,13 @@ const RETIREMENT: IResult = {
       ],
     },
   ],
+  title: 'Retirement',
 };
 
 const SSDI: IResult = {
-  action: APPLY_ONLINE_ACTION,
-  id:     'DI.10105.060',
-  label:  name,
-  name:
-      'Disability, also referred to as benefits Disability Insurance (SSDI)',
+  action:       APPLY_ONLINE_ACTION,
+  id:           'DI.10105.060',
+  label:        name,
   requirements: [
     {
       ageCalc:     (birthday: string): boolean => !isFraCalculator(birthday, 12),
@@ -86,13 +84,14 @@ const SSDI: IResult = {
       ],
     },
   ],
+  title:
+      'Disability, also referred to as benefits Disability Insurance (SSDI)',
 };
 
 const SSI: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'SI.00501.001',
   label:        name,
-  name:         'Supplemental Security Income (SSI)',
   requirements: [
     {
       explanation:
@@ -307,13 +306,13 @@ const SSI: IResult = {
       ],
     },
   ],
+  title: 'Supplemental Security Income (SSI)',
 };
 
 const MEDICARE: IResult = {
   action:       APPLY_ONLINE_ACTION,
   id:           'HI.00801.006 / .191 / .146, HI.00805.005',
   label:        name,
-  name:         'Medicare',
   requirements: [
     {
       explanation: 'You are between 64 years and 65 years and 3 months old.',
@@ -328,13 +327,13 @@ const MEDICARE: IResult = {
       responses: [],
     },
   ],
+  title: 'Medicare',
 };
 
 const SPOUSE: IResult = {
   action:       APPLY_ONLINE_ACTION,
   id:           'RS.00202.001',
   label:        name,
-  name:         'Spouse',
   requirements: [
     {
       explanation:
@@ -357,13 +356,13 @@ const SPOUSE: IResult = {
       ],
     },
   ],
+  title: 'Spouse',
 };
 
 const SPOUSE_WITH_CHILD: IResult = {
   action:       APPLY_ONLINE_ACTION,
   id:           'RS.01310.001, RS. 00208.005',
   label:        name,
-  name:         'Spouse with Child in Care',
   requirements: [
     {
       explanation:
@@ -386,13 +385,13 @@ const SPOUSE_WITH_CHILD: IResult = {
       ],
     },
   ],
+  title: 'Spouse with Child in Care',
 };
 
 const DIVORCED_SPOUSE: IResult = {
   action:       APPLY_ONLINE_ACTION,
   id:           'RS.00202.005',
   label:        name,
-  name:         'Divorced Spouse',
   requirements: [
     {
       explanation:
@@ -410,13 +409,13 @@ const DIVORCED_SPOUSE: IResult = {
       ],
     },
   ],
+  title: 'Divorced Spouse',
 };
 
 const WIDOWERS: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00207.001',
   label:        name,
-  name:         'Widowers',
   requirements: [
     {
       explanation:
@@ -432,13 +431,13 @@ const WIDOWERS: IResult = {
       ],
     },
   ],
+  title: 'Widowers',
 };
 
 const DISABLED_WIDOWERS: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00207.001',
   label:        name,
-  name:         'Disabled Widowers',
   requirements: [
     {
       explanation:
@@ -461,13 +460,13 @@ const DISABLED_WIDOWERS: IResult = {
       ],
     },
   ],
+  title: 'Disabled Widowers',
 };
 
 const LUMP_SUM: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00210.001',
   label:        name,
-  name:         'Lump Sum Death Payment, a one-time payment',
   requirements: [
     {
       explanation: 'The child lost a parent.',
@@ -497,13 +496,13 @@ const LUMP_SUM: IResult = {
       ],
     },
   ],
+  title: 'Lump Sum Death Payment, a one-time payment',
 };
 
 const CHILD_AUX: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00203.001',
   label:        name,
-  name:         "Child's Auxiliary",
   requirements: [
     {
       explanation:
@@ -538,13 +537,13 @@ const CHILD_AUX: IResult = {
       ],
     },
   ],
+  title: "Child's Auxiliary",
 };
 
 const CHILD_SURVIVOR: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00203.001',
   label:        name,
-  name:         "Child's Survivor",
   requirements: [
     {
       explanation: 'You expect a condition to affect your ability to work for a year or more and it started to affect you before you turned 22. You also lost a parent.',
@@ -558,13 +557,13 @@ const CHILD_SURVIVOR: IResult = {
       ],
     },
   ],
+  title: "Child's Survivor",
 };
 
 const CHILD_DISABILITY: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'DI.10115.001',
   label:        name,
-  name:         'Childhood Disability',
   requirements: [
     {
       explanation:
@@ -585,13 +584,13 @@ const CHILD_DISABILITY: IResult = {
       ],
     },
   ],
+  title: 'Childhood Disability',
 };
 
 const STUDENT_AUX: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00205.001',
   label:        name,
-  name:         'Student Auxiliary',
   requirements: [
     {
       explanation:
@@ -605,13 +604,13 @@ const STUDENT_AUX: IResult = {
       ],
     },
   ],
+  title: 'Student Auxiliary',
 };
 
 const STUDENT_SURVIVOR: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00205.001',
   label:        name,
-  name:         'Student Survivor',
   requirements: [
     {
       explanation: 'You go to high school full time and lost a parent.',
@@ -625,13 +624,13 @@ const STUDENT_SURVIVOR: IResult = {
       ],
     },
   ],
+  title: 'Student Survivor',
 };
 
 const MOTHER_FATHER: IResult = {
   action:       APPLY_BY_PHONE_ACTION,
   id:           'RS.00208.001',
   label:        name,
-  name:         "Mother/Father's",
   requirements: [
     {
       explanation:
@@ -646,6 +645,7 @@ const MOTHER_FATHER: IResult = {
       ],
     },
   ],
+  title: "Mother/Father's",
 };
 
 /**

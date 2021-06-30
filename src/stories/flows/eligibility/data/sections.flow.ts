@@ -4,7 +4,6 @@ import { ISection } from '../../../../survey';
 export const sections: ISection[] = [
   {
     id:           'introduction',
-    name:         'Introduction',
     requirements: [{
       explanation: 'Answered the first question',
       responses:   [
@@ -14,10 +13,10 @@ export const sections: ISection[] = [
         },
       ],
     }],
+    title: 'Introduction',
   },
   {
     id:           'a0_work',
-    name:         'Work',
     requirements: [
       {
         explanation: '18 or older',
@@ -29,10 +28,10 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Work',
   },
   {
     id:           'a0_family',
-    name:         'Family',
     requirements: [
       {
         explanation: '18 or older',
@@ -44,10 +43,10 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Family',
   },
   {
     id:           'a0_finances',
-    name:         'Finances',
     requirements: [
       {
         explanation: '18 or older',
@@ -59,10 +58,10 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Finances',
   },
   {
     id:           'a1_disability',
-    name:         'Disability',
     requirements: [
       {
         explanation: 'Is younger than 18',
@@ -74,10 +73,10 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Disability',
   },
   {
     id:           'a1_family',
-    name:         'Family',
     requirements: [
       {
         explanation: 'Is younger than 18',
@@ -89,10 +88,10 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Family',
   },
   {
     id:           'results',
-    name:         'Results',
     requirements: [
       {
         explanation: 'Has answered the age question',
@@ -104,5 +103,6 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Results',
   },
 ];

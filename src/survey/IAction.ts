@@ -1,14 +1,11 @@
 import { ACTION }  from '../lib/enums';
 import { IButton } from './IButton';
+import { IRef }    from './IRef';
 
 /**
  * Represents something the customer can do in response to receiving a result
  */
-export interface IAction {
-  /**
-   * @title Action
-   */
-  action: string;
+export interface IAction extends IRef {
   /**
    * Buttons to complete the action
    * @title Buttons
@@ -16,19 +13,19 @@ export interface IAction {
    */
   buttons: IButton[];
   /**
-   * Unique identifier
+   * Optional icon for the action
    *
-   * @title Id
+   * @title Icon
    */
-  id: string;
+  icon?: string;
+  /**
+   * @title Label
+   */
+  label: string;
   /**
    * @title Description
    */
   subTitle: string;
-  /**
-   * @title Title
-   */
-  title: string;
   /**
    * @title Type
    * @hidden

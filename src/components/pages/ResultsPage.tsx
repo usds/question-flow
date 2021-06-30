@@ -29,6 +29,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
     <StepLayout {...props}>
       <SummaryBox heading={step.bodyHeader || ''} className={CSS_CLASS.RESULTS_SUMMARY_HEADER}>
         <P node={step.bodyHeader} />
+        <P node={step.bodySubHeader} />
         <ul
           className={`usa-list usa-list--unstyled ${CSS_CLASS.RESULTS_SUMMARY_BOX}`}
         >

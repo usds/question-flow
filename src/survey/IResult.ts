@@ -1,10 +1,11 @@
 import { IAction }      from './IAction';
+import { IRef }         from './IRef';
 import { IRequirement } from './IStep';
 
 /**
  * Represents a potential result based on a customer's answers
  */
-export interface IResult {
+export interface IResult extends IRef {
   /**
    * Defines the call to action for this result
    *
@@ -12,13 +13,6 @@ export interface IResult {
    * @hidden
    */
   action: Partial<IAction>;
-  /**
-   * Unique identifier
-   *
-   * @title Id
-   * @hidden Not viewable/editable in Design Mode
-   */
-  id: string;
   /**
    * Identify the result (e.g. 'Benefit name')
    *
@@ -33,12 +27,6 @@ export interface IResult {
    * @hidden Not viewable/editable in Design Mode
    */
   match?: IRequirement;
-  /**
-   * Name of this result
-   *
-   * @title Name
-   */
-  name: string;
   /**
    * Collection of requirements required to achieve this result
    *

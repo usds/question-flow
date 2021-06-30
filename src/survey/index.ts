@@ -4,7 +4,7 @@ export * from './IDesignData';
 export * from './IButton';
 export * from './IPageData';
 export * from './IPages';
-export * from './IQuestionAnswer';
+export * from './IRef';
 export * from './IQuestionData';
 export * from './IQuestionableConfig';
 export * from './IQuestionnaire';

@@ -50,6 +50,7 @@ export enum PROGRESS_BAR_STATUS {
 export enum ACTION {
   CALL = 'call',
   HYBRID = 'hybrid',
+  NONE = 'none',
   ONLINE = 'online',
 }
 
@@ -74,6 +75,9 @@ export enum CSS_CLASS {
   BASE = 'usds-q',
   CALL_TO_ACTION = 'usds-q-cta',
   CALL_TO_ACTION_BUTTON = 'usds-q-cta-button',
+  CALL_TO_ACTION_ICON = 'usds-q-cta-icon',
+  CALL_TO_ACTION_LIST = 'usds-q-cta-list',
+  CALL_TO_ACTION_SECTION = 'usds-q-cta-section',
   DEV_PANEL_SECTION = 'usds-q-dev-panel',
   DOB = 'usds-q-dob',
   MULTI_CHOICE = 'usds-q-multi-choice',

@@ -1,5 +1,6 @@
 import { ArrayUnique }   from 'class-validator';
 import { groupBy }       from 'lodash';
+import { IBranch }       from '../survey/IBranch';
 import { DEFAULT_PAGES } from '../lib/defaultPages';
 import {
   ACTION,
@@ -51,6 +52,8 @@ export class Questionnaire implements IQuestionnaire {
 
   readonly pages: IPages = DEFAULT_PAGES;
 
+  readonly branches: IBranch[];
+
   private readonly steps: IStep[];
 
   constructor(data: IQuestionnaire) {
@@ -66,6 +69,8 @@ export class Questionnaire implements IQuestionnaire {
 
     // Wizard flow is defined as linear sequence of unique ids
     this.flow = this.steps.map((q) => q.id);
+
+    this.branches = data.branches;
   }
 
   /**
@@ -193,20 +198,36 @@ export class Questionnaire implements IQuestionnaire {
    * @param props
    * @returns
    */
-  getProgressPercent(props: IStepData, config: IQuestionableConfig): number {
-    if (Helpers.matches(props.step?.section?.id, PAGE_TYPE.RESULTS)) {
+  getProgressPercent(props: IStepData, config: QuestionableConfig): number {
+    const stepId = `${props.stepId}`;
+    const step   = this.getStepById(stepId);
+    if (Helpers.matches(step.type, PAGE_TYPE.LANDING)) {
+      // Landing page exists before progress starts
+      // less than 0% progress can be interpretted as 'do not display'
+      return -1;
+    }
+    if (Helpers.matches(step.type, PAGE_TYPE.SUMMARY)) {
+      // However we land on the summary, this is 100%
       return 100;
     }
-    const sections = this.getSections(props, config);
-    const lastStep = sections[sections.length - 1];
-    // if there is no step, the questionnaire has just started
-    if (!lastStep?.lastStep) {
-      // 0% progress can be interpretted as 'do not display'
-      return 0;
+    if (Helpers.matches(step.type, PAGE_TYPE.RESULTS)
+        || Helpers.matches(step.type, PAGE_TYPE.NO_RESULTS)
+    ) {
+      // Results are beyond the survery progress
+      // greater than 100% can be interpretted as 'do not display'
+      return 101;
     }
-    const thisStepIdx = this.flow.indexOf(`${props.stepId}`);
+
+    const answerable = this.getBranchQuestions(props);
+    const lastStep   = answerable.length; // sections[sections.length - 1]?.lastStep;
+
+    // if there is no step, the questionnaire has just started
+    if (lastStep <= 0) {
+      return 0.1;
+    }
+    const thisStepIdx = answerable.indexOf(stepId) + 1;
     // add 2 to account for the summary and result steps
-    let lastStepIdx = lastStep.lastStep + 2;
+    let lastStepIdx = lastStep + 2;
     if (config.mode === MODE.EDIT) {
       // if in design mode, every step will be iterated
       lastStepIdx = this.flow.length - 1;
@@ -214,6 +235,40 @@ export class Questionnaire implements IQuestionnaire {
     // To calculate the percent, divide the index of this step
     //   by the index of the last step multiplied by 100.
     return Math.round((thisStepIdx / lastStepIdx) * 100);
+  }
+
+  /**
+   * Gets all of the questions associated with a branch
+   * @param props
+   * @returns
+   */
+  getBranchQuestions(props: IStepData): string[] {
+    const stepId = `${props.stepId}`;
+    const step   = this.getStepById(stepId);
+    if (!isEnum(QUESTION_TYPE, step.type)) {
+      return [];
+    }
+    const question = step as IQuestion;
+    return this.branches
+      .find((b) => b.id === question.branch?.id)?.questions
+      .map((q) => q.id)
+      || [];
+  }
+
+  /**
+   * Gets a list of questions that may be answered in the future
+   * @param props
+   * @returns
+   */
+  getAnswerableQuestions(props: IStepData): string[] {
+    return this.questions
+      .filter(
+        (q) =>
+          !q.requirements
+          || q.requirements.length === 0
+          || q.requirements.some((r) => this.meetsAllRequirements(r, props.form, true)),
+      )
+      .map((q) => q.id);
   }
 
   /**
@@ -282,6 +337,18 @@ export class Questionnaire implements IQuestionnaire {
    * Gets the appropriate action given a set of results
    * @returns
    */
+  getActionByType(type: ACTION): IAction {
+    const action = this.actions.find((a) => a.type === type);
+    if (!action) {
+      throw new Error(`No matching action found for ${type}`);
+    }
+    return action;
+  }
+
+  /**
+   * Gets the appropriate action given a set of results
+   * @returns
+   */
   getAction(results: IResult[]): IAction {
     const groupedByAction = groupBy(results, 'action.id');
     const hybrid          = this.actions.find((a) => a.type === ACTION.HYBRID);
@@ -298,10 +365,9 @@ export class Questionnaire implements IQuestionnaire {
   }
 
   /**
-   * Performs constructor validation on the survery inputs.
-   * Sets step defaults for landing, summary and result if none are defined.
+   * Ensure the survey is constructed with (minimally) valid data
    */
-  private init() {
+  private validateInput() {
     if (this.questions?.length <= 0) {
       throw new Error('No questions have been defined.');
     }
@@ -311,10 +377,48 @@ export class Questionnaire implements IQuestionnaire {
     if (this.results?.length <= 0) {
       throw new Error('No results have been defined.');
     }
+  }
 
+  /**
+   * Ensure we have referential integrity between questions/branches
+   * In the cases where branches have defined and mismatches exist:
+   * Top level branches that have questions assigned will update the question reference to use the branch
+   * Each question that defines a branch relationship will establish a reference to a top level branch
+   */
+  private syncBranches(): void {
+    // Branches defined take priority; sync these first
+    this.branches.forEach((b) => {
+      b.questions.forEach((bq) => {
+        const question = this.questions.find((q) => q.id === bq.id);
+        if (question && question?.branch?.id !== b.id) {
+          question.branch = b;
+        }
+      });
+    });
+
+    this.questions.forEach((q) => {
+      // Branches are optional on questions
+      if (!q.branch?.id) {
+        return;
+      }
+      const exists         = this.branches.find((b) => b.id === q.branch?.id);
+      const validateBranch = exists || q.branch as IBranch;
+      if (!exists) {
+        this.branches.push(validateBranch);
+      }
+      validateBranch.questions = validateBranch.questions || [];
+      if (!validateBranch.questions.find((bq) => bq.id === q.id)) {
+        validateBranch.questions.push(q);
+      }
+    });
+  }
+
+  /**
+   * Sets step defaults for landing, summary and results if none are defined.
+   */
+  private setPageDefaults(): void {
     // NOTE: the following default assignment logic is not yet factored out.
     // This could be abstracted if repitions of this pattern emerge.
-
     const error = 'step is not correctly defined or defined more than once';
 
     // Ensure the wizard has a landing step at the beginning
@@ -354,7 +458,16 @@ export class Questionnaire implements IQuestionnaire {
     }
   }
 
-  private meetsAllRequirements(requirement: IRequirement, form: IForm) {
+  /**
+   * Performs constructor validation on the survery inputs.
+   */
+  private init(): void {
+    this.validateInput();
+    this.syncBranches();
+    this.setPageDefaults();
+  }
+
+  private meetsAllRequirements(requirement: IRequirement, form: IForm, allowUnanswered = false) {
     const {
       minAge, maxAge, responses: answers, ageCalc,
     } = requirement;
@@ -364,7 +477,7 @@ export class Questionnaire implements IQuestionnaire {
       Questionnaire.meetsMinAgeRequirements(form, minAge)
       && Questionnaire.meetsMaxAgeRequirements(form, maxAge)
       && Questionnaire.meetsAgeCalcRequirements(form, ageCalc)
-      && this.meetsAnswerRequirements(answers)
+      && this.meetsAnswerRequirements(answers, allowUnanswered)
     );
   }
 
@@ -433,9 +546,10 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Determines if current answers in the form meet the step's requirements
    * @param answers Collection of required answer Helpers.matches
+   * @param allowUnanswered if true, consider questions that are not yet answered
    * @returns true if all answers are valid or if no answers are required
    */
-  private meetsAnswerRequirements(answers?: IResponse[]): boolean {
+  private meetsAnswerRequirements(answers?: IResponse[], allowUnanswered = false): boolean {
     if (!answers || answers.length <= 0) return true;
 
     return answers.every((a) => {
@@ -444,9 +558,11 @@ export class Questionnaire implements IQuestionnaire {
         // Allowed answers are an array. Any matched answer makes the response valid.
         return a.answers.some(
           (i) =>
-            question.answer !== undefined
-            && question.answer
-              === question.answers.find((x) => x.id === i.id)?.title,
+            (allowUnanswered && question.answer === undefined)
+            || (question.answer !== undefined
+                && question.answer
+                === question.answers.find((x) => x.id === i.id)?.title
+            ),
         );
       }
       // If no answers are defined, this passes

@@ -14,7 +14,7 @@ export const ProgressBar = (props: IStepData): JSX.Element => {
   const completed = questionnaire.getProgressPercent(props, config);
 
   // Do not display the progress bar if there is no progress
-  if (completed <= 0) {
+  if (completed <= 0 || completed > 100) {
     return noel();
   }
 
