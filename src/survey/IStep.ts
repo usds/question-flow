@@ -6,22 +6,23 @@ import {
   QUESTION_TYPE,
   TStepType,
 } from '../lib/enums';
-import { TAge, TAgeCalc }  from '../lib/types';
-import { INavButton }      from './INavButton';
-import { IQuestionAnswer } from './IQuestionAnswer';
+import { TAge, TAgeCalc } from '../lib/types';
+import { IBranch }        from './IBranch';
+import { IButton }        from './IButton';
+import { IRef }           from './IRef';
 
 /**
  * Acceptable responses
  */
 export interface IResponse {
-  answers: Partial<IQuestionAnswer>[];
+  answers: Partial<IRef>[];
   question: Partial<IQuestion>;
 }
 
 /**
  * Generic step data definition. Applies to all types of steps.
  */
-export interface IStep {
+export interface IStep extends IRef {
   /**
    * Collection of navigation buttons
    *
@@ -34,14 +35,14 @@ export interface IStep {
      * @title Next Button
      * @default { label: 'Next' }
      */
-    next?: INavButton;
+    next?: IButton;
     /**
      * Previous / Back button
      *
      * @title Prev Button
      * @default { label: 'Prev' }
      */
-    prev?: INavButton;
+    prev?: IButton;
   };
   /**
    * React children to append to the title area
@@ -55,13 +56,6 @@ export interface IStep {
    * @title Footer
    */
   footer?: string;
-  /**
-   * Unique identifier
-   *
-   * @title Id
-   * @hidden Not viewable/editable in Design Mode
-   */
-  id: string;
   /**
    * Contextual content to display below the step contents and above the footer
    *
@@ -100,12 +94,6 @@ export interface IStep {
    */
   subTitle?: string;
   /**
-   * Display name of the step
-   *
-   * @title Title
-   */
-  title: string;
-  /**
    * Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}
    *
    * @title Step Type
@@ -130,7 +118,14 @@ export interface IQuestion extends IStep {
    *
    * @title Answers
    */
-  answers: IQuestionAnswer[];
+  answers: IRef[];
+  /**
+   * Collection of branches that use this question
+   *
+   * @title Branch
+   * @hidden
+   */
+  branch?: Partial<IBranch>;
   /**
    * Type of question
    *
@@ -208,14 +203,7 @@ export interface IRequirement {
 /**
  * Defines a survey section, used in progress bar
  */
-export interface ISection {
-  /**
-   * Unique identifier
-   *
-   * @title Id
-   * @hidden Not viewable/editable in Design Mode
-   */
-  id: string;
+export interface ISection extends IRef {
   /**
    * The last step id that is covered by this section
    *
@@ -223,12 +211,6 @@ export interface ISection {
    * @hidden Not viewable/editable in Design Mode
    */
   lastStep?: number;
-  /**
-   * The display name of this section
-   *
-   * @title Name
-   */
-  name: string;
   /**
    * Collection of requirements to enable display of this status
    *

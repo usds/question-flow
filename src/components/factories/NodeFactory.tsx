@@ -46,6 +46,10 @@ abstract class NodeFactory {
     return NodeFactory.Node(node, 'h2', className);
   }
 
+  public static H3({ node, className }: TEl): JSX.Element {
+    return NodeFactory.Node(node, 'h3', className);
+  }
+
   static Node(node: TParam, type: keyof ReactHTML, className = ''): JSX.Element {
     const el = NodeFactory.element(node);
     if (!el) {
@@ -58,7 +62,8 @@ abstract class NodeFactory {
 export const {
   Div,
   H2,
+  H3,
+  Node,
   P,
   Span,
-  Node,
 } = NodeFactory;

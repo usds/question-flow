@@ -1,7 +1,8 @@
 import {
   TVerticalPosition, TProgressBarType, THorizontalPosition, TButtonMode,
 } from '../lib/types';
-import { MODE } from '../lib/enums';
+import { MODE }    from '../lib/enums';
+import { IButton } from './IButton';
 
 /**
  * Configuration for customized behavior of Questionable
@@ -134,7 +135,7 @@ export interface IQuestionConfig {
 /**
  * Configuration for buttons
  */
-export interface IButtonConfig {
+export interface IButtonConfig extends IButton {
   /**
    * Default text to display if none is defined
    */

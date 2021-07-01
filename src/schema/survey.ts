@@ -3,14 +3,6 @@
 export const survey = {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "ACTION": {
-      "enum": [
-        "call",
-        "hybrid",
-        "online"
-      ],
-      "type": "string"
-    },
     "DESIGN_TYPE": {
       "const": "Edit",
       "description": "Defines the known component types for design",
@@ -19,32 +11,98 @@ export const survey = {
     "IAction": {
       "description": "Represents something the customer can do in response to receiving a result",
       "properties": {
-        "action": {
-          "title": "Action",
+        "icon": {
+          "description": "Optional icon for the action",
+          "title": "Icon",
           "type": "string"
         },
-        "description": {
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "subTitle": {
           "title": "Description",
-          "type": "string"
-        },
-        "name": {
           "type": "string"
         },
         "title": {
           "title": "Title",
           "type": "string"
-        },
-        "type": {
-          "$ref": "#/definitions/ACTION",
-          "title": "Type"
         }
       },
       "required": [
-        "action",
-        "description",
-        "name",
-        "title",
-        "type"
+        "id",
+        "label",
+        "subTitle",
+        "title"
+      ],
+      "type": "object"
+    },
+    "IBranch": {
+      "properties": {
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/definitions/IRef"
+          },
+          "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "questions",
+        "title"
+      ],
+      "type": "object"
+    },
+    "IButton": {
+      "description": "Represents a navigation button",
+      "properties": {
+        "horizontalPos": {
+          "$ref": "#/definitions/THorizontalPosition",
+          "description": "Horizontal orientation (left or right)",
+          "title": "Horizontal Position"
+        },
+        "label": {
+          "description": "Text to display on button (e.g. 'Prev' or 'Next')",
+          "title": "Label",
+          "type": "string"
+        },
+        "link": {
+          "description": "Link to tie to button click",
+          "title": "Link",
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/definitions/TButtonMode",
+          "description": "Render mode (link or button)",
+          "title": "Mode"
+        },
+        "outline": {
+          "description": "Show an outline",
+          "title": "Outline",
+          "type": "boolean"
+        },
+        "verticalPos": {
+          "$ref": "#/definitions/TVerticalPosition",
+          "description": "Vertical orientation (top or bottom)",
+          "title": "Vertical Position"
+        }
+      },
+      "required": [
+        "label"
       ],
       "type": "object"
     },
@@ -60,10 +118,25 @@ export const survey = {
           "description": "Horizontal orientation (left or right)",
           "title": "Horizontal Position"
         },
+        "label": {
+          "description": "Text to display on button (e.g. 'Prev' or 'Next')",
+          "title": "Label",
+          "type": "string"
+        },
+        "link": {
+          "description": "Link to tie to button click",
+          "title": "Link",
+          "type": "string"
+        },
         "mode": {
           "$ref": "#/definitions/TButtonMode",
           "description": "Render mode (link or button)",
           "title": "Mode"
+        },
+        "outline": {
+          "description": "Show an outline",
+          "title": "Outline",
+          "type": "boolean"
         },
         "verticalPos": {
           "$ref": "#/definitions/TVerticalPosition",
@@ -74,6 +147,7 @@ export const survey = {
       "required": [
         "defaultLabel",
         "horizontalPos",
+        "label",
         "mode",
         "verticalPos"
       ],
@@ -138,19 +212,6 @@ export const survey = {
       ],
       "type": "object"
     },
-    "INavButton": {
-      "description": "Represents a navigation button",
-      "properties": {
-        "label": {
-          "description": "Text to display on button (e.g. 'Prev' or 'Next')",
-          "type": "string"
-        }
-      },
-      "required": [
-        "label"
-      ],
-      "type": "object"
-    },
     "INavigationConfig": {
       "description": "Configuration for navigation",
       "properties": {
@@ -166,10 +227,16 @@ export const survey = {
               "description": "Horizontal orientation (left or right)",
               "title": "Horizontal Position"
             },
+            "label": {
+            },
+            "link": {
+            },
             "mode": {
               "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
               "title": "Mode"
+            },
+            "outline": {
             },
             "verticalPos": {
               "$ref": "#/definitions/TVerticalPosition",
@@ -191,10 +258,16 @@ export const survey = {
               "description": "Horizontal orientation (left or right)",
               "title": "Horizontal Position"
             },
+            "label": {
+            },
+            "link": {
+            },
             "mode": {
               "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
               "title": "Mode"
+            },
+            "outline": {
             },
             "verticalPos": {
               "$ref": "#/definitions/TVerticalPosition",
@@ -233,12 +306,12 @@ export const survey = {
           "description": "Collection of navigation buttons",
           "properties": {
             "next": {
-              "$ref": "#/definitions/INavButton",
+              "$ref": "#/definitions/IButton",
               "description": "Next button",
               "title": "Next Button"
             },
             "prev": {
-              "$ref": "#/definitions/INavButton",
+              "$ref": "#/definitions/IButton",
               "description": "Previous / Back button",
               "title": "Prev Button"
             }
@@ -249,6 +322,11 @@ export const survey = {
         "footer": {
           "description": "Optional footer text to display at the bottom of the step",
           "title": "Footer",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
           "type": "string"
         },
         "info": {
@@ -272,10 +350,7 @@ export const survey = {
         "section": {
           "description": "Section to which this step belongs",
           "properties": {
-            "name": {
-              "description": "The display name of this section",
-              "title": "Name",
-              "type": "string"
+            "id": {
             },
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
@@ -284,6 +359,8 @@ export const survey = {
               },
               "title": "Requirements",
               "type": "array"
+            },
+            "title": {
             }
           },
           "title": "Section",
@@ -295,7 +372,6 @@ export const survey = {
           "type": "string"
         },
         "title": {
-          "description": "Display name of the step",
           "title": "Title",
           "type": "string"
         },
@@ -306,6 +382,7 @@ export const survey = {
         }
       },
       "required": [
+        "id",
         "section",
         "title",
         "type"
@@ -408,7 +485,7 @@ export const survey = {
         "answers": {
           "description": "Collection of allowed answers",
           "items": {
-            "$ref": "#/definitions/IQuestionAnswer"
+            "$ref": "#/definitions/IRef"
           },
           "title": "Answers",
           "type": "array"
@@ -417,12 +494,12 @@ export const survey = {
           "description": "Collection of navigation buttons",
           "properties": {
             "next": {
-              "$ref": "#/definitions/INavButton",
+              "$ref": "#/definitions/IButton",
               "description": "Next button",
               "title": "Next Button"
             },
             "prev": {
-              "$ref": "#/definitions/INavButton",
+              "$ref": "#/definitions/IButton",
               "description": "Previous / Back button",
               "title": "Prev Button"
             }
@@ -433,6 +510,11 @@ export const survey = {
         "footer": {
           "description": "Optional footer text to display at the bottom of the step",
           "title": "Footer",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
           "type": "string"
         },
         "info": {
@@ -456,10 +538,7 @@ export const survey = {
         "section": {
           "description": "Section to which this step belongs",
           "properties": {
-            "name": {
-              "description": "The display name of this section",
-              "title": "Name",
-              "type": "string"
+            "id": {
             },
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
@@ -468,6 +547,8 @@ export const survey = {
               },
               "title": "Requirements",
               "type": "array"
+            },
+            "title": {
             }
           },
           "title": "Section",
@@ -479,7 +560,6 @@ export const survey = {
           "type": "string"
         },
         "title": {
-          "description": "Display name of the step",
           "title": "Title",
           "type": "string"
         },
@@ -491,28 +571,10 @@ export const survey = {
       },
       "required": [
         "answers",
+        "id",
         "section",
         "title",
         "type"
-      ],
-      "type": "object"
-    },
-    "IQuestionAnswer": {
-      "description": "Definition for answers to questions",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "order": {
-          "type": "number"
-        },
-        "title": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "title"
       ],
       "type": "object"
     },
@@ -573,10 +635,16 @@ export const survey = {
                   "description": "Horizontal orientation (left or right)",
                   "title": "Horizontal Position"
                 },
+                "label": {
+                },
+                "link": {
+                },
                 "mode": {
                   "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
                   "title": "Mode"
+                },
+                "outline": {
                 },
                 "verticalPos": {
                   "$ref": "#/definitions/TVerticalPosition",
@@ -598,10 +666,16 @@ export const survey = {
                   "description": "Horizontal orientation (left or right)",
                   "title": "Horizontal Position"
                 },
+                "label": {
+                },
+                "link": {
+                },
                 "mode": {
                   "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
                   "title": "Mode"
+                },
+                "outline": {
                 },
                 "verticalPos": {
                   "$ref": "#/definitions/TVerticalPosition",
@@ -708,6 +782,12 @@ export const survey = {
           },
           "type": "array"
         },
+        "branches": {
+          "items": {
+            "$ref": "#/definitions/IBranch"
+          },
+          "type": "array"
+        },
         "header": {
           "type": "string"
         },
@@ -735,11 +815,31 @@ export const survey = {
       },
       "required": [
         "actions",
+        "branches",
         "header",
         "pages",
         "questions",
         "results",
         "sections"
+      ],
+      "type": "object"
+    },
+    "IRef": {
+      "description": "Generic reference object",
+      "properties": {
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title"
       ],
       "type": "object"
     },
@@ -782,12 +882,12 @@ export const survey = {
           "items": {
             "properties": {
               "id": {
+                "description": "Unique identifier",
+                "title": "Id",
                 "type": "string"
               },
-              "order": {
-                "type": "number"
-              },
               "title": {
+                "title": "Title",
                 "type": "string"
               }
             },
@@ -800,7 +900,7 @@ export const survey = {
             "answers": {
               "description": "Collection of allowed answers",
               "items": {
-                "$ref": "#/definitions/IQuestionAnswer"
+                "$ref": "#/definitions/IRef"
               },
               "title": "Answers",
               "type": "array"
@@ -808,6 +908,8 @@ export const survey = {
             "buttons": {
             },
             "footer": {
+            },
+            "id": {
             },
             "info": {
             },
@@ -839,14 +941,14 @@ export const survey = {
     "IResult": {
       "description": "Represents a potential result based on a customer's answers",
       "properties": {
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
         "label": {
           "description": "Identify the result (e.g. 'Benefit name')",
           "title": "Label",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name of this result",
-          "title": "Name",
           "type": "string"
         },
         "requirements": {
@@ -856,21 +958,26 @@ export const survey = {
           },
           "title": "Requirements",
           "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
         }
       },
       "required": [
+        "id",
         "label",
-        "name",
-        "requirements"
+        "requirements",
+        "title"
       ],
       "type": "object"
     },
     "ISection": {
       "description": "Defines a survey section, used in progress bar",
       "properties": {
-        "name": {
-          "description": "The display name of this section",
-          "title": "Name",
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
           "type": "string"
         },
         "requirements": {
@@ -880,11 +987,16 @@ export const survey = {
           },
           "title": "Requirements",
           "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
         }
       },
       "required": [
-        "name",
-        "requirements"
+        "id",
+        "requirements",
+        "title"
       ],
       "type": "object"
     },
@@ -895,12 +1007,12 @@ export const survey = {
           "description": "Collection of navigation buttons",
           "properties": {
             "next": {
-              "$ref": "#/definitions/INavButton",
+              "$ref": "#/definitions/IButton",
               "description": "Next button",
               "title": "Next Button"
             },
             "prev": {
-              "$ref": "#/definitions/INavButton",
+              "$ref": "#/definitions/IButton",
               "description": "Previous / Back button",
               "title": "Prev Button"
             }
@@ -911,6 +1023,11 @@ export const survey = {
         "footer": {
           "description": "Optional footer text to display at the bottom of the step",
           "title": "Footer",
+          "type": "string"
+        },
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
           "type": "string"
         },
         "info": {
@@ -934,10 +1051,7 @@ export const survey = {
         "section": {
           "description": "Section to which this step belongs",
           "properties": {
-            "name": {
-              "description": "The display name of this section",
-              "title": "Name",
-              "type": "string"
+            "id": {
             },
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
@@ -946,6 +1060,8 @@ export const survey = {
               },
               "title": "Requirements",
               "type": "array"
+            },
+            "title": {
             }
           },
           "title": "Section",
@@ -957,7 +1073,6 @@ export const survey = {
           "type": "string"
         },
         "title": {
-          "description": "Display name of the step",
           "title": "Title",
           "type": "string"
         },
@@ -968,6 +1083,7 @@ export const survey = {
         }
       },
       "required": [
+        "id",
         "section",
         "title",
         "type"

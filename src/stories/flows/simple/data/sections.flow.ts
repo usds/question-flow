@@ -3,12 +3,11 @@ import { ISection } from '../../../../survey/IStep';
 export const sections: ISection[] = [
   {
     id:           'introduction',
-    name:         'Introduction',
     requirements: [],
+    title:        'Introduction',
   },
   {
     id:           'confirmation',
-    name:         'Confirmation',
     requirements: [
       {
         responses: [
@@ -19,10 +18,10 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Confirmation',
   },
   {
     id:           'satisfaction',
-    name:         'Satisfaction',
     requirements: [
       {
         responses: [
@@ -33,5 +32,6 @@ export const sections: ISection[] = [
         ],
       },
     ],
+    title: 'Satisfaction',
   },
 ];

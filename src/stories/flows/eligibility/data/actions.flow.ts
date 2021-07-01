@@ -7,27 +7,92 @@ import { IAction } from '../../../../survey';
 
 export const actions: IAction[] = [
   {
-    action:      '<a href="#">Start application</a>',
-    description:
-      'Answer more questions and upload documents to apply for the benefits you may be eligible for.',
-    name:  'Apply Online',
-    title: 'How to apply',
+    buttons: [
+      {
+        label: 'Start Application',
+        link:  'https://www.ssa.gov',
+        mode:  'button',
+      },
+    ],
+    icon:     'fas fa-desktop',
+    id:       '0',
+    label:    'How to apply',
+    subTitle:
+      'First, enter your personal information to start an application online. Then, we\'ll call you to get more details and complete your application over the phone.',
+    title: 'Start an application online and complete it by phone',
     type:  ACTION.ONLINE,
   },
   {
-    action:      'Call <a href="#">1-800-772-1213</a> to schedule an appointment',
-    description:
-      "Call us to schedule an appointment to apply for the benefits you may be eligible for. When it's time for your appointment, we'll call you to complete your application over the phone.",
-    name:  'Technician Assisted',
-    title: 'How to apply',
+    buttons: [
+      {
+        label: '1-800-772-1213',
+        link:  'tel:+18007721213',
+        mode:  'link',
+      },
+      {
+        label: 'TTY 1-800-325-0778',
+        link:  'tel:+18003250778',
+        mode:  'link',
+      },
+    ],
+    icon:     'fas fa-phone fa-flip-horizontal',
+    id:       '1',
+    label:    'How to apply',
+    subTitle:
+      "Call us to schedule an appointment. When it's time for your appointment, we'll call you and complete your application over the phone.",
+    title: 'Complete an application by phone',
     type:  ACTION.CALL,
   },
   {
-    action:      '<a href="#">Start application</a>',
-    description:
+    buttons: [
+      {
+        label: 'Start Application',
+        link:  'https://www.ssa.gov',
+        mode:  'button',
+      },
+      {
+        label: '1-800-772-1213',
+        link:  'tel:+18007721213',
+        mode:  'link',
+      },
+      {
+        label: 'TTY 1-800-325-0778',
+        link:  'tel:+18003250778',
+        mode:  'link',
+      },
+    ],
+    icon:     'fas fa-phone fa-flip-horizontal',
+    id:       '2',
+    label:    'How to apply',
+    subTitle:
       "Answer more questions and upload documents to apply for the benefits you may be eligible for. After you submit the application here on the website, we'll call you to get more information and finalize your application.",
-    name:  'Apply Online & Technician Assisted',
-    title: 'How to apply',
+    title: 'Start online, then schedule an appointment by phone',
     type:  ACTION.HYBRID,
+  },
+  {
+    buttons: [
+      {
+        label: 'Start Application',
+        link:  'https://www.ssa.gov',
+        mode:  'button',
+      },
+      {
+        label: '1-800-772-1213',
+        link:  'tel:+18007721213',
+        mode:  'link',
+      },
+      {
+        label: 'TTY 1-800-325-0778',
+        link:  'tel:+18003250778',
+        mode:  'link',
+      },
+    ],
+    icon:     'fas fa-phone fa-flip-horizontal',
+    id:       '2',
+    label:    'How to apply',
+    subTitle:
+      "Answer more questions and upload documents to apply for the benefits you may be eligible for. After you submit the application here on the website, we'll call you to get more information and finalize your application.",
+    title: '',
+    type:  ACTION.NONE,
   },
 ];

@@ -58,7 +58,7 @@ export abstract class Pages {
       <li key={`${props.stepId}_${result.id}`} className="padding-bottom-2">
         <span>
           {result.label}:{'  '}
-          <b>{result.name}</b>
+          <b>{result.title}</b>
         </span>
         <Div
           className="text-light"

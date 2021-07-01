@@ -16,25 +16,22 @@ export const pages: IPages = {
     type:    PAGE_TYPE.LANDING,
   },
   noResultsPage: {
-    children: (<>You can <a href="#apply">apply for benefits</a> but based on what you told us today, you may not be eligible at this time.</>),
-    footer:
-      'The information you shared today tells us about your current situation. In the future, you may become eligible for benefits as you age or things in your life change.',
-    id:      PAGE_TYPE.NO_RESULTS,
-    section: { id: PAGE_TYPE.RESULTS },
-    title:   'You may not be eligible for benefits.',
-    type:    PAGE_TYPE.NO_RESULTS,
+    body:     'If you want to apply anyway, review the process and start an application.',
+    id:       PAGE_TYPE.NO_RESULTS,
+    section:  { id: PAGE_TYPE.RESULTS },
+    subTitle: 'Based on your answers, you may not be eligible for benefits right now. As you age and aspects of your life change, you may become eligible.',
+    title:    'You may not be eligible for benefits.',
+    type:     PAGE_TYPE.NO_RESULTS,
   },
   resultsPage: {
-    bodyHeader:    'Benefits you may be eligible for',
-    bodySubHeader: "Here's what you may be eligible for and why",
-    children:      (<>This gives you an idea of what you may be eligible for, but we can{"'"}t guarantee you{"'"}ll get these benefits. We{"'"}ll analyze more details during the application process to provide a definite answer.
-      <p />
-      The information you shared today tells us about your current situation. In the future, you may become eligible for other benefits as you age or things in your life change.</>),
-    id:      PAGE_TYPE.RESULTS,
-    info:    'Each benefit we provide has an official name. You may see these names in other materials or hear our employees use them on the phone and in our offices.',
-    section: { id: PAGE_TYPE.RESULTS },
-    title:   'You may be eligible for benefits.',
-    type:    PAGE_TYPE.RESULTS,
+    body:       'The answers you shared today told us what\'s going on in your life right now. As you age and aspects of your life change, you may be eligible for other Social Security benefits.',
+    bodyHeader: 'This gives you an idea of what you may be eligible for, but we can\'t guarantee you\'ll get these benefits. We\'ll provide a definite answer after you complete the application process.',
+    id:         PAGE_TYPE.RESULTS,
+    info:       'Each benefit we provide has an official name. You may see these names in other materials or hear our employees use them on the phone and in our offices.',
+    section:    { id: PAGE_TYPE.RESULTS },
+    subTitle:   'Based on your answers, here\'s what you may be eligible for and why:',
+    title:      'You may be eligible for Social Security benefits.',
+    type:       PAGE_TYPE.RESULTS,
   },
   summaryPage: {
     buttons: {

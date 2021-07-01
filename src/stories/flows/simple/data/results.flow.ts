@@ -11,9 +11,9 @@ const name = 'Badge name';
  */
 export const results: IResult[] = [
   {
+    action:       { id: '0' },
     id:           '1',
     label:        name,
-    name:         'Participation Badge',
     requirements: [
       {
         // Answered a question
@@ -28,12 +28,12 @@ export const results: IResult[] = [
         ],
       },
     ],
+    title: 'Participation Badge',
   },
   {
-    id:    '2',
-    label: name,
-    name:
-      'Confused Choices Badge',
+    action:       { id: '0' },
+    id:           '2',
+    label:        name,
     requirements: [
       {
         explanation:
@@ -62,11 +62,13 @@ export const results: IResult[] = [
         ],
       },
     ],
+    title:
+      'Confused Choices Badge',
   },
   {
+    action:       { id: '0' },
     id:           '3',
     label:        name,
-    name:         'Daredevil Badge',
     requirements: [
       {
         explanation:
@@ -77,5 +79,6 @@ export const results: IResult[] = [
         ],
       },
     ],
+    title: 'Daredevil Badge',
   },
 ];

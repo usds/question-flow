@@ -6,6 +6,7 @@ const header = 'SSA Eligibility Survey';
 
 export const eligibility = {
   actions,
+  branches:  questions.branches,
   header,
   pages,
   questions: questions.list,

@@ -5,7 +5,7 @@ import { ISection }                               from '../../survey/IStep';
 import { noel }                                   from '../../lib/noop';
 
 const getIndicatorStep = (s: ISection) => (
-    <StepIndicatorStep key={s.id} label={s.name} status={s.status || 'incomplete'} />
+    <StepIndicatorStep key={s.id} label={s.title} status={s.status || 'incomplete'} />
 );
 
 export const StepIndicator = (props: IStepData): JSX.Element => {

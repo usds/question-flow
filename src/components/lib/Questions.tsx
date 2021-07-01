@@ -7,7 +7,7 @@ import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
 import { TDateOfBirth }              from '../../lib/types';
 import { IQuestion }                 from '../../survey';
 import { IQuestionableConfig }       from '../../survey/IQuestionableConfig';
-import { IQuestionAnswer }           from '../../survey/IQuestionAnswer';
+import { IRef }                      from '../../survey/IRef';
 import { IQuestionData }             from '../../survey/IQuestionData';
 import { Steps }                     from './Steps';
 
@@ -68,7 +68,7 @@ export abstract class Questions {
    * @returns
    */
   private static getRadio(
-    answer: IQuestionAnswer,
+    answer: IRef,
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
@@ -118,7 +118,7 @@ export abstract class Questions {
    * @returns
    */
   private static getCheckbox(
-    answer: IQuestionAnswer,
+    answer: IRef,
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
