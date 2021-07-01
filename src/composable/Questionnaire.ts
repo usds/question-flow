@@ -1,6 +1,5 @@
 import { ArrayUnique }   from 'class-validator';
 import { groupBy }       from 'lodash';
-import { IBranch }       from '../survey/IBranch';
 import { DEFAULT_PAGES } from '../lib/defaultPages';
 import {
   ACTION,
@@ -15,6 +14,7 @@ import {
 import { Helpers }             from '../lib/helpers';
 import { TAge, TAgeCalc }      from '../lib/types';
 import { IAction }             from '../survey/IAction';
+import { IBranch }             from '../survey/IBranch';
 import { IForm }               from '../survey/IForm';
 import { IPages }              from '../survey/IPages';
 import { IQuestionableConfig } from '../survey/IQuestionableConfig';
@@ -210,8 +210,9 @@ export class Questionnaire implements IQuestionnaire {
       // However we land on the summary, this is 100%
       return 100;
     }
-    if (Helpers.matches(step.type, PAGE_TYPE.RESULTS)
-        || Helpers.matches(step.type, PAGE_TYPE.NO_RESULTS)
+    if (
+      Helpers.matches(step.type, PAGE_TYPE.RESULTS)
+      || Helpers.matches(step.type, PAGE_TYPE.NO_RESULTS)
     ) {
       // Results are beyond the survery progress
       // greater than 100% can be interpretted as 'do not display'
@@ -249,10 +250,11 @@ export class Questionnaire implements IQuestionnaire {
       return [];
     }
     const question = step as IQuestion;
-    return this.branches
-      .find((b) => b.id === question.branch?.id)?.questions
-      .map((q) => q.id)
-      || [];
+    return (
+      this.branches
+        .find((b) => b.id === question.branch?.id)
+        ?.questions.map((q) => q.id) || []
+    );
   }
 
   /**
@@ -266,7 +268,8 @@ export class Questionnaire implements IQuestionnaire {
         (q) =>
           !q.requirements
           || q.requirements.length === 0
-          || q.requirements.some((r) => this.meetsAllRequirements(r, props.form, true)),
+          || q.requirements.some((r) =>
+            this.meetsAllRequirements(r, props.form, true)),
       )
       .map((q) => q.id);
   }
@@ -357,9 +360,12 @@ export class Questionnaire implements IQuestionnaire {
     const actions = Object.keys(groupedByAction);
     if (actions.length === 1) {
       match = this.actions.find((a) => a.id === actions[0]);
+      if (!match) {
+        throw new Error(`Action id ${actions[0]} could not be found.`);
+      }
     }
     if (!match) {
-      throw new Error('Could not find a Call to Action for these results');
+      throw new Error('Could not find a Call to Action for these results.');
     }
     return match;
   }
@@ -402,7 +408,7 @@ export class Questionnaire implements IQuestionnaire {
         return;
       }
       const exists         = this.branches.find((b) => b.id === q.branch?.id);
-      const validateBranch = exists || q.branch as IBranch;
+      const validateBranch = exists || (q.branch as IBranch);
       if (!exists) {
         this.branches.push(validateBranch);
       }
@@ -467,7 +473,11 @@ export class Questionnaire implements IQuestionnaire {
     this.setPageDefaults();
   }
 
-  private meetsAllRequirements(requirement: IRequirement, form: IForm, allowUnanswered = false) {
+  private meetsAllRequirements(
+    requirement: IRequirement,
+    form: IForm,
+    allowUnanswered = false,
+  ) {
     const {
       minAge, maxAge, responses: answers, ageCalc,
     } = requirement;
@@ -549,7 +559,10 @@ export class Questionnaire implements IQuestionnaire {
    * @param allowUnanswered if true, consider questions that are not yet answered
    * @returns true if all answers are valid or if no answers are required
    */
-  private meetsAnswerRequirements(answers?: IResponse[], allowUnanswered = false): boolean {
+  private meetsAnswerRequirements(
+    answers?: IResponse[],
+    allowUnanswered = false,
+  ): boolean {
     if (!answers || answers.length <= 0) return true;
 
     return answers.every((a) => {
@@ -560,9 +573,8 @@ export class Questionnaire implements IQuestionnaire {
           (i) =>
             (allowUnanswered && question.answer === undefined)
             || (question.answer !== undefined
-                && question.answer
-                === question.answers.find((x) => x.id === i.id)?.title
-            ),
+              && question.answer
+                === question.answers.find((x) => x.id === i.id)?.title),
         );
       }
       // If no answers are defined, this passes

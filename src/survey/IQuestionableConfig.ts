@@ -1,7 +1,10 @@
+import { MODE }        from '../lib/enums';
 import {
-  TVerticalPosition, TProgressBarType, THorizontalPosition, TButtonMode,
+  TButtonMode,
+  THorizontalPosition,
+  TProgressBarType,
+  TVerticalPosition,
 } from '../lib/types';
-import { MODE }    from '../lib/enums';
 import { IButton } from './IButton';
 
 /**
@@ -116,7 +119,7 @@ export interface IProgressBarConfig {
    * @title Type
    * @default 'progress-bar'
    */
-  type: TProgressBarType
+  type: TProgressBarType;
 }
 
 /**
@@ -152,7 +155,7 @@ export interface IButtonConfig extends IButton {
    *
    * @title Mode
    */
-  mode: TButtonMode;
+  type: TButtonMode;
   /**
    * Vertical orientation (top or bottom)
    *

@@ -7,7 +7,8 @@ export const pages: IPages = {
     body:    'Complete this series of questions to earn badges!',
     buttons: {
       next: {
-        label: 'Begin',
+        id:    'b2',
+        title: 'Begin',
       },
     },
     id:       PAGE_TYPE.LANDING,
@@ -17,19 +18,16 @@ export const pages: IPages = {
     type:     PAGE_TYPE.LANDING,
   },
   noResultsPage: {
-    footer:
-      'While you can try again, we cannot guarantee you\'ll get a badge.',
+    footer:   "While you can try again, we cannot guarantee you'll get a badge.",
     id:       PAGE_TYPE.NO_RESULTS,
     section:  { id: 'results' },
-    subTitle:
-      'Try again to earn some.',
-    title: 'You earned no badges.',
-    type:  PAGE_TYPE.NO_RESULTS,
+    subTitle: 'Try again to earn some.',
+    title:    'You earned no badges.',
+    type:     PAGE_TYPE.NO_RESULTS,
   },
   resultsPage: {
-    id:   PAGE_TYPE.RESULTS,
-    info:
-      'Each badge has an official name. You may see these names referenced in other resources online.',
+    id:      PAGE_TYPE.RESULTS,
+    info:    'Each badge has an official name. You may see these names referenced in other resources online.',
     section: { id: 'results' },
     title:   'You have earned these badges.',
     type:    PAGE_TYPE.RESULTS,
@@ -37,7 +35,8 @@ export const pages: IPages = {
   summaryPage: {
     buttons: {
       next: {
-        label: 'See your results',
+        id:    'b3',
+        title: 'See your results',
       },
     },
     id:       PAGE_TYPE.SUMMARY,

@@ -36,9 +36,7 @@ export const survey = {
       },
       "required": [
         "id",
-        "label",
-        "subTitle",
-        "title"
+        "label"
       ],
       "type": "object"
     },
@@ -62,8 +60,7 @@ export const survey = {
       },
       "required": [
         "id",
-        "questions",
-        "title"
+        "questions"
       ],
       "type": "object"
     },
@@ -75,9 +72,9 @@ export const survey = {
           "description": "Horizontal orientation (left or right)",
           "title": "Horizontal Position"
         },
-        "label": {
-          "description": "Text to display on button (e.g. 'Prev' or 'Next')",
-          "title": "Label",
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
           "type": "string"
         },
         "link": {
@@ -85,15 +82,19 @@ export const survey = {
           "title": "Link",
           "type": "string"
         },
-        "mode": {
-          "$ref": "#/definitions/TButtonMode",
-          "description": "Render mode (link or button)",
-          "title": "Mode"
-        },
         "outline": {
           "description": "Show an outline",
           "title": "Outline",
           "type": "boolean"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TButtonMode",
+          "description": "Render mode (link or button)",
+          "title": "Mode"
         },
         "verticalPos": {
           "$ref": "#/definitions/TVerticalPosition",
@@ -102,7 +103,7 @@ export const survey = {
         }
       },
       "required": [
-        "label"
+        "id"
       ],
       "type": "object"
     },
@@ -118,9 +119,9 @@ export const survey = {
           "description": "Horizontal orientation (left or right)",
           "title": "Horizontal Position"
         },
-        "label": {
-          "description": "Text to display on button (e.g. 'Prev' or 'Next')",
-          "title": "Label",
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
           "type": "string"
         },
         "link": {
@@ -128,15 +129,19 @@ export const survey = {
           "title": "Link",
           "type": "string"
         },
-        "mode": {
-          "$ref": "#/definitions/TButtonMode",
-          "description": "Render mode (link or button)",
-          "title": "Mode"
-        },
         "outline": {
           "description": "Show an outline",
           "title": "Outline",
           "type": "boolean"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TButtonMode",
+          "description": "Render mode (link or button)",
+          "title": "Mode"
         },
         "verticalPos": {
           "$ref": "#/definitions/TVerticalPosition",
@@ -147,8 +152,8 @@ export const survey = {
       "required": [
         "defaultLabel",
         "horizontalPos",
-        "label",
-        "mode",
+        "id",
+        "type",
         "verticalPos"
       ],
       "type": "object"
@@ -227,16 +232,18 @@ export const survey = {
               "description": "Horizontal orientation (left or right)",
               "title": "Horizontal Position"
             },
-            "label": {
+            "id": {
             },
             "link": {
             },
-            "mode": {
+            "outline": {
+            },
+            "title": {
+            },
+            "type": {
               "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
               "title": "Mode"
-            },
-            "outline": {
             },
             "verticalPos": {
               "$ref": "#/definitions/TVerticalPosition",
@@ -258,16 +265,18 @@ export const survey = {
               "description": "Horizontal orientation (left or right)",
               "title": "Horizontal Position"
             },
-            "label": {
+            "id": {
             },
             "link": {
             },
-            "mode": {
+            "outline": {
+            },
+            "title": {
+            },
+            "type": {
               "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
               "title": "Mode"
-            },
-            "outline": {
             },
             "verticalPos": {
               "$ref": "#/definitions/TVerticalPosition",
@@ -384,7 +393,6 @@ export const survey = {
       "required": [
         "id",
         "section",
-        "title",
         "type"
       ],
       "type": "object"
@@ -485,7 +493,21 @@ export const survey = {
         "answers": {
           "description": "Collection of allowed answers",
           "items": {
-            "$ref": "#/definitions/IRef"
+            "properties": {
+              "id": {
+                "description": "Unique identifier",
+                "title": "Id",
+                "type": "string"
+              },
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "type": "object"
           },
           "title": "Answers",
           "type": "array"
@@ -573,7 +595,6 @@ export const survey = {
         "answers",
         "id",
         "section",
-        "title",
         "type"
       ],
       "type": "object"
@@ -635,16 +656,18 @@ export const survey = {
                   "description": "Horizontal orientation (left or right)",
                   "title": "Horizontal Position"
                 },
-                "label": {
+                "id": {
                 },
                 "link": {
                 },
-                "mode": {
+                "outline": {
+                },
+                "title": {
+                },
+                "type": {
                   "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
                   "title": "Mode"
-                },
-                "outline": {
                 },
                 "verticalPos": {
                   "$ref": "#/definitions/TVerticalPosition",
@@ -666,16 +689,18 @@ export const survey = {
                   "description": "Horizontal orientation (left or right)",
                   "title": "Horizontal Position"
                 },
-                "label": {
+                "id": {
                 },
                 "link": {
                 },
-                "mode": {
+                "outline": {
+                },
+                "title": {
+                },
+                "type": {
                   "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
                   "title": "Mode"
-                },
-                "outline": {
                 },
                 "verticalPos": {
                   "$ref": "#/definitions/TVerticalPosition",
@@ -838,8 +863,7 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "title"
+        "id"
       ],
       "type": "object"
     },
@@ -900,7 +924,21 @@ export const survey = {
             "answers": {
               "description": "Collection of allowed answers",
               "items": {
-                "$ref": "#/definitions/IRef"
+                "properties": {
+                  "id": {
+                    "description": "Unique identifier",
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ],
+                "type": "object"
               },
               "title": "Answers",
               "type": "array"
@@ -967,8 +1005,7 @@ export const survey = {
       "required": [
         "id",
         "label",
-        "requirements",
-        "title"
+        "requirements"
       ],
       "type": "object"
     },
@@ -995,8 +1032,7 @@ export const survey = {
       },
       "required": [
         "id",
-        "requirements",
-        "title"
+        "requirements"
       ],
       "type": "object"
     },
@@ -1085,7 +1121,6 @@ export const survey = {
       "required": [
         "id",
         "section",
-        "title",
         "type"
       ],
       "type": "object"

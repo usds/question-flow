@@ -1,8 +1,11 @@
-import { isString, merge }                                                 from 'lodash';
-import { isEnum, MODE }                                                    from '../lib/enums';
+import { isString, merge } from 'lodash';
+import { isEnum, MODE }    from '../lib/enums';
 import {
   INavigationConfig,
-  IProgressBarConfig, IQuestionableConfig, IQuestionConfig, IStepConfig,
+  IProgressBarConfig,
+  IQuestionableConfig,
+  IQuestionConfig,
+  IStepConfig,
 } from '../survey/IQuestionableConfig';
 
 /**
@@ -17,16 +20,16 @@ export class QuestionableConfig implements IQuestionableConfig {
     next: {
       defaultLabel:  'Next',
       horizontalPos: 'left',
-      mode:          'button',
+      type:          'button',
       verticalPos:   'bottom',
     },
     prev: {
       defaultLabel:  'Go back',
       horizontalPos: 'left',
-      mode:          'link',
+      type:          'link',
       verticalPos:   'top',
     },
-  }
+  };
 
   #progressBar: IProgressBarConfig = {
     baseBgColor: '#f0f0f0',
@@ -34,17 +37,17 @@ export class QuestionableConfig implements IQuestionableConfig {
     hide:        false,
     position:    'bottom',
     type:        'progress-bar',
-  }
+  };
 
   #questions: IQuestionConfig = {
     showAnswerBorder: true,
-  }
+  };
 
   #steps: IStepConfig = {
     borderClass: 'border-0',
     showStepId:  false,
     titleClass:  '',
-  }
+  };
 
   constructor(config: Partial<IQuestionableConfig> = {}) {
     merge(this, config);

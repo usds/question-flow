@@ -1,9 +1,9 @@
 import { Meta, Story } from '@storybook/react';
 import { Questionable } from '../../components/Questionable';
-import { simpleFlow } from '../flows/simple/simple.flow';
-import { MODE } from '../../lib';
 import { QuestionableConfig } from '../../composable/Config';
+import { MODE } from '../../lib';
 import { IQuestionable } from '../../state/GlobalState';
+import { simpleFlow } from '../flows/simple/simple.flow';
 import '../styles';
 
 export default {
@@ -27,11 +27,11 @@ Design.args = {
     nav: {
       next: {
         verticalPos: 'top',
-        mode: 'button',
+        type: 'button',
       },
       prev: {
         verticalPos: 'top',
-        mode: 'button',
+        type: 'button',
       },
     },
   }),

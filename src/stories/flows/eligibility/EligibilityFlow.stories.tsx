@@ -1,10 +1,10 @@
 import { Meta, Story } from '@storybook/react';
-import { Questionnaire } from '../../../composable/Questionnaire';
 import { Questionable } from '../../../components/Questionable';
 import { QuestionableConfig } from '../../../composable/Config';
+import { Questionnaire } from '../../../composable/Questionnaire';
 import { IQuestionable } from '../../../state/GlobalState';
 import '../../styles';
-import { eligibility } from './eligibility.flow';
+import { buildEligibility } from './eligibility.flow';
 
 export default {
   argTypes: {
@@ -27,5 +27,5 @@ Eligibility.args = {
       bgColor: '#1DC2AE',
     },
   }),
-  questionnaire: new Questionnaire(eligibility),
+  questionnaire: new Questionnaire(buildEligibility()),
 };

@@ -1,5 +1,5 @@
-import { IPage }     from '../survey/IStep';
 import { IPages }    from '../survey/IPages';
+import { IPage }     from '../survey/IStep';
 import { PAGE_TYPE } from './enums';
 
 /**
@@ -11,7 +11,8 @@ const landingPage: IPage = {
   bodySubHeader: '',
   buttons:       {
     next: {
-      label: 'Start',
+      id:    'b1',
+      title: 'Start',
     },
   },
   id:      PAGE_TYPE.LANDING,
@@ -46,7 +47,8 @@ const noResultsPage: IPage = {
 const summaryPage: IPage = {
   buttons: {
     next: {
-      label: 'Submit',
+      id:    'b2',
+      title: 'Submit',
     },
   },
   id:      PAGE_TYPE.SUMMARY,

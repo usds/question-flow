@@ -25,7 +25,7 @@ export interface IAction extends IRef {
   /**
    * @title Description
    */
-  subTitle: string;
+  subTitle?: string;
   /**
    * @title Type
    * @hidden
