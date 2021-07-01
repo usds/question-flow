@@ -16,7 +16,7 @@ export interface IRef {
   /**
    * @title Title
    */
-  title: string;
+  title?: string;
   /**
    * @title Type
    * @hidden

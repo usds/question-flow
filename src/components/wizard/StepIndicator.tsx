@@ -1,12 +1,24 @@
-import { StepIndicator as SI, StepIndicatorStep } from '@trussworks/react-uswds';
-import { useGlobal }                              from '../../state/GlobalState';
-import { IStepData }                              from '../../survey/IStepData';
-import { ISection }                               from '../../survey/IStep';
-import { noel }                                   from '../../lib/noop';
+import {
+  StepIndicator as SI,
+  StepIndicatorStep,
+} from '@trussworks/react-uswds';
+import { noel }      from '../../lib/noop';
+import { useGlobal } from '../../state/GlobalState';
+import { ISection }  from '../../survey/IStep';
+import { IStepData } from '../../survey/IStepData';
 
-const getIndicatorStep = (s: ISection) => (
-    <StepIndicatorStep key={s.id} label={s.title} status={s.status || 'incomplete'} />
-);
+const getIndicatorStep = (s: ISection) => {
+  if (!s.title) {
+    return noel();
+  }
+  return (
+    <StepIndicatorStep
+      key={s.id}
+      label={s.title}
+      status={s.status || 'incomplete'}
+    />
+  );
+};
 
 export const StepIndicator = (props: IStepData): JSX.Element => {
   const { config, questionnaire } = useGlobal();

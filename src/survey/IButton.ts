@@ -1,9 +1,14 @@
-import { THorizontalPosition, TButtonMode, TVerticalPosition } from '../lib/types';
+import {
+  TButtonMode,
+  THorizontalPosition,
+  TVerticalPosition,
+} from '../lib/types';
+import { IRef } from './IRef';
 
 /**
  * Represents a navigation button
  */
-export interface IButton {
+export interface IButton extends IRef {
   /**
    * Horizontal orientation (left or right)
    *
@@ -12,29 +17,23 @@ export interface IButton {
    */
   horizontalPos?: THorizontalPosition;
   /**
-   * Text to display on button (e.g. 'Prev' or 'Next')
-   *
-   * @title Label
-   */
-  label: string;
-  /**
    * Link to tie to button click
    *
    * @title Link
    */
   link?: string;
   /**
-   * Render mode (link or button)
-   *
-   * @title Mode
-   */
-  mode?: TButtonMode;
-  /**
    * Show an outline
    *
    * @title Outline
    */
   outline?: boolean;
+  /**
+   * Render mode (link or button)
+   *
+   * @title Mode
+   */
+  type?: TButtonMode;
   /**
    * Vertical orientation (top or bottom)
    *

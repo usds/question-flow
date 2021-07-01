@@ -5305,14 +5305,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17.0.11":
-  version: 17.0.11
-  resolution: "@types/react@npm:17.0.11"
+"@types/react@npm:^17.0.13":
+  version: 17.0.13
+  resolution: "@types/react@npm:17.0.13"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 89e80ee8e08988abca0266e5e131f57b2e18f326bebfa0ed0a06b0bca29621a5a8202d617254a053f659b9c18090c52cae0aa475a6c6036b8858030f1d448e47
+  checksum: 8e25aaeac17c48e1f60544dc583c3ea770cd3d3ffdea944a1da3069db6a7d3a374d3a8bdac726150404318203c1b564135ce93e3b69bd5c06d7f262463b5525d
   languageName: node
   linkType: hard
 
@@ -5691,7 +5691,7 @@ __metadata:
     "@types/lodash": ^4.14.170
     "@types/luxon": ^1.27.0
     "@types/node": ^15.12.5
-    "@types/react": ^17.0.11
+    "@types/react": ^17.0.13
     "@types/react-dom": ^17.0.8
     "@types/react-jsonschema-form": ^1.7.5
     "@typescript-eslint/eslint-plugin": ^4.28.1
@@ -5721,7 +5721,7 @@ __metadata:
     eslint-plugin-yaml: ^0.5.0
     file-saver: ^2.0.5
     gh-pages: ^3.2.3
-    husky: ^6.0.0
+    husky: ^7.0.0
     jest: ^27.0.6
     lint-staged: ^11.0.0
     lodash: ^4.17.21
@@ -5734,7 +5734,7 @@ __metadata:
     react-docgen-typescript-loader: ^3.7.2
     react-dom: ^17.0.2
     rimraf: ^3.0.2
-    rollup: ^2.52.4
+    rollup: ^2.52.6
     rollup-plugin-copy: ^3.4.0
     rollup-plugin-dts: ^3.0.2
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -12169,12 +12169,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"husky@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "husky@npm:6.0.0"
+"husky@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "husky@npm:7.0.0"
   bin:
     husky: lib/bin.js
-  checksum: db6da76a670b2cd1e967990decfd291e6f35a5aee4d362208a51771474d3b4896d526acb4bf0413c2d7154716e42a4d8b6cc19f2bb108e48d1f554624c723a00
+  checksum: 2b9848c6365ad43110e19cffbf715ef695f2bcd8c98ee263b67389b492fe6b4045cad7be2af393b89c2d5effe3b97a6ff0443f869e9407d954bb93e17dade8a0
   languageName: node
   linkType: hard
 
@@ -18777,9 +18777,9 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.52.4":
-  version: 2.52.4
-  resolution: "rollup@npm:2.52.4"
+"rollup@npm:^2.52.6":
+  version: 2.52.6
+  resolution: "rollup@npm:2.52.6"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -18787,7 +18787,7 @@ resolve@^2.0.0-next.3:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: a97a24ff62a42bed6b9f0575f422e4c2ee8e457123f6ed51b5aa644d21e0bba36d661163e81e6be4e989918c7f73539b17b7bea0e1a11b2265805b87f4c9562d
+  checksum: 2de4dd74127dffbd5ad7fa1e2ae0666a7dccf0991a6026e7897ab266a3ec6372ecc8fe690f7295bb5698b358a0bf5ad958b4a5127eb454a6c848ca73795069b6
   languageName: node
   linkType: hard
 

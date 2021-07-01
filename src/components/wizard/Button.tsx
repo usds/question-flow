@@ -16,9 +16,9 @@ type TButtonConfig = {
   disabled: () => boolean;
   label: string;
   mode: TButtonMode;
-  onClick: () => void,
+  onClick: () => void;
   stepId: string;
-}
+};
 
 const Button = (props: TButtonConfig): JSX.Element => (
   <B
@@ -48,31 +48,28 @@ export const PreviousButton = (props: INavBar): JSX.Element => {
   const surveyEnd      = props.stepId === STEP_TYPE.RESULTS
     || props.stepId === STEP_TYPE.NO_RESULTS;
   const notEditMode    = config.mode !== MODE.EDIT
-    || (props.stepId === questionnaire.flow[0]
-    && config.mode === MODE.EDIT);
-  const doNotRender    = layoutMismatch
-    || ((surveyStart || surveyEnd)
-    && notEditMode);
+    || (props.stepId === questionnaire.flow[0] && config.mode === MODE.EDIT);
+  const doNotRender    = layoutMismatch || ((surveyStart || surveyEnd) && notEditMode);
 
   if (doNotRender) {
     return noel();
   }
 
-  const label    = step?.buttons?.prev?.label || config.nav.prev.defaultLabel || 'Previous';
+  const label    = step?.buttons?.prev?.title || config.nav.prev.defaultLabel || 'Previous';
   const onClick  = () => Steps.goToPrevStep(props, questionnaire, config);
   const disabled = () => false;
 
   return (
-    <Button {...
-      {
+    <Button
+      {...{
         dir:    'prev',
         disabled,
         label,
-        mode:   config.nav.prev.mode || 'link',
+        mode:   config.nav.prev.type || 'link',
         onClick,
         stepId: `${props.stepId}`,
-      }
-    }/>
+      }}
+    />
   );
 };
 
@@ -85,27 +82,27 @@ export const NextButton = (props: INavBar): JSX.Element => {
   const notEditMode               = config.mode !== MODE.EDIT
     || (props.stepId === questionnaire.flow[questionnaire.flow.length - 1]
       && config.mode === MODE.EDIT);
-  const doNotRender               = layoutMismatch
-    || ((surveyEnd) && notEditMode);
+  const doNotRender               = layoutMismatch || (surveyEnd && notEditMode);
 
   if (doNotRender) {
     return noel();
   }
 
-  const label    = step?.buttons?.next?.label || config.nav.next.defaultLabel || 'Previous';
+  const label    = step?.buttons?.next?.title || config.nav.next.defaultLabel || 'Previous';
   const onClick  = () => Steps.goToNextStep(props, questionnaire, config);
-  const disabled = () => config.mode === MODE.VIEW && !Steps.isNextEnabled(props);
+  const disabled = () =>
+    config.mode === MODE.VIEW && !Steps.isNextEnabled(props);
 
   return (
-    <Button {...
-      {
+    <Button
+      {...{
         dir:    'next',
         disabled,
         label,
-        mode:   config.nav.next.mode || 'button',
+        mode:   config.nav.next.type || 'button',
         onClick,
         stepId: `${props.stepId}`,
-      }
-    }/>
+      }}
+    />
   );
 };

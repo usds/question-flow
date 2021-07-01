@@ -11,18 +11,18 @@ export const Action = (action: Partial<IAction>): JSX.Element => {
     }
     let cssMode                                              = '';
     let variant: 'nav' | 'unstyled' | 'external' | undefined = 'nav';
-    if (a.mode === 'button') {
+    if (a.type === 'button') {
       cssMode = 'usa-button';
       variant = 'unstyled';
     }
     return (
-      <li key={a.label}>
+      <li key={a.title}>
         <Link
           className={`${CSS_CLASS.CALL_TO_ACTION_BUTTON} ${cssMode}`}
           variant={variant}
           href={a.link}
         >
-          {a.label}
+          {a.title}
         </Link>
       </li>
     );

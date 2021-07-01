@@ -118,7 +118,7 @@ export interface IQuestion extends IStep {
    *
    * @title Answers
    */
-  answers: IRef[];
+  answers: Pick<IRef, 'id' | 'title'>[];
   /**
    * Collection of branches that use this question
    *

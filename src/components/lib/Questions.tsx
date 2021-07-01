@@ -7,8 +7,8 @@ import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
 import { TDateOfBirth }              from '../../lib/types';
 import { IQuestion }                 from '../../survey';
 import { IQuestionableConfig }       from '../../survey/IQuestionableConfig';
-import { IRef }                      from '../../survey/IRef';
 import { IQuestionData }             from '../../survey/IQuestionData';
+import { IRef }                      from '../../survey/IRef';
 import { Steps }                     from './Steps';
 
 /**
@@ -72,17 +72,18 @@ export abstract class Questions {
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
-    const handler = () => Questions.updateForm(answer.title, props);
-    const id      = Steps.getDomId(answer.title, props);
+    const title   = Questions.getString(answer);
+    const handler = () => Questions.updateForm(title, props);
+    const id      = Steps.getDomId(title, props);
 
     return (
       <Radio
         id={id}
         key={id}
         name={Steps.getFieldSetName(props)}
-        label={answer.title}
-        value={answer.title}
-        checked={Questions.isSelected(answer.title, props) === true}
+        label={title}
+        value={title}
+        checked={Questions.isSelected(title, props) === true}
         className={CSS_CLASS.MULTI_CHOICE}
         onChange={handler}
         onClick={handler}
@@ -111,6 +112,13 @@ export abstract class Questions {
     );
   }
 
+  private static getString(ref: Partial<IRef> = {}): string {
+    if (!ref.title || ref.title === undefined || ref.title?.length <= 0) {
+      throw new Error(`Value is required; ${ref.id} does not have a title`);
+    }
+    return ref.title;
+  }
+
   /**
    * Generates a checkbox given a question definition
    * @param answer
@@ -122,17 +130,18 @@ export abstract class Questions {
     props: IQuestionData,
     config: IQuestionableConfig,
   ): JSX.Element {
-    const handler = () => Questions.updateForm(answer.title, props);
-    const id      = Steps.getDomId(answer.title, props);
+    const title   = Questions.getString(answer);
+    const handler = () => Questions.updateForm(title, props);
+    const id      = Steps.getDomId(title, props);
 
     return (
       <Checkbox
         id={id}
         key={id}
         name={Steps.getFieldSetName(props)}
-        label={answer.title}
-        value={answer.title}
-        checked={Questions.isSelected(answer.title, props) === true}
+        label={title}
+        value={title}
+        checked={Questions.isSelected(title, props) === true}
         className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
