@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/usds/questionable/compare/v1.1.7...v1.1.8) (2021-07-01)
+
+
+### Bug Fixes
+
+* **call-to-action:** expands data model to support calls to action ([#78](https://github.com/usds/questionable/issues/78)) ([456f2e7](https://github.com/usds/questionable/commit/456f2e73f930aea7dc9c9b611129d6fe92760151)), closes [#75](https://github.com/usds/questionable/issues/75)
+
 ## [1.1.7](https://github.com/usds/questionable/compare/v1.1.6...v1.1.7) (2021-06-29)
 
 
