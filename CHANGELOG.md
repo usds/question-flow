@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/usds/questionable/compare/v1.1.8...v1.1.9) (2021-07-01)
+
+
+### Bug Fixes
+
+* **content-logic:** enables separation of copy/information from business logic ([#84](https://github.com/usds/questionable/issues/84)) ([52d6700](https://github.com/usds/questionable/commit/52d6700a5562d9507aa4b19c8861ecbd4033bc59)), closes [#79](https://github.com/usds/questionable/issues/79)
+
 ## [1.1.8](https://github.com/usds/questionable/compare/v1.1.7...v1.1.8) (2021-07-01)
 
 
