@@ -493,21 +493,7 @@ export const survey = {
         "answers": {
           "description": "Collection of allowed answers",
           "items": {
-            "properties": {
-              "id": {
-                "description": "Unique identifier",
-                "title": "Id",
-                "type": "string"
-              },
-              "title": {
-                "title": "Title",
-                "type": "string"
-              }
-            },
-            "required": [
-              "id"
-            ],
-            "type": "object"
+            "$ref": "#/definitions/IRef"
           },
           "title": "Answers",
           "type": "array"
@@ -924,21 +910,7 @@ export const survey = {
             "answers": {
               "description": "Collection of allowed answers",
               "items": {
-                "properties": {
-                  "id": {
-                    "description": "Unique identifier",
-                    "title": "Id",
-                    "type": "string"
-                  },
-                  "title": {
-                    "title": "Title",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "id"
-                ],
-                "type": "object"
+                "$ref": "#/definitions/IRef"
               },
               "title": "Answers",
               "type": "array"
