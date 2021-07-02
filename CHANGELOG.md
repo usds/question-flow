@@ -1,3 +1,10 @@
+## [1.1.12](https://github.com/usds/questionable/compare/v1.1.11...v1.1.12) (2021-07-02)
+
+
+### Bug Fixes
+
+* **types:** provides correct type definition for answers ([eac9633](https://github.com/usds/questionable/commit/eac9633c2214af12246075468cb6d824fb7bd591))
+
 ## [1.1.11](https://github.com/usds/questionable/compare/v1.1.10...v1.1.11) (2021-07-02)
 
 
