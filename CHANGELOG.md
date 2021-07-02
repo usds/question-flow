@@ -1,3 +1,10 @@
+## [1.1.10](https://github.com/usds/questionable/compare/v1.1.9...v1.1.10) (2021-07-02)
+
+
+### Bug Fixes
+
+* **summary:** summary page questions now link back to the step ([#86](https://github.com/usds/questionable/issues/86)) ([25717d6](https://github.com/usds/questionable/commit/25717d63ac8a69c6f4e65336a1cef5a3b44325bb)), closes [#65](https://github.com/usds/questionable/issues/65)
+
 ## [1.1.9](https://github.com/usds/questionable/compare/v1.1.8...v1.1.9) (2021-07-01)
 
 
