@@ -1,3 +1,10 @@
+## [1.1.11](https://github.com/usds/questionable/compare/v1.1.10...v1.1.11) (2021-07-02)
+
+
+### Bug Fixes
+
+* **index:** corrects exports of interfaces for downstream consumers ([b493289](https://github.com/usds/questionable/commit/b4932895358e57277e6417981ccb731d24ed78d3))
+
 ## [1.1.10](https://github.com/usds/questionable/compare/v1.1.9...v1.1.10) (2021-07-02)
 
 
