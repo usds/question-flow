@@ -2,11 +2,11 @@
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { merge }                     from 'lodash';
 import { DateTime }                  from 'luxon';
+import { QuestionableConfig }        from '../../composable/Config';
 import { getDateTime }               from '../../lib/date';
 import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
 import { TDateOfBirth }              from '../../lib/types';
 import { IQuestion }                 from '../../survey';
-import { IQuestionableConfig }       from '../../survey/IQuestionableConfig';
 import { IQuestionData }             from '../../survey/IQuestionData';
 import { IRef }                      from '../../survey/IRef';
 import { Steps }                     from './Steps';
@@ -21,7 +21,9 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  private static updateForm(answer: string, props: IQuestionData): void {
+  private static updateForm(
+    answer: string, props: IQuestionData, config: QuestionableConfig,
+  ): void {
     Object.assign(props.step, { answer });
     // TODO: circle back and fix this logic. The problem is that our reducer is merging by KEY,
     // which in the case of arrays is the index, and the index will always be 0 if we're passing in new arrays
@@ -33,6 +35,7 @@ export abstract class Questions {
     } else {
       merge(value, props.step);
     }
+    config.events.answer({ answer, props, step: props.step.id });
     return props.dispatchForm({
       type:  ACTION_TYPE.UPDATE,
       value: { ...props.form },
@@ -70,10 +73,10 @@ export abstract class Questions {
   private static getRadio(
     answer: IRef,
     props: IQuestionData,
-    config: IQuestionableConfig,
+    config: QuestionableConfig,
   ): JSX.Element {
     const title   = Questions.getString(answer);
-    const handler = () => Questions.updateForm(title, props);
+    const handler = () => Questions.updateForm(title, props, config);
     const id      = Steps.getDomId(title, props);
 
     return (
@@ -99,7 +102,7 @@ export abstract class Questions {
    */
   public static getRadios(
     props: IQuestionData,
-    config: IQuestionableConfig,
+    config: QuestionableConfig,
   ): JSX.Element {
     return (
       <Fieldset
@@ -128,10 +131,10 @@ export abstract class Questions {
   private static getCheckbox(
     answer: IRef,
     props: IQuestionData,
-    config: IQuestionableConfig,
+    config: QuestionableConfig,
   ): JSX.Element {
     const title   = Questions.getString(answer);
-    const handler = () => Questions.updateForm(title, props);
+    const handler = () => Questions.updateForm(title, props, config);
     const id      = Steps.getDomId(title, props);
 
     return (
@@ -157,7 +160,7 @@ export abstract class Questions {
    */
   public static getCheckboxes(
     props: IQuestionData,
-    config: IQuestionableConfig,
+    config: QuestionableConfig,
   ): JSX.Element {
     return (
       <Fieldset

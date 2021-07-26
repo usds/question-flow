@@ -6,6 +6,7 @@ import {
   TVerticalPosition,
 } from '../lib/types';
 import { IButton } from './IButton';
+import { IEvent }  from './IEvent';
 
 /**
  * Configuration for customized behavior of Questionable
@@ -19,6 +20,13 @@ export interface IQuestionableConfig {
    * @hidden
    */
   readonly dev: boolean;
+  /**
+   * Event hooks for common form operations
+   *
+   * @title Events
+   * @hidden
+   */
+  events?: Partial<IEvent>;
   /**
    * View or edit mode
    *
@@ -44,6 +52,7 @@ export interface IQuestionableConfig {
    * @title Question Configuration
    */
   questions?: Partial<IQuestionConfig>;
+
   /**
    * Step configuration
    *
@@ -162,6 +171,12 @@ export interface IButtonConfig extends IButton {
    * @title Vertical Position
    */
   verticalPos: TVerticalPosition;
+  /**
+   * Toggle whether button is visible
+   *
+   * @title Visible
+   */
+  visible: boolean;
 }
 
 /**

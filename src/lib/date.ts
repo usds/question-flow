@@ -1,9 +1,6 @@
 import { DateTime } from 'luxon';
 import { TAge }     from './types';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const moment = require('moment');
-
 /**
  * Determines if a string can be parsed into a valid Date
  * @param dt
@@ -11,7 +8,7 @@ const moment = require('moment');
  */
 export const isValidDate = (dt: string | undefined): boolean => {
   if (!dt || dt.length < 8) return false;
-  if (!moment(dt, 'MM/DD/YYYY', true).isValid()) return false;
+  // if (!moment(dt, 'MM/DD/YYYY', true).isValid()) return false;
   return true;
 };
 

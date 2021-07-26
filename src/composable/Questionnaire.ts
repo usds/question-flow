@@ -185,12 +185,14 @@ export class Questionnaire implements IQuestionnaire {
 
   getNextStep(props: IStepData, config = new QuestionableConfig()): string {
     const thisStep = props.stepId as string;
-    return this.getStep(thisStep, props.form, DIRECTION.FORWARD, config);
+    const dir      = DIRECTION.FORWARD;
+    return this.getStep(thisStep, props.form, dir, config);
   }
 
   getPreviousStep(props: IStepData, config = new QuestionableConfig()): string {
     const thisStep = props.stepId as string;
-    return this.getStep(thisStep, props.form, DIRECTION.BACKWARD, config);
+    const dir      = DIRECTION.BACKWARD;
+    return this.getStep(thisStep, props.form, dir, config);
   }
 
   /**

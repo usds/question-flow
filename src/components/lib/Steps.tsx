@@ -1,10 +1,10 @@
-import { kebabCase, values }        from 'lodash';
-import { QuestionableConfig }       from '../../composable/Config';
-import { Questionnaire }            from '../../composable/Questionnaire';
-import { QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
-import { IForm }                    from '../../survey/IForm';
-import { IQuestionData }            from '../../survey/IQuestionData';
-import { IStepData }                from '../../survey/IStepData';
+import { kebabCase, values }                   from 'lodash';
+import { QuestionableConfig }                  from '../../composable/Config';
+import { Questionnaire }                       from '../../composable/Questionnaire';
+import { DIRECTION, QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
+import { IForm }                               from '../../survey/IForm';
+import { IQuestionData }                       from '../../survey/IQuestionData';
+import { IStepData }                           from '../../survey/IStepData';
 
 export abstract class Steps {
   public static goToStep(step: string, props: IStepData): void {
@@ -16,7 +16,10 @@ export abstract class Steps {
     questionnaire: Questionnaire,
     config: QuestionableConfig,
   ): void {
-    Steps.goToStep(questionnaire.getNextStep(props, config), props);
+    const step = questionnaire.getNextStep(props, config);
+    const dir  = DIRECTION[DIRECTION.FORWARD];
+    config.events.page({ dir, props, step });
+    Steps.goToStep(step, props);
   }
 
   public static goToPrevStep(
@@ -24,7 +27,10 @@ export abstract class Steps {
     questionnaire: Questionnaire,
     config: QuestionableConfig,
   ): void {
-    Steps.goToStep(questionnaire.getPreviousStep(props, config), props);
+    const step = questionnaire.getPreviousStep(props, config);
+    const dir  = DIRECTION[DIRECTION.BACKWARD];
+    config.events.page({ dir, props, step });
+    Steps.goToStep(step, props);
   }
 
   /**
