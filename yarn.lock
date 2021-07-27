@@ -5806,6 +5806,7 @@ __metadata:
     react: ^17.0.2
     react-docgen-typescript-loader: ^3.7.2
     react-dom: ^17.0.2
+    react-imask: ^6.1.0
     rimraf: ^3.0.2
     rollup: ^2.54.0
     rollup-plugin-copy: ^3.4.0
@@ -12323,6 +12324,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"imask@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "imask@npm:6.1.0"
+  checksum: bf4e2e8c11ba646bafe521d1c4473b4fe87e97d44d8bc68cb4849ab9dd2333f38684e5091eb2969ad3c1f39d3b9f35661506e91de8dd1e15745183768cf270b8
+  languageName: node
+  linkType: hard
+
 "immer@npm:8.0.1":
   version: 8.0.1
   resolution: "immer@npm:8.0.1"
@@ -17881,6 +17889,18 @@ fsevents@^1.2.7:
     react: ^16.6.0 || ^17.0.0
     react-dom: ^16.6.0 || ^17.0.0
   checksum: e7fbc5083437105044da626a48c0ca3a32a687ef249e9a1f74717dd29f44d6ebecb9a9f4ab6ae36e76a98d2d94fa2ae11bc46171fdc01138314eef945f5df2a6
+  languageName: node
+  linkType: hard
+
+"react-imask@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "react-imask@npm:6.1.0"
+  dependencies:
+    imask: ^6.1.0
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=0.14.0"
+  checksum: 11202574ee6d96526d89607393f949aa37860aa819a0bc405cfb6290398ddbded16dc12d9bc00571a279103b82e064720da35f358151a437416ba898ef926c89
   languageName: node
   linkType: hard
 

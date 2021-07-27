@@ -192,9 +192,16 @@ export abstract class Questions {
    */
   public static toBirthdate(dob: TDateOfBirth): string | undefined {
     if (dob.month && dob.day && dob.year) {
-      return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${
-        dob.year
-      }`;
+      if (+dob.month < 1 || +dob.month > 12) {
+        return undefined;
+      }
+      if (+dob.day < 1 || +dob.day > 31) {
+        return undefined;
+      }
+      if (+dob.year < 1900 || +dob.year > new Date().getFullYear()) {
+        return undefined;
+      }
+      return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${dob.year}`;
     }
     return undefined;
   }
