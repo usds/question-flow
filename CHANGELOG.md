@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/usds/questionable/compare/v1.1.12...v1.2.0) (2021-07-27)
+
+
+### Features
+
+* **release:** analytics release ([ab1c939](https://github.com/usds/questionable/commit/ab1c9394af5f124cb30059555cbf4de547e58fe3))
+
 ## [1.1.12](https://github.com/usds/questionable/compare/v1.1.11...v1.1.12) (2021-07-02)
 
 
