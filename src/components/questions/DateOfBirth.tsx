@@ -1,6 +1,7 @@
 import { DateInput, DateInputGroup } from '@trussworks/react-uswds';
 import { capitalize }                from 'lodash';
 import { ChangeEvent, useState }     from 'react';
+import { useGlobal }                 from '../../state/GlobalState';
 import { getAge }                    from '../../lib/date';
 import { ACTION_TYPE, DATE_UNIT }    from '../../lib/enums';
 import { noel }                      from '../../lib/noop';
@@ -11,6 +12,7 @@ import { Steps }                     from '../lib/Steps';
 import { StepLayout }                from '../wizard/StepLayout';
 
 export const DateOfBirth = (props: IQuestionData): JSX.Element => {
+  const { config }        = useGlobal();
   const { step }          = props;
   const dob: TDateOfBirth = {
     day:   Questions.getBirthdate(props)?.day?.toString(),
@@ -37,7 +39,7 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
     });
     const bd  = Questions.toBirthdate(state);
     const age = getAge(bd);
-    if (age) {
+    if (age && bd) {
       props.dispatchForm({
         type:  ACTION_TYPE.UPDATE,
         value: {
@@ -45,6 +47,7 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
           birthdate: bd,
         },
       });
+      Questions.updateForm(bd, props, config);
     }
   };
 

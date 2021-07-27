@@ -21,7 +21,7 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  private static updateForm(
+  public static updateForm(
     answer: string, props: IQuestionData, config: QuestionableConfig,
   ): void {
     Object.assign(props.step, { answer });

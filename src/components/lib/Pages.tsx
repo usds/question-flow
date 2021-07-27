@@ -69,7 +69,7 @@ export abstract class Pages {
     return data.results.map((result) => (
       <li key={`${props.stepId}_${result.id}`} className="padding-bottom-2">
         <span>
-          {result.label}:{'  '}
+          {result.label}{'  '}
           <b>{result.title}</b>
         </span>
         <Div
