@@ -1,5 +1,5 @@
-import { isString, merge } from 'lodash';
-import { isEnum, MODE }    from '../lib/enums';
+import { isString, merge }    from 'lodash';
+import { noop, isEnum, MODE } from '../lib';
 import {
   INavigationConfig,
   IProgressBarConfig,
@@ -7,6 +7,7 @@ import {
   IQuestionConfig,
   IStepConfig,
 } from '../survey/IQuestionableConfig';
+import { EventEmitter } from './EventEmitter';
 
 /**
  * Configuration class for customizing the Questionable components
@@ -22,12 +23,14 @@ export class QuestionableConfig implements IQuestionableConfig {
       horizontalPos: 'left',
       type:          'button',
       verticalPos:   'bottom',
+      visible:       true,
     },
     prev: {
       defaultLabel:  'Go back',
       horizontalPos: 'left',
       type:          'link',
       verticalPos:   'top',
+      visible:       true,
     },
   };
 
@@ -49,6 +52,13 @@ export class QuestionableConfig implements IQuestionableConfig {
     titleClass:  '',
   };
 
+  #events: EventEmitter = new EventEmitter({
+    onAnswer:       noop,
+    onEvent:        noop,
+    onPageBackward: noop,
+    onPageForward:  noop,
+  });
+
   constructor(config: Partial<IQuestionableConfig> = {}) {
     merge(this, config);
     if (this.dev) {
@@ -58,6 +68,14 @@ export class QuestionableConfig implements IQuestionableConfig {
 
   get dev(): boolean {
     return this.#mode === MODE.DEV;
+  }
+
+  get events(): EventEmitter {
+    return this.#events;
+  }
+
+  set events(val: Partial<EventEmitter>) {
+    merge(this.#events, val);
   }
 
   get mode(): MODE {

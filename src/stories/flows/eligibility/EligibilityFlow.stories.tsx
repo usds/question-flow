@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react';
+import { EventEmitter } from '../../../composable/EventEmitter';
 import { Questionable } from '../../../components/Questionable';
 import { QuestionableConfig } from '../../../composable/Config';
 import { Questionnaire } from '../../../composable/Questionnaire';
@@ -25,6 +26,12 @@ Eligibility.args = {
     },
     progressBar: {
       bgColor: '#1DC2AE',
+    },
+    events: new EventEmitter({ onEvent: console.log }),
+    nav: {
+    prev: {
+        visible: false,
+      },
     },
   }),
   questionnaire: new Questionnaire(buildEligibility()),

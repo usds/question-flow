@@ -22,7 +22,23 @@ import {
 } from '../lib/constants';
 import { TQuestionMap } from '../lib/contentMap';
 
-export const buildQuestions = (json: TQuestionMap) => {
+type Tq = {
+    branches: {
+        id: string;
+        order?: number | undefined;
+        questions: {
+            id: string;
+        }[];
+        title?: string | undefined;
+        type?: string | undefined;
+    }[];
+    list: IQuestion[];
+    map: {
+        [key: string]: IQuestion;
+    };
+};
+
+export const buildQuestions = (json: TQuestionMap): Tq => {
   /**
    * 18 or under 18
    */

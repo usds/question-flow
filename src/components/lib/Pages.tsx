@@ -1,4 +1,5 @@
 import { ReactNode }    from 'react';
+import { TResultData }  from '../../survey/IEvent';
 import { IGlobalState } from '../../state/GlobalState';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';
@@ -53,16 +54,27 @@ export abstract class Pages {
    * @returns
    */
   static getResults(props: IStepData, global: IGlobalState): ReactNode {
-    const { questionnaire } = global;
-    return questionnaire.getResults(props.form).map((result) => (
+    const { questionnaire, config } = global;
+    const data: TResultData         = {
+      props,
+      results: questionnaire.getResults(props.form).map((result) => ({
+        id:     result.id,
+        label:  result.label,
+        reason: Pages.getReason(props, result, global),
+        title:  result.title,
+      })),
+      step: 'results',
+    };
+    config.events.results(data);
+    return data.results.map((result) => (
       <li key={`${props.stepId}_${result.id}`} className="padding-bottom-2">
         <span>
-          {result.label}:{'  '}
+          {result.label}{'  '}
           <b>{result.title}</b>
         </span>
         <Div
           className="text-light"
-          node={Pages.getReason(props, result, global)}
+          node={result.reason}
         />
       </li>
     ));

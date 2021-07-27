@@ -25,7 +25,7 @@ const B: Partial<IQuestion> = {
   answers:  [],
   id:       'B',
   info:     "Most Social Security benefits have age requirements, so we'll use your birthday to see how old you are.",
-  subTitle: 'M DD YYYY',
+  subTitle: 'MM DD YYYY',
   title:    'Enter your birthday.',
 };
 

@@ -147,6 +147,11 @@ export const survey = {
           "$ref": "#/definitions/TVerticalPosition",
           "description": "Vertical orientation (top or bottom)",
           "title": "Vertical Position"
+        },
+        "visible": {
+          "description": "Toggle whether button is visible",
+          "title": "Visible",
+          "type": "boolean"
         }
       },
       "required": [
@@ -154,7 +159,8 @@ export const survey = {
         "horizontalPos",
         "id",
         "type",
-        "verticalPos"
+        "verticalPos",
+        "visible"
       ],
       "type": "object"
     },
@@ -175,6 +181,27 @@ export const survey = {
         "form",
         "step"
       ],
+      "type": "object"
+    },
+    "IEvent": {
+      "properties": {
+        "onAnswer": {
+          "not": {
+          }
+        },
+        "onEvent": {
+          "not": {
+          }
+        },
+        "onPageBackward": {
+          "not": {
+          }
+        },
+        "onPageForward": {
+          "not": {
+          }
+        }
+      },
       "type": "object"
     },
     "IForm": {
@@ -249,6 +276,11 @@ export const survey = {
               "$ref": "#/definitions/TVerticalPosition",
               "description": "Vertical orientation (top or bottom)",
               "title": "Vertical Position"
+            },
+            "visible": {
+              "description": "Toggle whether button is visible",
+              "title": "Visible",
+              "type": "boolean"
             }
           },
           "type": "object"
@@ -282,6 +314,11 @@ export const survey = {
               "$ref": "#/definitions/TVerticalPosition",
               "description": "Vertical orientation (top or bottom)",
               "title": "Vertical Position"
+            },
+            "visible": {
+              "description": "Toggle whether button is visible",
+              "title": "Visible",
+              "type": "boolean"
             }
           },
           "type": "object"
@@ -316,11 +353,17 @@ export const survey = {
           "properties": {
             "next": {
               "$ref": "#/definitions/IButton",
+              "default": {
+                "label": "Next"
+              },
               "description": "Next button",
               "title": "Next Button"
             },
             "prev": {
               "$ref": "#/definitions/IButton",
+              "default": {
+                "label": "Prev"
+              },
               "description": "Previous / Back button",
               "title": "Prev Button"
             }
@@ -469,11 +512,13 @@ export const survey = {
         },
         "position": {
           "$ref": "#/definitions/TVerticalPosition",
+          "default": "bottom",
           "description": "Vertical orientation of the progress bar",
           "title": "Position"
         },
         "type": {
           "$ref": "#/definitions/TProgressBarType",
+          "default": "progress-bar",
           "description": "Component type\n\nCan be one of two types: (1) The USWDS Step Indicator @see https://trussworks.github.io/react-uswds/?path=/docs/components-step-indicator (2) React progress bar @see https://katerinalupacheva.github.io/react-progress-bar/",
           "title": "Type"
         }
@@ -503,11 +548,17 @@ export const survey = {
           "properties": {
             "next": {
               "$ref": "#/definitions/IButton",
+              "default": {
+                "label": "Next"
+              },
               "description": "Next button",
               "title": "Next Button"
             },
             "prev": {
               "$ref": "#/definitions/IButton",
+              "default": {
+                "label": "Prev"
+              },
               "description": "Previous / Back button",
               "title": "Prev Button"
             }
@@ -659,6 +710,11 @@ export const survey = {
                   "$ref": "#/definitions/TVerticalPosition",
                   "description": "Vertical orientation (top or bottom)",
                   "title": "Vertical Position"
+                },
+                "visible": {
+                  "description": "Toggle whether button is visible",
+                  "title": "Visible",
+                  "type": "boolean"
                 }
               },
               "type": "object"
@@ -692,6 +748,11 @@ export const survey = {
                   "$ref": "#/definitions/TVerticalPosition",
                   "description": "Vertical orientation (top or bottom)",
                   "title": "Vertical Position"
+                },
+                "visible": {
+                  "description": "Toggle whether button is visible",
+                  "title": "Visible",
+                  "type": "boolean"
                 }
               },
               "type": "object"
@@ -721,11 +782,13 @@ export const survey = {
             },
             "position": {
               "$ref": "#/definitions/TVerticalPosition",
+              "default": "bottom",
               "description": "Vertical orientation of the progress bar",
               "title": "Position"
             },
             "type": {
               "$ref": "#/definitions/TProgressBarType",
+              "default": "progress-bar",
               "description": "Component type\n\nCan be one of two types: (1) The USWDS Step Indicator @see https://trussworks.github.io/react-uswds/?path=/docs/components-step-indicator (2) React progress bar @see https://katerinalupacheva.github.io/react-progress-bar/",
               "title": "Type"
             }
@@ -750,6 +813,7 @@ export const survey = {
           "description": "Step configuration",
           "properties": {
             "borderClass": {
+              "default": "border-0",
               "description": "Class determines whether cards have borders",
               "enum": [
                 "border-ink",
@@ -765,6 +829,7 @@ export const survey = {
               "type": "boolean"
             },
             "titleClass": {
+              "default": "",
               "description": "Class to apply to title. Use to add background to question text",
               "enum": [
                 "bg-base-lightest",
@@ -1016,11 +1081,17 @@ export const survey = {
           "properties": {
             "next": {
               "$ref": "#/definitions/IButton",
+              "default": {
+                "label": "Next"
+              },
               "description": "Next button",
               "title": "Next Button"
             },
             "prev": {
               "$ref": "#/definitions/IButton",
+              "default": {
+                "label": "Prev"
+              },
               "description": "Previous / Back button",
               "title": "Prev Button"
             }
@@ -1101,6 +1172,7 @@ export const survey = {
       "description": "Customizations for styling and formatting of the steps",
       "properties": {
         "borderClass": {
+          "default": "border-0",
           "description": "Class determines whether cards have borders",
           "enum": [
             "border-ink",
@@ -1116,6 +1188,7 @@ export const survey = {
           "type": "boolean"
         },
         "titleClass": {
+          "default": "",
           "description": "Class to apply to title. Use to add background to question text",
           "enum": [
             "bg-base-lightest",
@@ -1214,6 +1287,23 @@ export const survey = {
       ],
       "type": "object"
     },
+    "TAnswerData": {
+      "description": "Event data structure to be sent with event callbacks",
+      "properties": {
+        "answer": {
+          "type": "string"
+        },
+        "step": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "answer",
+        "step"
+      ],
+      "title": "Event Data Type",
+      "type": "object"
+    },
     "TButtonMode": {
       "enum": [
         "link",
@@ -1228,12 +1318,71 @@ export const survey = {
       ],
       "type": "string"
     },
+    "TNavData": {
+      "description": "Event data structure to be sent with event callbacks",
+      "properties": {
+        "dir": {
+          "type": "string"
+        },
+        "step": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "dir",
+        "step"
+      ],
+      "title": "Event Data Type",
+      "type": "object"
+    },
     "TProgressBarType": {
       "enum": [
         "step-indicator",
         "progress-bar"
       ],
       "type": "string"
+    },
+    "TResultData": {
+      "properties": {
+        "props": {
+          "$ref": "#/definitions/IStepData"
+        },
+        "results": {
+          "items": {
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "reason"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "step": {
+          "const": "results",
+          "type": "string"
+        }
+      },
+      "required": [
+        "props",
+        "results",
+        "step"
+      ],
+      "type": "object"
     },
     "TStepType": {
       "anyOf": [

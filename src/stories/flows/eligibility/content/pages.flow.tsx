@@ -34,12 +34,12 @@ export const pageContent = {
     buttons: {
       next: {
         id:    'pb2',
-        title: 'Submit',
+        title: 'Get Results',
       },
     },
     id:       PAGE_TYPE.SUMMARY,
     subTitle:
-      'If everything looks correct, click "Submit" to view your results; otherwise, go back and change your answers as needed.',
+      'Select a question if you need to change the answer. Then, check your answers to all the questions that come after the one you changed.',
     title: 'Review your answers',
   },
 };
