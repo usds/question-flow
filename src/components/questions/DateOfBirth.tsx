@@ -68,7 +68,7 @@ const onDoBKeyPress = (
     return;
   }
   const val = +`${e.currentTarget.value}${e.key}`;
-  if (isValid(unit, val)) {
+  if (!isValid(unit, val)) {
     e.preventDefault();
   }
 };
