@@ -78,6 +78,7 @@ export enum CSS_CLASS {
   CALL_TO_ACTION_ICON = 'usds-q-cta-icon',
   CALL_TO_ACTION_LIST = 'usds-q-cta-list',
   CALL_TO_ACTION_SECTION = 'usds-q-cta-section',
+  DESIGN_LAYOUT = 'usds-q-design-layout',
   DEV_PANEL_SECTION = 'usds-q-dev-panel',
   DOB = 'usds-q-dob',
   MULTI_CHOICE = 'usds-q-multi-choice',
@@ -98,6 +99,7 @@ export enum CSS_CLASS {
   STEP_LAYOUT = 'usds-q-step-layout',
   STEP_LAYOUT_SECTION = 'usds-q-step-layout-section',
   STEP_SUBTITLE = 'usds-q-step-subtitle',
+  SUMMARY_QA_LIST = 'usds-q-summary-qa-list',
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

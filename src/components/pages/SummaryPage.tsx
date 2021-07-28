@@ -5,6 +5,7 @@ import { noel }       from '../../lib/noop';
 import { IPageData }  from '../../survey/IPageData';
 import { StepLayout } from '../wizard/StepLayout';
 import { Steps }      from '../lib';
+import { CSS_CLASS }  from '../../lib/enums';
 
 /**
  * Internal method to generate a list of the survey answers
@@ -13,7 +14,7 @@ import { Steps }      from '../lib';
  */
 const getAnswers = (props: IPageData, onClick: (question: IQuestion) => void): ReactNode => {
   const answers = props.form.responses.map((question) => (
-      <li key={question.id} className="padding-bottom-2">
+      <li key={question.id} className={CSS_CLASS.SUMMARY_QA_LIST}>
         <span className="text-light">
           <Button
             type="button"

@@ -4,6 +4,7 @@ import { IGlobalState } from '../../state/GlobalState';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';
 import { Div }          from '../factories/NodeFactory';
+import { CSS_CLASS }    from '../../lib/enums';
 
 /**
  * Static utility methods for page components
@@ -67,7 +68,7 @@ export abstract class Pages {
     };
     config.events.results(data);
     return data.results.map((result) => (
-      <li key={`${props.stepId}_${result.id}`} className="padding-bottom-2">
+      <li key={`${props.stepId}_${result.id}`} className={CSS_CLASS.SUMMARY_QA_LIST}>
         <span>
           {result.label}{'  '}
           <b>{result.title}</b>

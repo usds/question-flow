@@ -4,6 +4,7 @@ import {
 import { IStepData } from '../../survey/IStepData';
 import { NavBar }    from './NavBar';
 import { useGlobal } from '../../state/GlobalState';
+import { CSS_CLASS } from '../../lib/enums';
 
 /**
  * Generates the Card layout for each step's contents
@@ -26,7 +27,7 @@ export const DesignLayout = (props: IStepData): JSX.Element => {
             <CardHeader className="bg-base-lightest">
               <h1>Edit the {questionnaire.header}</h1>
             </CardHeader>
-            <CardBody className="padding-top-3">{props.children}</CardBody>
+            <CardBody className={CSS_CLASS.DESIGN_LAYOUT}>{props.children}</CardBody>
             <CardFooter>
               {'Click "Save" to save your edits, or "Next" to continue editing'}
             </CardFooter>

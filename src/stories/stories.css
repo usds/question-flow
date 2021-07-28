@@ -36,6 +36,14 @@
   outline-style: solid;
 }
 
+.usds-q-summary-qa-list {
+  padding-bottom: 1rem !important;
+}
+
+.usds-q-design-layout {
+  padding-top: 1.5rem !important;
+}
+
 .usa-site-alert {
   background-color: #d5fbf3 !important;
 }
