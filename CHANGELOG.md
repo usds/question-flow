@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/usds/questionable/compare/v1.2.0...v1.2.1) (2021-07-28)
+
+
+### Bug Fixes
+
+* **analytics:** simplifies page handler and adds error handler ([2deb29b](https://github.com/usds/questionable/commit/2deb29b1371b80770501112eb4ea0366acb01d09)), closes [#105](https://github.com/usds/questionable/issues/105)
+
 # [1.2.0](https://github.com/usds/questionable/compare/v1.1.12...v1.2.0) (2021-07-27)
 
 
