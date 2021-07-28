@@ -14,22 +14,20 @@ export abstract class Steps {
   public static goToNextStep(
     props: IStepData,
     questionnaire: Questionnaire,
-    config: QuestionableConfig,
   ): void {
-    const step = questionnaire.getNextStep(props, config);
+    const step = questionnaire.getNextStep(props);
     const dir  = DIRECTION.FORWARD;
-    config.events.page({ dir, props, step });
+    questionnaire.config.events.page({ dir, props, step });
     Steps.goToStep(step, props);
   }
 
   public static goToPrevStep(
     props: IStepData,
     questionnaire: Questionnaire,
-    config: QuestionableConfig,
   ): void {
-    const step = questionnaire.getPreviousStep(props, config);
+    const step = questionnaire.getPreviousStep(props);
     const dir  = DIRECTION.BACKWARD;
-    config.events.page({ dir, props, step });
+    questionnaire.config.events.page({ dir, props, step });
     Steps.goToStep(step, props);
   }
 

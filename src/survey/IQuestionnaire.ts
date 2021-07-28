@@ -3,6 +3,7 @@ import { IResult }             from './IResult';
 import { IQuestion, ISection } from './IStep';
 import { IPages }              from './IPages';
 import { IBranch }             from './IBranch';
+import { IQuestionableConfig } from './IQuestionableConfig';
 
 /**
  * Definition for survey data input
@@ -10,6 +11,7 @@ import { IBranch }             from './IBranch';
 export interface IQuestionnaire {
   readonly actions: IAction[];
   readonly branches: IBranch[];
+  readonly config: IQuestionableConfig;
   readonly header: string;
   readonly pages: IPages;
   readonly questions: IQuestion[];

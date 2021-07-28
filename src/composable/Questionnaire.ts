@@ -35,28 +35,45 @@ import { QuestionableConfig } from './Config';
  * Utility wrapper for survey state
  */
 export class Questionnaire implements IQuestionnaire {
-  @ArrayUnique((question: IQuestion) => question.id)
-  readonly questions!: IQuestion[];
+  @ArrayUnique((action: IAction) => action.id)
+  readonly actions!: IAction[];
+
+  readonly branches!: IBranch[];
+
+  #config?: QuestionableConfig;
+
+  get config(): QuestionableConfig {
+    if (!this.#config) {
+      throw new Error('No configuration has been defined');
+    }
+    return this.#config;
+  }
+
+  private set config(config: QuestionableConfig | IQuestionableConfig) {
+    if (this.#config) {
+      return;
+    }
+    this.#config = new QuestionableConfig(config);
+  }
+
+  readonly flow: string[];
 
   readonly header!: string;
 
   @ArrayUnique((result: IResult) => result.label)
   readonly results!: IResult[];
 
-  readonly flow: string[];
+  readonly pages: IPages = DEFAULT_PAGES;
+
+  @ArrayUnique((question: IQuestion) => question.id)
+  readonly questions!: IQuestion[];
 
   @ArrayUnique((section: ISection) => section.id)
   readonly sections!: ISection[];
 
-  readonly actions!: IAction[];
-
-  readonly pages: IPages = DEFAULT_PAGES;
-
-  readonly branches: IBranch[];
-
   private readonly steps: IStep[];
 
-  constructor(data: IQuestionnaire) {
+  constructor(data: Partial<IQuestionnaire | Questionnaire>) {
     Object.assign(this, data);
 
     // Create a new collection for our flow logic
@@ -69,8 +86,6 @@ export class Questionnaire implements IQuestionnaire {
 
     // Wizard flow is defined as linear sequence of unique ids
     this.flow = this.steps.map((q) => q.id);
-
-    this.branches = data.branches;
   }
 
   /**
@@ -131,7 +146,6 @@ export class Questionnaire implements IQuestionnaire {
     thisStep: string,
     form: IForm,
     direction: DIRECTION,
-    config = new QuestionableConfig(),
   ): string {
     const nextStep =      this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
@@ -141,7 +155,7 @@ export class Questionnaire implements IQuestionnaire {
       return thisStep;
     }
 
-    if (config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       return nextStep;
     }
     // Special handling for results
@@ -183,16 +197,16 @@ export class Questionnaire implements IQuestionnaire {
     return thisStep;
   }
 
-  getNextStep(props: IStepData, config = new QuestionableConfig()): string {
+  getNextStep(props: IStepData): string {
     const thisStep = props.stepId as string;
     const dir      = DIRECTION.FORWARD;
-    return this.getStep(thisStep, props.form, dir, config);
+    return this.getStep(thisStep, props.form, dir);
   }
 
-  getPreviousStep(props: IStepData, config = new QuestionableConfig()): string {
+  getPreviousStep(props: IStepData): string {
     const thisStep = props.stepId as string;
     const dir      = DIRECTION.BACKWARD;
-    return this.getStep(thisStep, props.form, dir, config);
+    return this.getStep(thisStep, props.form, dir);
   }
 
   /**
@@ -200,7 +214,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param props
    * @returns
    */
-  getProgressPercent(props: IStepData, config: QuestionableConfig): number {
+  getProgressPercent(props: IStepData): number {
     const stepId = `${props.stepId}`;
     const step   = this.getStepById(stepId);
     if (Helpers.matches(step.type, PAGE_TYPE.LANDING)) {
@@ -231,7 +245,7 @@ export class Questionnaire implements IQuestionnaire {
     const thisStepIdx = answerable.indexOf(stepId) + 1;
     // add 2 to account for the summary and result steps
     let lastStepIdx = lastStep + 2;
-    if (config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       // if in design mode, every step will be iterated
       lastStepIdx = this.flow.length - 1;
     }
@@ -281,7 +295,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param props
    * @returns
    */
-  getSections(props: IStepData, config: IQuestionableConfig): ISection[] {
+  getSections(props: IStepData): ISection[] {
     if (!props) {
       return [];
     }
@@ -296,7 +310,7 @@ export class Questionnaire implements IQuestionnaire {
         s.requirements.length === 0
         || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
     );
-    if (config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       // In design mode, all sections are valid
       sections = [...this.sections];
     }

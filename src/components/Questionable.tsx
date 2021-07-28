@@ -1,15 +1,15 @@
-import { useReducer }                         from 'react';
-import { useWizard }                          from 'use-wizard';
-import { Answer }                             from '../composable/Answer';
-import { GlobalStateProvider, IQuestionable } from '../state/GlobalState';
-import { stepReducer }                        from '../state/stepReducer';
-import { DevPanel }                           from './wizard/DevPanel';
-import { ProgressFactory }                    from './factories/ProgressFactory';
-import { StepFactory }                        from './factories/StepFactory';
-import { CSS_CLASS }                          from '../lib/enums';
+import { useReducer }          from 'react';
+import { useWizard }           from 'use-wizard';
+import { Answer }              from '../composable/Answer';
+import { GlobalStateProvider } from '../state/GlobalState';
+import { stepReducer }         from '../state/stepReducer';
+import { DevPanel }            from './wizard/DevPanel';
+import { ProgressFactory }     from './factories/ProgressFactory';
+import { StepFactory }         from './factories/StepFactory';
+import { CSS_CLASS }           from '../lib/enums';
+import { Questionnaire }       from '../composable/Questionnaire';
 
-export const Questionable = (q: IQuestionable): JSX.Element => {
-  const { questionnaire } = q;
+export const Questionable = (questionnaire: Questionnaire): JSX.Element => {
   if (!questionnaire) {
     throw new Error('questionable is undefined');
   }
