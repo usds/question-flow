@@ -24,11 +24,17 @@ const isValid = (
   const valStr      = `${val}`;
   switch (unit) {
     case DATE_UNIT.DAY:
+      if (valStr.length <= 1 && val === 0) {
+        return true;
+      }
       if (val < 1 || val > 31) {
         return false;
       }
       break;
     case DATE_UNIT.MONTH:
+      if (valStr.length <= 1 && val === 0) {
+        return true;
+      }
       if (val < 1 || val > 12) {
         return false;
       }
