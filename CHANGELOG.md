@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/usds/questionable/compare/v1.2.2...v1.2.3) (2021-07-28)
+
+
+### Bug Fixes
+
+* **styles:** removes hard-coded USWDS padding ([d319902](https://github.com/usds/questionable/commit/d3199028ac4b7c4832eb6f0a3137bc441904b3dd))
+
 ## [1.2.2](https://github.com/usds/questionable/compare/v1.2.1...v1.2.2) (2021-07-28)
 
 
