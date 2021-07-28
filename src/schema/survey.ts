@@ -8,6 +8,14 @@ export const survey = {
       "description": "Defines the known component types for design",
       "type": "string"
     },
+    "DIRECTION": {
+      "description": "Navigation direction for steps by array index (+1 or -1)",
+      "enum": [
+        1,
+        -1
+      ],
+      "type": "number"
+    },
     "IAction": {
       "description": "Represents something the customer can do in response to receiving a result",
       "properties": {
@@ -189,15 +197,15 @@ export const survey = {
           "not": {
           }
         },
+        "onError": {
+          "not": {
+          }
+        },
         "onEvent": {
           "not": {
           }
         },
-        "onPageBackward": {
-          "not": {
-          }
-        },
-        "onPageForward": {
+        "onPage": {
           "not": {
           }
         }
@@ -1318,11 +1326,11 @@ export const survey = {
       ],
       "type": "string"
     },
-    "TNavData": {
+    "TPageData": {
       "description": "Event data structure to be sent with event callbacks",
       "properties": {
         "dir": {
-          "type": "string"
+          "$ref": "#/definitions/DIRECTION"
         },
         "step": {
           "type": "string"

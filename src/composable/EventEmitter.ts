@@ -1,33 +1,32 @@
-import { DIRECTION, log }                               from '../lib';
+import { log, noop } from '../lib';
 import {
-  TEvent, IEvent, TNavData, TAnswerData, TResultData,
+  TEvent,
+  IEvent,
+  TPageData,
+  TAnswerData,
+  TResultData,
+  TError,
 } from '../survey/IEvent';
 
 export class EventEmitter implements IEvent {
-  onAnswer: TEvent | undefined;
+  onAnswer: TEvent = noop;
 
-  onEvent: TEvent | undefined;
+  onEvent: TEvent = noop;
 
-  onPageBackward: TEvent | undefined;
+  onError: TError = noop;
 
-  onPageForward: TEvent | undefined;
+  onPage: TEvent = noop;
 
   constructor(obj: Partial<EventEmitter>) {
     Object.assign(this, obj);
   }
 
-  page(data: TNavData): void {
+  page(data: TPageData): void {
     this.event(data);
     try {
-      if (data.dir === DIRECTION[DIRECTION.BACKWARD]) {
-        if (this.onPageBackward) {
-          this.onPageBackward(data);
-        }
-      } else if (this.onPageForward) {
-        this.onPageForward(data);
-      }
+      this.onPage(data);
     } catch (e) {
-      log({ data, e });
+      this.error(e, data);
     }
   }
 
@@ -38,17 +37,25 @@ export class EventEmitter implements IEvent {
         this.onAnswer(data);
       }
     } catch (e) {
-      log({ data, e });
+      this.error(e, data);
     }
   }
 
-  event(data: TNavData | TAnswerData | TResultData): void {
+  error(e: Error, data: TPageData | TAnswerData | TResultData): void {
+    try {
+      this.onError(e, data);
+    } catch (innerE) {
+      log(data, e, innerE);
+    }
+  }
+
+  event(data: TPageData | TAnswerData | TResultData): void {
     try {
       if (this.onEvent) {
         this.onEvent(data);
       }
     } catch (e) {
-      log({ data, e });
+      this.error(e, data);
     }
   }
 

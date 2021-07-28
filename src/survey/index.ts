@@ -2,6 +2,7 @@ export * from './IAction';
 export * from './IBranch';
 export * from './IButton';
 export * from './IDesignData';
+export * from './IEvent';
 export * from './IForm';
 export * from './IPageData';
 export * from './IPages';

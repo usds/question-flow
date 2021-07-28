@@ -53,10 +53,10 @@ export class QuestionableConfig implements IQuestionableConfig {
   };
 
   #events: EventEmitter = new EventEmitter({
-    onAnswer:       noop,
-    onEvent:        noop,
-    onPageBackward: noop,
-    onPageForward:  noop,
+    onAnswer: noop,
+    onError:  noop,
+    onEvent:  noop,
+    onPage:   noop,
   });
 
   constructor(config: Partial<IQuestionableConfig> = {}) {

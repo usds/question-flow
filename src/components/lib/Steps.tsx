@@ -17,7 +17,7 @@ export abstract class Steps {
     config: QuestionableConfig,
   ): void {
     const step = questionnaire.getNextStep(props, config);
-    const dir  = DIRECTION[DIRECTION.FORWARD];
+    const dir  = DIRECTION.FORWARD;
     config.events.page({ dir, props, step });
     Steps.goToStep(step, props);
   }
@@ -28,7 +28,7 @@ export abstract class Steps {
     config: QuestionableConfig,
   ): void {
     const step = questionnaire.getPreviousStep(props, config);
-    const dir  = DIRECTION[DIRECTION.BACKWARD];
+    const dir  = DIRECTION.BACKWARD;
     config.events.page({ dir, props, step });
     Steps.goToStep(step, props);
   }

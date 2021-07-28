@@ -1,3 +1,4 @@
+import { DIRECTION }     from '../lib/enums';
 import { IQuestionData } from './IQuestionData';
 import { IStepData }     from './IStepData';
 
@@ -5,8 +6,8 @@ import { IStepData }     from './IStepData';
  * Event data structure to be sent with event callbacks
  * @title Event Data Type
  */
-export type TNavData = {
-  dir: string;
+export type TPageData = {
+  dir: DIRECTION;
   /**
    * @hidden
    */
@@ -44,11 +45,19 @@ export type TResultData = {
  * @title Event Type
  * @hidden
  */
-export type TEvent = (data: TNavData | TAnswerData | TResultData) => void;
+export type TEvent = (data: TPageData | TAnswerData | TResultData) => void;
+
+/**
+ * Error function type to be used as a callback
+ *
+ * @title Error Type
+ * @hidden
+ */
+export type TError = (e: Error, data: TPageData | TAnswerData | TResultData) => void;
 
 export interface IEvent {
   onAnswer: TEvent | undefined,
+  onError: TError | undefined,
   onEvent: TEvent | undefined,
-  onPageBackward: TEvent | undefined,
-  onPageForward: TEvent | undefined,
+  onPage: TEvent | undefined,
 }
