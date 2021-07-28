@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/usds/questionable/compare/v1.2.1...v1.2.2) (2021-07-28)
+
+
+### Bug Fixes
+
+* **dob:** allows leading zero in month and day ([b6de1d4](https://github.com/usds/questionable/commit/b6de1d4fc948f2c3f134a3b4dfb9fc3574e4b16f))
+
 ## [1.2.1](https://github.com/usds/questionable/compare/v1.2.0...v1.2.1) (2021-07-28)
 
 
