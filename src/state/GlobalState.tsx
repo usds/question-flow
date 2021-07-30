@@ -50,14 +50,7 @@ const useQuestionnaire = (): Questionnaire => {
   return questionnaire;
 };
 
-const useConfig = (): QuestionableConfig => {
-  const { config } = useGlobalState().state;
-
-  if (!config) {
-    throw new Error('Configuration is not defined');
-  }
-  return config;
-};
+const useConfig = (): QuestionableConfig => useQuestionnaire().config;
 
 export interface IGlobalState {
   config: QuestionableConfig;

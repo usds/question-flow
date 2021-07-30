@@ -448,6 +448,17 @@ export const survey = {
       ],
       "type": "object"
     },
+    "IPageConfig": {
+      "properties": {
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "visible"
+      ],
+      "type": "object"
+    },
     "IPageData": {
       "description": "Data defintion for page step",
       "properties": {
@@ -492,11 +503,47 @@ export const survey = {
         }
       },
       "required": [
-        "landingPage",
         "noResultsPage",
         "resultsPage",
         "summaryPage"
       ],
+      "type": "object"
+    },
+    "IPagesConfig": {
+      "properties": {
+        "landing": {
+          "properties": {
+            "visible": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "noresults": {
+          "properties": {
+            "visible": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "results": {
+          "properties": {
+            "visible": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "summary": {
+          "properties": {
+            "visible": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        }
+      },
       "type": "object"
     },
     "IProgressBarConfig": {
@@ -678,17 +725,6 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IQuestionable": {
-      "properties": {
-        "questionnaire": {
-          "$ref": "#/definitions/Questionnaire"
-        }
-      },
-      "required": [
-        "questionnaire"
-      ],
-      "type": "object"
-    },
     "IQuestionableConfig": {
       "description": "Configuration for customized behavior of Questionable",
       "properties": {
@@ -780,6 +816,45 @@ export const survey = {
           "title": "Navigation",
           "type": "object"
         },
+        "pages": {
+          "description": "Page configuration",
+          "properties": {
+            "landing": {
+              "properties": {
+                "visible": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "noresults": {
+              "properties": {
+                "visible": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "results": {
+              "properties": {
+                "visible": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "summary": {
+              "properties": {
+                "visible": {
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "title": "Pages",
+          "type": "object"
+        },
         "progressBar": {
           "description": "Progress Bar configuration",
           "properties": {
@@ -864,7 +939,8 @@ export const survey = {
       },
       "required": [
         "mode",
-        "nav"
+        "nav",
+        "pages"
       ],
       "type": "object"
     },
@@ -1273,68 +1349,6 @@ export const survey = {
         "multiple_select"
       ],
       "type": "string"
-    },
-    "Questionnaire": {
-      "description": "Utility wrapper for survey state",
-      "properties": {
-        "actions": {
-          "items": {
-            "$ref": "#/definitions/IAction"
-          },
-          "type": "array"
-        },
-        "branches": {
-          "items": {
-            "$ref": "#/definitions/IBranch"
-          },
-          "type": "array"
-        },
-        "config": {
-          "$ref": "#/definitions/IQuestionableConfig"
-        },
-        "flow": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "header": {
-          "type": "string"
-        },
-        "pages": {
-          "$ref": "#/definitions/IPages"
-        },
-        "questions": {
-          "items": {
-            "$ref": "#/definitions/IQuestion"
-          },
-          "type": "array"
-        },
-        "results": {
-          "items": {
-            "$ref": "#/definitions/IResult"
-          },
-          "type": "array"
-        },
-        "sections": {
-          "items": {
-            "$ref": "#/definitions/ISection"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "actions",
-        "branches",
-        "config",
-        "flow",
-        "header",
-        "pages",
-        "questions",
-        "results",
-        "sections"
-      ],
-      "type": "object"
     },
     "TAge": {
       "properties": {

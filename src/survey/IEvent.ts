@@ -53,7 +53,7 @@ export type TEvent = (data: TPageData | TAnswerData | TResultData) => void;
  * @title Error Type
  * @hidden
  */
-export type TError = (e: Error, data: TPageData | TAnswerData | TResultData) => void;
+export type TError = (e: Error, data?: TPageData | TAnswerData | TResultData) => void;
 
 export interface IEvent {
   onAnswer: TEvent | undefined,

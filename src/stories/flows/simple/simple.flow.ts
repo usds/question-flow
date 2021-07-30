@@ -1,5 +1,4 @@
-import { IBranch }       from '../../../survey/IBranch';
-import { Questionnaire } from '../../../composable/Questionnaire';
+import { IBranch } from '../../../survey/IBranch';
 import {
   actions,
   pages,
@@ -9,11 +8,12 @@ import {
 } from './data';
 import { QuestionableConfig } from '../../../composable/Config';
 import { MODE }               from '../../../lib/enums';
+import { IQuestionnaire }     from '../../../survey/IQuestionnaire';
 
 const header              = 'Simple Eligibility Survey';
 const branches: IBranch[] = [];
 
-export const simpleFlow = new Questionnaire({
+export const simpleFlow: IQuestionnaire = {
   actions,
   branches,
   config: new QuestionableConfig({
@@ -38,4 +38,4 @@ export const simpleFlow = new Questionnaire({
   questions,
   results,
   sections,
-});
+};

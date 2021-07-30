@@ -1,4 +1,4 @@
-import { log, noop } from '../lib';
+import { log, noop }  from '../lib';
 import { catchError } from '../lib/error';
 import {
   TEvent,
@@ -44,7 +44,7 @@ export class EventEmitter implements IEvent {
     }
   }
 
-  error(e: Error, data: TPageData | TAnswerData | TResultData): void {
+  error(e: Error, data?: TPageData | TAnswerData | TResultData): void {
     try {
       this.onError(e, data);
     } catch (innerE) {

@@ -9,12 +9,12 @@ import { StepFactory }         from './factories/StepFactory';
 import { CSS_CLASS }           from '../lib/enums';
 import { IQuestionable }       from '../survey/IQuestionable';
 
-export const Questionable = (props: IQuestionable): JSX.Element => {
-  if (!props?.questionnaire) {
+export const Questionable = ({ questionnaire }: IQuestionable): JSX.Element => {
+  if (!questionnaire) {
     throw new Error('questionable is undefined');
   }
-  const { questionnaire } = props;
-  const [step, wizard]    = useWizard(questionnaire.flow);
+
+  const [step, wizard] = useWizard(questionnaire.flow);
 
   // This is only used to store user inputs
   const [form, dispatchForm] = useReducer(stepReducer, new Answer());
