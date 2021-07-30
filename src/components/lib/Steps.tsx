@@ -1,5 +1,4 @@
 import { kebabCase, values }                   from 'lodash';
-import { QuestionableConfig }                  from '../../composable/Config';
 import { Questionnaire }                       from '../../composable/Questionnaire';
 import { DIRECTION, QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
 import { IForm }                               from '../../survey/IForm';

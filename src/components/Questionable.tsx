@@ -7,19 +7,19 @@ import { DevPanel }            from './wizard/DevPanel';
 import { ProgressFactory }     from './factories/ProgressFactory';
 import { StepFactory }         from './factories/StepFactory';
 import { CSS_CLASS }           from '../lib/enums';
-import { Questionnaire }       from '../composable/Questionnaire';
+import { IQuestionable }       from '../survey/IQuestionable';
 
-export const Questionable = (questionnaire: Questionnaire): JSX.Element => {
-  if (!questionnaire) {
+export const Questionable = (props: IQuestionable): JSX.Element => {
+  if (!props?.questionnaire) {
     throw new Error('questionable is undefined');
   }
-
-  const [step, wizard] = useWizard(questionnaire.flow);
+  const { questionnaire } = props;
+  const [step, wizard]    = useWizard(questionnaire.flow);
 
   // This is only used to store user inputs
   const [form, dispatchForm] = useReducer(stepReducer, new Answer());
   return (
-    <GlobalStateProvider value={q}>
+    <GlobalStateProvider value={questionnaire}>
       <div className={CSS_CLASS.BASE}>
         <section className={`section ${CSS_CLASS.PROGRESS_BAR_TOP_SECTION}`}>
           <ProgressFactory {...{

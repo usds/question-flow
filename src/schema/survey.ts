@@ -678,6 +678,17 @@ export const survey = {
       ],
       "type": "object"
     },
+    "IQuestionable": {
+      "properties": {
+        "questionnaire": {
+          "$ref": "#/definitions/Questionnaire"
+        }
+      },
+      "required": [
+        "questionnaire"
+      ],
+      "type": "object"
+    },
     "IQuestionableConfig": {
       "description": "Configuration for customized behavior of Questionable",
       "properties": {
@@ -872,6 +883,9 @@ export const survey = {
           },
           "type": "array"
         },
+        "config": {
+          "$ref": "#/definitions/IQuestionableConfig"
+        },
         "header": {
           "type": "string"
         },
@@ -900,6 +914,7 @@ export const survey = {
       "required": [
         "actions",
         "branches",
+        "config",
         "header",
         "pages",
         "questions",
@@ -1258,6 +1273,68 @@ export const survey = {
         "multiple_select"
       ],
       "type": "string"
+    },
+    "Questionnaire": {
+      "description": "Utility wrapper for survey state",
+      "properties": {
+        "actions": {
+          "items": {
+            "$ref": "#/definitions/IAction"
+          },
+          "type": "array"
+        },
+        "branches": {
+          "items": {
+            "$ref": "#/definitions/IBranch"
+          },
+          "type": "array"
+        },
+        "config": {
+          "$ref": "#/definitions/IQuestionableConfig"
+        },
+        "flow": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "header": {
+          "type": "string"
+        },
+        "pages": {
+          "$ref": "#/definitions/IPages"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/definitions/IQuestion"
+          },
+          "type": "array"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/definitions/IResult"
+          },
+          "type": "array"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/definitions/ISection"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "actions",
+        "branches",
+        "config",
+        "flow",
+        "header",
+        "pages",
+        "questions",
+        "results",
+        "sections"
+      ],
+      "type": "object"
     },
     "TAge": {
       "properties": {

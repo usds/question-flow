@@ -60,7 +60,7 @@ export const PreviousButton = (props: INavBar): JSX.Element => {
   }
 
   const label    = step?.buttons?.prev?.title || config.nav.prev.defaultLabel || 'Previous';
-  const onClick  = () => Steps.goToPrevStep(props, questionnaire, config);
+  const onClick  = () => Steps.goToPrevStep(props, questionnaire);
   const disabled = () => false;
 
   return (
@@ -98,7 +98,7 @@ export const NextButton = (props: INavBar): JSX.Element => {
   }
 
   const label    = step?.buttons?.next?.title || config.nav.next.defaultLabel || 'Previous';
-  const onClick  = () => Steps.goToNextStep(props, questionnaire, config);
+  const onClick  = () => Steps.goToNextStep(props, questionnaire);
   const disabled = () =>
     config.mode === MODE.VIEW && !Steps.isNextEnabled(props);
 

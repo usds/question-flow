@@ -1,7 +1,6 @@
 import { Meta, Story } from '@storybook/react';
 import { Questionable } from '../../../components/Questionable';
-import { QuestionableConfig } from '../../../composable/Config';
-import { IQuestionable } from '../../../state/GlobalState';
+import { IQuestionable } from '../../../survey/IQuestionable';
 import '../../styles';
 import { jsonFlow } from './json.flow';
 
@@ -17,14 +16,5 @@ const Template: Story<IQuestionable> = (args) => <Questionable {...args} />;
 
 export const JSON = Template.bind({});
 JSON.args = {
-  config: new QuestionableConfig({
-    dev: false,
-    steps: {
-      showStepId: false,
-    },
-    progressBar: {
-      bgColor: '#1DC2AE',
-    },
-  }),
   questionnaire: jsonFlow,
 };

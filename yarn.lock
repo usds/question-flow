@@ -5247,10 +5247,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.4.5":
-  version: 16.4.5
-  resolution: "@types/node@npm:16.4.5"
-  checksum: ff88c4de4475eb720adc99b374b242ddf9e43557e513584857a73b4f4155e9c9cfc1379cba60f43a9a7bd4aef91de285b67efc740c4856ae768847847f198d27
+"@types/node@npm:^16.4.7":
+  version: 16.4.7
+  resolution: "@types/node@npm:16.4.7"
+  checksum: a1e80deea93f10225d1ac0825bd5eff3355dbc37084a88b0138921c9c930eb54acebb008d090a332a96d31ff50de69f2f5fc1402571070ea745f023e9f874805
   languageName: node
   linkType: hard
 
@@ -5764,7 +5764,7 @@ __metadata:
     "@types/jest": ^26.0.24
     "@types/lodash": ^4.14.171
     "@types/luxon": ^1.27.1
-    "@types/node": ^16.4.5
+    "@types/node": ^16.4.7
     "@types/react": ^17.0.15
     "@types/react-dom": ^17.0.9
     "@types/react-jsonschema-form": ^1.7.6
@@ -5807,7 +5807,7 @@ __metadata:
     react-docgen-typescript-loader: ^3.7.2
     react-dom: ^17.0.2
     rimraf: ^3.0.2
-    rollup: ^2.55.0
+    rollup: ^2.55.1
     rollup-plugin-copy: ^3.4.0
     rollup-plugin-dts: ^3.0.2
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -18851,9 +18851,9 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.55.0":
-  version: 2.55.0
-  resolution: "rollup@npm:2.55.0"
+"rollup@npm:^2.55.1":
+  version: 2.55.1
+  resolution: "rollup@npm:2.55.1"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -18861,7 +18861,7 @@ resolve@^2.0.0-next.3:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 3407d6807e78f2088c2386a17a03fae71e2df2a56156e8ae33e0316045dca423426efeb87dc046948f2e5864545de33c7036cad2ec0b0d2015158236704502d8
+  checksum: 504f293723b98431cbd57341d6bbfe5388fcbfa7c34046885f81b51329a9316a08641945051857e05623e72b9b1ceb529a6e60275593d2710fe27f353c194962
   languageName: node
   linkType: hard
 
