@@ -3332,9 +3332,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^19.0.2":
-  version: 19.0.2
-  resolution: "@rollup/plugin-commonjs@npm:19.0.2"
+"@rollup/plugin-commonjs@npm:^20.0.0":
+  version: 20.0.0
+  resolution: "@rollup/plugin-commonjs@npm:20.0.0"
   dependencies:
     "@rollup/pluginutils": ^3.1.0
     commondir: ^1.0.1
@@ -3345,7 +3345,7 @@ __metadata:
     resolve: ^1.17.0
   peerDependencies:
     rollup: ^2.38.3
-  checksum: bf60da71b12c1c52fc2ca223272a1b5a4c27e47f707077024338f841b97f5656c352a3c2c11dd6a5fec0d63ae53407b9ceab72b87dda5701ddffdc09bba34513
+  checksum: fefc4b5ab1509ff64e26dfee3eca2f23cea204bf20f3dc76c616d3aa3faf4b1035166287518a64ba07faaaea1621a0af5b94b8f8199371ca67db905562e7e619
   languageName: node
   linkType: hard
 
@@ -5247,10 +5247,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.4.7":
-  version: 16.4.7
-  resolution: "@types/node@npm:16.4.7"
-  checksum: a1e80deea93f10225d1ac0825bd5eff3355dbc37084a88b0138921c9c930eb54acebb008d090a332a96d31ff50de69f2f5fc1402571070ea745f023e9f874805
+"@types/node@npm:^16.4.8":
+  version: 16.4.8
+  resolution: "@types/node@npm:16.4.8"
+  checksum: 1d4a421b95ac4d7671de17c56969bf95943c252c410dbe33c380e97a8afdfa7c2e5dcda0063a5c24fcc5538f40ef33c2582ae37f004c3c666da3758d8c8eecfc
   languageName: node
   linkType: hard
 
@@ -5741,7 +5741,7 @@ __metadata:
     "@ramonak/react-progress-bar": ^3.2.1
     "@rjsf/core": ^3.0.0
     "@rjsf/semantic-ui": ^3.0.0
-    "@rollup/plugin-commonjs": ^19.0.2
+    "@rollup/plugin-commonjs": ^20.0.0
     "@rollup/plugin-node-resolve": ^13.0.4
     "@semantic-release/changelog": ^5.0.1
     "@semantic-release/commit-analyzer": ^8.0.1
@@ -5764,7 +5764,7 @@ __metadata:
     "@types/jest": ^26.0.24
     "@types/lodash": ^4.14.171
     "@types/luxon": ^1.27.1
-    "@types/node": ^16.4.7
+    "@types/node": ^16.4.8
     "@types/react": ^17.0.15
     "@types/react-dom": ^17.0.9
     "@types/react-jsonschema-form": ^1.7.6
@@ -5774,7 +5774,7 @@ __metadata:
     babel-loader: ^8.2.2
     babel-preset-react-app: ^10.0.0
     class-validator: ^0.13.1
-    eslint: ^7.31.0
+    eslint: ^7.32.0
     eslint-config-airbnb-base: ^14.2.1
     eslint-config-prettier: ^8.3.0
     eslint-config-react-app: ^6.0.0
@@ -10244,9 +10244,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.31.0":
-  version: 7.31.0
-  resolution: "eslint@npm:7.31.0"
+"eslint@npm:^7.32.0":
+  version: 7.32.0
+  resolution: "eslint@npm:7.32.0"
   dependencies:
     "@babel/code-frame": 7.12.11
     "@eslint/eslintrc": ^0.4.3
@@ -10290,7 +10290,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: fd73d07ce0b73e5ea950b295a6eaf8d45914b4e56cba4ef49e55a36dc7e965a4865f63f618c0a096a01d089752d9e44180b80ba8657039b8e631dd40e0af1663
+  checksum: cc85af9985a3a11085c011f3d27abe8111006d34cc274291b3c4d7bea51a4e2ff6135780249becd919ba7f6d6d1ecc38a6b73dacb6a7be08d38453b344dc8d37
   languageName: node
   linkType: hard
 

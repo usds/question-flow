@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { Questionnaire }      from '../../../composable';
 import { QuestionableConfig } from '../../../composable/Config';
 import { EventEmitter }       from '../../../composable/EventEmitter';
 import { IQuestionnaire }     from '../../../survey/IQuestionnaire';

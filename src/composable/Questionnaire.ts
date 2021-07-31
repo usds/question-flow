@@ -40,15 +40,7 @@ export class Questionnaire implements IQuestionnaire {
 
   readonly branches!: IBranch[];
 
-  #config: QuestionableConfig = new QuestionableConfig();
-
-  get config(): QuestionableConfig {
-    return this.#config;
-  }
-
-  private set config(config: QuestionableConfig) {
-    merge(this.#config, config);
-  }
+  readonly config!: QuestionableConfig;
 
   readonly flow: string[];
 
@@ -501,7 +493,7 @@ export class Questionnaire implements IQuestionnaire {
         // In the case of the landing page, it will always go first
         this.steps.unshift(page.data);
       } else {
-        this.steps.splice(idx - 1, 0, page.data);
+        this.steps.splice(idx + 1, 0, page.data);
       }
     }
     if (this.steps.filter((q) => q.type === type).length !== 1) {
@@ -515,8 +507,8 @@ export class Questionnaire implements IQuestionnaire {
   private setPageDefaults(): void {
     this.setPage(0, PAGE_TYPE.LANDING);
     this.setPage(this.steps.length - 1, PAGE_TYPE.SUMMARY);
-    this.setPage(this.steps.length - 2, PAGE_TYPE.RESULTS);
-    this.setPage(this.steps.length - 3, PAGE_TYPE.NO_RESULTS);
+    this.setPage(this.steps.length - 1, PAGE_TYPE.RESULTS);
+    this.setPage(this.steps.length - 1, PAGE_TYPE.NO_RESULTS);
   }
 
   /**

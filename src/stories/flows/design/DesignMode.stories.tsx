@@ -1,8 +1,9 @@
 import { Meta, Story } from '@storybook/react';
-import { Questionable } from '../../components/Questionable';
-import { IQuestionable } from '../../survey/IQuestionable';
-import { simpleFlow } from '../flows/simple/simple.flow';
-import '../styles';
+import { Questionable } from '../../../components/Questionable';
+import { IQuestionable } from '../../../survey/IQuestionable';
+import { designFlow } from './design.flow';
+import '../../styles';
+import { Questionnaire } from '../../../composable/Questionnaire';
 
 export default {
   argTypes: {
@@ -16,5 +17,5 @@ const Template: Story<IQuestionable> = (args) => <Questionable {...args}></Quest
 
 export const Design = Template.bind({});
 Design.args = {
-  questionnaire: simpleFlow,
+  questionnaire: new Questionnaire(designFlow),
 };
