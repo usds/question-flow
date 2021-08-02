@@ -23,7 +23,7 @@ const getAnswers = (props: IPageData, onClick: (question: IQuestion) => void): R
           >
             {question.title}
           </Button>
-          :&nbsp;&nbsp;
+          {'  '}
           <span className="text-bold">{question.answer}</span>
         </span>
       </li>
