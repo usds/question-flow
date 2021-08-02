@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/usds/questionable/compare/v1.2.3...v1.3.0) (2021-08-02)
+
+
+### Features
+
+* **config:** allows pages to become optional ([#112](https://github.com/usds/questionable/issues/112)) ([aa182e1](https://github.com/usds/questionable/commit/aa182e17677c4f84aadcfd09096a996f226db26b))
+
 ## [1.2.3](https://github.com/usds/questionable/compare/v1.2.2...v1.2.3) (2021-07-28)
 
 
