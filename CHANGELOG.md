@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/usds/questionable/compare/v1.3.0...v1.3.1) (2021-08-02)
+
+
+### Bug Fixes
+
+* **style:** removes colon from summary page answers ([7a048b8](https://github.com/usds/questionable/commit/7a048b8858e6747e5c1ca65e51aa96988177cb01))
+
 # [1.3.0](https://github.com/usds/questionable/compare/v1.2.3...v1.3.0) (2021-08-02)
 
 
