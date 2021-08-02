@@ -1,4 +1,5 @@
-import { log, noop } from '../lib';
+import { log, noop }  from '../lib';
+import { catchError } from '../lib/error';
 import {
   TEvent,
   IEvent,
@@ -26,7 +27,8 @@ export class EventEmitter implements IEvent {
     try {
       this.onPage(data);
     } catch (e) {
-      this.error(e, data);
+      const error = catchError(e);
+      this.error(error, data);
     }
   }
 
@@ -37,11 +39,12 @@ export class EventEmitter implements IEvent {
         this.onAnswer(data);
       }
     } catch (e) {
-      this.error(e, data);
+      const error = catchError(e);
+      this.error(error, data);
     }
   }
 
-  error(e: Error, data: TPageData | TAnswerData | TResultData): void {
+  error(e: Error, data?: TPageData | TAnswerData | TResultData): void {
     try {
       this.onError(e, data);
     } catch (innerE) {
@@ -55,7 +58,8 @@ export class EventEmitter implements IEvent {
         this.onEvent(data);
       }
     } catch (e) {
-      this.error(e, data);
+      const error = catchError(e);
+      this.error(error, data);
     }
   }
 

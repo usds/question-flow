@@ -8,19 +8,14 @@ import React, {
 import { QuestionableConfig } from '../composable/Config';
 import { Questionnaire }      from '../composable/Questionnaire';
 
-export interface IQuestionable {
-  config?: QuestionableConfig;
-  questionnaire?: Questionnaire;
-}
-
 const GlobalStateContext = createContext({
-  setState: {} as Dispatch<SetStateAction<Partial<IQuestionable>>>,
-  state:    {} as Partial<IQuestionable>,
+  setState: {} as Dispatch<SetStateAction<Questionnaire>>,
+  state:    {} as Questionnaire,
 });
 
 type TGlobalStateContext = {
-  setState: React.Dispatch<React.SetStateAction<Partial<IQuestionable>>>;
-  state: Partial<IQuestionable>;
+  setState: React.Dispatch<React.SetStateAction<Questionnaire>>;
+  state: Questionnaire;
 };
 
 const useGlobalState = (): TGlobalStateContext => {
@@ -33,10 +28,10 @@ const useGlobalState = (): TGlobalStateContext => {
 
 export const GlobalStateProvider = ({
   children,
-  value = {} as IQuestionable,
+  value = {} as Questionnaire,
 }: {
   children: React.ReactNode;
-  value?: Partial<IQuestionable>;
+  value?: Questionnaire;
 }): JSX.Element => {
   const [state, setState] = useState(value);
   return (
@@ -47,22 +42,15 @@ export const GlobalStateProvider = ({
 };
 
 const useQuestionnaire = (): Questionnaire => {
-  const { questionnaire } = useGlobalState().state;
+  const questionnaire = useGlobalState().state;
 
   if (!questionnaire) {
-    throw new Error('useQuestionnaire has no data');
+    throw new Error('Questionnaire is not defined');
   }
   return questionnaire;
 };
 
-const useConfig = (): QuestionableConfig => {
-  const { config } = useGlobalState().state;
-
-  if (!config) {
-    throw new Error('useConfig has no data');
-  }
-  return config;
-};
+const useConfig = (): QuestionableConfig => useQuestionnaire().config;
 
 export interface IGlobalState {
   config: QuestionableConfig;

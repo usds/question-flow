@@ -9,7 +9,7 @@ export interface IPages {
    *
    * @title Landing Page
    */
-  readonly landingPage: IPage;
+  readonly landingPage?: IPage;
   /**
    * Last step of the survey if there are 0 results
    *

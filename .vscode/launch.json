@@ -6,12 +6,13 @@
   "configurations": [
     {
       // Requires the extension Debugger for Chrome: https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
-      "type": "edge",
+      "type": "chrome",
       "request": "launch",
       "name": "Storybook Debug",
       "url": "http://localhost:9009",
       "sourceMaps": true,
       "webRoot": "${workspaceFolder}",
+      "runtimeExecutable": "dev",
       "sourceMapPathOverrides": {
         "webpack:///*": "${webRoot}/*",
         "webpack:///./*": "${webRoot}/*",

@@ -1,6 +1,5 @@
-/* eslint-disable max-len */
-/*
-  eslint-disable import/no-extraneous-dependencies
+/* eslint-disable max-len, 
+    import/no-extraneous-dependencies
 */
 import { Meta, Story } from '@storybook/react';
 import { QUESTION_TYPE } from '../../lib';

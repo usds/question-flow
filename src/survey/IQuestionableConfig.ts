@@ -41,6 +41,12 @@ export interface IQuestionableConfig {
    */
   nav: Partial<INavigationConfig>;
   /**
+   * Page configuration
+   *
+   * @title Pages
+   */
+  pages: Partial<IPagesConfig>,
+  /**
    * Progress Bar configuration
    *
    * @title Progress Bar
@@ -191,4 +197,15 @@ export interface INavigationConfig {
    * Previous/Go back button
    */
   prev: Partial<IButtonConfig>;
+}
+
+export interface IPageConfig {
+  visible: boolean,
+}
+
+export interface IPagesConfig {
+  landing?: Partial<IPageConfig>,
+  noresults?: Partial<IPageConfig>,
+  results?: Partial<IPageConfig>,
+  summary?: Partial<IPageConfig>
 }

@@ -27,7 +27,7 @@ export const StepIndicator = (props: IStepData): JSX.Element => {
     return noel();
   }
 
-  const sections = questionnaire.getSections(props, config);
+  const sections = questionnaire.getSections(props);
   if (sections.length === 0) {
     return noel();
   }

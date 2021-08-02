@@ -2,6 +2,7 @@ import { isString, merge }    from 'lodash';
 import { noop, isEnum, MODE } from '../lib';
 import {
   INavigationConfig,
+  IPagesConfig,
   IProgressBarConfig,
   IQuestionableConfig,
   IQuestionConfig,
@@ -33,6 +34,21 @@ export class QuestionableConfig implements IQuestionableConfig {
       visible:       true,
     },
   };
+
+  #pages: IPagesConfig = {
+    landing: {
+      visible: true,
+    },
+    noresults: {
+      visible: true,
+    },
+    results: {
+      visible: true,
+    },
+    summary: {
+      visible: true,
+    },
+  }
 
   #progressBar: IProgressBarConfig = {
     baseBgColor: '#f0f0f0',
@@ -100,6 +116,14 @@ export class QuestionableConfig implements IQuestionableConfig {
 
   set nav(val: Partial<INavigationConfig>) {
     merge(this.#nav, val);
+  }
+
+  get pages(): IPagesConfig {
+    return this.#pages;
+  }
+
+  set pages(val: Partial<IPagesConfig>) {
+    merge(this.#pages, val);
   }
 
   get progressBar(): IProgressBarConfig {

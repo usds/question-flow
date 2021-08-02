@@ -1,6 +1,5 @@
-import { ArrayUnique }   from 'class-validator';
-import { groupBy }       from 'lodash';
-import { DEFAULT_PAGES } from '../lib/defaultPages';
+import { ArrayUnique }    from 'class-validator';
+import { groupBy, merge } from 'lodash';
 import {
   ACTION,
   DIRECTION,
@@ -11,15 +10,15 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import { Helpers }             from '../lib/helpers';
-import { TAge, TAgeCalc }      from '../lib/types';
-import { IAction }             from '../survey/IAction';
-import { IBranch }             from '../survey/IBranch';
-import { IForm }               from '../survey/IForm';
-import { IPages }              from '../survey/IPages';
-import { IQuestionableConfig } from '../survey/IQuestionableConfig';
-import { IQuestionnaire }      from '../survey/IQuestionnaire';
-import { IResult }             from '../survey/IResult';
+import { Helpers }        from '../lib/helpers';
+import { TAge, TAgeCalc } from '../lib/types';
+import { IAction }        from '../survey/IAction';
+import { IBranch }        from '../survey/IBranch';
+import { IForm }          from '../survey/IForm';
+import { IPages }         from '../survey/IPages';
+import { IPageConfig }    from '../survey/IQuestionableConfig';
+import { IQuestionnaire } from '../survey/IQuestionnaire';
+import { IResult }        from '../survey/IResult';
 import {
   IPage,
   IQuestion,
@@ -35,29 +34,32 @@ import { QuestionableConfig } from './Config';
  * Utility wrapper for survey state
  */
 export class Questionnaire implements IQuestionnaire {
-  @ArrayUnique((question: IQuestion) => question.id)
-  readonly questions!: IQuestion[];
+  @ArrayUnique((action: IAction) => action.id)
+  readonly actions!: IAction[];
+
+  readonly branches!: IBranch[];
+
+  readonly config!: QuestionableConfig;
+
+  readonly flow: string[];
 
   readonly header!: string;
 
   @ArrayUnique((result: IResult) => result.label)
   readonly results!: IResult[];
 
-  readonly flow: string[];
+  readonly pages!: IPages;
+
+  @ArrayUnique((question: IQuestion) => question.id)
+  readonly questions!: IQuestion[];
 
   @ArrayUnique((section: ISection) => section.id)
   readonly sections!: ISection[];
 
-  readonly actions!: IAction[];
-
-  readonly pages: IPages = DEFAULT_PAGES;
-
-  readonly branches: IBranch[];
-
   private readonly steps: IStep[];
 
-  constructor(data: IQuestionnaire) {
-    Object.assign(this, data);
+  constructor(data: Partial<IQuestionnaire | Questionnaire>) {
+    merge(this, data);
 
     // Create a new collection for our flow logic
     this.steps = this.questions.map((q, i) => ({
@@ -69,8 +71,6 @@ export class Questionnaire implements IQuestionnaire {
 
     // Wizard flow is defined as linear sequence of unique ids
     this.flow = this.steps.map((q) => q.id);
-
-    this.branches = data.branches;
   }
 
   /**
@@ -81,7 +81,7 @@ export class Questionnaire implements IQuestionnaire {
   getStepById(id: string): IStep {
     const ret = this.steps.find((q) => q.id === id);
     if (!ret) {
-      throw new Error(`Step id: ${id} not found in survery`);
+      this.throw(`Step id: ${id} not found in survery`);
     }
     return ret;
   }
@@ -94,7 +94,7 @@ export class Questionnaire implements IQuestionnaire {
   getPageById(id: string): IPage {
     const ret = this.getStepById(id);
     if (!isEnum(PAGE_TYPE, ret.type)) {
-      throw new Error(`Step id: ${id} is not a page`);
+      this.throw(`Step id: ${id} is not a page`);
     }
     return ret as IPage;
   }
@@ -106,7 +106,7 @@ export class Questionnaire implements IQuestionnaire {
    */
   getQuestion(q: Partial<IQuestion>): IQuestion {
     if (!q.id) {
-      throw new Error(`Question ${q} is not defined`);
+      this.throw(`Question ${q} is not defined`);
     }
     return this.getQuestionById(q.id);
   }
@@ -119,7 +119,7 @@ export class Questionnaire implements IQuestionnaire {
   getQuestionById(id: string): IQuestion {
     const ret = this.getStepById(id);
     if (!isEnum(QUESTION_TYPE, ret.type)) {
-      throw new Error(`Step id: ${id} not a question`);
+      this.throw(`Step id: ${id} not a question`);
     }
     return ret as IQuestion;
   }
@@ -131,7 +131,6 @@ export class Questionnaire implements IQuestionnaire {
     thisStep: string,
     form: IForm,
     direction: DIRECTION,
-    config = new QuestionableConfig(),
   ): string {
     const nextStep =      this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
@@ -141,7 +140,7 @@ export class Questionnaire implements IQuestionnaire {
       return thisStep;
     }
 
-    if (config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       return nextStep;
     }
     // Special handling for results
@@ -183,16 +182,16 @@ export class Questionnaire implements IQuestionnaire {
     return thisStep;
   }
 
-  getNextStep(props: IStepData, config = new QuestionableConfig()): string {
+  getNextStep(props: IStepData): string {
     const thisStep = props.stepId as string;
     const dir      = DIRECTION.FORWARD;
-    return this.getStep(thisStep, props.form, dir, config);
+    return this.getStep(thisStep, props.form, dir);
   }
 
-  getPreviousStep(props: IStepData, config = new QuestionableConfig()): string {
+  getPreviousStep(props: IStepData): string {
     const thisStep = props.stepId as string;
     const dir      = DIRECTION.BACKWARD;
-    return this.getStep(thisStep, props.form, dir, config);
+    return this.getStep(thisStep, props.form, dir);
   }
 
   /**
@@ -200,7 +199,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param props
    * @returns
    */
-  getProgressPercent(props: IStepData, config: QuestionableConfig): number {
+  getProgressPercent(props: IStepData): number {
     const stepId = `${props.stepId}`;
     const step   = this.getStepById(stepId);
     if (Helpers.matches(step.type, PAGE_TYPE.LANDING)) {
@@ -231,7 +230,7 @@ export class Questionnaire implements IQuestionnaire {
     const thisStepIdx = answerable.indexOf(stepId) + 1;
     // add 2 to account for the summary and result steps
     let lastStepIdx = lastStep + 2;
-    if (config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       // if in design mode, every step will be iterated
       lastStepIdx = this.flow.length - 1;
     }
@@ -281,8 +280,8 @@ export class Questionnaire implements IQuestionnaire {
    * @param props
    * @returns
    */
-  getSections(props: IStepData, config: IQuestionableConfig): ISection[] {
-    if (!props) {
+  getSections(props: IStepData): ISection[] {
+    if (!props || !this.sections || this.sections.length === 0) {
       return [];
     }
 
@@ -296,7 +295,7 @@ export class Questionnaire implements IQuestionnaire {
         s.requirements.length === 0
         || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
     );
-    if (config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       // In design mode, all sections are valid
       sections = [...this.sections];
     }
@@ -345,7 +344,7 @@ export class Questionnaire implements IQuestionnaire {
   getActionByType(type: ACTION): IAction {
     const action = this.actions.find((a) => a.type === type);
     if (!action) {
-      throw new Error(`No matching action found for ${type}`);
+      this.throw(`No matching action found for ${type}`);
     }
     return action;
   }
@@ -363,13 +362,23 @@ export class Questionnaire implements IQuestionnaire {
     if (actions.length === 1) {
       match = this.actions.find((a) => a.id === actions[0]);
       if (!match) {
-        throw new Error(`Action id ${actions[0]} could not be found.`);
+        this.throw(`Action id ${actions[0]} could not be found.`);
       }
     }
     if (!match) {
-      throw new Error('Could not find a Call to Action for these results.');
+      this.throw('Could not find a Call to Action for these results.');
     }
     return match;
+  }
+
+  /**
+   * Internal wrapper to create error, log, and throw
+   * @param e Error as string
+   */
+  private throw(e: string): never {
+    const error = new Error(e);
+    this.config.events.error(error);
+    throw error;
   }
 
   /**
@@ -377,13 +386,13 @@ export class Questionnaire implements IQuestionnaire {
    */
   private validateInput() {
     if (this.questions?.length <= 0) {
-      throw new Error('No questions have been defined.');
+      this.throw('No questions have been defined.');
     }
     if (this.header?.length <= 0) {
-      throw new Error('No header has been defined.');
+      this.throw('No header has been defined.');
     }
     if (this.results?.length <= 0) {
-      throw new Error('No results have been defined.');
+      this.throw('No results have been defined.');
     }
   }
 
@@ -422,48 +431,83 @@ export class Questionnaire implements IQuestionnaire {
   }
 
   /**
+   * Gets the data and configuration for a page type
+   * @param type Page Type
+   * @returns
+   */
+  private getPageSet = (type: PAGE_TYPE): {
+    config?: Partial<IPageConfig>,
+    data?: IPage,
+  } => {
+    switch (type) {
+      case PAGE_TYPE.LANDING:
+        return ({
+          config: this.config.pages.landing,
+          data:   this.pages.landingPage,
+        });
+      case PAGE_TYPE.NO_RESULTS:
+        return ({
+          config: this.config.pages.noresults,
+          data:   this.pages.noResultsPage,
+        });
+      case PAGE_TYPE.RESULTS:
+        return ({
+          config: this.config.pages.results,
+          data:   this.pages.resultsPage,
+        });
+      case PAGE_TYPE.SUMMARY:
+        return ({
+          config: this.config.pages.summary,
+          data:   this.pages.summaryPage,
+        });
+      default:
+        return this.throw(`No data for page type ${type}`);
+    }
+  }
+
+  /**
+   * If configured, sets a default page if required for the page type
+   * @param idx index of the page in `this.steps`
+   * @param type LANDING, RESULTS, etc
+   */
+  private setPage(idx: number, type: PAGE_TYPE): void {
+    const error = 'step is not correctly defined or defined more than once';
+
+    const page = this.getPageSet(type);
+    // visible is truthy unless explicitly set to false
+    if (!page.data || page?.config?.visible === false) {
+      if (this.steps.filter((q) => q.type === type).length > 0) {
+        // if the page has been assigned to steps, remove it
+        const doomed = this.steps.find((q) => q.type === type);
+        if (doomed) {
+          const doomIdx = this.steps.indexOf(doomed);
+          this.steps.splice(doomIdx, 1);
+        }
+      }
+      return;
+    }
+    // Ensure the wizard has this page at the specified location
+    if (this.steps[idx].type !== type) {
+      if (idx === 0) {
+        // In the case of the landing page, it will always go first
+        this.steps.unshift(page.data);
+      } else {
+        this.steps.splice(idx + 1, 0, page.data);
+      }
+    }
+    if (this.steps.filter((q) => q.type === type).length !== 1) {
+      this.throw(`${type} ${error}.`);
+    }
+  }
+
+  /**
    * Sets step defaults for landing, summary and results if none are defined.
    */
   private setPageDefaults(): void {
-    // NOTE: the following default assignment logic is not yet factored out.
-    // This could be abstracted if repitions of this pattern emerge.
-    const error = 'step is not correctly defined or defined more than once';
-
-    // Ensure the wizard has a landing step at the beginning
-    if (this.steps[0].type !== PAGE_TYPE.LANDING) {
-      this.steps.unshift(this.pages.landingPage);
-    }
-    if (this.steps.filter((q) => q.type === PAGE_TYPE.LANDING).length !== 1) {
-      throw new Error(`${PAGE_TYPE.LANDING} ${error}.`);
-    }
-
-    // Ensure the wizard has a no results step at the end
-    if (this.steps[this.steps.length - 1].type !== PAGE_TYPE.NO_RESULTS) {
-      // No results is last
-      this.steps.push(this.pages.noResultsPage);
-    }
-    if (
-      this.steps.filter((q) => q.type === PAGE_TYPE.NO_RESULTS).length !== 1
-    ) {
-      throw new Error(`${PAGE_TYPE.NO_RESULTS} ${error}.`);
-    }
-
-    // Ensure the wizard has a result step before the no results step
-    if (this.steps[this.steps.length - 2].type !== PAGE_TYPE.RESULTS) {
-      this.steps.splice(this.steps.length - 1, 0, this.pages.resultsPage);
-    }
-    if (this.steps.filter((q) => q.type === PAGE_TYPE.RESULTS).length !== 1) {
-      throw new Error(`${PAGE_TYPE.RESULTS} ${error}.`);
-    }
-
-    // Ensure the wizard has a summary step before results
-    if (this.steps[this.steps.length - 3].type !== PAGE_TYPE.SUMMARY) {
-      // Create wizard's summary step as the default step
-      this.steps.splice(this.steps.length - 2, 0, this.pages.summaryPage);
-    }
-    if (this.steps.filter((q) => q.type === PAGE_TYPE.SUMMARY).length !== 1) {
-      throw new Error(`${PAGE_TYPE.SUMMARY} ${error}.`);
-    }
+    this.setPage(0, PAGE_TYPE.LANDING);
+    this.setPage(this.steps.length - 1, PAGE_TYPE.SUMMARY);
+    this.setPage(this.steps.length - 1, PAGE_TYPE.RESULTS);
+    this.setPage(this.steps.length - 1, PAGE_TYPE.NO_RESULTS);
   }
 
   /**

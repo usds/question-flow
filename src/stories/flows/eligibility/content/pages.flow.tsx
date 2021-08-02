@@ -2,17 +2,6 @@
 import { PAGE_TYPE } from '../../../../lib';
 
 export const pageContent = {
-  landingPage: {
-    body:    "To receive benefits, you have to meet certain requirements. We'll guide you through a series of questions to determine if you may be eligible.",
-    buttons: {
-      next: {
-        id:    'pb1',
-        title: 'Get Started',
-      },
-    },
-    id:    PAGE_TYPE.LANDING,
-    title: 'Check eligibility for benefits',
-  },
   noResultsPage: {
     body:     'If you want to apply anyway, review the process and start an application.',
     id:       PAGE_TYPE.NO_RESULTS,

@@ -4,11 +4,6 @@ import { PAGE_TYPE } from '../../../../lib';
 import { IPages }    from '../../../../survey';
 
 const pageLogic: IPages = {
-  landingPage: {
-    id:      PAGE_TYPE.LANDING,
-    section: { id: PAGE_TYPE.LANDING },
-    type:    PAGE_TYPE.LANDING,
-  },
   noResultsPage: {
     id:      PAGE_TYPE.NO_RESULTS,
     section: { id: PAGE_TYPE.RESULTS },
