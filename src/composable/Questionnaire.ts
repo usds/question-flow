@@ -1,6 +1,5 @@
 import { ArrayUnique }    from 'class-validator';
 import { groupBy, merge } from 'lodash';
-import { DEFAULT_PAGES }  from '../lib/defaultPages';
 import {
   ACTION,
   DIRECTION,
@@ -49,7 +48,7 @@ export class Questionnaire implements IQuestionnaire {
   @ArrayUnique((result: IResult) => result.label)
   readonly results!: IResult[];
 
-  readonly pages: IPages = DEFAULT_PAGES;
+  readonly pages!: IPages;
 
   @ArrayUnique((question: IQuestion) => question.id)
   readonly questions!: IQuestion[];
@@ -476,7 +475,7 @@ export class Questionnaire implements IQuestionnaire {
 
     const page = this.getPageSet(type);
     // visible is truthy unless explicitly set to false
-    if (page?.config?.visible === false) {
+    if (!page.data || page?.config?.visible === false) {
       if (this.steps.filter((q) => q.type === type).length > 0) {
         // if the page has been assigned to steps, remove it
         const doomed = this.steps.find((q) => q.type === type);
@@ -488,7 +487,7 @@ export class Questionnaire implements IQuestionnaire {
       return;
     }
     // Ensure the wizard has this page at the specified location
-    if (this.steps[idx].type !== type && page.data) {
+    if (this.steps[idx].type !== type) {
       if (idx === 0) {
         // In the case of the landing page, it will always go first
         this.steps.unshift(page.data);
