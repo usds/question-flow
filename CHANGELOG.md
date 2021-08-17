@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/usds/questionable/compare/v1.3.1...v1.3.2) (2021-08-17)
+
+
+### Bug Fixes
+
+* **nav:** allows button visibility to be configured on a per-page basis ([69cb70f](https://github.com/usds/questionable/commit/69cb70fcbd179d0855a31f9d79f15ee91198ec41))
+
 ## [1.3.1](https://github.com/usds/questionable/compare/v1.3.0...v1.3.1) (2021-08-02)
 
 
