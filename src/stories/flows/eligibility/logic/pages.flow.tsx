@@ -15,6 +15,12 @@ const pageLogic: IPages = {
     type:    PAGE_TYPE.RESULTS,
   },
   summaryPage: {
+    buttons: {
+      prev: {
+        id:      's_prev',
+        visible: false,
+      },
+    },
     id:      PAGE_TYPE.SUMMARY,
     section: { id: 'results' },
     type:    PAGE_TYPE.SUMMARY,

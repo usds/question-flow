@@ -41,11 +41,16 @@ interface INavBar extends IStepData {
 export const PreviousButton = (props: INavBar): JSX.Element => {
   const { questionnaire, config } = useGlobal();
 
-  if (!config.nav.prev.visible) {
+  if (config.nav.prev.visible === false) {
     return noel();
   }
 
-  const { step }       = props;
+  const { step } = props;
+
+  if (step?.buttons?.prev?.visible === false) {
+    return noel();
+  }
+
   const layoutMismatch = props.verticalPos !== config.nav.prev.verticalPos;
   const surveyStart    = props.stepId === STEP_TYPE.LANDING
     || props.stepId === questionnaire.flow[1];
@@ -84,7 +89,12 @@ export const NextButton = (props: INavBar): JSX.Element => {
     return noel();
   }
 
-  const { step }       = props;
+  const { step } = props;
+
+  if (step?.buttons?.next?.visible === false) {
+    return noel();
+  }
+
   const layoutMismatch = props.verticalPos !== config.nav.next.verticalPos;
   const surveyEnd      = props.stepId === STEP_TYPE.RESULTS
     || props.stepId === STEP_TYPE.NO_RESULTS;

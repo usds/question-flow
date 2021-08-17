@@ -30,7 +30,7 @@ export const buildEligibility = (json: any = {}): IQuestionnaire => {
     events: new EventEmitter({ onEvent: console.log }),
     nav:    {
       prev: {
-        visible: false,
+        visible: true,
       },
     },
     pages: {

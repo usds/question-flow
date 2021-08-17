@@ -108,6 +108,11 @@ export const survey = {
           "$ref": "#/definitions/TVerticalPosition",
           "description": "Vertical orientation (top or bottom)",
           "title": "Vertical Position"
+        },
+        "visible": {
+          "description": "Visibility status of the button (show/hide)",
+          "title": "Visible",
+          "type": "boolean"
         }
       },
       "required": [

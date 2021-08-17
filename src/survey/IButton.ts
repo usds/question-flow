@@ -40,4 +40,10 @@ export interface IButton extends IRef {
    * @title Vertical Position
    */
   verticalPos?: TVerticalPosition;
+  /**
+   * Visibility status of the button (show/hide)
+   *
+   * @title Visible
+   */
+  visible?: boolean;
 }
