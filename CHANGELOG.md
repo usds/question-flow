@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/usds/questionable/compare/v1.3.2...v1.3.3) (2021-08-18)
+
+
+### Bug Fixes
+
+* **config:** corrects previous button logic without landing page ([b1418d6](https://github.com/usds/questionable/commit/b1418d6970e82ba864d5ffd3e1dcc91a915a3306))
+
 ## [1.3.2](https://github.com/usds/questionable/compare/v1.3.1...v1.3.2) (2021-08-17)
 
 
