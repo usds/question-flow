@@ -52,8 +52,9 @@ export const PreviousButton = (props: INavBar): JSX.Element => {
   }
 
   const layoutMismatch = props.verticalPos !== config.nav.prev.verticalPos;
-  const surveyStart    = props.stepId === STEP_TYPE.LANDING
-    || props.stepId === questionnaire.flow[1];
+  const surveyStart    = (props.stepId === STEP_TYPE.LANDING
+    && questionnaire.flow[0] === STEP_TYPE.LANDING)
+    || props.stepId === questionnaire.flow[0];
   const surveyEnd      = props.stepId === STEP_TYPE.RESULTS
     || props.stepId === STEP_TYPE.NO_RESULTS;
   const notEditMode    = config.mode !== MODE.EDIT
