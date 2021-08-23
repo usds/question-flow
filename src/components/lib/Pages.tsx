@@ -1,10 +1,12 @@
 import { ReactNode }    from 'react';
+import { kebabCase }    from 'lodash';
 import { TResultData }  from '../../survey/IEvent';
 import { IGlobalState } from '../../state/GlobalState';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';
 import { Div }          from '../factories/NodeFactory';
 import { CSS_CLASS }    from '../../lib/enums';
+import { groupBy }      from '../../lib/array';
 
 /**
  * Static utility methods for page components
@@ -59,25 +61,34 @@ export abstract class Pages {
     const data: TResultData         = {
       props,
       results: questionnaire.getResults(props.form).map((result) => ({
-        id:     result.id,
-        label:  result.label,
-        reason: Pages.getReason(props, result, global),
-        title:  result.title,
+        category: result.category,
+        id:       result.id,
+        label:    result.label,
+        reason:   Pages.getReason(props, result, global),
+        title:    result.title,
       })),
       step: 'results',
     };
     config.events.results(data);
-    return data.results.map((result) => (
-      <li key={`${props.stepId}_${result.id}`} className={CSS_CLASS.SUMMARY_QA_LIST}>
-        <span>
-          {result.label}{'  '}
-          <b>{result.title}</b>
-        </span>
-        <Div
-          className="text-light"
-          node={result.reason}
-        />
-      </li>
-    ));
+    const categories = groupBy(data.results, 'category');
+    return Object.keys(categories).map((key) => {
+      const cat   = categories[key];
+      const group = cat.map((result) => (
+        <li key={`${props.stepId}_${result.id}`} className={CSS_CLASS.RESULTS_BENEFITS}>
+          <span>
+            {result.label}{'  '}
+            <b>{result.title}</b>
+          </span>
+          <Div
+            className="text-light"
+            node={result.reason}
+          />
+        </li>
+      ));
+      return (<li key={kebabCase(key)} className={CSS_CLASS.RESULTS_CATEGORY}>
+        <span><b>{key}</b></span>
+        {group}
+      </li>);
+    });
   }
 }

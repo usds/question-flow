@@ -81,6 +81,4 @@ export const NINETEEN_ONE = {
  */
 export const WORK = { id: 'a0_work' };
 
-export const APPLY_BY_PHONE_ACTION = { id: 'a1' };
-
-export const APPLY_ONLINE_ACTION = { id: 'a0' };
+export const LEARN_HOW_TO_APPLY_ACTION = { id: 'a0' };

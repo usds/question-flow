@@ -845,22 +845,38 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
       id:           'CC',
       requirements: [
         {
-          explanation: 'Disabled',
+          explanation: 'Child is disabled and has not lost a parent',
           responses:   [
             UNDER_18,
             {
               answers:  [YES],
               question: X,
             },
+            {
+              answers:  [YES],
+              question: Y,
+            },
+            {
+              answers:  [NO], // has not lost a parent
+              question: Z,
+            },
           ],
         },
         {
-          explanation: 'Disabled for more than a year',
+          explanation: 'Child is disabled and has surving parent',
           responses:   [
             UNDER_18,
             {
               answers:  [YES],
+              question: X,
+            },
+            {
+              answers:  [YES],
               question: Y,
+            },
+            {
+              answers:  [YES], // has a surving parent
+              question: AA,
             },
           ],
         },

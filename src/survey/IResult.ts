@@ -14,6 +14,10 @@ export interface IResult extends IRef {
    */
   action: Partial<IAction>;
   /**
+   * Optional tag/category to group results
+   */
+  category?: string;
+  /**
    * Identify the result (e.g. 'Benefit name')
    *
    * @title Label

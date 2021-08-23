@@ -1120,6 +1120,10 @@ export const survey = {
     "IResult": {
       "description": "Represents a potential result based on a customer's answers",
       "properties": {
+        "category": {
+          "description": "Optional tag/category to group results",
+          "type": "string"
+        },
         "id": {
           "description": "Unique identifier",
           "title": "Id",

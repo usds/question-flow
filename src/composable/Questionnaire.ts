@@ -182,12 +182,22 @@ export class Questionnaire implements IQuestionnaire {
     return thisStep;
   }
 
+  /**
+   * Gets the next allowed step id in the sequence
+   * @param props step context
+   * @returns step id
+   */
   getNextStep(props: IStepData): string {
     const thisStep = props.stepId as string;
     const dir      = DIRECTION.FORWARD;
     return this.getStep(thisStep, props.form, dir);
   }
 
+  /**
+   * Gets the previously answered step id
+   * @param props step context
+   * @returns step id
+   */
   getPreviousStep(props: IStepData): string {
     const thisStep = props.stepId as string;
     const dir      = DIRECTION.BACKWARD;

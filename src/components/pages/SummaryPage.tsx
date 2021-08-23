@@ -1,4 +1,5 @@
-import { Button }     from '@trussworks/react-uswds';
+/* eslint-disable no-script-url */
+import { Link }       from '@trussworks/react-uswds';
 import { ReactNode }  from 'react';
 import { IQuestion }  from '../../survey';
 import { noel }       from '../../lib/noop';
@@ -16,13 +17,14 @@ const getAnswers = (props: IPageData, onClick: (question: IQuestion) => void): R
   const answers = props.form.responses.map((question) => (
       <li key={question.id} className={CSS_CLASS.SUMMARY_QA_LIST}>
         <span className="text-light">
-          <Button
-            type="button"
-            unstyled
-            onClick={() => onClick(question)}
+          <Link href={'javascript:void(0)'}
+          onClick={() => {
+            onClick(question);
+            return false;
+          }}
           >
             {question.title}
-          </Button>
+          </Link>
           {'  '}
           <span className="text-bold">{question.answer}</span>
         </span>

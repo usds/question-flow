@@ -12,21 +12,32 @@ const online = {
   type: 'button',
 } as IButton;
 
-const phone = {
-  id:   'ab2',
-  type: 'link',
-} as IButton;
+const noneOnline: Partial<IButton> = {
+  id:    'ab1',
+  link:  'https://www.ssa.gov',
+  title: 'learn how to apply online',
+  type:  'link',
+};
 
-const phoneTty = {
-  id:   'ab3',
-  type: 'link',
-} as IButton;
+const nonePhone: Partial<IButton> = {
+  id:    'ab2',
+  link:  'tel:+18007721213',
+  title: '1-800-772-1213',
+  type:  'link',
+};
+
+const nonePhoneTty: Partial<IButton> = {
+  id:    'ab3',
+  link:  'tel:+18003250778',
+  title: 'TTY 1-800-325-0778',
+  type:  'link',
+};
 
 export const buildActions = (json: TActionMap): IAction[] => [
   merge(
     {
       buttons: [online],
-      icon:    'fas fa-desktop',
+      icon:    '',
       id:      'a0',
       type:    ACTION.ONLINE,
     },
@@ -34,26 +45,8 @@ export const buildActions = (json: TActionMap): IAction[] => [
   ) as IAction,
   merge(
     {
-      buttons: [phone, phoneTty],
-      icon:    'fas fa-phone fa-flip-horizontal',
-      id:      'a1',
-      type:    ACTION.CALL,
-    },
-    json.a1,
-  ) as IAction,
-  merge(
-    {
-      buttons: [online, phone, phoneTty],
-      icon:    'fas fa-phone fa-flip-horizontal',
-      id:      'a2',
-      type:    ACTION.HYBRID,
-    },
-    json.a2,
-  ) as IAction,
-  merge(
-    {
-      buttons: [online, phone, phoneTty],
-      icon:    'fas fa-phone fa-flip-horizontal',
+      buttons: [noneOnline, nonePhone, nonePhoneTty],
+      icon:    '',
       id:      'a3',
       type:    ACTION.NONE,
     },

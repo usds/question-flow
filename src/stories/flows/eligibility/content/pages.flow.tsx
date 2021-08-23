@@ -3,18 +3,17 @@ import { PAGE_TYPE } from '../../../../lib';
 
 export const pageContent = {
   noResultsPage: {
-    body:     'If you want to apply anyway, review the process and start an application.',
+    body:     'If you want to start an application anyway',
     id:       PAGE_TYPE.NO_RESULTS,
     subTitle:
       'Based on your answers, you may not be eligible for benefits right now. As you age and aspects of your life change, you may become eligible.',
     title: 'You may not be eligible for benefits.',
   },
   resultsPage: {
-    body:       "The answers you shared today told us what's going on in your life right now. As you age and aspects of your life change, you may be eligible for other Social Security benefits.",
-    bodyHeader:
-      "This gives you an idea of what you may be eligible for, but we can't guarantee you'll get these benefits. We'll provide a definite answer after you complete the application process.",
-    id:       PAGE_TYPE.RESULTS,
-    info:     'Each benefit we provide has an official name. You may see these names in other materials or hear our employees use them on the phone and in our offices.',
+    body:       "This gives you an idea of what you may be eligible for, but we can't guarantee you'll get these benefits. We'll provide a definite answer after you complete the application process. The answers you shared today told us what's going on in your life right now. As you age and aspects of your life change, you may be eligible for other Social Security benefits.",
+    bodyHeader: '',
+    id:         PAGE_TYPE.RESULTS,
+    info:       '',
     subTitle:
       "Based on your answers, here's what you may be eligible for and why:",
     title: 'You may be eligible for Social Security benefits.',

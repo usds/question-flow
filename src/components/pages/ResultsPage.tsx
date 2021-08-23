@@ -1,4 +1,3 @@
-import { SummaryBox } from '@trussworks/react-uswds';
 import { CSS_CLASS }  from '../../lib';
 import { noel }       from '../../lib/noop';
 import { useGlobal }  from '../../state/GlobalState';
@@ -40,10 +39,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
 
   return (
     <StepLayout {...props}>
-      <SummaryBox
-        heading={step.bodyHeader || ''}
-        className={CSS_CLASS.RESULTS_SUMMARY_HEADER}
-      >
+      <div className={CSS_CLASS.RESULTS_SUMMARY_HEADER}>
         <P node={step.bodyHeader} />
         <P node={step.bodySubHeader} />
         <ul
@@ -55,7 +51,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
         <P node={step.children} />
         <Action {...action} />
         {followupActions}
-      </SummaryBox>
+      </div>
     </StepLayout>
   );
 };

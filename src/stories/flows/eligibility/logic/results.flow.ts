@@ -6,8 +6,7 @@ import { merge }           from 'lodash';
 import { IResult }         from '../../../../survey';
 import { isFraCalculator } from '../lib/calculator.flow';
 import {
-  APPLY_BY_PHONE_ACTION,
-  APPLY_ONLINE_ACTION,
+  LEARN_HOW_TO_APPLY_ACTION,
   EIGHTEEN,
   IDK,
   NINETEEN_ONE,
@@ -23,6 +22,7 @@ import { TQuestionMap, TResultMap } from '../lib/contentMap';
 export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
   const {
     A,
+    AA,
     BB,
     C,
     CC,
@@ -55,7 +55,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r1: IResult = merge(
     {
-      action:       APPLY_ONLINE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r1',
       requirements: [
         {
@@ -77,7 +77,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r2: IResult = merge(
     {
-      action:       APPLY_ONLINE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r2',
       requirements: [
         {
@@ -101,7 +101,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r3: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r3',
       requirements: [
         {
@@ -267,6 +267,16 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
           responses: [
             { answers: [NO], question: A },
             { answers: [YES], question: Y },
+            { answers: [YES], question: Z },
+            { answers: [NO], question: AA },
+          ],
+        },
+        {
+          explanation:
+            "You expect the child's condition to affect their daily activities for a year or longer or be terminal. And, the child's parent(s) may need help paying for basic needs like food, clothing, and a home.",
+          responses: [
+            { answers: [NO], question: A },
+            { answers: [YES], question: Y },
             { answers: [YES], question: CC },
             { answers: [YES], question: DD },
             { answers: [YES], question: EE },
@@ -326,7 +336,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r4: IResult = merge(
     {
-      action:       APPLY_ONLINE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r4',
       requirements: [
         {
@@ -352,7 +362,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r5: IResult = merge(
     {
-      action:       APPLY_ONLINE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r5',
       requirements: [
         {
@@ -386,7 +396,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r6: IResult = merge(
     {
-      action:       APPLY_ONLINE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r6',
       requirements: [
         {
@@ -420,7 +430,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r7: IResult = merge(
     {
-      action:       APPLY_ONLINE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r7',
       requirements: [
         {
@@ -448,7 +458,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r8: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r8',
       requirements: [
         {
@@ -474,7 +484,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r9: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r9',
       requirements: [
         {
@@ -507,14 +517,12 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r10: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r10',
       requirements: [
         {
           explanation: 'The child lost a parent.',
           responses:   [
-            // Is under 18
-            { answers: [YES], question: A },
             // Child has experienced loss of parent
             { answers: [YES], question: Z },
           ],
@@ -547,7 +555,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r11: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r11',
       requirements: [
         {
@@ -557,12 +565,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
             // Is under 18
             { answers: [NO], question: A },
             {
-              answers: [
-                // Parents receive SS
-                { id: '0' },
-                // Parents might receive SS
-                { id: '2' },
-              ],
+              answers:  [YES, IDK],
               question: BB,
             },
           ],
@@ -592,7 +595,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r12: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r12',
       requirements: [
         {
@@ -603,7 +606,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
             // Not in high school
             { answers: [NO], question: C },
             { answers: [YES], question: H },
-            { answers: [{ id: '0' }], question: I },
+            { answers: [NO], question: I },
             { answers: [YES], question: U },
           ],
         },
@@ -617,7 +620,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r13: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r13',
       requirements: [
         {
@@ -648,7 +651,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r14: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r14',
       requirements: [
         {
@@ -672,7 +675,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r15: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r15',
       requirements: [
         {
@@ -696,7 +699,7 @@ export const buildResults = (json: TResultMap, questionMap: TQuestionMap) => {
    */
   const r16: IResult = merge(
     {
-      action:       APPLY_BY_PHONE_ACTION,
+      action:       LEARN_HOW_TO_APPLY_ACTION,
       id:           'r16',
       requirements: [
         {
