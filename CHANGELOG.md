@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/usds/questionable/compare/v1.3.3...v1.3.4) (2021-08-23)
+
+
+### Bug Fixes
+
+* **results:** allows grouping of results by category ([9268fa6](https://github.com/usds/questionable/commit/9268fa616e99a9f77db89b30fcfd8bc5f1572aff))
+
 ## [1.3.3](https://github.com/usds/questionable/compare/v1.3.2...v1.3.3) (2021-08-18)
 
 
