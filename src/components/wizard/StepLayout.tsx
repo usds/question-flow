@@ -16,25 +16,28 @@ export const StepLayout = (props: IStepData): JSX.Element => {
   const { config }                  = useGlobal();
   const { borderClass, titleClass } = config.steps;
 
+  const getCssClass = (name: string) => Wizard.getCssClass(CSS_CLASS.STEP_LAYOUT, name, props);
+
   return (
-    <div>
+    <div className={getCssClass('outer')}>
       <NavBar {...{ ...props, verticalPos: 'top' }} />
       <section className={CSS_CLASS.STEP_LAYOUT}>
-        <CardGroup>
+        <CardGroup className={getCssClass('card-group')}>
           <Card
             headerFirst
             gridLayout={{ tablet: { col: 12 } }}
             containerProps={{ className: borderClass }}
+            className={getCssClass('card')}
           >
-            <CardHeader className={titleClass}>
+            <CardHeader className={`${titleClass} ${getCssClass('card-header')}`}>
               {Wizard.getHeader(props, config)}
             </CardHeader>
-            <CardBody>
+            <CardBody className={getCssClass('card-body')}>
               {Wizard.getSubtitle(props)}
               {props.children}
               {Wizard.getInfoBox(props)}
             </CardBody>
-            <CardFooter>
+            <CardFooter className={getCssClass('card-footer')}>
               {Wizard.getFooter(props)}
             </CardFooter>
           </Card>

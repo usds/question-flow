@@ -7,6 +7,15 @@ import { IStepData }              from '../../survey/IStepData';
 import { P }                      from '../factories/NodeFactory';
 
 export abstract class Wizard {
+  public static getCssClass(prefix: CSS_CLASS, name: string, props: IStepData): string {
+    const base = `${prefix}-${name}`;
+    return [
+      `${base}`,
+      `${base}-${props.step?.type}`,
+      `${base}-${props.stepId}`,
+    ].join(' ');
+  }
+
   public static getHeader(
     props: IStepData,
     config: QuestionableConfig,
@@ -19,7 +28,11 @@ export abstract class Wizard {
     if (config.steps.showStepId) {
       text = `${props.step?.id}: ${text}`;
     }
-    return <h3 className={`usa-card__heading ${CSS_CLASS.STEP_HEADER}`}>{text}</h3>;
+    return (
+      <h3 className={`usa-card__heading ${Wizard.getCssClass(CSS_CLASS.STEP, 'header', props)}`}>
+        {text}
+      </h3>
+    );
   }
 
   public static getSubtitle(props: IStepData): JSX.Element {
@@ -28,7 +41,7 @@ export abstract class Wizard {
       return noel();
     }
     return (
-      <P className={CSS_CLASS.STEP_SUBTITLE} node={text}/>
+      <P className={Wizard.getCssClass(CSS_CLASS.STEP, 'subtitle', props)} node={text}/>
     );
   }
 
@@ -38,7 +51,11 @@ export abstract class Wizard {
       return noel();
     }
     return (
-      <SiteAlert variant="info" showIcon={false} className={`outline-1px ${CSS_CLASS.STEP_INFO}`}>
+      <SiteAlert
+        variant="info"
+        showIcon={false}
+        className={`outline-1px ${Wizard.getCssClass(CSS_CLASS.STEP, 'info', props)}`}
+      >
         {text}
       </SiteAlert>
     );
@@ -51,7 +68,7 @@ export abstract class Wizard {
     }
     return (
       <P
-        className={`font-sans-6 ${CSS_CLASS.STEP_FOOTER}`}
+        className={`font-sans-6 ${Wizard.getCssClass(CSS_CLASS.STEP, 'footer', props)}`}
         node={text}
        />
     );

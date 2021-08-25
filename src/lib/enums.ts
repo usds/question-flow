@@ -102,6 +102,7 @@ export enum CSS_CLASS {
   RESULTS_SECONDARY_ACTIONS = 'usds-q-results-secondary-actions',
   RESULTS_SUMMARY_BOX = 'usds-q-results-summary-box',
   RESULTS_SUMMARY_HEADER = 'usds-q-results-summary-header',
+  STEP = 'usds-q-step',
   STEP_FOOTER = 'usds-q-step-footer',
   STEP_HEADER = 'usds-q-step-header',
   STEP_INFO = 'usds-q-step-info',
