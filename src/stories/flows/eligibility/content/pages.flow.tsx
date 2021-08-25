@@ -3,10 +3,18 @@ import { PAGE_TYPE } from '../../../../lib';
 
 export const pageContent = {
   noResultsPage: {
-    body:     'If you want to start an application anyway',
+    body:     '',
     id:       PAGE_TYPE.NO_RESULTS,
-    subTitle:
-      'Based on your answers, you may not be eligible for benefits right now. As you age and aspects of your life change, you may become eligible.',
+    subTitle: `
+Based on your answers, you may not be eligible for benefits right now. As you age and parts of your life change, you may become eligible.<br>
+<br>
+If you want to start an application anyway, <a href="ssa.gov">learn how to apply.</a><br>
+<br>
+Call us if you have questions or think you may be eligible for benefits.<br>
+<br>
+Call 1-800-772-1213<br>
+Call TTY 1-800-325-0778 if you're deaf or hard of hearing<br>
+`,
     title: 'You may not be eligible for benefits.',
   },
   resultsPage: {

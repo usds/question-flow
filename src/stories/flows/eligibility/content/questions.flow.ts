@@ -35,7 +35,7 @@ const B: Partial<IQuestion> = {
 const C: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'C',
-  title:   'Do you go to high school full time?',
+  title:   'Are you a full-time elementary or high school student?',
 };
 
 /**
@@ -44,8 +44,8 @@ const C: Partial<IQuestion> = {
 const D: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'D',
-  info:    "When you work, part of your paycheck goes into Social Security. That's why your work history is a primary consideration.",
-  title:   'Have you ever had a job in the United States?',
+  info:    "Part of your paycheck goes into Social Security when you work in the United States or a U.S. territory. That's why your work history is important.",
+  title:   'Have you ever had a job?',
 };
 
 /**
@@ -64,8 +64,7 @@ const F: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'F',
   info:    "How long you've worked is also important. Ten years is often what's required.",
-  title:
-    "Think about the jobs you've had in the past. Have you worked for a total of 10 years or more?",
+  title:   'Have you worked for a total of 10 years or more?',
 };
 
 /**
@@ -86,7 +85,7 @@ const G: Partial<IQuestion> = {
 const H: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'H',
-  info:    'Our disability benefit is there for you when your ability to work is affected for a long time.',
+  info:    'Our disability benefits are there for you when your ability to work is affected for a long time.',
   title:
     'Do you expect the condition to affect your ability to work for a year or more or be terminal?',
 };
@@ -114,7 +113,7 @@ const J: Partial<IQuestion> = {
   subTitle:
     'Supplemental Nutritional Assistance Program (SNAP), Medicaid, and Temporary Assistance for Needy Families (TANF) are a few examples.',
   title:
-    'Do you get state or federal government assistance to help cover your basic needs?',
+    'Do you get state or federal government assistance to help pay for essentials like food, clothing, and a home?',
 };
 
 /**
@@ -123,8 +122,8 @@ const J: Partial<IQuestion> = {
 const K: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'K',
-  info:    'One of our benefits provides assistance if your income and financial resources are limited.',
-  title:   'Is it hard to pay for basic needs like food, clothing, and a home?',
+  info:    'One of our benefits provides assistance if your income and other resources are limited.',
+  title:   'Is it hard to pay for essentials like food, clothing, and a home?',
 };
 
 /**
@@ -150,7 +149,7 @@ const L: Partial<IQuestion> = {
 const M: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'M',
-  info:    'If they get Social Security payments right now, you may be eligible for some of our spousal benefits.',
+  info:    'If they get Social Security payments right now, you may be eligible for spousal benefits.',
   title:   'Does your spouse get Social Security benefits?',
 };
 
@@ -169,7 +168,7 @@ const N: Partial<IQuestion> = {
 const O: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'O',
-  info:    "You may be eligible for spousal benefits based on a former spouse's work history even though you're no longer connected to them through marriage.",
+  info:    "You may be eligible for spousal benefits based on a former spouse's work history even though you're no longer married.",
   title:   'Are you divorced?',
 };
 
@@ -180,7 +179,7 @@ const P: Partial<IQuestion> = {
   answers:  [YES, NO],
   id:       'P',
   subTitle:
-    'If you\'ve gotten divorced more than once, choose "Yes" if one of your marriages lasted for 10 years or more.',
+    'If you\'ve been married multiple times, choose "Yes" if one of them lasted for 10 years or more.',
   title: 'Were you married for 10 years or more before you got divorced?',
 };
 
@@ -190,9 +189,9 @@ const P: Partial<IQuestion> = {
 const Q: Partial<IQuestion> = {
   answers: [YES, NO, IDK],
   id:      'Q',
-  info:    "How long you've worked is also important. Ten years is often what's required.",
+  info:    "How long they've worked in the United States or a U.S. territory is important. Ten years is often what's required.",
   title:
-    'Has your former spouse worked for 10 years or more in the United States?',
+    'Has your former spouse worked for 10 years or more?',
 };
 
 /**
@@ -202,7 +201,7 @@ const R: Partial<IQuestion> = {
   answers:  [YES, NO],
   id:       'R',
   subTitle:
-    '"Widowed" may not be a term you use to describe yourself. It means that your spouse passed away during your marriage. It may have happened recently or a long time ago.',
+    '"Widowed" may not be a term you use to describe yourself. It means that your spouse died during your marriage. It may have happened recently or a long time ago.',
   title: 'Are you widowed?',
 };
 
@@ -212,9 +211,9 @@ const R: Partial<IQuestion> = {
 const S: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'S',
-  info:    "You may be eligible for spousal benefits based on your former spouse's work history.",
+  info:    'You may be eligible for spousal benefits based on their work history.',
   title:
-    'Did your spouse ever have a job in the United States before they passed away?',
+    'Did your spouse ever have a job in the United States or a U.S. territory before they died?',
 };
 
 /**
@@ -224,7 +223,7 @@ const T: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'T',
   info:    'One of our spousal benefits looks at whether you take care of disabled or young children.',
-  title:   'Do you have kids who are disabled or under 16?',
+  title:   'Do you have children who are disabled or under 16?',
 };
 
 /**
@@ -234,8 +233,8 @@ const U: Partial<IQuestion> = {
   answers:  [YES, NO],
   id:       'U',
   subTitle:
-    'They may have been your birth, adoptive, or step parent, and may have passed away recently or a long time ago.',
-  title: 'Did you lose a parent?',
+    'They may have been your birth, adoptive, or step parent, and may have died recently or a long time ago.',
+  title: 'Did your parent(s) pass away?',
 };
 
 /**
@@ -245,7 +244,7 @@ const V: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'V',
   title:
-    "We're sorry for your loss. Do you have one or multiple surviving parents?",
+    'Do you have one or multiple parents who are alive?',
 };
 
 const W: Partial<IQuestion> = {
@@ -288,8 +287,8 @@ const Z: Partial<IQuestion> = {
   id:            'Z',
   internalNotes: 'Children under 18',
   subTitle:
-    'The parent may have been their birth, adoptive, or step parent, and may have passed away recently or a long time ago.',
-  title: 'Did the child lose a parent?',
+    'The parent may have been their birth, adoptive, or step parent, and may have died recently or a long time ago.',
+  title: 'Did the child\'s parent(s) pass away?',
 };
 
 /**
@@ -299,7 +298,7 @@ const AA: Partial<IQuestion> = {
   answers: [YES, NO],
   id:      'AA',
   title:
-    "We're sorry for their loss. Do they have one or multiple surviving parents?",
+    'Do they have one or multiple parents who are alive?',
 };
 
 /**
@@ -309,7 +308,7 @@ const BB: Partial<IQuestion> = {
   answers: [YES, NO, IDK],
   id:      'BB',
   info:    'If their parent(s) get Social Security payments right now, they may be eligible for one of our benefits for children.',
-  title:   'Do their parent(s) get Social Security benefits?',
+  title:   'Do the child\'s parent(s) get Social Security benefits?',
 };
 
 /**
@@ -330,7 +329,7 @@ const DD: Partial<IQuestion> = {
   subTitle:
     'Supplemental Nutritional Assistance Program (SNAP), Medicaid, and Temporary Assistance for Needy Families (TANF) are a few examples.',
   title:
-    'Do their parent(s) get state or federal government assistance to help cover basic needs?',
+    'Do the child\'s parent(s) get state or federal government assistance to help pay for essentials like food, clothing, and a home?',
 };
 
 /**
@@ -339,9 +338,9 @@ const DD: Partial<IQuestion> = {
 const EE: Partial<IQuestion> = {
   answers: [YES, NO, IDK],
   id:      'EE',
-  info:    'One of our benefits provides assistance if their income and financial resources are limited.',
+  info:    'One of our benefits provides assistance if the child has a disability and their parent(s) have limited income.',
   title:
-    'Is it hard for their parent(s) to pay for basic needs like food, clothing, and a home?',
+    'Is it hard for their parent(s) to pay for essentials like food, clothing, and a home?',
 };
 
 export const questionContentMap: TQuestionMap = {

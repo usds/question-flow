@@ -14,7 +14,7 @@ abstract class NodeFactory {
   private static element(node: TParam): JSX.Element | null {
     switch (typeof node) {
       case 'string':
-        return (<>{node}</>);
+        return (<div dangerouslySetInnerHTML={{ __html: node }}></div>);
       case 'bigint':
       case 'boolean':
       case 'undefined':

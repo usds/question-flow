@@ -31,7 +31,7 @@ const getAnswers = (props: IPageData, onClick: (question: IQuestion) => void): R
       </li>
   ));
 
-  return <ul className="usa-list usa-list--unstyled">{answers}</ul>;
+  return <ul className={`${CSS_CLASS.SUMMARY_LIST} usa-list usa-list--unstyled`}>{answers}</ul>;
 };
 
 /**

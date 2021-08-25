@@ -40,15 +40,15 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
   return (
     <StepLayout {...props}>
       <div className={CSS_CLASS.RESULTS_SUMMARY_HEADER}>
-        <P node={step.bodyHeader} />
-        <P node={step.bodySubHeader} />
+        <P node={step.bodyHeader} className={CSS_CLASS.RESULTS_BODY_HEADER}/>
+        <P node={step.bodySubHeader} className={CSS_CLASS.RESULTS_BODY_SUBHEADER}/>
         <ul
           className={`usa-list usa-list--unstyled ${CSS_CLASS.RESULTS_SUMMARY_BOX}`}
         >
           {Pages.getResults(props, global)}
         </ul>
-        <P node={step.body} />
-        <P node={step.children} />
+        <P node={step.body} className={CSS_CLASS.RESULTS_BODY}/>
+        <P node={step.children} className={CSS_CLASS.RESULTS_CHILDREN}/>
         <Action {...action} />
         {followupActions}
       </div>
