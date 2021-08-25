@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/usds/questionable/compare/v1.3.4...v1.3.5) (2021-08-25)
+
+
+### Bug Fixes
+
+* **styles:** adds unique class names to summary, results and no results pages ([57066a1](https://github.com/usds/questionable/commit/57066a1ac271d644673ae4d6bfb226630b515db6))
+
 ## [1.3.4](https://github.com/usds/questionable/compare/v1.3.3...v1.3.4) (2021-08-23)
 
 
