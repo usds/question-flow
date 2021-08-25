@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/usds/questionable/compare/v1.3.5...v1.3.6) (2021-08-25)
+
+
+### Bug Fixes
+
+* **styles:** adds more granular and unique class names to step layout ([a9a1332](https://github.com/usds/questionable/commit/a9a1332432c17c90b3b4759b5dcd72898c200a59))
+
 ## [1.3.5](https://github.com/usds/questionable/compare/v1.3.4...v1.3.5) (2021-08-25)
 
 
