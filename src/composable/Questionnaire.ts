@@ -230,7 +230,8 @@ export class Questionnaire implements IQuestionnaire {
       return 101;
     }
 
-    const answerable = this.getBranchQuestions(props);
+    // if we have branches then we need to do this, otherwise we need to get the number of steps
+    const answerable = this.getAllAnswerableQuestions(props);
     const lastStep   = answerable.length; // sections[sections.length - 1]?.lastStep;
 
     // if there is no step, the questionnaire has just started
@@ -246,26 +247,56 @@ export class Questionnaire implements IQuestionnaire {
     }
     // To calculate the percent, divide the index of this step
     //   by the index of the last step multiplied by 100.
+
     return Math.round((thisStepIdx / lastStepIdx) * 100);
   }
 
   /**
    * Gets all of the questions associated with a branch
    * @param props
-   * @returns
+   * @returns string[]
    */
-  getBranchQuestions(props: IStepData): string[] {
+  getAllAnswerableQuestions(props: IStepData): string[] {
     const stepId = `${props.stepId}`;
     const step   = this.getStepById(stepId);
     if (!isEnum(QUESTION_TYPE, step.type)) {
       return [];
     }
+
+    if (this.branches.length) {
+      const question = step as IQuestion;
+      return this.getBranchQuestions(question);
+    } else {
+      return this.getQuestionsWithoutBranches();
+    }
+
+  }
+
+  /**
+   * Gets all of the questions associated with a branch
+   * @param step
+   * @returns string[]
+   */
+  private getBranchQuestions(step: IQuestion): string[] {
     const question = step as IQuestion;
+
     return (
       this.branches
         .find((b) => b.id === question.branch?.id)
         ?.questions.map((q) => q.id) || []
     );
+  }
+
+  /**
+   * Gets all of the questions regardless of branch
+   * @returns string[]
+   */
+  private getQuestionsWithoutBranches(): string[] {
+    return (
+      this.steps
+        .filter((q) => isEnum(QUESTION_TYPE, q.type))
+        .map(q => q.id)
+    )
   }
 
   /**
