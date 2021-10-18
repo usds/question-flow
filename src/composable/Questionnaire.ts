@@ -266,10 +266,8 @@ export class Questionnaire implements IQuestionnaire {
     if (this.branches.length) {
       const question = step as IQuestion;
       return this.getBranchQuestions(question);
-    } else {
-      return this.getQuestionsWithoutBranches();
     }
-
+    return this.getQuestionsWithoutBranches();
   }
 
   /**
@@ -295,8 +293,8 @@ export class Questionnaire implements IQuestionnaire {
     return (
       this.steps
         .filter((q) => isEnum(QUESTION_TYPE, q.type))
-        .map(q => q.id)
-    )
+        .map((q) => q.id)
+    );
   }
 
   /**
