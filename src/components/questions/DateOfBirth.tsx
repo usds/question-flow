@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { DateInput, DateInputGroup }                                from '@trussworks/react-uswds';
-import { capitalize }                                               from 'lodash';
+import { capitalize, kebabCase }                                    from 'lodash';
 import {
   ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useState,
 } from 'react';
 import { QuestionableConfig }     from '../../composable';
 import { useGlobal }              from '../../state/GlobalState';
+import { setAge }                 from '../../state/cookie';
 import { getAge }                 from '../../lib/date';
 import { ACTION_TYPE, DATE_UNIT } from '../../lib/enums';
 import { noel }                   from '../../lib/noop';
@@ -14,6 +15,8 @@ import { IQuestionData }          from '../../survey/IQuestionData';
 import { Questions }              from '../lib/Questions';
 import { Steps }                  from '../lib/Steps';
 import { StepLayout }             from '../wizard/StepLayout';
+
+let cookieName = '';
 
 const isValid = (
   unit: DATE_UNIT,
@@ -104,6 +107,7 @@ const onDateOfBirthChange = (
   const bd  = Questions.toBirthdate(state);
   const age = getAge(bd);
   if (age && bd) {
+    setAge(cookieName, age.years);
     props.dispatchForm({
       type:  ACTION_TYPE.UPDATE,
       value: {
@@ -176,15 +180,15 @@ const getDateInputGroup = (label: string,
 );
 
 export const DateOfBirth = (props: IQuestionData): JSX.Element => {
-  const { config }        = useGlobal();
-  const { step }          = props;
-  const dob: TDateOfBirth = {
+  const { config, questionnaire } = useGlobal();
+  const { step }                  = props;
+  const dob: TDateOfBirth         = {
     day:   Questions.getBirthdate(props)?.day?.toString(),
     month: Questions.getBirthdate(props)?.month?.toString(),
     year:  Questions.getBirthdate(props)?.year?.toString(),
   };
-  const [state, setState] = useState(dob);
-
+  const [state, setState]         = useState(dob);
+  cookieName                      = kebabCase(questionnaire.header);
   if (!step) {
     return noel();
   }
