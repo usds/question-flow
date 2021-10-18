@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/usds/questionable/compare/v1.3.6...v1.4.0) (2021-10-18)
+
+
+### Bug Fixes
+
+* **lint:** skips else for return ([#147](https://github.com/usds/questionable/issues/147)) ([3218b81](https://github.com/usds/questionable/commit/3218b8188c9e473857fdbc382c78718baa3a06ea))
+* **progress-bar:** make progress bar work for simple flow as well as branch flow ([#116](https://github.com/usds/questionable/issues/116)) ([fa51c4a](https://github.com/usds/questionable/commit/fa51c4a225784cc2f9a02f76e37c92a33686b38f))
+
+
+### Features
+
+* **cookies:** enables persistent state ([#146](https://github.com/usds/questionable/issues/146)) ([30bd966](https://github.com/usds/questionable/commit/30bd9661b139ec6b139b0c20e8540a52cef6394d))
+
 ## [1.3.6](https://github.com/usds/questionable/compare/v1.3.5...v1.3.6) (2021-08-25)
 
 
