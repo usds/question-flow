@@ -7,6 +7,7 @@ import { IStepData }    from '../../survey/IStepData';
 import { Div }          from '../factories/NodeFactory';
 import { CSS_CLASS }    from '../../lib/enums';
 import { groupBy }      from '../../lib/array';
+import { setResults }   from '../../state/cookie';
 
 /**
  * Static utility methods for page components
@@ -69,6 +70,9 @@ export abstract class Pages {
       })),
       step: 'results',
     };
+    setResults(kebabCase(questionnaire.header), data.results.map((r) => ({
+      description: r.reason, name: r.title, ...r,
+    })));
     config.events.results(data);
     const categories = groupBy(data.results, 'category');
     return Object.keys(categories).map((key) => {
