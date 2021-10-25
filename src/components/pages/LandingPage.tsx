@@ -1,6 +1,6 @@
 import { noel }       from '../../lib/noop';
 import { IPageData }  from '../../survey/IPageData';
-import { P }          from '../factories/NodeFactory';
+import { Span }       from '../factories/NodeFactory';
 import { StepLayout } from '../wizard/StepLayout';
 
 /**
@@ -16,8 +16,8 @@ export const LandingPage = (props: IPageData): JSX.Element => {
 
   return (
     <StepLayout {...props}>
-      <P node={step.body} />
-      <P node={step.children} />
+      <Span node={step.body} />
+      <Span node={step.children} />
     </StepLayout>
   );
 };

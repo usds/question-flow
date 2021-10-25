@@ -1,13 +1,13 @@
-import { ReactNode }    from 'react';
 import { kebabCase }    from 'lodash';
-import { TResultData }  from '../../survey/IEvent';
+import { ReactNode }    from 'react';
+import { groupBy }      from '../../lib/array';
+import { CSS_CLASS }    from '../../lib/enums';
 import { IGlobalState } from '../../state/GlobalState';
+import { setResults }   from '../../state/storage';
+import { TResultData }  from '../../survey/IEvent';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';
 import { Div }          from '../factories/NodeFactory';
-import { CSS_CLASS }    from '../../lib/enums';
-import { groupBy }      from '../../lib/array';
-import { setResults }   from '../../state/storage';
 
 /**
  * Static utility methods for page components
@@ -70,29 +70,39 @@ export abstract class Pages {
       })),
       step: 'results',
     };
-    setResults(kebabCase(questionnaire.header), data.results.map((r) => ({
-      description: r.reason, name: r.title, ...r,
-    })));
+    setResults(
+      kebabCase(questionnaire.header),
+      data.results.map((r) => ({
+        description: r.reason,
+        name:        r.title,
+        ...r,
+      })),
+    );
     config.events.results(data);
     const categories = groupBy(data.results, 'category');
     return Object.keys(categories).map((key) => {
       const cat   = categories[key];
       const group = cat.map((result) => (
-        <li key={`${props.stepId}_${result.id}`} className={CSS_CLASS.RESULTS_BENEFITS}>
+        <li
+          key={`${props.stepId}_${result.id}`}
+          className={CSS_CLASS.RESULTS_BENEFITS}
+        >
           <span>
-            {result.label}{'  '}
+            {result.label}
+            {'  '}
             <b>{result.title}</b>
           </span>
-          <Div
-            className="text-light"
-            node={result.reason}
-          />
+          <Div className="text-light" node={result.reason} />
         </li>
       ));
-      return (<li key={kebabCase(key)} className={CSS_CLASS.RESULTS_CATEGORY}>
-        <span><b>{key}</b></span>
-        {group}
-      </li>);
+      return (
+        <li key={kebabCase(key)} className={CSS_CLASS.RESULTS_CATEGORY}>
+          <span>
+            <b>{key}</b>
+          </span>
+          <ul>{group}</ul>
+        </li>
+      );
     });
   }
 }

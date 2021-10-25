@@ -1,16 +1,20 @@
 /* eslint-disable no-param-reassign */
-import { DateInput, DateInputGroup }                                from '@trussworks/react-uswds';
-import { capitalize, kebabCase }                                    from 'lodash';
+import { DateInput, DateInputGroup } from '@trussworks/react-uswds';
+import { capitalize, kebabCase }     from 'lodash';
 import {
-  ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useState,
+  ChangeEvent,
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useState,
 } from 'react';
 import { QuestionableConfig }     from '../../composable';
-import { useGlobal }              from '../../state/GlobalState';
-import { setAge }                 from '../../state/storage';
 import { getAge }                 from '../../lib/date';
 import { ACTION_TYPE, DATE_UNIT } from '../../lib/enums';
 import { noel }                   from '../../lib/noop';
 import { TDateOfBirth }           from '../../lib/types';
+import { useGlobal }              from '../../state/GlobalState';
+import { setAge }                 from '../../state/storage';
 import { IQuestionData }          from '../../survey/IQuestionData';
 import { Questions }              from '../lib/Questions';
 import { Steps }                  from '../lib/Steps';
@@ -21,7 +25,7 @@ let cookieName = '';
 const isValid = (
   unit: DATE_UNIT,
   val: number,
-// eslint-disable-next-line sonarjs/cognitive-complexity
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): boolean => {
   const currentYear = new Date().getFullYear();
   const valStr      = `${val}`;
@@ -43,21 +47,17 @@ const isValid = (
       }
       break;
     case DATE_UNIT.YEAR:
-      if (valStr.length === 1
-            && val !== 1
-            && val !== 2
+      if (valStr.length === 1 && val !== 1 && val !== 2) {
+        return false;
+      }
+      if (
+        valStr.length === 2
+        && !valStr.startsWith('19')
+        && !valStr.startsWith('20')
       ) {
         return false;
       }
-      if (valStr.length === 2
-            && !valStr.startsWith('19')
-            && !valStr.startsWith('20')
-      ) {
-        return false;
-      }
-      if (valStr.length === 4
-          && (val < 1900 || val > currentYear)
-      ) {
+      if (valStr.length === 4 && (val < 1900 || val > currentYear)) {
         return false;
       }
       break;
@@ -72,7 +72,7 @@ const onDoBKeyPress = (
   if (e.defaultPrevented) {
     return; // Should do nothing if the default action has been cancelled
   }
-  if (!(new RegExp('[0-9]').test(e.key))) {
+  if (!new RegExp('[0-9]').test(e.key)) {
     e.preventDefault();
     return;
   }
@@ -151,32 +151,36 @@ const getDateInput = (
   }
 
   return (
-      <DateInput
-        id={Steps.getDomId(unit, props)}
-        name={label}
-        label={capitalize(unit)}
-        unit={unit}
-        maxLength={reqs.length}
-        minLength={reqs.length}
-        defaultValue={state[unit]}
-        onChange={(e) => onDateOfBirthChange(e, unit, props, state, setState, config)}
-        onKeyPress={(e) => onDoBKeyPress(e, unit)}
-      />
+    <DateInput
+      id={Steps.getDomId(unit, props)}
+      name={label}
+      label={capitalize(unit)}
+      unit={unit}
+      maxLength={reqs.length}
+      minLength={reqs.length}
+      defaultValue={state[unit]}
+      onChange={(e) =>
+        onDateOfBirthChange(e, unit, props, state, setState, config)
+      }
+      onKeyPress={(e) => onDoBKeyPress(e, unit)}
+    />
   );
 };
 
-const getDateInputGroup = (label: string,
+const getDateInputGroup = (
+  label: string,
   props: IQuestionData,
   state: TDateOfBirth,
   setState: Dispatch<SetStateAction<TDateOfBirth>>,
-  config: QuestionableConfig): JSX.Element => (
-    <div>
-      <DateInputGroup>
-        {getDateInput(DATE_UNIT.MONTH, label, props, state, setState, config)}
-        {getDateInput(DATE_UNIT.DAY, label, props, state, setState, config)}
-        {getDateInput(DATE_UNIT.YEAR, label, props, state, setState, config)}
-      </DateInputGroup>
-    </div>
+  config: QuestionableConfig,
+): JSX.Element => (
+  <>
+    <DateInputGroup>
+      {getDateInput(DATE_UNIT.MONTH, label, props, state, setState, config)}
+      {getDateInput(DATE_UNIT.DAY, label, props, state, setState, config)}
+      {getDateInput(DATE_UNIT.YEAR, label, props, state, setState, config)}
+    </DateInputGroup>
+  </>
 );
 
 export const DateOfBirth = (props: IQuestionData): JSX.Element => {

@@ -2,7 +2,7 @@ import { CSS_CLASS }  from '../../lib';
 import { noel }       from '../../lib/noop';
 import { useGlobal }  from '../../state/GlobalState';
 import { IPageData }  from '../../survey/IPageData';
-import { P }          from '../factories/NodeFactory';
+import { Span }       from '../factories/NodeFactory';
 import { Pages }      from '../lib';
 import { Action }     from '../wizard/Action';
 import { StepLayout } from '../wizard/StepLayout';
@@ -40,15 +40,21 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
   return (
     <StepLayout {...props}>
       <div className={CSS_CLASS.RESULTS_SUMMARY_HEADER}>
-        <P node={step.bodyHeader} className={CSS_CLASS.RESULTS_BODY_HEADER}/>
-        <P node={step.bodySubHeader} className={CSS_CLASS.RESULTS_BODY_SUBHEADER}/>
+        <Span
+          node={step.bodyHeader}
+          className={CSS_CLASS.RESULTS_BODY_HEADER}
+        />
+        <Span
+          node={step.bodySubHeader}
+          className={CSS_CLASS.RESULTS_BODY_SUBHEADER}
+        />
         <ul
           className={`usa-list usa-list--unstyled ${CSS_CLASS.RESULTS_SUMMARY_BOX}`}
         >
           {Pages.getResults(props, global)}
         </ul>
-        <P node={step.body} className={CSS_CLASS.RESULTS_BODY}/>
-        <P node={step.children} className={CSS_CLASS.RESULTS_CHILDREN}/>
+        <Span node={step.body} className={CSS_CLASS.RESULTS_BODY} />
+        <Span node={step.children} className={CSS_CLASS.RESULTS_CHILDREN} />
         <Action {...action} />
         {followupActions}
       </div>

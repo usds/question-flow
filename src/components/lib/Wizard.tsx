@@ -4,10 +4,14 @@ import { QuestionableConfig }     from '../../composable/Config';
 import { ACTION_TYPE, CSS_CLASS } from '../../lib/enums';
 import { noel }                   from '../../lib/noop';
 import { IStepData }              from '../../survey/IStepData';
-import { P }                      from '../factories/NodeFactory';
+import { Span }                   from '../factories/NodeFactory';
 
 export abstract class Wizard {
-  public static getCssClass(prefix: CSS_CLASS, name: string, props: IStepData): string {
+  public static getCssClass(
+    prefix: CSS_CLASS,
+    name: string,
+    props: IStepData,
+  ): string {
     const base = `${prefix}-${name}`;
     return [
       `${base}`,
@@ -29,7 +33,13 @@ export abstract class Wizard {
       text = `${props.step?.id}: ${text}`;
     }
     return (
-      <h3 className={`usa-card__heading ${Wizard.getCssClass(CSS_CLASS.STEP, 'header', props)}`}>
+      <h3
+        className={`usa-card__heading ${Wizard.getCssClass(
+          CSS_CLASS.STEP,
+          'header',
+          props,
+        )}`}
+      >
         {text}
       </h3>
     );
@@ -41,7 +51,10 @@ export abstract class Wizard {
       return noel();
     }
     return (
-      <P className={Wizard.getCssClass(CSS_CLASS.STEP, 'subtitle', props)} node={text}/>
+      <Span
+        className={Wizard.getCssClass(CSS_CLASS.STEP, 'subtitle', props)}
+        node={text}
+      />
     );
   }
 
@@ -54,7 +67,11 @@ export abstract class Wizard {
       <SiteAlert
         variant="info"
         showIcon={false}
-        className={`outline-1px ${Wizard.getCssClass(CSS_CLASS.STEP, 'info', props)}`}
+        className={`outline-1px ${Wizard.getCssClass(
+          CSS_CLASS.STEP,
+          'info',
+          props,
+        )}`}
       >
         {text}
       </SiteAlert>
@@ -67,10 +84,14 @@ export abstract class Wizard {
       return noel();
     }
     return (
-      <P
-        className={`font-sans-6 ${Wizard.getCssClass(CSS_CLASS.STEP, 'footer', props)}`}
+      <Span
+        className={`font-sans-6 ${Wizard.getCssClass(
+          CSS_CLASS.STEP,
+          'footer',
+          props,
+        )}`}
         node={text}
-       />
+      />
     );
   }
 

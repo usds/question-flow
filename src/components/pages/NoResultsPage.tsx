@@ -1,10 +1,10 @@
-import { useGlobal }         from '../../state/GlobalState';
+import { ACTION, CSS_CLASS } from '../../lib';
 import { noel }              from '../../lib/noop';
+import { useGlobal }         from '../../state/GlobalState';
 import { IPageData }         from '../../survey/IPageData';
-import { P }                 from '../factories/NodeFactory';
+import { Span }              from '../factories/NodeFactory';
 import { Action }            from '../wizard/Action';
 import { StepLayout }        from '../wizard/StepLayout';
-import { ACTION, CSS_CLASS } from '../../lib';
 
 /**
  * Displays the wizard results
@@ -24,10 +24,13 @@ export const NoResultsPage = (props: IPageData): JSX.Element => {
 
   return (
     <StepLayout {...props}>
-      <P node={step.bodyHeader} className={CSS_CLASS.NO_RESULTS_HEADER} />
-      <P node={step.bodySubHeader} className={CSS_CLASS.NO_RESULTS_SUBHEADER}/>
-      <P node={step.body} className={CSS_CLASS.NO_RESULTS_BODY} />
-      <P node={step.children} />
+      <Span node={step.bodyHeader} className={CSS_CLASS.NO_RESULTS_HEADER} />
+      <Span
+        node={step.bodySubHeader}
+        className={CSS_CLASS.NO_RESULTS_SUBHEADER}
+      />
+      <Span node={step.body} className={CSS_CLASS.NO_RESULTS_BODY} />
+      <Span node={step.children} />
       <Action {...action} />
     </StepLayout>
   );

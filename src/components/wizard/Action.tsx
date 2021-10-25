@@ -1,8 +1,8 @@
-import { Link }      from '@trussworks/react-uswds';
-import { CSS_CLASS } from '../../lib';
-import { noel }      from '../../lib/noop';
-import { IAction }   from '../../survey/IAction';
-import { H2, H3, P } from '../factories/NodeFactory';
+import { Link }         from '@trussworks/react-uswds';
+import { CSS_CLASS }    from '../../lib';
+import { noel }         from '../../lib/noop';
+import { IAction }      from '../../survey/IAction';
+import { H2, H3, Span } from '../factories/NodeFactory';
 
 export const Action = (action: Partial<IAction>): JSX.Element => {
   const buttons = action.buttons?.map((a) => {
@@ -17,13 +17,15 @@ export const Action = (action: Partial<IAction>): JSX.Element => {
     }
     return (
       <li key={a.title}>
-        <Link
-          className={`${CSS_CLASS.CALL_TO_ACTION_BUTTON} ${cssMode}`}
-          variant={variant}
-          href={a.link}
-        >
-          {a.title}
-        </Link>
+        <>
+          <Link
+            className={`${CSS_CLASS.CALL_TO_ACTION_BUTTON} ${cssMode}`}
+            variant={variant}
+            href={a.link}
+          >
+            {a.title}
+          </Link>
+        </>
       </li>
     );
   });
@@ -35,7 +37,7 @@ export const Action = (action: Partial<IAction>): JSX.Element => {
           <i className={action.icon} />
         </div>
         <H3 node={action.title} />
-        <P node={action.subTitle} />
+        <Span node={action.subTitle} />
         <ul
           className={`usa-list usa-list--unstyled ${CSS_CLASS.CALL_TO_ACTION_LIST}`}
         >
