@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/usds/questionable/compare/v1.4.0...v1.4.1) (2021-10-25)
+
+
+### Bug Fixes
+
+* **storage:** uses sessionStorage instead of cookies ([#155](https://github.com/usds/questionable/issues/155)) ([a9c13ae](https://github.com/usds/questionable/commit/a9c13aed80d44dad9953f5ca301395d5a1b7a70c))
+
 # [1.4.0](https://github.com/usds/questionable/compare/v1.3.6...v1.4.0) (2021-10-18)
 
 
