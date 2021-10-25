@@ -71,7 +71,7 @@ rules:
       ignoreComments: true
       ignoreUrls: true
   no-multi-spaces:
-    - warn
+    - off
     - exceptions:
         ImportDeclaration: true
         Property: true

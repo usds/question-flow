@@ -1,3 +1,5 @@
+import { log } from '../lib/log';
+
 interface IPersists {
     age: number;
     results: IResult[];
@@ -15,10 +17,25 @@ const parse = (val: string | undefined | null): IPersists => {
   return ret as IPersists;
 };
 
-const get = (cookieName: string) => parse(sessionStorage.getItem(cookieName));
+const get = (cookieName: string) => {
+  let ret = { age: 0, results: [] } as IPersists;
+  try {
+    const cookieVal = document.cookie
+      .split('; ')?.find((row: string) => row.startsWith(`${cookieName}=`))?.split('=')[1];
+    ret             = parse(cookieVal);
+  } catch (e) {
+    log(e);
+  }
+  return ret;
+};
 
-const set = (cookieName: string, cook: IPersists) =>
-  sessionStorage.setItem(cookieName, JSON.stringify(cook));
+const set = (cookieName: string, cook: IPersists) => {
+  try {
+    document.cookie = `${cookieName}=${JSON.stringify(cook)}; path=/;`;
+  } catch (e) {
+    log(e);
+  }
+};
 
 export const setAge = (cookieName: string, age: number): void => {
   const cook = get(cookieName);
