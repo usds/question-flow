@@ -7,7 +7,7 @@ import { IStepData }    from '../../survey/IStepData';
 import { Div }          from '../factories/NodeFactory';
 import { CSS_CLASS }    from '../../lib/enums';
 import { groupBy }      from '../../lib/array';
-import { setResults }   from '../../state/cookie';
+import { setResults }   from '../../state/storage';
 
 /**
  * Static utility methods for page components

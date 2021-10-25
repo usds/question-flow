@@ -1,5 +1,3 @@
-import * as Cookies from 'js-cookie';
-
 interface IPersists {
     age: number;
     results: IResult[];
@@ -11,15 +9,16 @@ interface IResult {
     name?: string;
 }
 
-const parse = (val: string | undefined): IPersists => {
+const parse = (val: string | undefined | null): IPersists => {
   if (!val) return { age: 0, results: [] } as IPersists;
   const ret = JSON.parse(val);
   return ret as IPersists;
 };
 
-const get = (cookieName: string) => parse(Cookies.get(cookieName));
+const get = (cookieName: string) => parse(sessionStorage.getItem(cookieName));
 
-const set = (cookieName: string, cook: IPersists) => Cookies.set(cookieName, JSON.stringify(cook));
+const set = (cookieName: string, cook: IPersists) =>
+  sessionStorage.setItem(cookieName, JSON.stringify(cook));
 
 export const setAge = (cookieName: string, age: number): void => {
   const cook = get(cookieName);
