@@ -502,7 +502,7 @@ export class Questionnaire implements IQuestionnaire {
       default:
         return this.throw(`No data for page type ${type}`);
     }
-  }
+  };
 
   /**
    * If configured, sets a default page if required for the page type
