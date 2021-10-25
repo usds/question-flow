@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/usds/questionable/compare/v1.4.1...v1.4.2) (2021-10-25)
+
+
+### Bug Fixes
+
+* **storage:** adds native support for cookies ([#156](https://github.com/usds/questionable/issues/156)) ([b57cd2d](https://github.com/usds/questionable/commit/b57cd2df6438f0a7dc410f91e71f9edf93a04508))
+
 ## [1.4.1](https://github.com/usds/questionable/compare/v1.4.0...v1.4.1) (2021-10-25)
 
 
