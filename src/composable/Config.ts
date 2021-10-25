@@ -48,7 +48,7 @@ export class QuestionableConfig implements IQuestionableConfig {
     summary: {
       visible: true,
     },
-  }
+  };
 
   #progressBar: IProgressBarConfig = {
     baseBgColor: '#f0f0f0',

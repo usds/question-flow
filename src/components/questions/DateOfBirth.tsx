@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { QuestionableConfig }     from '../../composable';
 import { useGlobal }              from '../../state/GlobalState';
-import { setAge }                 from '../../state/cookie';
+import { setAge }                 from '../../state/storage';
 import { getAge }                 from '../../lib/date';
 import { ACTION_TYPE, DATE_UNIT } from '../../lib/enums';
 import { noel }                   from '../../lib/noop';
