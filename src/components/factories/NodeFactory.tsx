@@ -14,7 +14,7 @@ abstract class NodeFactory {
   private static element(node: TParam): JSX.Element | null {
     switch (typeof node) {
       case 'string':
-        return (<div dangerouslySetInnerHTML={{ __html: node }}></div>);
+        return <div dangerouslySetInnerHTML={{ __html: node }}></div>;
       case 'bigint':
       case 'boolean':
       case 'undefined':
@@ -28,10 +28,6 @@ abstract class NodeFactory {
         }
         return null;
     }
-  }
-
-  public static P({ node, className }: TEl): JSX.Element {
-    return NodeFactory.Node(node, 'p', className);
   }
 
   public static Div({ node, className }: TEl): JSX.Element {
@@ -50,7 +46,11 @@ abstract class NodeFactory {
     return NodeFactory.Node(node, 'h3', className);
   }
 
-  static Node(node: TParam, type: keyof ReactHTML, className = ''): JSX.Element {
+  static Node(
+    node: TParam,
+    type: keyof ReactHTML,
+    className = '',
+  ): JSX.Element {
     const el = NodeFactory.element(node);
     if (!el) {
       return noel();
@@ -60,10 +60,5 @@ abstract class NodeFactory {
 }
 
 export const {
-  Div,
-  H2,
-  H3,
-  Node,
-  P,
-  Span,
+  Div, H2, H3, Node, Span,
 } = NodeFactory;
