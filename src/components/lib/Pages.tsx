@@ -3,7 +3,7 @@ import { ReactNode }    from 'react';
 import { groupBy }      from '../../lib/array';
 import { CSS_CLASS }    from '../../lib/enums';
 import { IGlobalState } from '../../state/GlobalState';
-import { setResults }   from '../../state/storage';
+import { setResults }   from '../../state/persists';
 import { TResultData }  from '../../survey/IEvent';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';
