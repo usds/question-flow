@@ -14,7 +14,7 @@ import { ACTION_TYPE, DATE_UNIT } from '../../lib/enums';
 import { noel }                   from '../../lib/noop';
 import { TDateOfBirth }           from '../../lib/types';
 import { useGlobal }              from '../../state/GlobalState';
-import { setAge }                 from '../../state/storage';
+import { setAge }                 from '../../state/persists';
 import { IQuestionData }          from '../../survey/IQuestionData';
 import { Questions }              from '../lib/Questions';
 import { Steps }                  from '../lib/Steps';

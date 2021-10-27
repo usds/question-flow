@@ -1,5 +1,6 @@
 import { isString, merge }    from 'lodash';
 import { noop, isEnum, MODE } from '../lib';
+import { getQueryParams }     from '../lib/params';
 import {
   INavigationConfig,
   IPagesConfig,
@@ -77,7 +78,8 @@ export class QuestionableConfig implements IQuestionableConfig {
 
   constructor(config: Partial<IQuestionableConfig> = {}) {
     merge(this, config);
-    if (this.dev) {
+    const params = getQueryParams();
+    if (this.dev || params.showStepId) {
       this.#steps.showStepId = true;
     }
   }

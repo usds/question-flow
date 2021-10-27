@@ -4675,14 +4675,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trussworks/react-uswds@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@trussworks/react-uswds@npm:2.3.0"
+"@trussworks/react-uswds@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@trussworks/react-uswds@npm:2.4.0"
   peerDependencies:
     react: ^16.x || ^17.x
     react-dom: ^16.x || ^17.x
     uswds: 2.11.2
-  checksum: 8430da7f4fcca9f9bc90b243fcd9f31b3810f6ceff7ba1194ec60424213b27e9f625fb96b5d325d32cb04d9a19e66d526147b40c478829c603b279419681f960
+  checksum: 9a822b7f3982fa7ddc17a582080a8fb22b9f29acddf63bf87da79f720bc9c44c7fca8f05f5208c3040e3bd4990cb1edef360164d967d9f8a8111f402f19faf40
   languageName: node
   linkType: hard
 
@@ -4999,10 +4999,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.11.5":
-  version: 16.11.5
-  resolution: "@types/node@npm:16.11.5"
-  checksum: 290382b32606f0edf4b0b4d3e50283fdf18591c48f0088c22f114196d7f032973720afaba9c11a5acf8411a97c40c94cb89efb5a49691b77ec47917d501916be
+"@types/node@npm:^16.11.6":
+  version: 16.11.6
+  resolution: "@types/node@npm:16.11.6"
+  checksum: 6e19634766ff589d3d2f361c2196b671f8f133cdadc5ad347a621c360d8994b6c4fbccfb2ad9c60c588c593831a96497c9c6b77d2b7e91be723384b94f6368e7
   languageName: node
   linkType: hard
 
@@ -5419,13 +5419,13 @@ __metadata:
     "@testing-library/jest-dom": ^5.14.1
     "@testing-library/react": ^12.1.2
     "@testing-library/user-event": ^13.5.0
-    "@trussworks/react-uswds": ^2.3.0
+    "@trussworks/react-uswds": ^2.4.0
     "@types/file-saver": ^2.0.3
     "@types/jest": ^27.0.2
     "@types/lodash": ^4.14.176
     "@types/luxon": ^2.0.5
-    "@types/node": ^16.11.5
-    "@types/react": ^17.0.32
+    "@types/node": ^16.11.6
+    "@types/react": ^17.0.33
     "@types/react-dom": ^17.0.10
     "@types/react-jsonschema-form": ^1.7.7
     "@typescript-eslint/eslint-plugin": ^5.2.0
@@ -5440,7 +5440,7 @@ __metadata:
     eslint-config-react-app: ^6.0.0
     eslint-plugin-align-assignments: ^1.1.2
     eslint-plugin-align-import: ^1.0.0
-    eslint-plugin-flowtype: ^7.0.0
+    eslint-plugin-flowtype: ^8.0.2
     eslint-plugin-import: ^2.25.2
     eslint-plugin-jest: ^25.2.2
     eslint-plugin-json-files: ^1.3.0
@@ -5457,7 +5457,7 @@ __metadata:
     gh-pages: ^3.2.3
     husky: ^7.0.4
     jest: ^27.3.1
-    lint-staged: ^11.2.4
+    lint-staged: ^11.2.6
     lodash: ^4.17.21
     luxon: ^2.0.2
     prettier: ^2.4.1
@@ -8262,7 +8262,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:^7.0.0":
+"cosmiconfig@npm:^7.0.0, cosmiconfig@npm:^7.0.1":
   version: 7.0.1
   resolution: "cosmiconfig@npm:7.0.1"
   dependencies:
@@ -9680,15 +9680,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-flowtype@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "eslint-plugin-flowtype@npm:7.0.0"
+"eslint-plugin-flowtype@npm:^8.0.2":
+  version: 8.0.2
+  resolution: "eslint-plugin-flowtype@npm:8.0.2"
   dependencies:
     lodash: ^4.17.21
     string-natural-compare: ^3.0.1
   peerDependencies:
-    eslint: ^7.32.0
-  checksum: a47625dd2d56ad9e12aa4fb94f1b9abdbc45832aac66bafd0b547a225e27ee35d20dc69d2b762e6845369e00f06181d69fc4e4ebb7922d6e2f909b84b97616d8
+    eslint: ^8.1.0
+  checksum: 51fc3562e6f7b29de7cc0c5da8db2171ea4e912d80bc1c40461f07e162820f67fbd6f1d7fc058c89fc627707750e33125d2d41b85974ebd0bb918fbea076773a
   languageName: node
   linkType: hard
 
@@ -14282,13 +14282,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"lilconfig@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "lilconfig@npm:2.0.3"
-  checksum: 39fcd06c9f94bec0f7be969f89abcead96cf9334682007df63e6fbe9bdb0566cf8e1ca53a8f56d2acca802f28e8acbabe8ed4e6265ed5e419b6a1397db003741
-  languageName: node
-  linkType: hard
-
 "lines-and-columns@npm:^1.1.6":
   version: 1.1.6
   resolution: "lines-and-columns@npm:1.1.6"
@@ -14296,18 +14289,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:^11.2.4":
-  version: 11.2.4
-  resolution: "lint-staged@npm:11.2.4"
+"lint-staged@npm:^11.2.6":
+  version: 11.2.6
+  resolution: "lint-staged@npm:11.2.6"
   dependencies:
     cli-truncate: 2.1.0
     colorette: ^1.4.0
     commander: ^8.2.0
+    cosmiconfig: ^7.0.1
     debug: ^4.3.2
     enquirer: ^2.3.6
     execa: ^5.1.1
-    js-yaml: ^4.1.0
-    lilconfig: ^2.0.3
     listr2: ^3.12.2
     micromatch: ^4.0.4
     normalize-path: ^3.0.0
@@ -14317,7 +14309,7 @@ fsevents@^1.2.7:
     supports-color: 8.1.1
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 9c1478d1903029a1db15b81c3f4d56a99b28774871961d18ea38dff1d7648bbca2eaa55c53c5c71732add89994bb07d3b91ce127495a7e586f519dfdb8a45938
+  checksum: b9071621db351c553579bd18df3d80fb753f851c4f1f72db0aaf12e713eab25b6d8a044dab2957817de7da02054a63f7725a49c763aee09295133f0d554f4d3f
   languageName: node
   linkType: hard
 
