@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/usds/questionable/compare/v1.4.2...v1.4.3) (2021-10-27)
+
+
+### Bug Fixes
+
+* **debug:** allow toggle state of step id from query string ([#161](https://github.com/usds/questionable/issues/161)) ([5867288](https://github.com/usds/questionable/commit/5867288e2f484a434fdb000e6a0cba7f31db7e48))
+
 ## [1.4.2](https://github.com/usds/questionable/compare/v1.4.1...v1.4.2) (2021-10-25)
 
 
