@@ -1,5 +1,5 @@
-import { ArrayUnique }    from 'class-validator';
-import { groupBy, merge } from 'lodash';
+import { ArrayUnique }             from 'class-validator';
+import { groupBy, isEmpty, merge } from 'lodash';
 import {
   ACTION,
   DIRECTION,
@@ -10,7 +10,8 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import { Helpers }        from '../lib/helpers';
+import { matches }        from '../lib/helpers';
+import { log }            from '../lib/log';
 import { TAge, TAgeCalc } from '../lib/types';
 import { IAction }        from '../survey/IAction';
 import { IBranch }        from '../survey/IBranch';
@@ -127,11 +128,7 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
-  getStep(
-    thisStep: string,
-    form: IForm,
-    direction: DIRECTION,
-  ): string {
+  getStep(thisStep: string, form: IForm, direction: DIRECTION): string {
     const nextStep =      this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
       : undefined;
@@ -212,18 +209,18 @@ export class Questionnaire implements IQuestionnaire {
   getProgressPercent(props: IStepData): number {
     const stepId = `${props.stepId}`;
     const step   = this.getStepById(stepId);
-    if (Helpers.matches(step.type, PAGE_TYPE.LANDING)) {
+    if (matches(step.type, PAGE_TYPE.LANDING)) {
       // Landing page exists before progress starts
       // less than 0% progress can be interpretted as 'do not display'
       return -1;
     }
-    if (Helpers.matches(step.type, PAGE_TYPE.SUMMARY)) {
+    if (matches(step.type, PAGE_TYPE.SUMMARY)) {
       // However we land on the summary, this is 100%
       return 100;
     }
     if (
-      Helpers.matches(step.type, PAGE_TYPE.RESULTS)
-      || Helpers.matches(step.type, PAGE_TYPE.NO_RESULTS)
+      matches(step.type, PAGE_TYPE.RESULTS)
+      || matches(step.type, PAGE_TYPE.NO_RESULTS)
     ) {
       // Results are beyond the survery progress
       // greater than 100% can be interpretted as 'do not display'
@@ -290,11 +287,9 @@ export class Questionnaire implements IQuestionnaire {
    * @returns string[]
    */
   private getQuestionsWithoutBranches(): string[] {
-    return (
-      this.steps
-        .filter((q) => isEnum(QUESTION_TYPE, q.type))
-        .map((q) => q.id)
-    );
+    return this.steps
+      .filter((q) => isEnum(QUESTION_TYPE, q.type))
+      .map((q) => q.id);
   }
 
   /**
@@ -344,14 +339,14 @@ export class Questionnaire implements IQuestionnaire {
         (acc, q, index) => (q.section.id === s.id ? index : acc),
         -1,
       );
-      if (Helpers.matches(section.id, PAGE_TYPE.RESULTS)) {
+      if (matches(section.id, PAGE_TYPE.RESULTS)) {
         section.lastStep = this.questions.length - 2;
-      } else if (Helpers.matches(section.id, PAGE_TYPE.LANDING)) {
+      } else if (matches(section.id, PAGE_TYPE.LANDING)) {
         section.lastStep = 0;
       }
       if (section.lastStep < 0) {
         section.status = PROGRESS_BAR_STATUS.INCOMPLETE;
-      } else if (Helpers.matches(section.id, thisQuestion.section.id)) {
+      } else if (matches(section.id, thisQuestion.section.id)) {
         section.status = PROGRESS_BAR_STATUS.CURRENT;
       } else if (section.lastStep < thisQuestionIdx) {
         section.status = PROGRESS_BAR_STATUS.COMPLETE;
@@ -474,31 +469,33 @@ export class Questionnaire implements IQuestionnaire {
    * @param type Page Type
    * @returns
    */
-  private getPageSet = (type: PAGE_TYPE): {
-    config?: Partial<IPageConfig>,
-    data?: IPage,
+  private getPageSet = (
+    type: PAGE_TYPE,
+  ): {
+    config?: Partial<IPageConfig>;
+    data?: IPage;
   } => {
     switch (type) {
       case PAGE_TYPE.LANDING:
-        return ({
+        return {
           config: this.config.pages.landing,
           data:   this.pages.landingPage,
-        });
+        };
       case PAGE_TYPE.NO_RESULTS:
-        return ({
+        return {
           config: this.config.pages.noresults,
           data:   this.pages.noResultsPage,
-        });
+        };
       case PAGE_TYPE.RESULTS:
-        return ({
+        return {
           config: this.config.pages.results,
           data:   this.pages.resultsPage,
-        });
+        };
       case PAGE_TYPE.SUMMARY:
-        return ({
+        return {
           config: this.config.pages.summary,
           data:   this.pages.summaryPage,
-        });
+        };
       default:
         return this.throw(`No data for page type ${type}`);
     }
@@ -639,8 +636,41 @@ export class Questionnaire implements IQuestionnaire {
   }
 
   /**
+   *
+   * @param questionAnswer the user's answer
+   * @param matchAnswer the question answer for validation
+   * @param allowUnanswered optional bit to ignore undefined
+   * @param id answer id
+   * @returns true if the answer is a match
+   */
+  private matchesAnswer(
+    questionAnswer?: string,
+    matchAnswer?: string,
+    allowUnanswered = false,
+    id = '',
+  ): boolean {
+    let ret = false;
+    if (allowUnanswered && isEmpty(questionAnswer)) {
+      ret = true;
+    }
+    if (isEmpty(questionAnswer)) {
+      ret = false;
+    }
+    ret = matches(questionAnswer, matchAnswer);
+    if (this.config.dev) {
+      log('Answer matching', {
+        id,
+        matchAnswer,
+        questionAnswer,
+        ret,
+      });
+    }
+    return ret;
+  }
+
+  /**
    * Determines if current answers in the form meet the step's requirements
-   * @param answers Collection of required answer Helpers.matches
+   * @param answers Collection of required answer that `matches()`
    * @param allowUnanswered if true, consider questions that are not yet answered
    * @returns true if all answers are valid or if no answers are required
    */
@@ -654,13 +684,20 @@ export class Questionnaire implements IQuestionnaire {
       const question = this.getQuestion(a.question);
       if (question.answers?.length > 0) {
         // Allowed answers are an array. Any matched answer makes the response valid.
-        return a.answers.some(
-          (i) =>
-            (allowUnanswered && question.answer === undefined)
-            || (question.answer !== undefined
-              && question.answer
-                === question.answers.find((x) => x.id === i.id)?.title),
-        );
+        const hasAnyMatch = a.answers.some((i) => {
+          const answer = question.answers.find((x) =>
+            matches(`${x.id}`, `${i.id}`));
+          return this.matchesAnswer(
+            question.answer,
+            answer?.title,
+            allowUnanswered,
+            i.id,
+          );
+        });
+        if (this.config.dev) {
+          log('Answer matching', { hasAnyMatch, question });
+        }
+        return hasAnyMatch;
       }
       // If no answers are defined, this passes
       return true;

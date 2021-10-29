@@ -1,14 +1,15 @@
-import { log } from '../lib/log';
+import { catchError }   from '../lib/error';
+import { error as log } from '../lib/log';
 
 interface IPersists {
-    age: number;
-    results: IResult[];
+  age: number;
+  results: IResult[];
 }
 
 interface IResult {
-    category?: string;
-    description: string;
-    name?: string;
+  category?: string;
+  description: string;
+  name?: string;
 }
 
 const parse = (val: string | undefined | null): IPersists => {
@@ -21,10 +22,13 @@ const get = (cookieName: string) => {
   let ret = { age: 0, results: [] } as IPersists;
   try {
     const cookieVal = document.cookie
-      .split('; ')?.find((row: string) => row.startsWith(`${cookieName}=`))?.split('=')[1];
+      .split('; ')
+      ?.find((row: string) => row.startsWith(`${cookieName}=`))
+      ?.split('=')[1];
     ret             = parse(cookieVal);
   } catch (e) {
-    log(e);
+    const error = catchError(e);
+    log('Get cookie', error, { cookieName });
   }
   return ret;
 };
@@ -33,7 +37,8 @@ const set = (cookieName: string, cook: IPersists) => {
   try {
     document.cookie = `${cookieName}=${JSON.stringify(cook)}; path=/;`;
   } catch (e) {
-    log(e);
+    const error = catchError(e);
+    log('Set cookie', error, { cook, cookieName });
   }
 };
 
