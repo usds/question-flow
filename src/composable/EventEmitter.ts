@@ -1,12 +1,12 @@
-import { log, noop }  from '../lib';
-import { catchError } from '../lib/error';
+import { error as log, noop } from '../lib';
+import { catchError }         from '../lib/error';
 import {
-  TEvent,
   IEvent,
-  TPageData,
   TAnswerData,
-  TResultData,
   TError,
+  TEvent,
+  TPageData,
+  TResultData,
 } from '../survey/IEvent';
 
 export class EventEmitter implements IEvent {
