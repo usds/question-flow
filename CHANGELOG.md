@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/usds/questionable/compare/v1.4.3...v1.4.4) (2021-10-29)
+
+
+### Bug Fixes
+
+* **dev:** enables debug logging ([#162](https://github.com/usds/questionable/issues/162)) ([0893bc7](https://github.com/usds/questionable/commit/0893bc7366b2a286adca61039234cda961f503c6))
+
 ## [1.4.3](https://github.com/usds/questionable/compare/v1.4.2...v1.4.3) (2021-10-27)
 
 
