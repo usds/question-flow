@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/usds/questionable/compare/v1.4.4...v1.4.5) (2021-11-02)
+
+
+### Bug Fixes
+
+* **cookie:** branch name is stored in persistence layer ([#167](https://github.com/usds/questionable/issues/167)) ([739afe9](https://github.com/usds/questionable/commit/739afe95789612bc19f30ec836f2c06f248fe59d))
+
 ## [1.4.4](https://github.com/usds/questionable/compare/v1.4.3...v1.4.4) (2021-10-29)
 
 
