@@ -1,8 +1,10 @@
+import { kebabCase }    from 'lodash';
 import { catchError }   from '../lib/error';
 import { error as log } from '../lib/log';
 
 interface IPersists {
   age: number;
+  branch?: string;
   results: IResult[];
 }
 
@@ -18,33 +20,43 @@ const parse = (val: string | undefined | null): IPersists => {
   return ret as IPersists;
 };
 
+const getCookieName = (cookieName: string) => kebabCase(cookieName.trim().toLowerCase());
+
 const get = (cookieName: string) => {
-  let ret = { age: 0, results: [] } as IPersists;
+  let ret     = { age: 0, results: [] } as IPersists;
+  const cName = getCookieName(cookieName);
   try {
     const cookieVal = document.cookie
       .split('; ')
-      ?.find((row: string) => row.startsWith(`${cookieName}=`))
+      ?.find((row: string) => row.startsWith(`${cName}=`))
       ?.split('=')[1];
     ret             = parse(cookieVal);
   } catch (e) {
     const error = catchError(e);
-    log('Get cookie', error, { cookieName });
+    log('Get cookie', error, { cName });
   }
   return ret;
 };
 
 const set = (cookieName: string, cook: IPersists) => {
+  const cName = getCookieName(cookieName);
   try {
-    document.cookie = `${cookieName}=${JSON.stringify(cook)}; path=/;`;
+    document.cookie = `${cName}=${JSON.stringify(cook)}; path=/;`;
   } catch (e) {
     const error = catchError(e);
-    log('Set cookie', error, { cook, cookieName });
+    log('Set cookie', error, { cName, cook });
   }
 };
 
 export const setAge = (cookieName: string, age: number): void => {
   const cook = get(cookieName);
   cook.age   = age;
+  set(cookieName, cook);
+};
+
+export const setBranch = (cookieName: string, branch: string): void => {
+  const cook  = get(cookieName);
+  cook.branch = branch;
   set(cookieName, cook);
 };
 

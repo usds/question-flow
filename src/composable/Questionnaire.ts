@@ -13,6 +13,7 @@ import {
 import { matches }        from '../lib/helpers';
 import { log }            from '../lib/log';
 import { TAge, TAgeCalc } from '../lib/types';
+import { setBranch }      from '../state/persists';
 import { IAction }        from '../survey/IAction';
 import { IBranch }        from '../survey/IBranch';
 import { IForm }          from '../survey/IForm';
@@ -275,11 +276,16 @@ export class Questionnaire implements IQuestionnaire {
   private getBranchQuestions(step: IQuestion): string[] {
     const question = step as IQuestion;
 
-    return (
-      this.branches
-        .find((b) => b.id === question.branch?.id)
-        ?.questions.map((q) => q.id) || []
-    );
+    if (question.branch) {
+      setBranch(this.header, `${question.branch.title}`);
+
+      return (
+        this.branches
+          .find((b) => b.id === question.branch?.id)
+          ?.questions.map((q) => q.id) || []
+      );
+    }
+    return [];
   }
 
   /**
