@@ -70,6 +70,7 @@ export abstract class Pages {
       })),
       step: 'results',
     };
+
     setResults(
       kebabCase(questionnaire.header),
       data.results.map((r) => ({
