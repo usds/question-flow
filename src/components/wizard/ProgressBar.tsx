@@ -19,15 +19,17 @@ export const ProgressBar = (props: IStepData): JSX.Element => {
   }
 
   return (
-    <div className={CSS_CLASS.PROGRESS_BAR}>
+    <div
+      className={CSS_CLASS.PROGRESS_BAR}
+      tab-index={0}
+      aria-label={`${completed}% percent complete`}
+    >
       <PB
         completed={completed}
         bgColor={config.progressBar.bgColor}
         baseBgColor={config.progressBar.baseBgColor}
         isLabelVisible={false}
         borderRadius={'0px'}
-        tab-index={0}
-        aria-label={`${completed}% percent complete`}
       />
     </div>
   );
