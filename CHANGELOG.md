@@ -1,3 +1,10 @@
+## [1.4.7](https://github.com/usds/questionable/compare/v1.4.6...v1.4.7) (2021-12-13)
+
+
+### Bug Fixes
+
+* **508:** improving accessibility on progress bar ([#179](https://github.com/usds/questionable/issues/179)) ([f1c8a75](https://github.com/usds/questionable/commit/f1c8a757061a8a1bc0d7b9bcad80928836e83f55))
+
 ## [1.4.6](https://github.com/usds/questionable/compare/v1.4.5...v1.4.6) (2021-12-13)
 
 
