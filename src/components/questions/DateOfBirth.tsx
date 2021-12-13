@@ -72,7 +72,8 @@ const onDoBKeyPress = (
   if (e.defaultPrevented) {
     return; // Should do nothing if the default action has been cancelled
   }
-  if (!new RegExp('[0-9]').test(e.key)) {
+  const isNumber = /[0-9]/;
+  if (!isNumber.test(e.key)) {
     e.preventDefault();
     return;
   }

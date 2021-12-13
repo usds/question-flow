@@ -88,7 +88,7 @@ export abstract class Pages {
           key={`${props.stepId}_${result.id}`}
           className={CSS_CLASS.RESULTS_BENEFITS}
         >
-          <span>
+          <span role="heading" aria-level={6}>
             {result.label}
             {'  '}
             <b>{result.title}</b>
@@ -98,7 +98,7 @@ export abstract class Pages {
       ));
       return (
         <li key={kebabCase(key)} className={CSS_CLASS.RESULTS_CATEGORY}>
-          <span>
+          <span role="heading" aria-level={5}>
             <b>{key}</b>
           </span>
           <ul>{group}</ul>
