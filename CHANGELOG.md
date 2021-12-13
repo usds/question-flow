@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/usds/questionable/compare/v1.4.5...v1.4.6) (2021-12-13)
+
+
+### Bug Fixes
+
+* **508:** addresses accessibility concerns in testing ([#178](https://github.com/usds/questionable/issues/178)) ([6ad45d0](https://github.com/usds/questionable/commit/6ad45d034303bcc6f8e6a32e4ff9172c3812f268))
+
 ## [1.4.5](https://github.com/usds/questionable/compare/v1.4.4...v1.4.5) (2021-11-02)
 
 
