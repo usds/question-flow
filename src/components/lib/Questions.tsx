@@ -21,9 +21,7 @@ export abstract class Questions {
    * @param props
    * @returns
    */
-  public static updateForm(
-    answer: string, props: IQuestionData, config: QuestionableConfig,
-  ): void {
+  public static updateForm(answer: string, props: IQuestionData, config: QuestionableConfig): void {
     Object.assign(props.step, { answer });
     // TODO: circle back and fix this logic. The problem is that our reducer is merging by KEY,
     // which in the case of arrays is the index, and the index will always be 0 if we're passing in new arrays

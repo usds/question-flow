@@ -77,6 +77,7 @@ export const survey = {
       "properties": {
         "horizontalPos": {
           "$ref": "#/definitions/THorizontalPosition",
+          "default": "left",
           "description": "Horizontal orientation (left or right)",
           "title": "Horizontal Position"
         },
@@ -129,6 +130,7 @@ export const survey = {
         },
         "horizontalPos": {
           "$ref": "#/definitions/THorizontalPosition",
+          "default": "left",
           "description": "Horizontal orientation (left or right)",
           "title": "Horizontal Position"
         },
@@ -199,20 +201,16 @@ export const survey = {
     "IEvent": {
       "properties": {
         "onAnswer": {
-          "not": {
-          }
+          "not": {}
         },
         "onError": {
-          "not": {
-          }
+          "not": {}
         },
         "onEvent": {
-          "not": {
-          }
+          "not": {}
         },
         "onPage": {
-          "not": {
-          }
+          "not": {}
         }
       },
       "type": "object"
@@ -269,17 +267,14 @@ export const survey = {
             },
             "horizontalPos": {
               "$ref": "#/definitions/THorizontalPosition",
+              "default": "left",
               "description": "Horizontal orientation (left or right)",
               "title": "Horizontal Position"
             },
-            "id": {
-            },
-            "link": {
-            },
-            "outline": {
-            },
-            "title": {
-            },
+            "id": {},
+            "link": {},
+            "outline": {},
+            "title": {},
             "type": {
               "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
@@ -307,17 +302,14 @@ export const survey = {
             },
             "horizontalPos": {
               "$ref": "#/definitions/THorizontalPosition",
+              "default": "left",
               "description": "Horizontal orientation (left or right)",
               "title": "Horizontal Position"
             },
-            "id": {
-            },
-            "link": {
-            },
-            "outline": {
-            },
-            "title": {
-            },
+            "id": {},
+            "link": {},
+            "outline": {},
+            "title": {},
             "type": {
               "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
@@ -415,8 +407,7 @@ export const survey = {
         "section": {
           "description": "Section to which this step belongs",
           "properties": {
-            "id": {
-            },
+            "id": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -425,8 +416,7 @@ export const survey = {
               "title": "Requirements",
               "type": "array"
             },
-            "title": {
-            }
+            "title": {}
           },
           "title": "Section",
           "type": "object"
@@ -657,8 +647,7 @@ export const survey = {
         "section": {
           "description": "Section to which this step belongs",
           "properties": {
-            "id": {
-            },
+            "id": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -667,8 +656,7 @@ export const survey = {
               "title": "Requirements",
               "type": "array"
             },
-            "title": {
-            }
+            "title": {}
           },
           "title": "Section",
           "type": "object"
@@ -735,6 +723,7 @@ export const survey = {
       "properties": {
         "mode": {
           "$ref": "#/definitions/MODE",
+          "default": "MODE.VIEW",
           "description": "View or edit mode",
           "title": "Mode"
         },
@@ -750,17 +739,14 @@ export const survey = {
                 },
                 "horizontalPos": {
                   "$ref": "#/definitions/THorizontalPosition",
+                  "default": "left",
                   "description": "Horizontal orientation (left or right)",
                   "title": "Horizontal Position"
                 },
-                "id": {
-                },
-                "link": {
-                },
-                "outline": {
-                },
-                "title": {
-                },
+                "id": {},
+                "link": {},
+                "outline": {},
+                "title": {},
                 "type": {
                   "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
@@ -788,17 +774,14 @@ export const survey = {
                 },
                 "horizontalPos": {
                   "$ref": "#/definitions/THorizontalPosition",
+                  "default": "left",
                   "description": "Horizontal orientation (left or right)",
                   "title": "Horizontal Position"
                 },
-                "id": {
-                },
-                "link": {
-                },
-                "outline": {
-                },
-                "title": {
-                },
+                "id": {},
+                "link": {},
+                "outline": {},
+                "title": {},
                 "type": {
                   "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
@@ -1084,24 +1067,15 @@ export const survey = {
               "title": "Answers",
               "type": "array"
             },
-            "buttons": {
-            },
-            "footer": {
-            },
-            "id": {
-            },
-            "info": {
-            },
-            "internalNotes": {
-            },
-            "requirements": {
-            },
-            "section": {
-            },
-            "subTitle": {
-            },
-            "title": {
-            },
+            "buttons": {},
+            "footer": {},
+            "id": {},
+            "info": {},
+            "internalNotes": {},
+            "requirements": {},
+            "section": {},
+            "subTitle": {},
+            "title": {},
             "type": {
               "$ref": "#/definitions/QUESTION_TYPE",
               "description": "Type of question",
@@ -1238,8 +1212,7 @@ export const survey = {
         "section": {
           "description": "Section to which this step belongs",
           "properties": {
-            "id": {
-            },
+            "id": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -1248,8 +1221,7 @@ export const survey = {
               "title": "Requirements",
               "type": "array"
             },
-            "title": {
-            }
+            "title": {}
           },
           "title": "Section",
           "type": "object"

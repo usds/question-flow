@@ -72,7 +72,8 @@ const onDoBKeyPress = (
   if (e.defaultPrevented) {
     return; // Should do nothing if the default action has been cancelled
   }
-  if (!new RegExp('[0-9]').test(e.key)) {
+  const isNumber = /[0-9]/;
+  if (!isNumber.test(e.key)) {
     e.preventDefault();
     return;
   }
@@ -155,6 +156,7 @@ const getDateInput = (
       id={Steps.getDomId(unit, props)}
       name={label}
       label={capitalize(unit)}
+      aria-label={capitalize(unit)}
       unit={unit}
       maxLength={reqs.length}
       minLength={reqs.length}
@@ -175,7 +177,7 @@ const getDateInputGroup = (
   config: QuestionableConfig,
 ): JSX.Element => (
   <>
-    <DateInputGroup>
+    <DateInputGroup role="group" aria-label={props.step.title}>
       {getDateInput(DATE_UNIT.MONTH, label, props, state, setState, config)}
       {getDateInput(DATE_UNIT.DAY, label, props, state, setState, config)}
       {getDateInput(DATE_UNIT.YEAR, label, props, state, setState, config)}
