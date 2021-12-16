@@ -8,17 +8,17 @@ import {
   SetStateAction,
   useState,
 } from 'react';
-import { QuestionableConfig }     from '../../composable';
-import { getAge }                 from '../../lib/date';
-import { ACTION_TYPE, DATE_UNIT } from '../../lib/enums';
-import { noel }                   from '../../lib/noop';
-import { TDateOfBirth }           from '../../lib/types';
-import { useGlobal }              from '../../state/GlobalState';
-import { setAge }                 from '../../state/persists';
-import { IQuestionData }          from '../../survey/IQuestionData';
-import { Questions }              from '../lib/Questions';
-import { Steps }                  from '../lib/Steps';
-import { StepLayout }             from '../wizard/StepLayout';
+import { QuestionableConfig }                from '../../composable';
+import { getAge }                            from '../../lib/date';
+import { ACTION_TYPE, CSS_CLASS, DATE_UNIT } from '../../lib/enums';
+import { noel }                              from '../../lib/noop';
+import { TDateOfBirth }                      from '../../lib/types';
+import { useGlobal }                         from '../../state/GlobalState';
+import { setAge }                            from '../../state/persists';
+import { IQuestionData }                     from '../../survey/IQuestionData';
+import { Questions }                         from '../lib/Questions';
+import { Steps }                             from '../lib/Steps';
+import { StepLayout }                        from '../wizard/StepLayout';
 
 let cookieName = '';
 
@@ -90,6 +90,8 @@ const onDateOfBirthChange = (
   state: TDateOfBirth,
   setState: Dispatch<SetStateAction<TDateOfBirth>>,
   config: QuestionableConfig,
+  setError: Dispatch<SetStateAction<string>>,
+// eslint-disable-next-line sonarjs/cognitive-complexity
 ): void => {
   const val    = +e.target.value;
   const valStr = `${val}`;
@@ -105,9 +107,12 @@ const onDateOfBirthChange = (
   setState({
     ...state,
   });
-  const bd  = Questions.toBirthdate(state);
-  const age = getAge(bd);
+  const bd     = Questions.toBirthdate(state);
+  const age    = getAge(bd);
+  const errStr = `${state.month || ''}/${state.day || ''}/${state.year || ''}`;
+
   if (age && bd) {
+    setError('');
     setAge(cookieName, age.years);
     props.dispatchForm({
       type:  ACTION_TYPE.UPDATE,
@@ -117,6 +122,15 @@ const onDateOfBirthChange = (
       },
     });
     Questions.updateForm(bd, props, config);
+    if (props.step.exitRequirements && age.years > 0) {
+      const invalid = props.step.exitRequirements.every((r) =>
+        r.minAge && age.years < r.minAge.years);
+      if (invalid) {
+        const min = props.step.exitRequirements.map((r) => r.minAge?.years).join(', ');
+        // eslint-disable-next-line max-len
+        setError(`Looks like that's a birth date under age ${min}. Enter a birthday for someone who is over ${min} years old or tap "Go Back".`);
+      }
+    }
   } else if (props.form?.age?.years && props.form.age.years > 0) {
     // If we have previously set a valid age, unset it
     props.dispatchForm({
@@ -126,7 +140,10 @@ const onDateOfBirthChange = (
         birthdate: '',
       },
     });
-    // error = `${state.month}/${state.day}/${state.year} is not a valid birthday.`;
+    setError(`${errStr} is not valid 1.`);
+  } else {
+    // eslint-disable-next-line max-len
+    setError('Follow the "MM DD YYYY" format to enter your birthday. For example, September 9, 1960 is 09 09 1960.');
   }
 };
 
@@ -137,6 +154,7 @@ const getDateInput = (
   state: TDateOfBirth,
   setState: Dispatch<SetStateAction<TDateOfBirth>>,
   config: QuestionableConfig,
+  setError: Dispatch<SetStateAction<string>>,
 ): JSX.Element => {
   let reqs = {
     length: 2,
@@ -162,7 +180,7 @@ const getDateInput = (
       minLength={reqs.length}
       defaultValue={state[unit]}
       onChange={(e) =>
-        onDateOfBirthChange(e, unit, props, state, setState, config)
+        onDateOfBirthChange(e, unit, props, state, setState, config, setError)
       }
       onKeyPress={(e) => onDoBKeyPress(e, unit)}
     />
@@ -175,14 +193,17 @@ const getDateInputGroup = (
   state: TDateOfBirth,
   setState: Dispatch<SetStateAction<TDateOfBirth>>,
   config: QuestionableConfig,
+  error: string,
+  setError: Dispatch<SetStateAction<string>>,
 ): JSX.Element => (
-  <>
+  <div>
     <DateInputGroup role="group" aria-label={props.step.title}>
-      {getDateInput(DATE_UNIT.MONTH, label, props, state, setState, config)}
-      {getDateInput(DATE_UNIT.DAY, label, props, state, setState, config)}
-      {getDateInput(DATE_UNIT.YEAR, label, props, state, setState, config)}
+      {getDateInput(DATE_UNIT.MONTH, label, props, state, setState, config, setError)}
+      {getDateInput(DATE_UNIT.DAY, label, props, state, setState, config, setError)}
+      {getDateInput(DATE_UNIT.YEAR, label, props, state, setState, config, setError)}
     </DateInputGroup>
-  </>
+    <span className={CSS_CLASS.DOB_ERROR}>{error}</span>
+  </div>
 );
 
 export const DateOfBirth = (props: IQuestionData): JSX.Element => {
@@ -194,12 +215,13 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
     year:  Questions.getBirthdate(props)?.year?.toString(),
   };
   const [state, setState]         = useState(dob);
+  const [error, setError]         = useState('');
   cookieName                      = kebabCase(questionnaire.header);
   if (!step) {
     return noel();
   }
 
-  return getDateInputGroup('date_of_birth', props, state, setState, config);
+  return getDateInputGroup('date_of_birth', props, state, setState, config, error, setError);
 };
 
 export const DateOfBirthStep = (props: IQuestionData): JSX.Element => (

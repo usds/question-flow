@@ -129,6 +129,7 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   getStep(thisStep: string, form: IForm, direction: DIRECTION): string {
     const nextStep =      this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
@@ -136,6 +137,15 @@ export class Questionnaire implements IQuestionnaire {
     // If there are no more steps, stay on current
     if (!nextStep) {
       return thisStep;
+    }
+
+    const thisQuestion = this.getStepById(thisStep);
+    if (thisQuestion.exitRequirements) {
+      const allowExit = thisQuestion.exitRequirements.every((r) =>
+        this.meetsAllRequirements(r, form));
+      if (!allowExit) {
+        return thisStep;
+      }
     }
 
     if (this.config.mode === MODE.EDIT) {
@@ -150,14 +160,15 @@ export class Questionnaire implements IQuestionnaire {
     }
 
     const nextQuestion = this.getStepById(nextStep);
-    if (!nextQuestion?.requirements) {
+    if (!nextQuestion?.entryRequirements) {
       return nextStep;
     }
 
     // match is a tri-state (undefined === unset)
     let match: boolean | undefined;
+
     // Each requirement is joined by `OR`
-    nextQuestion.requirements.forEach((r) => {
+    nextQuestion.entryRequirements?.forEach((r) => {
       // This safely handles cases where requirement parameters are undefined
       const next = this.meetsAllRequirements(r, form);
 
@@ -307,9 +318,9 @@ export class Questionnaire implements IQuestionnaire {
     return this.questions
       .filter(
         (q) =>
-          !q.requirements
-          || q.requirements.length === 0
-          || q.requirements.some((r) =>
+          !q.entryRequirements
+          || q.entryRequirements.length === 0
+          || q.entryRequirements.some((r) =>
             this.meetsAllRequirements(r, props.form, true)),
       )
       .map((q) => q.id);
@@ -561,7 +572,7 @@ export class Questionnaire implements IQuestionnaire {
     this.setPageDefaults();
   }
 
-  private meetsAllRequirements(
+  public meetsAllRequirements(
     requirement: IRequirement,
     form: IForm,
     allowUnanswered = false,
@@ -585,7 +596,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param minAge a TAge object or undefined
    * @returns true if no min age, else true if age is >= min age
    */
-  private static meetsMinAgeRequirements(form: IForm, minAge?: TAge): boolean {
+  public static meetsMinAgeRequirements(form: IForm, minAge?: TAge): boolean {
     if (!minAge) return true;
 
     if (form.age === undefined) {
@@ -607,7 +618,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param maxAge a TAge object or undefined
    * @returns true if no max age, else true if age is <= max age
    */
-  private static meetsMaxAgeRequirements(form: IForm, maxAge?: TAge): boolean {
+  public static meetsMaxAgeRequirements(form: IForm, maxAge?: TAge): boolean {
     if (!maxAge) return true;
     if (form.age === undefined) {
       return false;

@@ -80,14 +80,20 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const B: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'B',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Is 18 or older',
           responses:   [OVER_18],
         },
       ],
+      exitRequirements: [
+        {
+          explanation: 'Is 18 or older',
+          minAge:      EIGHTEEN,
+        },
+      ],
+      id:      'B',
       section: { id: 'introduction' },
       type:    QUESTION_TYPE.DOB,
     },
@@ -99,9 +105,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const C: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'C',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Is between 18 and 19.1',
           maxAge:      NINETEEN_ONE,
@@ -109,6 +114,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           responses:   [OVER_18],
         },
       ],
+      id:      'C',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -120,14 +126,15 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const D: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'D',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Is 18 or older',
+          minAge:      EIGHTEEN,
           responses:   [OVER_18],
         },
       ],
+      id:      'D',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -139,9 +146,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const E: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'E',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Has worked at all',
           responses:   [
@@ -153,6 +159,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'E',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -164,9 +171,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const F: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'F',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Has worked at all',
           minAge:      SIXTY_ONE_EIGHT,
@@ -179,6 +185,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'F',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -190,9 +197,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const G: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'G',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           ageCalc:     (birthday: string) => !isFraCalculator(birthday, 12),
           explanation: 'Adults age 18 and over, but below FRA + 12 months',
@@ -206,6 +212,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'G',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -217,9 +224,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const H: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'H',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Is disabled and younger than FRA+ 12',
           responses:   [
@@ -231,6 +237,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'H',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -242,9 +249,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const I: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'I',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Has disability',
           minAge:      {
@@ -260,6 +266,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'I',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -271,9 +278,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const J: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'J',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Under 65 and disabled',
           maxAge:      { months: 12, years: 64 },
@@ -285,6 +291,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           responses:   [OVER_18],
         },
       ],
+      id:      'J',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -296,9 +303,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const K: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'K',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Is an adult',
           responses:   [
@@ -310,6 +316,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'K',
       section: WORK,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -321,14 +328,14 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const L: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'L',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Adult age 18 and over',
           responses:   [OVER_18],
         },
       ],
+      id:      'L',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -340,9 +347,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const M: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'M',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Married (includes separation)',
           responses:   [
@@ -354,6 +360,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'M',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -365,9 +372,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const N: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'N',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Spouse does not receive benefits',
           minAge:      SIXTY,
@@ -380,6 +386,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'N',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -391,9 +398,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const O: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'O',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Not currently married but was in the past',
           responses:   [
@@ -405,6 +411,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'O',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -416,9 +423,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const P: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'P',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Divorced',
           responses:   [
@@ -430,6 +436,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'P',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -441,9 +448,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const Q: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'Q',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Married 10 years or more before divorce',
           responses:   [
@@ -455,6 +461,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'Q',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -466,9 +473,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const R: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'R',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Not married before 60',
           responses:   [
@@ -505,6 +511,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           responses:   [OVER_18, { answers: [YES], question: Q }],
         },
       ],
+      id:      'R',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -516,9 +523,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const S: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'S',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Widowed',
           responses:   [
@@ -530,6 +536,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'S',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -541,9 +548,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const T: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'T',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Under 62 and spouse gets benefits',
           maxAge:      { months: 12, years: 61 },
@@ -567,6 +573,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'T',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -578,9 +585,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const U: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'U',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Attends high school',
           maxAge:      NINETEEN_ONE,
@@ -639,6 +645,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'U',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -650,9 +657,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const V: IQuestion = merge(
     {
-      branch:       ADULT_BRANCH,
-      id:           'V',
-      requirements: [
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Has lost a parent',
           responses:   [
@@ -665,6 +671,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'V',
       section: FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -673,10 +680,9 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
 
   const W: IQuestion = merge(
     {
-      answers:      [YES, NO, IDK],
-      branch:       ADULT_BRANCH,
-      id:           'W',
-      requirements: [
+      answers:           [YES, NO, IDK],
+      branch:            ADULT_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Has lost a parent but has surviving parents',
           responses:   [
@@ -700,6 +706,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'W',
       section: CHILD_FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -711,14 +718,14 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const X: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'X',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Under 18',
           responses:   [UNDER_18],
         },
       ],
+      id:      'X',
       section: DISABILITY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -730,9 +737,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const Y: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'Y',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Under 18 and is disabled',
           responses:   [
@@ -745,6 +751,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'Y',
       section: DISABILITY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -756,9 +763,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const Z: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'Z',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Child is not disabled',
           responses:   [
@@ -780,6 +786,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'Z',
       section: CHILD_FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -791,9 +798,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const AA: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'AA',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Child has lost a parent',
           responses:   [
@@ -805,6 +811,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'AA',
       section: CHILD_FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -816,9 +823,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const BB: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'BB',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Has not lost a parent',
           responses:   [
@@ -830,6 +836,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'BB',
       section: CHILD_FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -841,9 +848,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const CC: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'CC',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Child is disabled and has not lost a parent',
           responses:   [
@@ -881,6 +887,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'CC',
       section: CHILD_FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -892,9 +899,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const DD: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'DD',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Under 18',
           responses:   [
@@ -906,6 +912,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'DD',
       section: CHILD_FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
@@ -917,9 +924,8 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
    */
   const EE: IQuestion = merge(
     {
-      branch:       MINOR_BRANCH,
-      id:           'EE',
-      requirements: [
+      branch:            MINOR_BRANCH,
+      entryRequirements: [
         {
           explanation: 'Under 18',
           responses:   [
@@ -931,6 +937,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
           ],
         },
       ],
+      id:      'EE',
       section: CHILD_FAMILY,
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
     },
