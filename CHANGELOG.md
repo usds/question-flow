@@ -1,3 +1,10 @@
+## [1.4.8](https://github.com/usds/questionable/compare/v1.4.7...v1.4.8) (2021-12-16)
+
+
+### Bug Fixes
+
+* **dob:** adds exit validation to requirements logic ([#184](https://github.com/usds/questionable/issues/184)) ([5b867e8](https://github.com/usds/questionable/commit/5b867e8779a6da65cb53b72288314d6d4fe383a7))
+
 ## [1.4.7](https://github.com/usds/questionable/compare/v1.4.6...v1.4.7) (2021-12-13)
 
 
