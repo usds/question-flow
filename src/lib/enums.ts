@@ -81,6 +81,7 @@ export enum CSS_CLASS {
   DESIGN_LAYOUT = 'usds-q-design-layout',
   DEV_PANEL_SECTION = 'usds-q-dev-panel',
   DOB = 'usds-q-dob',
+  DOB_ERROR = 'usds-q-dob-error',
   MULTI_CHOICE = 'usds-q-multi-choice',
   MULTI_CHOICE_GROUP = 'usds-q-multi-choice-group',
   MULTI_SELECT = 'usds-q-multi-select',

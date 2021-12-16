@@ -31,7 +31,7 @@ Checklist.args = {
     id: 'I',
     info: "You may be eligible for certain benefits if you're legally married now or were in the past.",
     internalNotes: 'Adults age 18 and over',
-    requirements: [],
+    entryRequirements: [],
     section: { id: 'a0_family' },
     subTitle:
       'Long-term partnerships often resemble marriage, but our benefits require legal recognition in your state.',

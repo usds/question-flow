@@ -1,9 +1,9 @@
-import { kebabCase, values }                   from 'lodash';
-import { Questionnaire }                       from '../../composable/Questionnaire';
-import { DIRECTION, QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
-import { IForm }                               from '../../survey/IForm';
-import { IQuestionData }                       from '../../survey/IQuestionData';
-import { IStepData }                           from '../../survey/IStepData';
+import { kebabCase, values }    from 'lodash';
+import { Questionnaire }        from '../../composable/Questionnaire';
+import { DIRECTION, STEP_TYPE } from '../../lib/enums';
+import { IForm }                from '../../survey/IForm';
+import { IQuestionData }        from '../../survey/IQuestionData';
+import { IStepData }            from '../../survey/IStepData';
 
 export abstract class Steps {
   public static goToStep(step: string, props: IStepData): void {
@@ -36,16 +36,17 @@ export abstract class Steps {
    * @returns
    */
   public static isNextEnabled(props: IStepData): boolean {
-    if (!props?.step) throw new Error('This survery is not defined');
-
-    if (props.stepId === STEP_TYPE.LANDING) return true;
-
-    if (props.stepId === STEP_TYPE.SUMMARY) return true;
-
-    if (!props.form) return false;
-    // KLUDGE Alert: this is not an elegant way to solve this
-    if (props.step?.type === QUESTION_TYPE.DOB) {
-      return undefined !== props.form?.age?.years && props.form.age.years >= 0;
+    if (!props?.step) {
+      throw new Error('This survery is not defined');
+    }
+    if (props.stepId === STEP_TYPE.LANDING) {
+      return true;
+    }
+    if (props.stepId === STEP_TYPE.SUMMARY) {
+      return true;
+    }
+    if (!props.form) {
+      return false;
     }
     return Steps.isValid(props.form, props.step?.id);
   }
@@ -54,9 +55,17 @@ export abstract class Steps {
     const q = form.responses.find((a) => a?.id === questionId);
     if (!q) return false;
     const answers = values(q.answers);
+    let years     = 0;
     switch (q.type) {
       case STEP_TYPE.DOB:
-        return undefined !== form?.age?.years && form.age.years > 0;
+        years = form?.age?.years || 0;
+        if (years <= 0) {
+          return false;
+        }
+        if (!q.exitRequirements) {
+          return true;
+        }
+        return q.exitRequirements.every((r) => r.minAge && years >= r.minAge.years);
       case STEP_TYPE.MULTIPLE_CHOICE:
         return (
           q.answer !== undefined

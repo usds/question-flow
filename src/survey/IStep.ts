@@ -51,6 +51,18 @@ export interface IStep extends IRef {
    */
   children?: ReactNode;
   /**
+   * Collection of requirements to view/enter this step
+   *
+   * @title Requirements
+   */
+  entryRequirements?: IRequirement[];
+  /**
+   * Collection of requirements to leave this step
+   *
+   * @title Exit Requirements
+   */
+  exitRequirements?: IRequirement[];
+  /**
    * Optional footer text to display at the bottom of the step
    *
    * @title Footer
@@ -75,12 +87,6 @@ export interface IStep extends IRef {
    * @hidden
    */
   order?: number;
-  /**
-   * Collection of requirements to view this step
-   *
-   * @title Requirements
-   */
-  requirements?: IRequirement[];
   /**
    * Section to which this step belongs
    *

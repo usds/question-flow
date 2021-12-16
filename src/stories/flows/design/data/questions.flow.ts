@@ -27,9 +27,7 @@ export const questions: IQuestion[] = [
       { id: '0', title: 'Yes' },
       { id: '1', title: 'No' },
     ],
-    id:            'B',
-    internalNotes: 'users who don\'t like surveys',
-    requirements:  [
+    entryRequirements: [
       {
         responses: [
           {
@@ -39,19 +37,19 @@ export const questions: IQuestion[] = [
         ],
       },
     ],
-    section:  { id: 'confirmation' },
-    subTitle: 'Surveys can be important tools to help guide user interactions.',
-    title:    'Are you sure you don\'t like surveys?',
-    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
+    id:            'B',
+    internalNotes: 'users who don\'t like surveys',
+    section:       { id: 'confirmation' },
+    subTitle:      'Surveys can be important tools to help guide user interactions.',
+    title:         'Are you sure you don\'t like surveys?',
+    type:          QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
       { id: '0', title: 'Yes' },
       { id: '1', title: 'No' },
     ],
-    id:            'C',
-    internalNotes: 'users who do like surveys',
-    requirements:  [
+    entryRequirements: [
       {
         responses: [
           {
@@ -61,19 +59,19 @@ export const questions: IQuestion[] = [
         ],
       },
     ],
-    section:  { id: 'confirmation' },
-    subTitle: 'Surveys can be wastes of time. Do you honestly like them?',
-    title:    'Are you sure you like surveys?',
-    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
+    id:            'C',
+    internalNotes: 'users who do like surveys',
+    section:       { id: 'confirmation' },
+    subTitle:      'Surveys can be wastes of time. Do you honestly like them?',
+    title:         'Are you sure you like surveys?',
+    type:          QUESTION_TYPE.MULTIPLE_CHOICE,
   },
   {
     answers: [
       { id: '0', title: 'Yes' },
       { id: '1', title: 'No' },
     ],
-    id:            'D',
-    internalNotes: 'users who do like surveys',
-    requirements:  [
+    entryRequirements: [
       {
         responses: [
           {
@@ -91,9 +89,11 @@ export const questions: IQuestion[] = [
         ],
       },
     ],
-    section:  { id: 'satisfaction' },
-    subTitle: 'Given the chance to do it all over, wouldn\'t you like to try?',
-    title:    'Would you take this survey again?',
-    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
+    id:            'D',
+    internalNotes: 'users who do like surveys',
+    section:       { id: 'satisfaction' },
+    subTitle:      'Given the chance to do it all over, wouldn\'t you like to try?',
+    title:         'Would you take this survey again?',
+    type:          QUESTION_TYPE.MULTIPLE_CHOICE,
   },
 ];

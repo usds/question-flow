@@ -376,6 +376,22 @@ export const survey = {
           "title": "Buttons",
           "type": "object"
         },
+        "entryRequirements": {
+          "description": "Collection of requirements to view/enter this step",
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "exitRequirements": {
+          "description": "Collection of requirements to leave this step",
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "title": "Exit Requirements",
+          "type": "array"
+        },
         "footer": {
           "description": "Optional footer text to display at the bottom of the step",
           "title": "Footer",
@@ -395,14 +411,6 @@ export const survey = {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
           "type": "string"
-        },
-        "requirements": {
-          "description": "Collection of requirements to view this step",
-          "items": {
-            "$ref": "#/definitions/IRequirement"
-          },
-          "title": "Requirements",
-          "type": "array"
         },
         "section": {
           "description": "Section to which this step belongs",
@@ -616,6 +624,22 @@ export const survey = {
           "title": "Buttons",
           "type": "object"
         },
+        "entryRequirements": {
+          "description": "Collection of requirements to view/enter this step",
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "exitRequirements": {
+          "description": "Collection of requirements to leave this step",
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "title": "Exit Requirements",
+          "type": "array"
+        },
         "footer": {
           "description": "Optional footer text to display at the bottom of the step",
           "title": "Footer",
@@ -635,14 +659,6 @@ export const survey = {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
           "type": "string"
-        },
-        "requirements": {
-          "description": "Collection of requirements to view this step",
-          "items": {
-            "$ref": "#/definitions/IRequirement"
-          },
-          "title": "Requirements",
-          "type": "array"
         },
         "section": {
           "description": "Section to which this step belongs",
@@ -1068,11 +1084,12 @@ export const survey = {
               "type": "array"
             },
             "buttons": {},
+            "entryRequirements": {},
+            "exitRequirements": {},
             "footer": {},
             "id": {},
             "info": {},
             "internalNotes": {},
-            "requirements": {},
             "section": {},
             "subTitle": {},
             "title": {},
@@ -1181,6 +1198,22 @@ export const survey = {
           "title": "Buttons",
           "type": "object"
         },
+        "entryRequirements": {
+          "description": "Collection of requirements to view/enter this step",
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "exitRequirements": {
+          "description": "Collection of requirements to leave this step",
+          "items": {
+            "$ref": "#/definitions/IRequirement"
+          },
+          "title": "Exit Requirements",
+          "type": "array"
+        },
         "footer": {
           "description": "Optional footer text to display at the bottom of the step",
           "title": "Footer",
@@ -1200,14 +1233,6 @@ export const survey = {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
           "type": "string"
-        },
-        "requirements": {
-          "description": "Collection of requirements to view this step",
-          "items": {
-            "$ref": "#/definitions/IRequirement"
-          },
-          "title": "Requirements",
-          "type": "array"
         },
         "section": {
           "description": "Section to which this step belongs",
