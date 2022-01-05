@@ -1,3 +1,10 @@
+## [1.4.10](https://github.com/usds/questionable/compare/v1.4.9...v1.4.10) (2022-01-05)
+
+
+### Bug Fixes
+
+* **error:** date of birth error message now in USWDS styled div ([#194](https://github.com/usds/questionable/issues/194)) ([5371436](https://github.com/usds/questionable/commit/5371436df2993525727751ae28e6246facd0e435))
+
 ## [1.4.9](https://github.com/usds/questionable/compare/v1.4.8...v1.4.9) (2022-01-05)
 
 
