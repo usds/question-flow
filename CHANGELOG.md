@@ -1,3 +1,10 @@
+## [1.4.9](https://github.com/usds/questionable/compare/v1.4.8...v1.4.9) (2022-01-05)
+
+
+### Bug Fixes
+
+* **steps:** corrects logic for previous/next validation ([#193](https://github.com/usds/questionable/issues/193)) ([e56f1e6](https://github.com/usds/questionable/commit/e56f1e66492263ca727bba12715064189badba3a))
+
 ## [1.4.8](https://github.com/usds/questionable/compare/v1.4.7...v1.4.8) (2021-12-16)
 
 
