@@ -12,8 +12,6 @@ extends:
   - plugin:react/recommended
   - plugin:sonarjs/recommended
   - plugin:typescript-sort-keys/recommended
-  - react-app
-  - react-app/jest
 ignorePatterns:
   - '*.stories.tsx'
 overrides:

@@ -61,6 +61,8 @@ const isValid = (
         return false;
       }
       break;
+    default:
+      return false;
   }
   return true;
 };
@@ -102,6 +104,8 @@ const onDateOfBirthChange = (
       break;
     case DATE_UNIT.YEAR:
       state[unit] = valStr;
+      break;
+    default:
       break;
   }
   setState({

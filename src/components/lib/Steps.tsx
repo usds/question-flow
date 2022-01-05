@@ -1,9 +1,10 @@
-import { kebabCase, values }    from 'lodash';
-import { Questionnaire }        from '../../composable/Questionnaire';
-import { DIRECTION, STEP_TYPE } from '../../lib/enums';
-import { IForm }                from '../../survey/IForm';
-import { IQuestionData }        from '../../survey/IQuestionData';
-import { IStepData }            from '../../survey/IStepData';
+import { kebabCase, values }                   from 'lodash';
+import { Questionnaire }                       from '../../composable/Questionnaire';
+import { DIRECTION, QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
+import { log }                                 from '../../lib/log';
+import { IForm }                               from '../../survey/IForm';
+import { IQuestionData }                       from '../../survey/IQuestionData';
+import { IStepData }                           from '../../survey/IStepData';
 
 export abstract class Steps {
   public static goToStep(step: string, props: IStepData): void {
@@ -45,6 +46,11 @@ export abstract class Steps {
     if (props.stepId === STEP_TYPE.SUMMARY) {
       return true;
     }
+    // KLUDGE Alert: this is not an elegant way to solve this
+    if (props.step?.type === QUESTION_TYPE.DOB) {
+      log('DOB');
+      return undefined !== props.form?.age?.years && props.form.age.years >= 0;
+    }
     if (!props.form) {
       return false;
     }
@@ -53,27 +59,36 @@ export abstract class Steps {
 
   public static isValid(form: IForm, questionId: string): boolean {
     const q = form.responses.find((a) => a?.id === questionId);
-    if (!q) return false;
-    const answers = values(q.answers);
+    let ret = true;
+    if (!q) {
+      ret = false;
+    }
+    const answers = values(q?.answers);
     let years     = 0;
-    switch (q.type) {
+    switch (q?.type) {
       case STEP_TYPE.DOB:
         years = form?.age?.years || 0;
         if (years <= 0) {
-          return false;
+          ret = false;
         }
-        if (!q.exitRequirements) {
-          return true;
+        if (!q?.exitRequirements || q.exitRequirements.length === 0) {
+          // ret === true
         }
-        return q.exitRequirements.every((r) => r.minAge && years >= r.minAge.years);
+        ret = ret
+          && (q.exitRequirements?.every((r) => r.minAge && years >= r.minAge.years) || true);
+        break;
       case STEP_TYPE.MULTIPLE_CHOICE:
-        return (
+        ret = ret && (
           q.answer !== undefined
           && answers?.find((x) => x.title === q.answer) !== undefined
         );
+        break;
       default:
-        return true;
+        // ret === true
+        break;
     }
+    log(`isValid: ${ret}`);
+    return ret;
   }
 
   public static getFieldSetName(props: IQuestionData): string {
