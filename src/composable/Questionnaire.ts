@@ -130,7 +130,7 @@ export class Questionnaire implements IQuestionnaire {
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  getStep(thisStep: string, form: IForm, direction: DIRECTION): string {
+  getStep(thisStep: string, form: IForm, direction: DIRECTION, skip = 0): string {
     const nextStep =      this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
       : undefined;
@@ -140,7 +140,10 @@ export class Questionnaire implements IQuestionnaire {
     }
 
     const thisQuestion = this.getStepById(thisStep);
-    if (thisQuestion.exitRequirements) {
+    if (skip === 0
+      && direction === DIRECTION.FORWARD
+      && thisQuestion.exitRequirements
+      && thisQuestion.exitRequirements.length > 0) {
       const allowExit = thisQuestion.exitRequirements.every((r) =>
         this.meetsAllRequirements(r, form));
       if (!allowExit) {
@@ -152,10 +155,11 @@ export class Questionnaire implements IQuestionnaire {
       return nextStep;
     }
     // Special handling for results
-    if (nextStep === STEP_TYPE.RESULTS && this.getResults(form).length === 0) {
+    const hasResults = this.getResults(form).length > 0;
+    if (nextStep === STEP_TYPE.RESULTS && !hasResults) {
       return STEP_TYPE.NO_RESULTS;
     }
-    if (nextStep === STEP_TYPE.NO_RESULTS && this.getResults(form).length > 0) {
+    if (nextStep === STEP_TYPE.NO_RESULTS && hasResults) {
       return STEP_TYPE.RESULTS;
     }
 
@@ -184,7 +188,7 @@ export class Questionnaire implements IQuestionnaire {
       return nextStep;
     }
     // Get the next step whose requirements are met
-    const n = this.getStep(nextStep, form, direction);
+    const n = this.getStep(nextStep, form, direction, skip + 1);
     if (n !== nextStep) {
       return n;
     }
