@@ -113,7 +113,9 @@ const onDateOfBirthChange = (
   });
   const bd     = Questions.toBirthdate(state);
   const age    = getAge(bd);
-  const errStr = `${state.month || ''}/${state.day || ''}/${state.year || ''}`;
+  const errStr = `${state.month || '__'}/${state.day || '__'}/${state.year || '____'}`;
+  // eslint-disable-next-line max-len
+  const generalError = 'Follow the "MM DD YYYY" format to enter your birthday. For example, September 9, 1960 is 09 09 1960.';
 
   if (age && bd) {
     setError('');
@@ -144,10 +146,9 @@ const onDateOfBirthChange = (
         birthdate: '',
       },
     });
-    setError(`${errStr} is not valid 1.`);
+    setError(`"${errStr}" is not a valid date. ${generalError}`);
   } else {
-    // eslint-disable-next-line max-len
-    setError('Follow the "MM DD YYYY" format to enter your birthday. For example, September 9, 1960 is 09 09 1960.');
+    setError(`"${errStr}" is not a valid date. ${generalError}`);
   }
 };
 
@@ -191,6 +192,9 @@ const getDateInput = (
   );
 };
 
+const getAlertClass = (error: string) =>
+  `${(error.length > 0 ? CSS_CLASS.VISIBLE : CSS_CLASS.HIDDEN)} ${CSS_CLASS.DOB_ERROR}`;
+
 const getDateInputGroup = (
   label: string,
   props: IQuestionData,
@@ -206,7 +210,15 @@ const getDateInputGroup = (
       {getDateInput(DATE_UNIT.DAY, label, props, state, setState, config, setError)}
       {getDateInput(DATE_UNIT.YEAR, label, props, state, setState, config, setError)}
     </DateInputGroup>
-    <span className={CSS_CLASS.DOB_ERROR}>{error}</span>
+    <div className={getAlertClass(error)}>
+      <div className="usa-alert usa-alert--error usa-alert--slim">
+        <div className="usa-alert__body">
+          <p className="usa-alert__text">
+            {error}
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 );
 

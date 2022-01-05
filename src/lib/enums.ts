@@ -82,6 +82,7 @@ export enum CSS_CLASS {
   DEV_PANEL_SECTION = 'usds-q-dev-panel',
   DOB = 'usds-q-dob',
   DOB_ERROR = 'usds-q-dob-error',
+  HIDDEN = 'usds-q-hidden',
   MULTI_CHOICE = 'usds-q-multi-choice',
   MULTI_CHOICE_GROUP = 'usds-q-multi-choice-group',
   MULTI_SELECT = 'usds-q-multi-select',
@@ -112,6 +113,7 @@ export enum CSS_CLASS {
   STEP_SUBTITLE = 'usds-q-step-subtitle',
   SUMMARY_LIST = 'usds-q-summary-list',
   SUMMARY_QA_LIST = 'usds-q-summary-qa-list',
+  VISIBLE = 'usds-q-visible',
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -30,7 +30,6 @@ plugins:
   - align-import
   - import
   - json-files
-  - json-files
   - jsx-a11y
   - react
   - react-hooks
