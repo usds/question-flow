@@ -116,7 +116,6 @@ const onDateOfBirthChange = (
   const errStr = `${state.month || '__'}/${state.day || '__'}/${state.year || '____'}`;
   // eslint-disable-next-line max-len
   const generalError = 'Follow the "MM DD YYYY" format to enter your birthday. For example, September 9, 1960 is 09 09 1960.';
-
   if (age && bd) {
     setError('');
     setAge(cookieName, age.years);
@@ -133,19 +132,26 @@ const onDateOfBirthChange = (
         r.minAge && age.years < r.minAge.years);
       if (invalid) {
         const min = props.step.exitRequirements.map((r) => r.minAge?.years).join(', ');
+        props.dispatchForm({
+          type:  ACTION_TYPE.UPDATE,
+          value: {
+            age:       { years: 0 },
+            birthdate: '',
+          },
+        });
         // eslint-disable-next-line max-len
         setError(`Looks like that's a birth date under age ${min}. Enter a birthday for someone who is over ${min} years old or tap "Go Back".`);
       }
     }
   } else if (props.form?.age?.years && props.form.age.years > 0) {
     // If we have previously set a valid age, unset it
-    props.dispatchForm({
-      type:  ACTION_TYPE.UPDATE,
-      value: {
-        age:       { years: -1 },
-        birthdate: '',
-      },
-    });
+    // props.dispatchForm({
+    //   type:  ACTION_TYPE.UPDATE,
+    //   value: {
+    //     age:       { years: -1 },
+    //     birthdate: '',
+    //   },
+    // });
     setError(`"${errStr}" is not a valid date. ${generalError}`);
   } else {
     setError(`"${errStr}" is not a valid date. ${generalError}`);
@@ -225,10 +231,11 @@ const getDateInputGroup = (
 export const DateOfBirth = (props: IQuestionData): JSX.Element => {
   const { config, questionnaire } = useGlobal();
   const { step }                  = props;
+  const birthdate                 = Questions.getBirthdate(props);
   const dob: TDateOfBirth         = {
-    day:   Questions.getBirthdate(props)?.day?.toString(),
-    month: Questions.getBirthdate(props)?.month?.toString(),
-    year:  Questions.getBirthdate(props)?.year?.toString(),
+    day:   birthdate?.day?.toString(),
+    month: birthdate?.month?.toString(),
+    year:  birthdate?.year?.toString(),
   };
   const [state, setState]         = useState(dob);
   const [error, setError]         = useState('');
@@ -236,7 +243,6 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
   if (!step) {
     return noel();
   }
-
   return getDateInputGroup('date_of_birth', props, state, setState, config, error, setError);
 };
 

@@ -1,7 +1,6 @@
 import { kebabCase, values }                   from 'lodash';
 import { Questionnaire }                       from '../../composable/Questionnaire';
 import { DIRECTION, QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
-import { log }                                 from '../../lib/log';
 import { IForm }                               from '../../survey/IForm';
 import { IQuestionData }                       from '../../survey/IQuestionData';
 import { IStepData }                           from '../../survey/IStepData';
@@ -48,8 +47,8 @@ export abstract class Steps {
     }
     // KLUDGE Alert: this is not an elegant way to solve this
     if (props.step?.type === QUESTION_TYPE.DOB) {
-      log('DOB');
-      return undefined !== props.form?.age?.years && props.form.age.years >= 0;
+      const yearsOld = props.form.age?.years || 0;
+      return yearsOld > 0;
     }
     if (!props.form) {
       return false;
@@ -87,7 +86,6 @@ export abstract class Steps {
         // ret === true
         break;
     }
-    log(`isValid: ${ret}`);
     return ret;
   }
 
