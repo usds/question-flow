@@ -132,6 +132,13 @@ const onDateOfBirthChange = (
         r.minAge && age.years < r.minAge.years);
       if (invalid) {
         const min = props.step.exitRequirements.map((r) => r.minAge?.years).join(', ');
+        props.dispatchForm({
+          type:  ACTION_TYPE.UPDATE,
+          value: {
+            age:       { years: 0 },
+            birthdate: '',
+          },
+        });
         // eslint-disable-next-line max-len
         setError(`Looks like that's a birth date under age ${min}. Enter a birthday for someone who is over ${min} years old or tap "Go Back".`);
       }
