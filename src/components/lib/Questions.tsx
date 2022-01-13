@@ -177,6 +177,9 @@ export abstract class Questions {
    * @returns
    */
   public static getBirthdate(props: IQuestionData): DateTime | undefined {
+    if (props.step?.answer) {
+      return getDateTime(props.step.answer);
+    }
     if (props.form?.birthdate) {
       return getDateTime(props.form.birthdate);
     }
