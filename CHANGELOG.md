@@ -1,3 +1,10 @@
+## [1.4.12](https://github.com/usds/questionable/compare/v1.4.11...v1.4.12) (2022-01-13)
+
+
+### Bug Fixes
+
+* **ci:** upgrade dependencies ([fee453c](https://github.com/usds/questionable/commit/fee453c1dd53e8f099dcebf7e90c12aeec1620e6))
+
 ## [1.4.11](https://github.com/usds/questionable/compare/v1.4.10...v1.4.11) (2022-01-13)
 
 
