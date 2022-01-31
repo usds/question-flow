@@ -1,5 +1,18 @@
 import { ArrayUnique }             from 'class-validator';
 import { groupBy, isEmpty, merge } from 'lodash';
+import { IAction }                 from '../survey/IAction';
+import { IBranch }                 from '../survey/IBranch';
+import { IForm }                   from '../survey/IForm';
+import { IPageConfig }             from '../survey/IQuestionableConfig';
+import { IPages }                  from '../survey/IPages';
+import { IQuestionnaire }          from '../survey/IQuestionnaire';
+import { IResult }                 from '../survey/IResult';
+import { IStepData }               from '../survey/IStepData';
+import { log }                     from '../lib/log';
+import { matches }                 from '../lib/helpers';
+import { QuestionableConfig }      from './Config';
+import { setBranch }               from '../state/persists';
+import { TAge, TAgeCalc }          from '../lib/types';
 import {
   ACTION,
   DIRECTION,
@@ -10,17 +23,6 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../lib/enums';
-import { matches }        from '../lib/helpers';
-import { log }            from '../lib/log';
-import { TAge, TAgeCalc } from '../lib/types';
-import { setBranch }      from '../state/persists';
-import { IAction }        from '../survey/IAction';
-import { IBranch }        from '../survey/IBranch';
-import { IForm }          from '../survey/IForm';
-import { IPages }         from '../survey/IPages';
-import { IPageConfig }    from '../survey/IQuestionableConfig';
-import { IQuestionnaire } from '../survey/IQuestionnaire';
-import { IResult }        from '../survey/IResult';
 import {
   IPage,
   IQuestion,
@@ -29,8 +31,6 @@ import {
   ISection,
   IStep,
 } from '../survey/IStep';
-import { IStepData }          from '../survey/IStepData';
-import { QuestionableConfig } from './Config';
 
 /**
  * Utility wrapper for survey state

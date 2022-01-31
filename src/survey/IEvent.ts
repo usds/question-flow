@@ -1,4 +1,5 @@
 import { DIRECTION }     from '../lib/enums';
+import { IForm }         from './IForm';
 import { IQuestionData } from './IQuestionData';
 import { IStepData }     from './IStepData';
 
@@ -39,13 +40,15 @@ export type TResultData = {
   step: 'results';
 }
 
+export type TEvent = TPageData | TAnswerData | TResultData | IForm;
+
 /**
  * Event function type to be used as a callback
  *
  * @title Event Type
  * @hidden
  */
-export type TEvent = (data: TPageData | TAnswerData | TResultData) => void;
+export type TOnEvent = (data: TEvent) => void;
 
 /**
  * Error function type to be used as a callback
@@ -53,11 +56,14 @@ export type TEvent = (data: TPageData | TAnswerData | TResultData) => void;
  * @title Error Type
  * @hidden
  */
-export type TError = (e: Error, data?: TPageData | TAnswerData | TResultData) => void;
+export type TOnError = (e: Error, data?: TEvent) => void;
 
 export interface IEvent {
-  onAnswer: TEvent | undefined,
-  onError: TError | undefined,
-  onEvent: TEvent | undefined,
-  onPage: TEvent | undefined,
+  onAnswer: TOnEvent | undefined,
+  onAnyEvent: TOnEvent | undefined,
+  onError: TOnError | undefined,
+  onInit: TOnEvent | undefined,
+  onNoResults: TOnEvent | undefined,
+  onPage: TOnEvent | undefined,
+  onResults: TOnEvent | undefined
 }

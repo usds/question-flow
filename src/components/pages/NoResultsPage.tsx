@@ -1,10 +1,10 @@
 import { ACTION, CSS_CLASS } from '../../lib';
-import { noel }              from '../../lib/noop';
-import { useGlobal }         from '../../state/GlobalState';
-import { IPageData }         from '../../survey/IPageData';
-import { Span }              from '../factories/NodeFactory';
 import { Action }            from '../wizard/Action';
+import { IPageData }         from '../../survey/IPageData';
+import { noel }              from '../../lib/noop';
+import { Span }              from '../factories/NodeFactory';
 import { StepLayout }        from '../wizard/StepLayout';
+import { useGlobal }         from '../../state/GlobalState';
 
 /**
  * Displays the wizard results
@@ -12,13 +12,15 @@ import { StepLayout }        from '../wizard/StepLayout';
  * @returns
  */
 export const NoResultsPage = (props: IPageData): JSX.Element => {
-  const { step }          = props;
-  const global            = useGlobal();
-  const { questionnaire } = global;
+  const { step }                  = props;
+  const global                    = useGlobal();
+  const { questionnaire, config } = global;
 
   if (!step) {
     return noel();
   }
+
+  config.events.noResult(props.form);
 
   const action = questionnaire.getActionByType(ACTION.NONE);
 

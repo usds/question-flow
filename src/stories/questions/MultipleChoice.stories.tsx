@@ -1,14 +1,14 @@
+import { Form } from '../../composable/Form';
+import { IQuestionData } from '../../survey/IQuestionData';
+import { Meta, Story } from '@storybook/react';
+import { MultipleChoice } from '../../components/questions/MultipleChoice';
+import { QUESTION_TYPE } from '../../lib';
+import { stepReducer } from '../../state/stepReducer';
+import '../../stories/styles';
 /* eslint-disable max-len */
 /*
   eslint-disable import/no-extraneous-dependencies
 */
-import { Meta, Story } from '@storybook/react';
-import { QUESTION_TYPE } from '../../lib';
-import { Answer } from '../../composable/Answer';
-import { stepReducer } from '../../state/stepReducer';
-import '../../stories/styles';
-import { IQuestionData } from "../../survey/IQuestionData";
-import { MultipleChoice } from '../../components/questions/MultipleChoice';
 
 export default {
   argTypes: {
@@ -23,7 +23,7 @@ const Template: Story<IQuestionData> = (args) => <MultipleChoice {...args} />;
 export const Radiolist = Template.bind({});
 Radiolist.args = {
   dispatchForm: stepReducer,
-  form: new Answer(),
+  form: new Form(),
   step: {
     answers: [
       { id: '0', title: 'Yes' },

@@ -1,50 +1,56 @@
-import { error as log, noop } from '../lib';
 import { catchError }         from '../lib/error';
+import { error as log, noop } from '../lib';
+import { IForm }              from '../survey';
 import {
   IEvent,
   TAnswerData,
-  TError,
   TEvent,
+  TOnError,
+  TOnEvent,
   TPageData,
   TResultData,
 } from '../survey/IEvent';
 
 export class EventEmitter implements IEvent {
-  onAnswer: TEvent = noop;
+  onAnswer: TOnEvent = noop;
 
-  onEvent: TEvent = noop;
+  onError: TOnError = noop;
 
-  onError: TError = noop;
+  onAnyEvent: TOnEvent = noop;
 
-  onPage: TEvent = noop;
+  onPage: TOnEvent = noop;
+
+  onInit: TOnEvent = noop;
+
+  onResults: TOnEvent = noop;
+
+  onNoResults: TOnEvent = noop;
 
   constructor(obj: Partial<EventEmitter>) {
     Object.assign(this, obj);
   }
 
+  init(data: IForm): void {
+    this.event(data, this.onInit);
+  }
+
   page(data: TPageData): void {
-    this.event(data);
-    try {
-      this.onPage(data);
-    } catch (e) {
-      const error = catchError(e);
-      this.error(error, data);
-    }
+    this.event(data, this.onPage);
   }
 
   answer(data: TAnswerData): void {
-    this.event(data);
-    try {
-      if (this.onAnswer) {
-        this.onAnswer(data);
-      }
-    } catch (e) {
-      const error = catchError(e);
-      this.error(error, data);
-    }
+    this.event(data, this.onAnswer);
   }
 
-  error(e: Error, data?: TPageData | TAnswerData | TResultData): void {
+  result(data: TResultData): void {
+    this.event(data, this.onResults);
+  }
+
+  noResult(data: IForm): void {
+    this.event(data, this.onNoResults);
+  }
+
+  error(e: Error, data?: TEvent): void {
     try {
       this.onError(e, data);
     } catch (innerE) {
@@ -52,18 +58,16 @@ export class EventEmitter implements IEvent {
     }
   }
 
-  event(data: TPageData | TAnswerData | TResultData): void {
+  event(data: TEvent, callback: TOnEvent, noAny = true): void {
+    if (noAny) {
+      // This is a recursive call, so we do not need to catch errors
+      this.event(data, this.onAnyEvent, false);
+    }
     try {
-      if (this.onEvent) {
-        this.onEvent(data);
-      }
+      callback(data);
     } catch (e) {
       const error = catchError(e);
       this.error(error, data);
     }
-  }
-
-  results(data: TResultData): void {
-    this.event(data);
   }
 }

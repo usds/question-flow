@@ -1,13 +1,13 @@
-/* eslint-disable max-len, 
-    import/no-extraneous-dependencies
-*/
+import { DateOfBirth } from '../../components/questions/DateOfBirth';
+import { Form } from '../../composable/Form';
+import { IQuestionData } from '../../survey/IQuestionData';
 import { Meta, Story } from '@storybook/react';
 import { QUESTION_TYPE } from '../../lib';
-import { Answer } from '../../composable/Answer';
 import { stepReducer } from '../../state/stepReducer';
 import '../styles';
-import { IQuestionData } from "../../survey/IQuestionData";
-import { DateOfBirth } from '../../components/questions/DateOfBirth';
+/* eslint-disable max-len,
+    import/no-extraneous-dependencies
+*/
 
 export default {
   argTypes: {
@@ -22,7 +22,7 @@ const Template: Story<IQuestionData> = (args) => <DateOfBirth {...args} />;
 export const DoB = Template.bind({});
 DoB.args = {
   dispatchForm: stepReducer,
-  form: new Answer(),
+  form: new Form(),
   step: {
     answers: [],
     id: 'B',
