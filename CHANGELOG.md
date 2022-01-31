@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/usds/questionable/compare/v1.4.12...v1.5.0) (2022-01-31)
+
+
+### Features
+
+* **analytics:** adds wizard on start/on finish events ([#206](https://github.com/usds/questionable/issues/206)) ([b533b23](https://github.com/usds/questionable/commit/b533b23cbb70150223027b0156d999005ef8c422))
+
 ## [1.4.12](https://github.com/usds/questionable/compare/v1.4.11...v1.4.12) (2022-01-13)
 
 
