@@ -28,15 +28,15 @@ export const buildEligibility = (json: any = {}): IQuestionnaire => {
   const config        = new QuestionableConfig({
     dev:    false,
     events: new EventEmitter({
-      onAnswer: () => console.log('answer'),
-      onAnyEvent: () => console.log('anyEvent'),
-      onError: console.error,
-      onInit: () => console.log('init'),
+      onAnswer:    () => console.log('answer'),
+      onAnyEvent:  () => console.log('anyEvent'),
+      onError:     console.error,
+      onInit:      () => console.log('init'),
       onNoResults: () => console.log('noResults'),
-      onPage: () => console.log('page'),
-      onResults: () => console.log('results'),
+      onPage:      () => console.log('page'),
+      onResults:   () => console.log('results'),
     }),
-    nav:    {
+    nav: {
       prev: {
         visible: true,
       },
