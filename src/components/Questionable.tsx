@@ -1,13 +1,13 @@
 import { useReducer }          from 'react';
 import { useWizard }           from 'use-wizard';
-import { Answer }              from '../composable/Answer';
-import { GlobalStateProvider } from '../state/GlobalState';
-import { stepReducer }         from '../state/stepReducer';
+import { CSS_CLASS }           from '../lib/enums';
 import { DevPanel }            from './wizard/DevPanel';
+import { Form }                from '../composable/Form';
+import { GlobalStateProvider } from '../state/GlobalState';
+import { IQuestionable }       from '../survey/IQuestionable';
 import { ProgressFactory }     from './factories/ProgressFactory';
 import { StepFactory }         from './factories/StepFactory';
-import { CSS_CLASS }           from '../lib/enums';
-import { IQuestionable }       from '../survey/IQuestionable';
+import { stepReducer }         from '../state/stepReducer';
 
 export const Questionable = ({ questionnaire }: IQuestionable): JSX.Element => {
   if (!questionnaire) {
@@ -17,7 +17,7 @@ export const Questionable = ({ questionnaire }: IQuestionable): JSX.Element => {
   const [step, wizard] = useWizard(questionnaire.flow);
 
   // This is only used to store user inputs
-  const [form, dispatchForm] = useReducer(stepReducer, new Answer());
+  const [form, dispatchForm] = useReducer(stepReducer, new Form());
   return (
       <GlobalStateProvider value={questionnaire}>
         <div className={CSS_CLASS.BASE}>

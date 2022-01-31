@@ -1,11 +1,11 @@
-/* eslint-disable max-len, import/no-extraneous-dependencies */
+import { Form } from '../../composable/Form';
+import { IQuestionData } from '../../survey/IQuestionData';
 import { Meta, Story } from '@storybook/react';
+import { MultipleSelect } from '../../components/questions/MultiSelect';
 import { QUESTION_TYPE } from '../../lib';
 import { stepReducer } from '../../state';
-import { Answer } from '../../composable/Answer';
 import '../../stories/styles';
-import { IQuestionData } from "../../survey/IQuestionData";
-import { MultipleSelect } from '../../components/questions/MultiSelect';
+/* eslint-disable max-len, import/no-extraneous-dependencies */
 
 export default {
   argTypes: {
@@ -20,7 +20,7 @@ const Template: Story<IQuestionData> = (args) => <MultipleSelect {...args} />;
 export const Checklist = Template.bind({});
 Checklist.args = {
   dispatchForm: stepReducer,
-  form: new Answer(),
+  form: new Form(),
   step: {
     answers: [
       { id: '0', title: 'Hamburgers' },

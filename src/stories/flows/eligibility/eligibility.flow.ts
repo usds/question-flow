@@ -1,11 +1,11 @@
-/* eslint-disable no-console */
-import { QuestionableConfig } from '../../../composable/Config';
+import { actionContentMap }   from './content/actions.flow';
 import { EventEmitter }       from '../../../composable/EventEmitter';
 import { IQuestionnaire }     from '../../../survey/IQuestionnaire';
-import { actionContentMap }   from './content/actions.flow';
 import { pageContent }        from './content/pages.flow';
+import { QuestionableConfig } from '../../../composable/Config';
 import { questionContentMap } from './content/questions.flow';
 import { resultContentMap }   from './content/results.flow';
+/* eslint-disable no-console */
 import {
   buildActions,
   buildPages,
@@ -27,8 +27,16 @@ export const buildEligibility = (json: any = {}): IQuestionnaire => {
   const results       = buildResults(resultsJson, questions.map);
   const config        = new QuestionableConfig({
     dev:    false,
-    events: new EventEmitter({ onEvent: console.log }),
-    nav:    {
+    events: new EventEmitter({
+      onAnswer:    () => console.log('answer'),
+      onAnyEvent:  () => console.log('anyEvent'),
+      onError:     console.error,
+      onInit:      () => console.log('init'),
+      onNoResults: () => console.log('noResults'),
+      onPage:      () => console.log('page'),
+      onResults:   () => console.log('results'),
+    }),
+    nav: {
       prev: {
         visible: true,
       },

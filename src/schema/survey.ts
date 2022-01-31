@@ -203,13 +203,22 @@ export const survey = {
         "onAnswer": {
           "not": {}
         },
+        "onAnyEvent": {
+          "not": {}
+        },
         "onError": {
           "not": {}
         },
-        "onEvent": {
+        "onInit": {
+          "not": {}
+        },
+        "onNoResults": {
           "not": {}
         },
         "onPage": {
+          "not": {}
+        },
+        "onResults": {
           "not": {}
         }
       },
@@ -1415,6 +1424,22 @@ export const survey = {
         "button"
       ],
       "type": "string"
+    },
+    "TEvent": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TPageData"
+        },
+        {
+          "$ref": "#/definitions/TAnswerData"
+        },
+        {
+          "$ref": "#/definitions/TResultData"
+        },
+        {
+          "$ref": "#/definitions/IForm"
+        }
+      ]
     },
     "THorizontalPosition": {
       "enum": [

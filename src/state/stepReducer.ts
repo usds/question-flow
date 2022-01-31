@@ -1,7 +1,7 @@
 import { merge }       from 'lodash';
 import { ACTION_TYPE } from '../lib/enums';
+import { Form }        from '../composable/Form';
 import { IForm }       from '../survey/IForm';
-import { Answer }      from '../composable/Answer';
 
 /**
  * Merges the form's answer state as the user progresses through the survey
@@ -18,7 +18,7 @@ export const stepReducer = (
   // except when we attempt to storybook/test individual components in isolation
   switch (action?.type) {
     case ACTION_TYPE.RESET:
-      return new Answer();
+      return new Form();
 
     case ACTION_TYPE.UPDATE:
       return merge(

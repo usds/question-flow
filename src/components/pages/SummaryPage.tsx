@@ -1,12 +1,12 @@
-/* eslint-disable no-script-url */
 import { Link }       from '@trussworks/react-uswds';
 import { ReactNode }  from 'react';
+import { CSS_CLASS }  from '../../lib/enums';
+import { IPageData }  from '../../survey/IPageData';
 import { IQuestion }  from '../../survey';
 import { noel }       from '../../lib/noop';
-import { IPageData }  from '../../survey/IPageData';
 import { StepLayout } from '../wizard/StepLayout';
 import { Steps }      from '../lib';
-import { CSS_CLASS }  from '../../lib/enums';
+/* eslint-disable no-script-url */
 
 /**
  * Internal method to generate a list of the survey answers

@@ -1,13 +1,13 @@
 import { kebabCase }    from 'lodash';
 import { ReactNode }    from 'react';
-import { groupBy }      from '../../lib/array';
 import { CSS_CLASS }    from '../../lib/enums';
+import { Div }          from '../factories/NodeFactory';
+import { groupBy }      from '../../lib/array';
 import { IGlobalState } from '../../state/GlobalState';
-import { setResults }   from '../../state/persists';
-import { TResultData }  from '../../survey/IEvent';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';
-import { Div }          from '../factories/NodeFactory';
+import { setResults }   from '../../state/persists';
+import { TResultData }  from '../../survey/IEvent';
 
 /**
  * Static utility methods for page components
@@ -58,8 +58,8 @@ export abstract class Pages {
    * @returns
    */
   static getResults(props: IStepData, global: IGlobalState): ReactNode {
-    const { questionnaire, config } = global;
-    const data: TResultData         = {
+    const { questionnaire } = global;
+    const data: TResultData = {
       props,
       results: questionnaire.getResults(props.form).map((result) => ({
         category: result.category,
@@ -79,7 +79,7 @@ export abstract class Pages {
         ...r,
       })),
     );
-    config.events.results(data);
+
     const categories = groupBy(data.results, 'category');
     return Object.keys(categories).map((key) => {
       const cat   = categories[key];

@@ -1,6 +1,7 @@
 import { isString, merge }    from 'lodash';
-import { isEnum, MODE, noop } from '../lib';
+import { EventEmitter }       from './EventEmitter';
 import { getQueryParams }     from '../lib/params';
+import { isEnum, MODE, noop } from '../lib';
 import {
   INavigationConfig,
   IPagesConfig,
@@ -9,7 +10,6 @@ import {
   IQuestionConfig,
   IStepConfig,
 } from '../survey/IQuestionableConfig';
-import { EventEmitter } from './EventEmitter';
 
 /**
  * Configuration class for customizing the Questionable components
@@ -70,10 +70,10 @@ export class QuestionableConfig implements IQuestionableConfig {
   };
 
   #events: EventEmitter = new EventEmitter({
-    onAnswer: noop,
-    onError:  noop,
-    onEvent:  noop,
-    onPage:   noop,
+    onAnswer:   noop,
+    onAnyEvent: noop,
+    onError:    noop,
+    onPage:     noop,
   });
 
   constructor(config: Partial<IQuestionableConfig> = {}) {
