@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/usds/questionable/compare/v1.5.0...v1.5.1) (2022-02-02)
+
+
+### Bug Fixes
+
+* **validation:** date of birth validation correctly handles form ([#210](https://github.com/usds/questionable/issues/210)) ([b16406a](https://github.com/usds/questionable/commit/b16406a2e480f893c1a4721c0ba4cdae09fd2f26))
+
 # [1.5.0](https://github.com/usds/questionable/compare/v1.4.12...v1.5.0) (2022-01-31)
 
 
