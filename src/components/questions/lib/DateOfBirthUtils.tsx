@@ -156,7 +156,10 @@ export const onDateOfBirthChange = (
           .map((r) => r.minAge?.years)
           .join(', ');
         // eslint-disable-next-line max-len
-        message.push(`Looks like that's a birth date under age ${min}. Enter a birthday for someone who is over ${min} years old or tap "Go Back".`);
+        let underAge = `Looks like that's a birthday for someone under age ${min}. `;
+        underAge    += `Enter a birthday for someone who is age ${min} or over, `;
+        underAge    += 'or tap "Go Back" to check eligibility for a child.';
+        message.push(underAge);
       }
     }
   } else if ((monthIsValid || dayIsValid || yearIsValid)
