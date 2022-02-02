@@ -3,6 +3,7 @@ import { capitalize }                                     from 'lodash';
 import {
   ChangeEvent, Dispatch, KeyboardEvent, SetStateAction,
 } from 'react';
+import { noel }                              from '../../../lib/noop';
 import { QuestionableConfig }                from '../../../composable';
 import { getAge }                            from '../../../lib/date';
 import { ACTION_TYPE, CSS_CLASS, DATE_UNIT } from '../../../lib/enums';
@@ -129,13 +130,12 @@ export const onDateOfBirthChange = (
   setState({
     ...state,
   });
-  const bd     = Questions.toBirthdate(state);
-  const age    = getAge(bd);
-  const errStr = `${state.month || '__'}/${state.day || '__'}/${
-    state.year || '____'
-  }`;
-  // eslint-disable-next-line max-len
-  const generalError =    'Follow the "MM DD YYYY" format to enter your birthday. For example, September 9, 1960 is 09 09 1960.';
+  const bd                = Questions.toBirthdate(state);
+  const age               = getAge(bd);
+  const monthIsValid      = isValid(DATE_UNIT.MONTH, state[DATE_UNIT.MONTH] || '');
+  const dayIsValid        = isValid(DATE_UNIT.DAY, state[DATE_UNIT.DAY] || '');
+  const yearIsValid       = isValid(DATE_UNIT.YEAR, state[DATE_UNIT.YEAR] || '');
+  const message: string[] = [];
   if (age && bd) {
     setError({ message: '', type: 'info' });
     setAge(cookieName, age.years);
@@ -155,32 +155,30 @@ export const onDateOfBirthChange = (
         const min = props.step.exitRequirements
           .map((r) => r.minAge?.years)
           .join(', ');
-        props.dispatchForm({
-          type:  ACTION_TYPE.UPDATE,
-          value: {
-            age:       { years: 0 },
-            birthdate: '',
-          },
-        });
-        setError({
-          // eslint-disable-next-line max-len
-          message: `Looks like that's a birth date under age ${min}. Enter a birthday for someone who is over ${min} years old or tap "Go Back".`,
-
-          type: 'error',
-        });
+        // eslint-disable-next-line max-len
+        message.push(`Looks like that's a birth date under age ${min}. Enter a birthday for someone who is over ${min} years old or tap "Go Back".`);
       }
     }
-  } else if (props.form?.age?.years && props.form.age.years > 0) {
-    if (!isValid(DATE_UNIT.MONTH, state[DATE_UNIT.MONTH] || '')) {
-      setError({
-        message: `1 "${errStr}" is not a valid date. ${generalError}`,
-        type:    'error',
-      });
+  } else if ((monthIsValid || dayIsValid || yearIsValid)
+    || (props.form?.age?.years && props.form.age.years > 0)) {
+    if ((yearIsValid && !dayIsValid)) {
+      message.push('Please enter the day in DD format.');
     }
-  } else {
+    if ((yearIsValid && !monthIsValid) || (dayIsValid && !monthIsValid)) {
+      message.push('Please enter the month in MM format.');
+    }
+  }
+  if (message.length > 0) {
     setError({
-      message: `2 "${errStr}" is not a valid date. ${generalError}`,
-      type:    'info',
+      message: `"${message.join(' ')}`,
+      type:    'error',
+    });
+    props.dispatchForm({
+      type:  ACTION_TYPE.UPDATE,
+      value: {
+        age:       { years: 0 },
+        birthdate: '',
+      },
     });
   }
 };
@@ -205,7 +203,6 @@ export const getDateInput = (
     max:    12,
     min:    1,
   };
-  console.log({ ...state, log: 'state' });
   switch (unit) {
     case DATE_UNIT.DAY:
       disabled = isDisabled(DATE_UNIT.MONTH, state[DATE_UNIT.MONTH]);
@@ -229,6 +226,7 @@ export const getDateInput = (
   return (
     <DateInput
       id={Steps.getDomId(unit, props)}
+      className={disabled ? CSS_CLASS.DISABLED_INPUT : ''}
       name={label}
       label={capitalize(unit)}
       aria-label={capitalize(unit)}
@@ -251,6 +249,9 @@ export const getAlertClass = (info: IInfoBox): string => {
 
 export const getInfoBox = (utilParams: TDoBUtilParams): JSX.Element => {
   const info = utilParams.error;
+  if (info.message.trim().length === 0) {
+    return noel();
+  }
   return (
     <div className={getAlertClass(info)}>
       <div className={`usa-alert usa-alert--${info.type} usa-alert--slim`}>

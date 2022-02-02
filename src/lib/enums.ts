@@ -55,8 +55,9 @@ export enum ACTION {
 }
 
 export enum ACTION_TYPE {
+  RERENDER = 'RERENDER',
   RESET = 'RESET',
-  UPDATE = 'UPDATE',
+  UPDATE = 'UPDATE'
 }
 
 export enum DATE_UNIT {
@@ -80,6 +81,7 @@ export enum CSS_CLASS {
   CALL_TO_ACTION_SECTION = 'usds-q-cta-section',
   DESIGN_LAYOUT = 'usds-q-design-layout',
   DEV_PANEL_SECTION = 'usds-q-dev-panel',
+  DISABLED_INPUT = 'usds-q-disbaled-input',
   DOB = 'usds-q-dob',
   DOB_ERROR = 'usds-q-dob-error',
   DOB_INFO = 'usds-q-dob-info',
