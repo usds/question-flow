@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/usds/questionable/compare/v1.5.1...v1.5.2) (2022-02-03)
+
+
+### Bug Fixes
+
+* **err:** updates dob error message ([cbdffff](https://github.com/usds/questionable/commit/cbdffff0a2cdecfeac925f8fa4074deadba85490))
+
 ## [1.5.1](https://github.com/usds/questionable/compare/v1.5.0...v1.5.1) (2022-02-02)
 
 
