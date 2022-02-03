@@ -164,11 +164,18 @@ export const onDateOfBirthChange = (
     }
   } else if ((monthIsValid || dayIsValid || yearIsValid)
     || (props.form?.age?.years && props.form.age.years > 0)) {
-    if ((yearIsValid && !dayIsValid)) {
-      message.push('Please enter the day in DD format.');
-    }
+    let text = '';
     if ((yearIsValid && !monthIsValid) || (dayIsValid && !monthIsValid)) {
-      message.push('Please enter the month in MM format.');
+      text += ' month';
+    }
+    if ((yearIsValid && !dayIsValid)) {
+      if (text.length > 0) {
+        text += ' and';
+      }
+      text += ' day';
+    }
+    if (text.length > 0) {
+      message.push(`Enter the ${text} you were born.`);
     }
   }
   if (message.length > 0) {
