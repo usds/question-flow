@@ -207,6 +207,6 @@
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
   "types": "dist/index.d.ts",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "packageManager": "yarn@3.1.1"
 }

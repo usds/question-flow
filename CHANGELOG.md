@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/usds/questionable/compare/v1.5.3...v1.5.4) (2022-02-03)
+
+
+### Bug Fixes
+
+* **ci:** trigger publish ([#213](https://github.com/usds/questionable/issues/213)) ([c2aae46](https://github.com/usds/questionable/commit/c2aae46b1fb73af957a847185545c53859169c81))
+
 ## [1.5.3](https://github.com/usds/questionable/compare/v1.5.2...v1.5.3) (2022-02-03)
 
 
