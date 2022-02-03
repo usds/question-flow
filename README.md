@@ -48,7 +48,7 @@ or
 npm i @usds.gov/questionable
 ```
 
-## Usage
+## Usage 
 
 It is strongly suggested applications use the same version of [USWDS](https://designsystem.digital.gov/) that is used by [@trussworks/react-uswds](https://github.com/trussworks/react-uswds). A version mismatch may result in unexpected markup & CSS combinations. This project will stay current with @trussworks/react-uswds, which is often behind the USWDS by a point release or two.
 
