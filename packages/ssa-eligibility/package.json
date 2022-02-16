@@ -1,0 +1,74 @@
+{
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ]
+  },
+  "dependencies": {
+    "@usds.gov/questionable": "^1.5.4",
+    "axios": "^0.26.0",
+    "cross-env": "^7.0.3",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-async": "^10.0.1",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "typescript": "^4.5.5",
+    "web-vitals": "^2.1.4"
+  },
+  "engines": {
+    "node": "14.x - 16.x"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "homepage": "https://usds.github.io/ssa-eligibility",
+  "keywords": [
+    "react",
+    "uswds",
+    "uswds 2.0",
+    "react component",
+    "us web design",
+    "design system",
+    "component library",
+    "usds",
+    "survey",
+    "questionnaire"
+  ],
+  "license": "ISC",
+  "main": "dist/main.js",
+  "module": "dist/main.esm.js",
+  "name": "@usds.gov/ssa-eligibility",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usds/ssa-eligibility.git"
+  },
+  "scripts": {
+    "build": "yarn lint && yarn build:rollup",
+    "build:gh": "react-scripts build",
+    "build:rollup": "rollup --config --environment NODE_ENV:production",
+    "build:ts": "tsc --build \"./tsconfig.build.json\"",
+    "deploy": "gh-pages -d build",
+    "eject": "react-scripts eject",
+    "lint": "yarn lint:ts && yarn type-check",
+    "lint:fix": "pretty-quick --staged && eslint --cache --fix \"src/**/*.{ts,tsx,json,js}\"",
+    "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
+    "predeploy": "npm run build",
+    "prepare": "husky install",
+    "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\"",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "type-check": "tsc --noEmit"
+  },
+  "types": "dist/main.d.ts",
+  "version": "1.1.7",
+  "packageManager": "yarn@3.1.1"
+}

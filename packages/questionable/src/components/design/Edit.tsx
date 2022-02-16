@@ -1,7 +1,8 @@
-import Form              from '@rjsf/semantic-ui';
-import { Button }        from '@trussworks/react-uswds';
+/* eslint-disable */
+// import Form from '@rjsf/semantic-ui';
+// import { Button }        from '@trussworks/react-uswds';
 import { kebabCase }     from 'lodash';
-import { getStepSchema } from '../../schema/editStepSchema';
+// import { getStepSchema } from '../../schema/editStepSchema';
 import { useGlobal }     from '../../state/GlobalState';
 import { IPageData }     from '../../survey/IPageData';
 import { IQuestionData } from '../../survey/IQuestionData';
@@ -13,40 +14,41 @@ import { DesignLayout }  from '../wizard/DesignLayout';
  * @param props
  * @returns
  */
-export const Edit = (props: IQuestionData | IPageData): JSX.Element => {
+export const Edit = (_props: IQuestionData | IPageData): JSX.Element => {
   const { questionnaire } = useGlobal();
-  const schema            = getStepSchema(props);
+  //const schema            = getStepSchema(props);
   const fileName          = kebabCase(questionnaire.header);
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const onSubmit = ({ formData }: any) => {
     Wizard.saveAsJson(formData, `${fileName}.json`);
   };
-  return (
-    <Form
-      schema={schema}
-      uiSchema={{
-        step: {
-          'ui:order': [
-            'title',
-            'subTitle',
-            'bodyHeader',
-            'bodySubHeader',
-            'body',
-            'info',
-            'footer',
-            '*',
-          ],
-        },
-      }}
-      onSubmit={onSubmit}
-      formData={{ step: props.step }}
-    >
-      <div>
-        <Button type="submit">Save</Button>
-      </div>
-    </Form>
-  );
+  return <div onClick={onSubmit}></div>
+  // return (
+  //   <Form
+  //     schema={schema}
+  //     uiSchema={{
+  //       step: {
+  //         'ui:order': [
+  //           'title',
+  //           'subTitle',
+  //           'bodyHeader',
+  //           'bodySubHeader',
+  //           'body',
+  //           'info',
+  //           'footer',
+  //           '*',
+  //         ],
+  //       },
+  //     }}
+  //     onSubmit={onSubmit}
+  //     formData={{ step: props.step }}
+  //   >
+  //     <div>
+  //       <Button type="submit">Save</Button>
+  //     </div>
+  //   </Form>
+  // );
 };
 
 /**

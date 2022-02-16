@@ -3,7 +3,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
-    "baseUrl": ".",
+    "baseUrl": "packages",
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
@@ -14,7 +14,8 @@
     "jsx": "react-jsx",
     "lib": [
       "dom",
-      "ES2015"
+      "ES2015",
+      "es2019"
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -32,7 +33,15 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "ES2015"
+    "target": "ES2019",
+    "paths": {
+      "@usds.gov/questionable": [
+        "questionable"
+      ],
+      "@usds.gov/ssa-eligibility": [
+        "ssa-eligibility"
+      ],
+    }
   },
   "exclude": [
     "node_modules",
@@ -41,10 +50,8 @@
     "**/*.css",
     "**/*.test.ts"
   ],
-  "files": [
-    "src/index.ts"
-  ],
   "include": [
+    "types.d.ts",
     "src"
-  ]
+  ],
 }
