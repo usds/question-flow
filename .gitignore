@@ -9,6 +9,7 @@
 # production / NPM
 projects/questionable/dist
 projects/ssa-eligibility/dist
+projects/ssa-eligibility/build
 
 # Storybook
 projects/questionable/storybook-static
