@@ -11,6 +11,6 @@
   ],
   "extends": "./tsconfig.build.json",
   "include": [
-    "src"
+    "projects/questionable/src"
   ]
 }

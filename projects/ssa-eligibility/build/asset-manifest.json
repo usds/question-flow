@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/ssa-eligibility/static/css/main.afd7dcd9.chunk.css",
+    "main.js": "/ssa-eligibility/static/js/main.33a1fbf7.chunk.js",
+    "main.js.map": "/ssa-eligibility/static/js/main.33a1fbf7.chunk.js.map",
+    "runtime-main.js": "/ssa-eligibility/static/js/runtime-main.bc9cedc2.js",
+    "runtime-main.js.map": "/ssa-eligibility/static/js/runtime-main.bc9cedc2.js.map",
+    "static/css/2.d4226c95.chunk.css": "/ssa-eligibility/static/css/2.d4226c95.chunk.css",
+    "static/js/2.240ecdec.chunk.js": "/ssa-eligibility/static/js/2.240ecdec.chunk.js",
+    "static/js/2.240ecdec.chunk.js.map": "/ssa-eligibility/static/js/2.240ecdec.chunk.js.map",
+    "static/js/3.655994dd.chunk.js": "/ssa-eligibility/static/js/3.655994dd.chunk.js",
+    "static/js/3.655994dd.chunk.js.map": "/ssa-eligibility/static/js/3.655994dd.chunk.js.map",
+    "index.html": "/ssa-eligibility/index.html",
+    "static/css/2.d4226c95.chunk.css.map": "/ssa-eligibility/static/css/2.d4226c95.chunk.css.map",
+    "static/css/main.afd7dcd9.chunk.css.map": "/ssa-eligibility/static/css/main.afd7dcd9.chunk.css.map",
+    "static/js/2.240ecdec.chunk.js.LICENSE.txt": "/ssa-eligibility/static/js/2.240ecdec.chunk.js.LICENSE.txt",
+    "static/media/uswds.css": "/ssa-eligibility/static/media/f347d9834a5feacbcefb85461ac77e70.f347d983.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bc9cedc2.js",
+    "static/css/2.d4226c95.chunk.css",
+    "static/js/2.240ecdec.chunk.js",
+    "static/css/main.afd7dcd9.chunk.css",
+    "static/js/main.33a1fbf7.chunk.js"
+  ]
+}

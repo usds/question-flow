@@ -4,8 +4,8 @@ import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-ts';
 import pkg        from './package.json';
 
-const input        = 'src/index.ts';
-const tsconfig     = 'tsconfig.build.json';
+const input        = 'src/main.ts';
+const tsconfig     = 'tsconfig.npm.json';
 const production   = process.env.NODE_ENV === 'production';
 const browserslist = pkg.browserslist[process.env.NODE_ENV];
 

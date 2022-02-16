@@ -7,10 +7,12 @@
 /coverage
 
 # production / NPM
-/dist
+projects/questionable/dist
+projects/ssa-eligibility/dist
 
 # Storybook
-/storybook-static
+projects/questionable/storybook-static
+projects/ssa-eligibility/storybook-static
 
 #ide
 /.idea

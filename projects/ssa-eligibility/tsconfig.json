@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ESNext",
+      "dom"
+    ],
+    "target": "ESNext",
+    "module": "esnext"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "./tsconfig.build.json",
+  "include": [
+    "src"
+  ]
+}
