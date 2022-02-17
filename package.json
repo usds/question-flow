@@ -163,7 +163,9 @@
   "private": true,
   "scripts": {
     "build": "yarn workspaces foreach run build",
+    "lint": "yarn workspaces foreach run lint:fix",
     "contributors:add": "all-contributors add",
+    "start": "yarn workspace @usds.gov/questionable-storybook start",
     "nuke": "yarn workspaces foreach run clean && rimraf node_modules/.cache && rimraf .yarn/cache && yarn cache clean"
   },
   "workspaces": [

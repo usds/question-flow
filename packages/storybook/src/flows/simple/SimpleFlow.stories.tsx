@@ -1,4 +1,4 @@
-import '../../../styles';
+import '../../styles';
 import { Meta, Story } from '@storybook/react';
 import { simpleFlow } from './simple.flow';
 import {

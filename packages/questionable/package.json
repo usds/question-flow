@@ -178,7 +178,7 @@
     "build:schema": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true && node ./scripts/parseSchema.js",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",
-    "deploy": "gh-pages -d build",
+    "deploy": "yarn publish",
     "lint": "yarn lint:ts && yarn type-check",
     "lint:fix": "pretty-quick --staged && eslint --cache --fix \"src/**/*.{ts,tsx,json,js}\"",
     "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",

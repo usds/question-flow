@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react';
 import { Questionable,IQuestionable } from '@usds.gov/questionable';
-import '../../../styles';
+import '../../styles';
 import { jsonFlow } from './json.flow';
 
 export default {

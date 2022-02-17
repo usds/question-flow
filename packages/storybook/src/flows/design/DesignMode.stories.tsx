@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react';
 import { Questionable ,IQuestionable, Questionnaire } from '@usds.gov/questionable';
 import { designFlow } from './design.flow';
-import '../../../styles';
+import '../../styles';
 export default {
   argTypes: {
     config: { control: { type: 'object' } },
