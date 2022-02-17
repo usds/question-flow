@@ -8,23 +8,19 @@ import { getDateTime, getDateTimeAge } from '@usds.gov/questionable';
  */
 export const isFraCalculator = (dob: string, monthOffset = 0): boolean => {
   const dateOfBirth = getDateTime(dob);
-  if (!dateOfBirth) {
-    return false;
-  }
+  if (!dateOfBirth) return false;
 
   let fra = dateOfBirth;
   // If the birthday is on the 1st of the month, FRA is calculated from the previous month
   // NOTE: if on 01/01, this will roll birthday back to the previous year
   if (dateOfBirth.day === 1) {
-    fra = dateOfBirth.minus({ day: 1 });
+    fra = dateOfBirth.minus({ days: 1 });
   }
   // Frequently, calculations are in the form of FRA + 12 months or FRA - n months
   fra = fra.plus({ months: monthOffset });
 
   const age = getDateTimeAge(fra);
-  if (!age) {
-    return false;
-  }
+  if (!age) return false;
 
   // Anyone 67 or more is always FRA
   if (age.years >= 67) {

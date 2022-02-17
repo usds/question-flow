@@ -93,7 +93,7 @@
     "semantic-ui-css": "^2.4.1",
     "storybook-readme": "^5.0.9",
     "ts-jest": "^27.1.3",
-    "ts-json-schema-generator": "^0.97.0",
+    "ts-json-schema-generator": "^0.98.0",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
@@ -162,10 +162,11 @@
   "packageManager": "yarn@3.1.1",
   "private": true,
   "scripts": {
-    "build": "yarn workspaces foreach run build"
+    "build": "yarn workspaces foreach run build",
+    "contributors:add": "all-contributors add",
+    "nuke": "yarn workspaces foreach run clean && rimraf node_modules/.cache && rimraf .yarn/cache && yarn cache clean"
   },
   "workspaces": [
-    "packages/questionable",
-    "packages/ssa-eligibility"
+    "packages/*"
   ]
 }

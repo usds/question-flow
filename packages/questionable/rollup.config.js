@@ -2,10 +2,10 @@ import commonjs   from '@rollup/plugin-commonjs';
 import resolve    from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-ts';
-import pkg        from '../../package.json';
+import pkg        from './package.json';
 
 const input        = 'src/index.ts';
-const tsconfig     = 'tsconfig.build.json';
+const tsconfig     = 'tsconfig.json';
 const production   = process.env.NODE_ENV === 'production';
 const browserslist = pkg.browserslist[process.env.NODE_ENV];
 

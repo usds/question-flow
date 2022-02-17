@@ -11,8 +11,8 @@ const online = {
   type: 'button',
 } as IButton;
 
-export const buildActions = (json: TActionMap): IAction[] => {
-  const first  = merge(
+export const buildActions = (json: TActionMap): IAction[] => [
+  merge(
     {
       buttons: [online],
       icon:    '',
@@ -20,8 +20,8 @@ export const buildActions = (json: TActionMap): IAction[] => {
       type:    ACTION.ONLINE,
     },
     json.a0,
-  ) as IAction;
-  const second = merge(
+  ) as IAction,
+  merge(
     {
       buttons: [],
       icon:    '',
@@ -29,17 +29,5 @@ export const buildActions = (json: TActionMap): IAction[] => {
       type:    ACTION.NONE,
     },
     json.a3,
-  ) as IAction;
-
-  const { drupalSettings } = window || {};
-  let linkAddOn            = '';
-  if (drupalSettings?.component?.eligibility?.survey === 1) {
-    linkAddOn = '?clickedApply=1';
-  }
-  first.buttons[0].link += linkAddOn;
-
-  return ([
-    first,
-    second,
-  ]);
-};
+  ) as IAction,
+];

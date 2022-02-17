@@ -20,11 +20,12 @@ export const useFetch = (url: string) => {
     axios.get(url, { cancelToken: source.token })
       .then((res: any) => {
         setLoading(false);
-        res.data && setData(res.data);
+        setData(res.data);
+        return res.data;
       })
       .catch((err: any) => {
         setLoading(false);
-        setError(`An error occurred. Awkward..${err?.description || err}`);
+        setError(`An error occurred: ${err?.description || err}`);
       });
     return () => {
       source.cancel();

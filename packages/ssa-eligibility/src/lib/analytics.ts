@@ -7,7 +7,7 @@ declare global {
   interface Window {
     dataLayer: Record<string, any>[];
     drupalSettings: DrupalSettings;
- } 
+ }
 }
 
 export const gtag = (...args: any[]) => {
