@@ -3,7 +3,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
-    "baseUrl": "packages",
+    "baseUrl": "./packages",
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
