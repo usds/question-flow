@@ -2,7 +2,7 @@ const path = require('path')
 
 const main = {
   "stories": [
-    "../src/**"
+    "../src/**/**"
   ],
   "addons": [
     "@storybook/addon-links",

@@ -8,7 +8,7 @@ import { IQuestionData } from '../../survey/IQuestionData';
 import {
   DateOfBirthStep,
   MultipleChoiceStep,
-  MultipleSelectStep,
+  MultiSelectStep,
 } from '../questions';
 
 /**
@@ -32,7 +32,7 @@ export const QuestionFactory = (props: IStepData): JSX.Element => {
     case QUESTION_TYPE.MULTIPLE_CHOICE:
       return <MultipleChoiceStep {...stepData} />;
     case QUESTION_TYPE.MULTIPLE_SELECT:
-      return <MultipleSelectStep {...stepData} />;
+      return <MultiSelectStep {...stepData} />;
     default:
       return noel('Question does not exist', 'QuestionFactory');
   }

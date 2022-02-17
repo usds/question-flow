@@ -9,7 +9,7 @@ import { StepLayout }    from '../wizard/StepLayout';
  * @param props
  * @returns
  */
-export const MultipleSelect = (props: IQuestionData): JSX.Element => {
+export const MultiSelect = (props: IQuestionData): JSX.Element => {
   const { config } = useGlobal();
 
   if (props?.step?.answers === undefined) {
@@ -24,8 +24,8 @@ export const MultipleSelect = (props: IQuestionData): JSX.Element => {
  * @param props
  * @returns
  */
-export const MultipleSelectStep = (props: IQuestionData): JSX.Element => (
+export const MultiSelectStep = (props: IQuestionData): JSX.Element => (
   <StepLayout {...props}>
-    <MultipleSelect {...props} />
+    <MultiSelect {...props} />
   </StepLayout>
 );
