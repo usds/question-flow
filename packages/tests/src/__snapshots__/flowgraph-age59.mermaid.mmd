@@ -1,0 +1,83 @@
+graph TD
+    A[ Who do you want to check<br/>eligibility for? ] -- who do you want to check<br/>eligibility for an<br/>adult age 18 and over --> B[ Enter your birthday. ]
+    B -- age59 --> D[ Have you ever had a job in<br/>the United States? ]
+    D -- have you ever had a job in<br/>the united states yes --> E[ Do you receive income<br/>from a job right now? ]
+    E -- do you receive income from<br/>a job right now yes --> G[ Do you have a condition<br/>that prevents you<br/>from working or<br/>limits the type of<br/>work youre able to<br/>do? ]
+    G -- do you have a condition<br/>that prevents you<br/>from working or<br/>limits the type of<br/>work youre able to<br/>do yes --> H[ Do you expect the<br/>condition to affect<br/>your ability to work<br/>for a year or more or<br/>be terminal? ]
+    H -- do you expect the condition<br/>to affect your ability<br/>to work for a year or<br/>more or be terminal yes --> I[ When did the condition<br/>start to affect your<br/>daily activities and<br/>ability to work? ]
+    I -- when did the condition<br/>start to affect your<br/>daily activities and<br/>ability to work<br/>before my 22nd<br/>birthday --> J[ Do you get state or<br/>federal government<br/>assistance to help<br/>cover your basic<br/>needs? ]
+    J -- do you get state or<br/>federal government<br/>assistance to help<br/>cover your basic<br/>needs yes --> K[ Is it hard to pay for<br/>basic needs like food<br/>clothing and a home? ]
+    K -- is it hard to pay for<br/>basic needs like food<br/>clothing and a home<br/>yes --> L[ Are you married? ]
+    L -- are you married yes --> M[ Does your spouse get Social<br/>Security benefits? ]
+    M -- does your spouse get social<br/>security benefits yes --> T[ Do you have kids who are<br/>disabled or under 16? ]
+    T -- do you have kids who are<br/>disabled or under 16 yes --> U[ Did you lose a parent? ]
+    U -- did you lose a parent yes --> V[ We're sorry for your loss. Do<br/>you have one or multiple<br/>surviving parents? ]
+    V -- were sorry for your loss do<br/>you have one or multiple<br/>surviving parents yes --> W[ Do your parents get<br/>Social Security<br/>benefits? ]
+    W -- do your parent s get social<br/>security benefits yes --> Summary[ Review your answers ]
+    W -- do your parent s get social<br/>security benefits no --> Summary
+    W -- do your parent s get<br/>social security<br/>benefits i dont<br/>know --> Summary
+    V -- were sorry for your loss do<br/>you have one or multiple<br/>surviving parents no --> Summary
+    U -- did you lose a parent no --> W
+    T -- do you have kids who are<br/>disabled or under 16 no --> U
+    M -- does your spouse get social<br/>security benefits no --> U
+    L -- are you married yes<br/>but im separated<br/>from my spouse --> M
+    L -- are you married no but i<br/>was in the past --> O[ Are you divorced? ]
+    O -- are you divorced yes --> P[ Were you married for 10<br/>years or more before<br/>you got divorced? ]
+    P -- were you married for 10<br/>years or more before<br/>you got divorced yes --> Q[ Has your former spouse<br/>worked for 10 years or<br/>more in the United<br/>States? ]
+    Q -- has your former spouse<br/>worked for 10<br/>years or more in<br/>the united states<br/>yes --> R[ Are you widowed? ]
+    R -- are you widowed yes --> S[ Did your spouse ever<br/>have a job in the<br/>United States<br/>before they passed<br/>away? ]
+    S -- did your spouse ever<br/>have a job in the<br/>united states before<br/>they passed away yes --> T
+    S -- did your spouse ever<br/>have a job in the<br/>united states<br/>before they passed<br/>away no --> U
+    R -- are you widowed no --> U
+    Q -- has your former spouse<br/>worked for 10 years or<br/>more in the united<br/>states no --> R
+    Q -- has your former spouse<br/>worked for 10 years<br/>or more in the<br/>united states i dont<br/>know --> R
+    P -- were you married for 10<br/>years or more before<br/>you got divorced no --> R
+    O -- are you divorced no --> R
+    L -- are you married no ive<br/>never been married --> R
+    K -- is it hard to pay for<br/>basic needs like food<br/>clothing and a home no --> L
+    M -- does your spouse get social<br/>security benefits yes --> R
+    S -- did your spouse ever<br/>have a job in the<br/>united states<br/>before they passed<br/>away no --> T
+    R -- are you widowed no --> T
+    M -- does your spouse get social<br/>security benefits no --> R
+    J -- do you get state or<br/>federal government<br/>assistance to help<br/>cover your basic<br/>needs no --> K
+    I -- when did the condition<br/>start to affect your<br/>daily activities and<br/>ability to work<br/>after my 22nd<br/>birthday --> J
+    T -- do you have kids who are<br/>disabled or under 16 yes --> W
+    T -- do you have kids who are<br/>disabled or under 16 no --> W
+    S -- did your spouse ever<br/>have a job in the<br/>united states<br/>before they passed<br/>away no --> W
+    R -- are you widowed no --> W
+    H -- do you expect the<br/>condition to affect<br/>your ability to work<br/>for a year or more or<br/>be terminal no --> K
+    G -- do you have a condition<br/>that prevents you<br/>from working or<br/>limits the type of<br/>work youre able to<br/>do no --> K
+    E -- do you receive income<br/>from a job right now<br/>no --> G
+    D -- have you ever had a job in<br/>the united states no --> G
+    A -- who do you want to check<br/>eligibility for a<br/>child under age 18 --> G
+    K -- is it hard to pay for<br/>basic needs like food<br/>clothing and a home<br/>yes --> R
+    W -- do your parent s get social<br/>security benefits yes --> X[ Does the child have a<br/>condition that<br/>significantly<br/>affects their daily<br/>activities? ]
+    X -- does the child have a<br/>condition that<br/>significantly affects<br/>their daily<br/>activities yes --> Y[ Do you expect the<br/>condition to<br/>significantly affect<br/>their daily activities<br/>for a year or longer<br/>or be terminal? ]
+    Y -- do you expect the<br/>condition to<br/>significantly affect<br/>their daily activities<br/>for a year or longer<br/>or be terminal yes --> Z[ Did the child lose<br/>a parent? ]
+    Z -- did the child lose<br/>a parent yes --> AA[ We're sorry for their<br/>loss. Do they have<br/>one or multiple<br/>surviving parents? ]
+    AA -- were sorry for their<br/>loss do they have<br/>one or multiple<br/>surviving parents<br/>yes --> CC[ Do their parents<br/>receive income<br/>from a job right<br/>now? ]
+    CC -- do their parent s<br/>receive income from<br/>a job right now yes --> DD[ Do their parents get<br/>state or federal<br/>government assistance<br/>to help cover basic<br/>needs? ]
+    DD -- do their parent s get<br/>state or federal<br/>government assistance<br/>to help cover basic<br/>needs yes --> EE[ Is it hard for their<br/>parents to pay for<br/>basic needs like<br/>food clothing and a<br/>home? ]
+    EE -- is it hard for their<br/>parent s to pay for<br/>basic needs like food<br/>clothing and a home<br/>yes --> Summary
+    EE -- is it hard for their<br/>parent s to pay for<br/>basic needs like food<br/>clothing and a home<br/>no --> Summary
+    EE -- is it hard for their<br/>parent s to pay for<br/>basic needs like food<br/>clothing and a home i<br/>dont know --> Summary
+    DD -- do their parent s get<br/>state or federal<br/>government assistance<br/>to help cover basic<br/>needs no --> EE
+    DD -- do their parent s get state<br/>or federal government<br/>assistance to help cover<br/>basic needs i dont know --> EE
+    CC -- do their parent s<br/>receive income<br/>from a job right<br/>now no --> DD
+    CC -- do their parent s<br/>receive income from a<br/>job right now i dont<br/>know --> DD
+    AA -- were sorry for their<br/>loss do they have<br/>one or multiple<br/>surviving parents<br/>no --> CC
+    Z -- did the child lose<br/>a parent no --> BB[ Do their parents get<br/>Social Security<br/>benefits? ]
+    BB -- do their parent s<br/>get social<br/>security<br/>benefits yes --> CC
+    BB -- do their parent s get<br/>social security benefits<br/>no --> CC
+    BB -- do their parent s get<br/>social security<br/>benefits i dont<br/>know --> CC
+    Y -- do you expect the<br/>condition to<br/>significantly affect<br/>their daily activities<br/>for a year or longer<br/>or be terminal no --> Z
+    X -- does the child have a<br/>condition that<br/>significantly affects<br/>their daily<br/>activities no --> Z
+    AA -- were sorry for their<br/>loss do they have<br/>one or multiple<br/>surviving parents<br/>yes --> DD
+    AA -- were sorry for their<br/>loss do they have<br/>one or multiple<br/>surviving parents<br/>no --> DD
+    BB -- do their parent s<br/>get social<br/>security<br/>benefits yes --> DD
+    BB -- do their parent s get<br/>social security benefits<br/>no --> DD
+    BB -- do their parent s get<br/>social security<br/>benefits i dont<br/>know --> DD
+    W -- do your parent s get social<br/>security benefits no --> X
+    W -- do your parent s get<br/>social security<br/>benefits i dont<br/>know --> X
+    V -- were sorry for your loss do<br/>you have one or multiple<br/>surviving parents no --> X
+    K -- is it hard to pay for<br/>basic needs like food<br/>clothing and a home no --> R

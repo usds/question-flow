@@ -1,0 +1,282 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot correctly 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div>
+        <div
+          class="usds-q"
+        >
+          <section
+            class="section usds-q-progress-bar-top-section"
+          >
+            
+          </section>
+          <section
+            class="section usds-q-step-layout-section"
+          >
+            <div>
+              <nav
+                class="usds-q-navbar usds-q-navbar-top"
+              >
+                
+                
+              </nav>
+              <section
+                class="usds-q-step-layout"
+              >
+                <ul
+                  class="usa-card-group"
+                  data-testid="CardGroup"
+                >
+                  <li
+                    class="usa-card usa-card--header-first tablet:grid-col-12"
+                    data-testid="Card"
+                  >
+                    <div
+                      class="usa-card__container border-0"
+                    >
+                      <header
+                        class="usa-card__header"
+                        data-testid="CardHeader"
+                      >
+                        <h3
+                          class="usa-card__heading usds-q-step-header"
+                        >
+                          Check eligibility for benefits
+                        </h3>
+                      </header>
+                      <div
+                        class="usa-card__body"
+                        data-testid="CardBody"
+                      >
+                        
+                        <p>
+                          To receive benefits, you have to meet certain requirements. We'll guide you through a series of questions to determine if you may be eligible.
+                        </p>
+                        
+                      </div>
+                      <div
+                        class="usa-card__footer"
+                        data-testid="CardFooter"
+                      >
+                        
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </section>
+              <nav
+                class="usds-q-navbar usds-q-navbar-bottom"
+              >
+                
+                <button
+                  class="usa-button usds-q-navbar-button usds-q-navbar-button-next"
+                  data-testid="next-button-Landing"
+                  type="button"
+                >
+                  Get Started
+                </button>
+              </nav>
+            </div>
+          </section>
+          <section
+            class="section usds-q-progress-bar-bottom-section"
+          >
+            <div
+              class="usds-q-progress-bar"
+            >
+              <div
+                style="display: initial; align-items: initial;"
+              >
+                <div
+                  style="height: 20px; background-color: rgb(240, 240, 240); border-radius: 0px; width: 100%;"
+                >
+                  <div
+                    style="height: 20px; width: 0.5%; background-color: rgb(29, 194, 174); transition: width 1s ease-in-out; border-radius: inherit; display: flex; align-items: center; justify-content: flex-end;"
+                  >
+                    <span
+                      style="padding: 5px; color: rgb(255, 255, 255); font-weight: bold; font-size: 15px; display: none;"
+                    >
+                      0.5%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section
+            class="section usds-q-dev-panel"
+          >
+            
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div>
+      <div
+        class="usds-q"
+      >
+        <section
+          class="section usds-q-progress-bar-top-section"
+        >
+          
+        </section>
+        <section
+          class="section usds-q-step-layout-section"
+        >
+          <div>
+            <nav
+              class="usds-q-navbar usds-q-navbar-top"
+            >
+              
+              
+            </nav>
+            <section
+              class="usds-q-step-layout"
+            >
+              <ul
+                class="usa-card-group"
+                data-testid="CardGroup"
+              >
+                <li
+                  class="usa-card usa-card--header-first tablet:grid-col-12"
+                  data-testid="Card"
+                >
+                  <div
+                    class="usa-card__container border-0"
+                  >
+                    <header
+                      class="usa-card__header"
+                      data-testid="CardHeader"
+                    >
+                      <h3
+                        class="usa-card__heading usds-q-step-header"
+                      >
+                        Check eligibility for benefits
+                      </h3>
+                    </header>
+                    <div
+                      class="usa-card__body"
+                      data-testid="CardBody"
+                    >
+                      
+                      <p>
+                        To receive benefits, you have to meet certain requirements. We'll guide you through a series of questions to determine if you may be eligible.
+                      </p>
+                      
+                    </div>
+                    <div
+                      class="usa-card__footer"
+                      data-testid="CardFooter"
+                    >
+                      
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <nav
+              class="usds-q-navbar usds-q-navbar-bottom"
+            >
+              
+              <button
+                class="usa-button usds-q-navbar-button usds-q-navbar-button-next"
+                data-testid="next-button-Landing"
+                type="button"
+              >
+                Get Started
+              </button>
+            </nav>
+          </div>
+        </section>
+        <section
+          class="section usds-q-progress-bar-bottom-section"
+        >
+          <div
+            class="usds-q-progress-bar"
+          >
+            <div
+              style="display: initial; align-items: initial;"
+            >
+              <div
+                style="height: 20px; background-color: rgb(240, 240, 240); border-radius: 0px; width: 100%;"
+              >
+                <div
+                  style="height: 20px; width: 0.5%; background-color: rgb(29, 194, 174); transition: width 1s ease-in-out; border-radius: inherit; display: flex; align-items: center; justify-content: flex-end;"
+                >
+                  <span
+                    style="padding: 5px; color: rgb(255, 255, 255); font-weight: bold; font-size: 15px; display: none;"
+                  >
+                    0.5%
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          class="section usds-q-dev-panel"
+        >
+          
+        </section>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
