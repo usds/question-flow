@@ -4,15 +4,14 @@
 **/node_modules/**
 
 # testing
-/coverage
+**/coverage/**
 
 # production / NPM
-packages/**/dist/**
-packages/**/build/**
+**/dist/**
+**/build/**
 
 # Storybook
-packages/questionable/storybook-static
-packages/ssa-eligibility/storybook-static
+**/storybook-static/**
 
 #ide
 /.idea

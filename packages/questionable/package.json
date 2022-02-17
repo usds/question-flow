@@ -172,9 +172,6 @@
     "type": "git",
     "url": "https://github.com/usds/questionable.git"
   },
-  "resolutions": {
-    "@types/react": "^17.0.29"
-  },
   "scripts": {
     "build": "yarn lint && yarn build:rollup && yarn build:schema",
     "build:rollup": "rollup --config --environment NODE_ENV:production",

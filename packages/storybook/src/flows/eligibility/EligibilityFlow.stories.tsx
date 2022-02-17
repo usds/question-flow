@@ -4,7 +4,7 @@ import {
   Questionable,
   Questionnaire
 } from '@usds.gov/questionable';
-import '../../styles';
+import '../../../styles';
 import { buildEligibility } from './eligibility.flow';
 
 export default {

@@ -10440,7 +10440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.9.0":
+"enhanced-resolve@npm:^5.0.0, enhanced-resolve@npm:^5.8.3":
   version: 5.9.0
   resolution: "enhanced-resolve@npm:5.9.0"
   dependencies:
@@ -18198,14 +18198,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-clamp@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "postcss-clamp@npm:3.0.0"
+"postcss-clamp@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "postcss-clamp@npm:4.0.0"
   dependencies:
-    postcss-value-parser: ^4.1.0
+    postcss-value-parser: ^4.2.0
   peerDependencies:
-    postcss: ^8.4.5
-  checksum: a7428a91b8167a9f0930499bd5937c9fda03c81a20825479d2ce0bea131f865d90ab76cd377e3664112699393f73c1a1bc3591151ebf290219a893af8fe71d10
+    postcss: ^8.4.6
+  checksum: 103ae5039a55623f2835c11684367bb094d62ac21a99ee612741f4dcec827eccd21ad3a11d6792f66f90e86133f046e352addbab4576b90d98b3c4ea0dce1e53
   languageName: node
   linkType: hard
 
@@ -18875,8 +18875,8 @@ __metadata:
   linkType: hard
 
 "postcss-preset-env@npm:^7.0.1":
-  version: 7.4.0
-  resolution: "postcss-preset-env@npm:7.4.0"
+  version: 7.4.1
+  resolution: "postcss-preset-env@npm:7.4.1"
   dependencies:
     "@csstools/postcss-color-function": ^1.0.2
     "@csstools/postcss-font-format-keywords": ^1.0.0
@@ -18893,7 +18893,7 @@ __metadata:
     css-prefers-color-scheme: ^6.0.3
     cssdb: ^6.3.1
     postcss-attribute-case-insensitive: ^5.0.0
-    postcss-clamp: ^3.0.0
+    postcss-clamp: ^4.0.0
     postcss-color-functional-notation: ^4.2.2
     postcss-color-hex-alpha: ^8.0.3
     postcss-color-rebeccapurple: ^7.0.2
@@ -18922,7 +18922,7 @@ __metadata:
     postcss-selector-not: ^5.0.0
   peerDependencies:
     postcss: ^8.4
-  checksum: aec4f9d1158e367e12fee6f1d87fcd33c077add7814f5083b6d622017c267a3526a45e05493662e970f3494615bb4aee4937036d0882ae0f66716fb5c635e646
+  checksum: adfa72f3c1d344630fbb2b7ea0c6832cbcdce9abf84c65237a833cc31ac2095315a5fb13a6e4222938801367212038aa8e2afd425527ba8d45e4fb13cd293ab7
   languageName: node
   linkType: hard
 
@@ -21248,8 +21248,8 @@ __metadata:
   linkType: hard
 
 "semantic-ui-react@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "semantic-ui-react@npm:2.1.1"
+  version: 2.1.2
+  resolution: "semantic-ui-react@npm:2.1.2"
   dependencies:
     "@babel/runtime": ^7.10.5
     "@fluentui/react-component-event-listener": ~0.51.6
@@ -21267,7 +21267,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
-  checksum: c62ffd545c460816c6ad1a1dadb51d871f9cae793da9271196d9059bad124d502c7e758761fa45bf6218af8781eae4b5b5e1a4aac02c35d74fb1705bef8f1636
+  checksum: 3bd30dfc7786b1511a9623d015952f22b0af4a18aea0113bd9a3f1592774c6a503f48f505577d971ef3e1c680d60cc08dbff8f4a8d0b5fbd943d0c3685ca30e6
   languageName: node
   linkType: hard
 
@@ -24370,8 +24370,8 @@ __metadata:
   linkType: hard
 
 "webpack@npm:^5.64.4":
-  version: 5.69.0
-  resolution: "webpack@npm:5.69.0"
+  version: 5.69.1
+  resolution: "webpack@npm:5.69.1"
   dependencies:
     "@types/eslint-scope": ^3.7.3
     "@types/estree": ^0.0.51
@@ -24382,7 +24382,7 @@ __metadata:
     acorn-import-assertions: ^1.7.6
     browserslist: ^4.14.5
     chrome-trace-event: ^1.0.2
-    enhanced-resolve: ^5.9.0
+    enhanced-resolve: ^5.8.3
     es-module-lexer: ^0.9.0
     eslint-scope: 5.1.1
     events: ^3.2.0
@@ -24402,7 +24402,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 0b0fc2ffcb926fc7506ec56901ae9a69f1ae969a6afc63395a3ed56f938d385c1d16d1dea39fd56dbb9362189c05da49174219904e5a337040aed5a46080e926
+  checksum: 490a6e9e4cd9d0ed3b6c7ca08015da2628919fda8fcf9c36f0f6c0e3ad71eaaaf4b0d12753109f22a4faf79fe9a9063552d9708e0ee2352cf8568433b8e296a7
   languageName: node
   linkType: hard
 
