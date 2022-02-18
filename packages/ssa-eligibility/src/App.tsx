@@ -6,8 +6,8 @@ import {
   Questionable,
   Questionnaire,
 } from '@usds.gov/questionable';
-import { merge }                                      from 'lodash';
-import { useFetch }                                   from './lib/fetch';
+import { merge }    from 'lodash';
+import { useFetch } from './lib/fetch';
 import {
   Attributes,
   CMS,
@@ -43,6 +43,31 @@ export const AppContainer = (json?: CMS): JSX.Element => {
 };
 
 /**
+ * Flatten the data returned from the API before passing it on
+ * @param data 
+ * @returns 
+ */
+const transformDataToCMS = (data: any) => {
+  let json: Partial<CMS> = {};
+  if (data?.data !== undefined && data?.data?.length > 0) {
+    try {
+      const questions = data?.data?.map((question: Datum) => {
+        const q = question.attributes;
+        q.id    = q.question_id;
+        return q;
+      }).reduce((ret: IQuestionData, question: Attributes) => {
+        ret[question.id] = question;
+        return ret;
+      }, {});
+      json = merge(json, { questions });
+    } catch (e) {
+      log('API error', e);
+    }
+  }
+  return json as CMS;
+};
+
+/**
  * React application container for the web component
  * @param config - object representing the Fetch configuration
  * @returns
@@ -63,21 +88,7 @@ export const App = (config: IFetchAPI = {
     if (loading) {
       return (<div></div>);
     }
-    if (data?.data !== undefined && data?.data?.length > 0) {
-      try {
-        const questions = data?.data?.map((question: Datum) => {
-          const q = question.attributes;
-          q.id    = q.question_id;
-          return q;
-        }).reduce((ret: IQuestionData, question: Attributes) => {
-          ret[question.id] = question;
-          return ret;
-        }, {});
-        json = merge(json, { questions });
-      } catch (e) {
-        log('API error', e);
-      }
-    }
+    json = transformDataToCMS(data);
   } catch (e) {
     log('API error', e);
   }

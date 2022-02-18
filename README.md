@@ -58,32 +58,39 @@ You can import Questionable components using ES6 syntax:
 import { Questionable } from '@usds.gov/questionable';
 ```
 
+More detailed examples are provided in [the storybook](https://usds.github.io/questionable).
+
 ## Organization
 
 This project is comprised by four sub-projects (aka "packages", "workspaces"). The root of the project contains configuration and utilities for all sub-projects. Workspaces are located in `/packages`. Common functions such as `yarn build` and `yarn lint` can be run from the root of the project and will run on each sub-project in turn.
 
+- [`/packages/questionable`](packages/questionable/)
+- [`/packages/ssa-eligibility`](packages/ssa-eligibility/)
+- [`/packages/storybook`](packages/storybook/)
+- [`/packages/tests`](packages/tests/)
+
 ### The Component (Questionable)
 
-This project represents the generic web component. This is the code behind the `@usds.gov@questionable` package published to NPM. This project provides a generic wizard suitable for testing eligibility workflows and perhaps other point of entry flows that rely on simple state machine mechanics and can be expressed as a set of linear steps with rules governing their sequence according to branching logic.
+[This project](packages/questionable/) represents the generic web component. This is the code behind the `@usds.gov@questionable` package published to NPM. This project provides a generic wizard suitable for testing eligibility workflows and perhaps other point of entry flows that rely on simple state machine mechanics and can be expressed as a set of linear steps with rules governing their sequence according to branching logic.
 
-- `components`: UI components used for rendering each question in the survey
-- `composable`: Stateful classes that organize the components into a unified app
-- `lib`: Generic helper utilities
-- `schema`: Auto-generated JSON schema representing the data model
-- `state`: React reducer for the aggregation of survey data
-- `survey`: Core interfaces and classes for the data structure of the question/anwer/results
+- [`components`](/packages/questionable/src/components/): UI components used for rendering each question in the survey
+- [`composable`](/packages/questionable/src/composable/): Stateful classes that organize the components into a unified app
+- [`lib`](/packages/questionable/src/lib/): Generic helper utilities
+- [`schema`](/packages/questionable/src/schema/): Auto-generated JSON schema representing the data model
+- [`state`](/packages/questionable/src/state/): React reducer for the aggregation of survey data
+- [`survey`](/packages/questionable/src/survey/): Core interfaces and classes for the data structure of the question/answer/results
 
 ### Storybook
 
-This project demonstrates the Questionable component and its subcomponents in the Storybook portfolio with working examples of the use of the plugin.
+[This project](/packages/storybook/) demonstrates the Questionable component and its subcomponents in the Storybook portfolio with working examples of the use of the plugin.
 
 ### Tests
 
-Still in-progress collection of unit tests to assert that each data point is evaluated and resolved thus validating an entire workflow is valid (or not).
+[Still in-progress collection](/packages/tests/) of unit tests to assert that each data point is evaluated and resolved thus validating an entire workflow is valid (or not).
 
-### ssa-eligibility
+### `ssa-eligibility`
 
-An implementation of Questionable using live, production data.
+[This project](/packages/ssa-eligibility/) is a specific implementation of Questionable using live, production data. This component is bundled and published as `@usds.gov/sss-eligibility`.
 
 ## Background
 

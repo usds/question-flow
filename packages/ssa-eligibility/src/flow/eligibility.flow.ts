@@ -19,18 +19,27 @@ import {
 
 const header = 'SSA Eligibility';
 
+/**
+ * Constructs the object required to instantiate Questionable
+ * @param json
+ * @returns a new instance of the questionnaire
+ */
 // eslint-disable-next-line max-len
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
 export const buildEligibility = (json: any = {}): IQuestionnaire => {
-  const actionsJson   = json.actions || actionContentMap;
-  const actions       = buildActions(actionsJson);
+  // TODO: migrate the copy to the CMS
+  const actionsJson = json.actions || actionContentMap;
+  const actions     = buildActions(actionsJson);
+  // `json.questions` should always exist. This has been migrated to the CMS
   const questionsJson = json.questions || questionContentMap;
   const questions     = buildQuestions(questionsJson);
-  const pagesJson     = json.pages || pageContent;
-  const pages         = buildPages(pagesJson);
-  const resultsJson   = json.results || resultContentMap;
-  const results       = buildResults(resultsJson, questions.map);
-  const config        = new QuestionableConfig({
+  // TODO: migrate the copy to the CMS
+  const pagesJson = json.pages || pageContent;
+  const pages     = buildPages(pagesJson);
+  // TODO: migrate the copy to the CMS
+  const resultsJson = json.results || resultContentMap;
+  const results     = buildResults(resultsJson, questions.map);
+  const config      = new QuestionableConfig({
     dev:    true,
     events: {
       onError,

@@ -2,7 +2,7 @@
 
 Logic is content that is (a) not copy, (b) not visible to customers and (c) part of the application's functionality.
 
-If you need to make copy changes, see [`src/flow/content`](../content/README.md) or contact your CMS admin.
+If you need to make copy changes, see [`src/flow/content`](../content) or contact your CMS admin.
 
 ## Concepts
 

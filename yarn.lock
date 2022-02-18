@@ -5728,7 +5728,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.11.0
+    eslint-plugin-sonarjs: ^0.12.0
     eslint-plugin-sort-keys-fix: ^1.1.2
     eslint-plugin-testing-library: ^5.0.5
     eslint-plugin-typescript-sort-keys: ^2.1.0
@@ -5748,7 +5748,7 @@ __metadata:
     react-dom: ^17.0.2
     react-scripts: 5.0.0
     rimraf: ^3.0.2
-    rollup: ^2.67.2
+    rollup: ^2.67.3
     rollup-plugin-copy: ^3.4.0
     rollup-plugin-dts: ^4.1.0
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -5804,7 +5804,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.11.0
+    eslint-plugin-sonarjs: ^0.12.0
     eslint-plugin-sort-keys-fix: ^1.1.2
     eslint-plugin-testing-library: ^5.0.5
     eslint-plugin-typescript-sort-keys: ^2.1.0
@@ -5862,7 +5862,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.11.0
+    eslint-plugin-sonarjs: ^0.12.0
     eslint-plugin-sort-keys-fix: ^1.1.2
     eslint-plugin-testing-library: ^5.0.5
     eslint-plugin-typescript-sort-keys: ^2.1.0
@@ -5880,7 +5880,7 @@ __metadata:
     react-scripts: 5.0.0
     react-test-renderer: ^17.0.2
     rimraf: ^3.0.2
-    rollup: ^2.67.2
+    rollup: ^2.67.3
     rollup-plugin-copy: ^3.4.0
     rollup-plugin-dts: ^4.1.0
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -5956,7 +5956,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.11.0
+    eslint-plugin-sonarjs: ^0.12.0
     eslint-plugin-sort-keys-fix: ^1.1.2
     eslint-plugin-testing-library: ^5.0.5
     eslint-plugin-typescript-sort-keys: ^2.1.0
@@ -5975,7 +5975,7 @@ __metadata:
     react-docgen-typescript-loader: ^3.7.2
     react-dom: ^17.0.2
     rimraf: ^3.0.2
-    rollup: ^2.67.2
+    rollup: ^2.67.3
     rollup-plugin-copy: ^3.4.0
     rollup-plugin-dts: ^4.1.0
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -6037,7 +6037,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.11.0
+    eslint-plugin-sonarjs: ^0.12.0
     eslint-plugin-sort-keys-fix: ^1.1.2
     eslint-plugin-testing-library: ^5.0.5
     eslint-plugin-typescript-sort-keys: ^2.1.0
@@ -6055,7 +6055,7 @@ __metadata:
     react-dom: ^17.0.2
     react-scripts: 5.0.0
     rimraf: ^3.0.2
-    rollup: ^2.67.2
+    rollup: ^2.67.3
     rollup-plugin-copy: ^3.4.0
     rollup-plugin-dts: ^4.1.0
     rollup-plugin-peer-deps-external: ^2.2.4
@@ -11045,12 +11045,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-sonarjs@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "eslint-plugin-sonarjs@npm:0.11.0"
+"eslint-plugin-sonarjs@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "eslint-plugin-sonarjs@npm:0.12.0"
   peerDependencies:
     eslint: ^5.0.0 || ^6.0.0 || ^7.0.0|| ^8.0.0
-  checksum: ef9633e518f6d8365b7370bf48f70fb837124c68318e14146c13ffa8f4c5a747b5f776956124549f81252131ebb8c139d071b9c66e2af77889d0eada725d6d25
+  checksum: 96be3002ce2344a07081c33649d9bb927189153c2e68ecb13069b0adfa4ff2e2cecec6f25ee3d5e29600d8d8aac6e14e54f1990b0847234975f311d48521c828
   languageName: node
   linkType: hard
 
@@ -21039,7 +21039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.43.1, rollup@npm:^2.67.2":
+"rollup@npm:^2.43.1":
   version: 2.67.2
   resolution: "rollup@npm:2.67.2"
   dependencies:
@@ -21050,6 +21050,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 9aca5251ba4b441064183cde2394b91567259002d68086bdd3906db66d55dd148ab27e57c51eb53830d7b9b813c2d4e834b7735d65e2a869780bc639d4a20c38
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.67.3":
+  version: 2.67.3
+  resolution: "rollup@npm:2.67.3"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: c4013a2ceef6918375fd07a6548e05d0f3df1db9f0a0281aebe6e993a45c0e667c5a06f53b55c0ffaf72f72266c1879bc181b13199aace97d93f0fc47691d4a9
   languageName: node
   linkType: hard
 
