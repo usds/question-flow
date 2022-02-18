@@ -1,16 +1,57 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "baseUrl": "./packages",
+    "declaration": true,
+    "declarationMap": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
     "lib": [
-      "ESNext",
-      "dom"
+      "dom",
+      "ES2015",
+      "es2019"
     ],
-    "target": "ESNext"
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "target": "ES2019",
+    "paths": {
+      "@usds.gov/questionable": [
+        "questionable"
+      ],
+      "@usds.gov/ssa-eligibility": [
+        "ssa-eligibility"
+      ],
+    }
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/stories",
+    "**/*.stories.ts",
+    "**/*.css",
+    "**/*.test.ts"
   ],
-  "extends": "./tsconfig.build.json",
   "include": [
+    "types.d.ts",
     "src"
-  ]
+  ],
 }

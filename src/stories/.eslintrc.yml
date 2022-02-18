@@ -1,6 +1,0 @@
-rules:
-  no-unused-expressions: off
-  import/no-extraneous-dependencies:
-    - warn
-    - devDependencies: true
-  '@typescript-eslint/ban-types': off
