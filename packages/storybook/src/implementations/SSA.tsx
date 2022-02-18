@@ -1,18 +1,20 @@
 import '../styles';
-import { Meta, Story } from '@storybook/react';
-import { App } from '@usds.gov/ssa-eligibility/src/App';
+import { Meta, Story }  from '@storybook/react';
+import { AppContainer } from '@usds.gov/ssa-eligibility/src/App';
+import { sampleData }   from '@usds.gov/ssa-eligibility/src/data/sample';
 
 export default {
   argTypes: {
-    config: { control: { type: 'object' } },
+    data: { control: { type: 'object' } },
   },
-  component: Questionable,
-  title:     'Questionable/Simple Flow',
+  component:  AppContainer,
+  
+  title: 'Implementations/SSA Eligibility',
 } as Meta;
 
-const Template: Story<App> = (args) => <Questionable {...args} />;
+const Template: Story<typeof AppContainer> = (args) => <AppContainer {...args} />;
 
-export const Simple = Template.bind({});
-Simple.args = {
-  questionnaire: new Questionnaire(simpleFlow),
+export const SSA = Template.bind({});
+SSA.args = {
+  data: sampleData,
 };

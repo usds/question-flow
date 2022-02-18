@@ -1,5 +1,8 @@
+import { CMS } from '../lib/interfaces';
+
 /* eslint-disable */
-export const sampleData = {
+export const sampleData: CMS = {
+  /** This is the shape of the data returned from Drupal */
   "data": [
     {
       "attributes": {

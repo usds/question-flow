@@ -2,6 +2,13 @@
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
  */
+
+/**
+ * NOTE: the content of this file is for default/failover/demo usage ONLY!
+ * All the question content in this file should come from the backend.
+ * If you need to make changes to copy, contact your CMS admin.
+ */
+
 import { QUESTION_TYPE, IQuestion } from '@usds.gov/questionable';
 import {
   IDK, NO, YES, TQuestionMap,

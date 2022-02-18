@@ -6,25 +6,51 @@ import {
   Questionable,
   Questionnaire,
 } from '@usds.gov/questionable';
-import { merge }                                 from 'lodash';
-import { useFetch }                              from './lib/fetch';
+import { merge }                                      from 'lodash';
+import { useFetch }                                   from './lib/fetch';
 import {
-  Attributes, Datum, IFetchAPI, IQuestionData,
+  Attributes,
+  CMS,
+  Datum,
+  IFetchAPI,
+  IQuestionData,
 } from './lib/interfaces';
 import { buildEligibility } from './flow/eligibility.flow';
 
 const API_URL = '/jsonapi/question/eligibility';
 
+export const AppContainer = (json?: CMS): JSX.Element => {
+  if (!json) {
+    return <div></div>;
+  }
+  const eligibility = buildEligibility(json);
+  if (Object.keys(eligibility).length === 0) {
+    return <></>;
+  }
+  const gtag = window.gtag || noop;
+  gtag('config', 'ssa_eligibility_wizard', {
+    send_page_view: false,
+  });
+  const args = {
+    questionnaire: new Questionnaire(eligibility),
+  };
+
+  return (
+    <div>
+      <Questionable {...args} />
+    </div>
+  );
+};
+
 /**
  * React application container for the web component
  * @param config - object representing the Fetch configuration
- * @param json - JSON that represents content of survey
  * @returns
  */
 export const App = (config: IFetchAPI = {
   url: API_URL,
 }): JSX.Element => {
-  let json = {};
+  let json: Partial<CMS> = {};
   try {
     const {
       data, error, loading,
@@ -55,26 +81,5 @@ export const App = (config: IFetchAPI = {
   } catch (e) {
     log('API error', e);
   }
-
-  if (Object.keys(json).length === 0) {
-    return <div></div>;
-  }
-
-  const eligibility = buildEligibility(json);
-  if (Object.keys(eligibility).length === 0) {
-    return <></>;
-  }
-  const gtag = window.gtag || noop;
-  gtag('config', 'ssa_eligibility_wizard', {
-    send_page_view: false,
-  });
-  const args = {
-    questionnaire: new Questionnaire(eligibility),
-  };
-
-  return (
-    <div>
-      <Questionable {...args}/>
-    </div>
-  );
+  return AppContainer(json as CMS);
 };

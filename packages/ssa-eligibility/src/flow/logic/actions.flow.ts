@@ -31,6 +31,9 @@ export const buildActions = (json: TActionMap): IAction[] => {
     json.a3,
   ) as IAction;
 
+  /**
+   * Added for Medalia testing
+   */
   const { drupalSettings } = window || {};
   let linkAddOn            = '';
   if (drupalSettings?.component?.eligibility?.survey === 1) {
