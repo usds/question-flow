@@ -32,6 +32,12 @@ export interface IResult extends IRef {
    */
   match?: IRequirement;
   /**
+   * Human readable explanation of result determination
+   *
+   * @title Reason
+   */
+  reason?: string;
+  /**
    * Collection of requirements required to achieve this result
    *
    * @title Requirements

@@ -36,8 +36,9 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
       </div>
     );
   }
-
-  config.events.onResults(props.form);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const genResults = results as any;
+  config.events.onResults({ ...props.form, results: genResults });
 
   return (
     <StepLayout {...props}>

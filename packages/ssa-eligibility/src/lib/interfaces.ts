@@ -9,16 +9,16 @@ export interface Datum {
     attributes: Attributes;
     id: string;
     links: Links;
-    type: Type;
+    type: Type | string;
 }
 
 export interface Attributes {
     answers: Answer[];
     drupal_internal__qid: number;
     drupal_internal__vid: number;
-    id: string;
+    id?: string;
     info: null | string;
-    moderation_state: ModerationState;
+    moderation_state: ModerationState | string;
     question_id: string;
     status: boolean;
     subTitle: null | string;

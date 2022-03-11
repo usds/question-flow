@@ -6,7 +6,7 @@ import {
   Questionable,
   Questionnaire,
 } from '@usds.gov/questionable';
-import { merge }    from 'lodash';
+import { merge } from 'lodash';
 import { useFetch } from './lib/fetch';
 import {
   Attributes,
@@ -44,8 +44,8 @@ export const AppContainer = (json?: CMS): JSX.Element => {
 
 /**
  * Flatten the data returned from the API before passing it on
- * @param data 
- * @returns 
+ * @param data
+ * @returns
  */
 const transformDataToCMS = (data: any) => {
   let json: Partial<CMS> = {};
@@ -56,8 +56,10 @@ const transformDataToCMS = (data: any) => {
         q.id    = q.question_id;
         return q;
       }).reduce((ret: IQuestionData, question: Attributes) => {
-        ret[question.id] = question;
-        return ret;
+        if (question.id) {
+          ret[question.id] = question;
+          return ret;
+        } return ret;
       }, {});
       json = merge(json, { questions });
     } catch (e) {
@@ -79,7 +81,7 @@ export const App = (config: IFetchAPI = {
   try {
     const {
       data, error, loading,
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+      // eslint-disable-next-line react-hooks/rules-of-hooks
     } = useFetch(`${config.url}`);
     // const res = useAsync({ promiseFn: () => getData(config) });
     if (error) {

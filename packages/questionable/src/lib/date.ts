@@ -6,11 +6,7 @@ import { TAge }     from './types';
  * @param dt
  * @returns
  */
-export const isValidDate = (dt: string | undefined): boolean => {
-  if (!dt || dt.length < 8) return false;
-  // if (!moment(dt, 'MM/DD/YYYY', true).isValid()) return false;
-  return true;
-};
+export const isValidDate = (dt: string | undefined): boolean => !(!dt || dt.length < 8);
 
 /**
  * Gets a luxon DateTime object from a date string

@@ -1134,6 +1134,11 @@ export const survey = {
           "title": "Label",
           "type": "string"
         },
+        "reason": {
+          "description": "Human readable explanation of result determination",
+          "title": "Reason",
+          "type": "string"
+        },
         "requirements": {
           "description": "Collection of requirements required to achieve this result",
           "items": {
