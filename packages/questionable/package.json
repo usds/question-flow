@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@ramonak/react-progress-bar": "^4.4.0",
-    "@rjsf/core": "^4.0.1",
+    "@rjsf/core": "^4.1.0",
     "@rjsf/semantic-ui": "^4.0.1",
     "@trussworks/react-uswds": "^2.8.0",
     "class-validator": "^0.13.2",
