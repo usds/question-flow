@@ -40,7 +40,6 @@ export const buildEligibility = (json: any = {}): IQuestionnaire => {
   const resultsJson = json.results || resultContentMap;
   const results     = buildResults(resultsJson, questions.map);
   const config      = new QuestionableConfig({
-    dev:    true,
     events: {
       onError,
       onInit,
@@ -64,9 +63,6 @@ export const buildEligibility = (json: any = {}): IQuestionnaire => {
     },
     progressBar: {
       bgColor: '#1DC2AE',
-    },
-    steps: {
-      showStepId: false,
     },
   });
 
