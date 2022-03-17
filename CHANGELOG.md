@@ -1,3 +1,10 @@
+## [1.5.6](https://github.com/usds/questionable/compare/v1.5.5...v1.5.6) (2022-03-17)
+
+
+### Bug Fixes
+
+* **ci:** turn off dev mode ([e3e9556](https://github.com/usds/questionable/commit/e3e955605832d13fa1d7428d2469178b16cf5186))
+
 ## [1.5.5](https://github.com/usds/questionable/compare/v1.5.4...v1.5.5) (2022-03-17)
 
 
