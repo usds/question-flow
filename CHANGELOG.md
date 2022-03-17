@@ -1,3 +1,12 @@
+## [1.5.5](https://github.com/usds/questionable/compare/v1.5.4...v1.5.5) (2022-03-17)
+
+
+### Bug Fixes
+
+* **analytics:** adds results into result event ([710da04](https://github.com/usds/questionable/commit/710da04fd6ea9ceb79b14f38550a010ee15df231))
+* **ci:** upgrade deps ([a332b57](https://github.com/usds/questionable/commit/a332b5707f85a551db12181e5c5d4fc7481a5347))
+* **docs:** expands and refines project documentation ([8e04704](https://github.com/usds/questionable/commit/8e04704ec89cb017f241ba5ac046989ce6c28391))
+
 ## [1.5.4](https://github.com/usds/questionable/compare/v1.5.3...v1.5.4) (2022-02-03)
 
 
