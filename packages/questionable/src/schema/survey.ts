@@ -200,6 +200,9 @@ export const survey = {
     },
     "IEvent": {
       "properties": {
+        "onActionClick": {
+          "not": {}
+        },
         "onAnswer": {
           "not": {}
         },

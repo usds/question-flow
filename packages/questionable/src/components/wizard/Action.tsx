@@ -1,10 +1,16 @@
 import { Link }         from '@trussworks/react-uswds';
 import { CSS_CLASS }    from '../../lib';
 import { noel }         from '../../lib/noop';
+import { useGlobal }    from '../../state';
+import { IForm }        from '../../survey';
 import { IAction }      from '../../survey/IAction';
 import { H2, H3, Span } from '../factories/NodeFactory';
 
-export const Action = (action: Partial<IAction>): JSX.Element => {
+export const Action = ({ action, page }:
+  { action: Partial<IAction>, page: IForm }): JSX.Element => {
+  const global     = useGlobal();
+  const { config } = global;
+
   const buttons = action.buttons?.map((a) => {
     if (!a.link) {
       return noel();
@@ -22,6 +28,9 @@ export const Action = (action: Partial<IAction>): JSX.Element => {
             className={`${CSS_CLASS.CALL_TO_ACTION_BUTTON} ${cssMode}`}
             variant={variant}
             href={a.link}
+            onClick={() => {
+              config.events.action({ ...page, ...action });
+            }}
           >
             {a.title}
           </Link>

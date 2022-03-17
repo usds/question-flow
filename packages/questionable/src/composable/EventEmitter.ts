@@ -12,6 +12,8 @@ import {
 } from '../survey/IEvent';
 
 export class EventEmitter implements IEvent {
+  onActionClick: TOnEvent = noop;
+
   onAnswer: TOnEvent = noop;
 
   onError: TOnError = noop;
@@ -28,6 +30,10 @@ export class EventEmitter implements IEvent {
 
   constructor(obj: Partial<EventEmitter>) {
     Object.assign(this, obj);
+  }
+
+  action(data: IForm): void {
+    this.event(data, this.onActionClick);
   }
 
   init(data: IForm): void {

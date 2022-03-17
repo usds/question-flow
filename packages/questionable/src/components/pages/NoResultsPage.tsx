@@ -33,7 +33,7 @@ export const NoResultsPage = (props: IPageData): JSX.Element => {
       />
       <Span node={step.body} className={CSS_CLASS.NO_RESULTS_BODY} />
       <Span node={step.children} />
-      <Action {...action} />
+      <Action action={action} page={props.form} />
     </StepLayout>
   );
 };

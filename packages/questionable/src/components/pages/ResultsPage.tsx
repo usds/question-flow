@@ -31,7 +31,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
     followupActions = (
       <div className={CSS_CLASS.RESULTS_SECONDARY_ACTIONS}>
         {secondaryActions.map((a) => (
-          <Action key={a?.id} {...a} />
+          <Action key={a?.id} action={action} page={props.form} />
         ))}
       </div>
     );
@@ -58,7 +58,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
         </ul>
         <Span node={step.body} className={CSS_CLASS.RESULTS_BODY} />
         <Span node={step.children} className={CSS_CLASS.RESULTS_CHILDREN} />
-        <Action {...action} />
+        <Action action={action} page={props.form} />
         {followupActions}
       </div>
     </StepLayout>

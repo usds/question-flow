@@ -59,6 +59,7 @@ export type TOnEvent = (data: TEvent) => void;
 export type TOnError = (e: Error, data?: TEvent) => void;
 
 export interface IEvent {
+  onActionClick: TOnEvent | undefined,
   onAnswer: TOnEvent | undefined,
   onAnyEvent: TOnEvent | undefined,
   onError: TOnError | undefined,

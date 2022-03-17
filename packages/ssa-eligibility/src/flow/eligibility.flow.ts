@@ -1,5 +1,6 @@
 import { IQuestionnaire, QuestionableConfig } from '@usds.gov/questionable';
 import {
+  onActionClick,
   onError,
   onInit,
   onNoResults,
@@ -41,6 +42,7 @@ export const buildEligibility = (json: any = {}): IQuestionnaire => {
   const results     = buildResults(resultsJson, questions.map);
   const config      = new QuestionableConfig({
     events: {
+      onActionClick,
       onError,
       onInit,
       onNoResults,

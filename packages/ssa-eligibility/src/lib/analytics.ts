@@ -30,6 +30,13 @@ export const gtag = (...args: any[]) => {
   }
 };
 
+export const onActionClick = (data?: TEvent) => {
+  gtag({
+    event: 'action_benefits_quest',
+    ...data,
+  });
+};
+
 export const onInit = (data?: TEvent) => {
   gtag({
     event: 'begin_benefits_quest',

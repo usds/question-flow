@@ -189,5 +189,5 @@
     "semantic-release": "semantic-release",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
-  "version": "1.5.7"
+  "version": "1.5.8"
 }
