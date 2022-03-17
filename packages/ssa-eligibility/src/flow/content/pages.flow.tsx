@@ -8,7 +8,7 @@ export const pageContent = {
     subTitle: `
 Based on your answers, you may not be eligible for benefits right now. As you age and parts of your life change, you may become eligible.<br>
 <br>
-If you want to start an application anyway, <a href="ssa.gov">learn how to apply.</a><br>
+If you want to start an application anyway, <a href="/apply">learn how to apply.</a><br>
 <br>
 Call us if you have questions or think you may be eligible for benefits.<br>
 <br>
