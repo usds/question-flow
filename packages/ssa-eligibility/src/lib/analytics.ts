@@ -1,13 +1,17 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { log, TEvent, TOnError } from '@usds.gov/questionable';
-import { isDebug }               from '../flow/lib/debug';
-import { DrupalSettings }        from './drupal';
+import {
+  IResult, log, TEvent, TOnError,
+} from '@usds.gov/questionable';
+import { isDebug }        from '../flow/lib/debug';
+import { DrupalSettings } from './drupal';
 
 declare global {
   interface Window {
     dataLayer: Record<string, any>[];
     drupalSettings: DrupalSettings;
- }
+  }
 }
 
 export const gtag = (...args: any[]) => {
@@ -31,9 +35,22 @@ export const gtag = (...args: any[]) => {
 };
 
 export const onActionClick = (data?: TEvent) => {
+  const action = (data as any).buttons;
+  if (!action?.length) return;
+
+  const button = action[0];
+  if (!button) return;
+
+  const link_text = button.title?.toLowerCase().split(' ').join('_');
+  const link_url  = button.link;
   gtag({
-    event: 'action_benefits_quest',
-    ...data,
+    click_type:     'cta',
+    event:          'click',
+    event_category: 'click',
+    event_label:    link_text,
+    event_name:     `${link_text}_quest`,
+    link_text,
+    link_url,
   });
 };
 
@@ -45,6 +62,12 @@ export const onInit = (data?: TEvent) => {
 };
 
 export const onResults = (data?: TEvent) => {
+  const results = (data as any).results as IResult[];
+  for (const r of results) {
+    if (!r.category) {
+      r.category = r.title;
+    }
+  }
   gtag({
     event: 'complete_benefits_quest',
     ...data,
