@@ -1,3 +1,11 @@
+## [1.5.7](https://github.com/usds/questionable/compare/v1.5.6...v1.5.7) (2022-03-17)
+
+
+### Bug Fixes
+
+* **analytics:** adds on action click ([fe2058f](https://github.com/usds/questionable/commit/fe2058f3fafa35b3f50aa68595d327edb6ac0cca))
+* **link:** correct apply link ([9e1c132](https://github.com/usds/questionable/commit/9e1c1322ef1e964f44f81f1e976f528dcc201cdb))
+
 ## [1.5.6](https://github.com/usds/questionable/compare/v1.5.5...v1.5.6) (2022-03-17)
 
 
