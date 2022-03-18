@@ -1,3 +1,10 @@
+## [1.5.8](https://github.com/usds/questionable/compare/v1.5.7...v1.5.8) (2022-03-18)
+
+
+### Bug Fixes
+
+* **analytics:** CTA event and result category ([a24eb60](https://github.com/usds/questionable/commit/a24eb60fa88a054f69ba1ff341a5eb947c910e93))
+
 ## [1.5.7](https://github.com/usds/questionable/compare/v1.5.6...v1.5.7) (2022-03-17)
 
 
