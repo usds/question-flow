@@ -67,6 +67,7 @@ rules:
     - code: 100
       ignoreComments: true
       ignoreUrls: true
+  no-underscore-dangle: off
   no-multi-spaces:
     - off
     - exceptions:
