@@ -5,7 +5,7 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import { QuestionableConfig } from '../composable/Config';
+import { QuestionableConfig } from '../composable/QuestionableConfig';
 import { Questionnaire }      from '../composable/Questionnaire';
 
 const GlobalStateContext = createContext({

@@ -1,12 +1,12 @@
-import { ProgressBar }       from '../wizard/ProgressBar';
-import { StepIndicator }     from '../wizard/StepIndicator';
-import { noel }              from '../../lib/noop';
-import { useGlobal }         from '../../state/GlobalState';
-import { IStepData }         from '../../survey/IStepData';
-import { TVerticalPosition } from '../../lib/types';
+import { TVerticalPositionCore } from '@usds.gov/questionable-core';
+import { ProgressBar }           from '../wizard/ProgressBar';
+import { StepIndicator }         from '../wizard/StepIndicator';
+import { noel }                  from '../../lib/noel';
+import { useGlobal }             from '../../state/GlobalState';
+import { IStepData }             from '../../survey/IStepData';
 
 export const ProgressFactory = ({ props, position }:
-  { position: TVerticalPosition, props: IStepData }): JSX.Element => {
+  { position: TVerticalPositionCore, props: IStepData }): JSX.Element => {
   const { config } = useGlobal();
 
   if (config.progressBar.hide || config.progressBar.position !== position) {

@@ -1,5 +1,6 @@
+import { IRefCore } from '@usds.gov/questionable-core';
 /** Generic reference object */
-export interface IRef {
+export interface IRef extends IRefCore {
   /**
    * Unique identifier
    *

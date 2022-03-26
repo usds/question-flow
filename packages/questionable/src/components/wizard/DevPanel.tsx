@@ -1,6 +1,6 @@
 import { Accordion, Button } from '@trussworks/react-uswds';
 import { CSS_CLASS }         from '../../lib';
-import { noel }              from '../../lib/noop';
+import { noel }              from '../../lib/noel';
 import { useGlobal }         from '../../state/GlobalState';
 import { IStepData }         from '../../survey/IStepData';
 import { Wizard }            from '../lib/Wizard';

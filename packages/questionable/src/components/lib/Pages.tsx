@@ -1,8 +1,8 @@
 import { kebabCase }    from 'lodash';
 import { ReactNode }    from 'react';
+import { groupBy }      from '@usds.gov/questionable-core';
 import { CSS_CLASS }    from '../../lib/enums';
 import { Div }          from '../factories/NodeFactory';
-import { groupBy }      from '../../lib/array';
 import { IGlobalState } from '../../state/GlobalState';
 import { IResult }      from '../../survey/IResult';
 import { IStepData }    from '../../survey/IStepData';

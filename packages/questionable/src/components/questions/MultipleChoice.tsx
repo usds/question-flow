@@ -1,4 +1,4 @@
-import { noel }          from '../../lib/noop';
+import { noel }          from '../../lib/noel';
 import { useGlobal }     from '../../state';
 import { IQuestionData } from '../../survey/IQuestionData';
 import { Questions }     from '../lib/Questions';

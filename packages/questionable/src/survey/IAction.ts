@@ -1,11 +1,10 @@
-import { ACTION }  from '../lib/enums';
-import { IButton } from './IButton';
-import { IRef }    from './IRef';
+import { ACTION, IActionCore } from '@usds.gov/questionable-core';
+import { IButton }             from './IButton';
 
 /**
  * Represents something the customer can do in response to receiving a result
  */
-export interface IAction extends IRef {
+export interface IAction extends IActionCore {
   /**
    * Buttons to complete the action
    * @title Buttons

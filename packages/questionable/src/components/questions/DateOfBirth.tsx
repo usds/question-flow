@@ -2,19 +2,23 @@ import { kebabCase } from 'lodash';
 import {
   useState,
 } from 'react';
-import { noel }                                        from '../../lib/noop';
-import { TDateOfBirth }                                from '../../lib/types';
-import { useGlobal }                                   from '../../state/GlobalState';
-import { IQuestionData }                               from '../../survey/IQuestionData';
-import { Questions }                                   from '../lib/Questions';
-import { StepLayout }                                  from '../wizard/StepLayout';
-import { TDoBUtilParams, IInfoBox, getDateInputGroup } from './lib/DateOfBirthUtils';
+import { TDateOfBirthCore } from '@usds.gov/questionable-core';
+import { noel }             from '../../lib/noel';
+import { useGlobal }        from '../../state/GlobalState';
+import { IQuestionData }    from '../../survey/IQuestionData';
+import { Questions }        from '../lib/Questions';
+import { StepLayout }       from '../wizard/StepLayout';
+import {
+  TDoBUtilParams,
+  IInfoBox,
+  getDateInputGroup,
+} from './lib/DateOfBirthUtils';
 
 export const DateOfBirth = (props: IQuestionData): JSX.Element => {
   const { config, questionnaire } = useGlobal();
   const { step }                  = props;
   const birthdate                 = Questions.getBirthdate(props);
-  const dob: TDateOfBirth         = {
+  const dob: TDateOfBirthCore     = {
     day:   birthdate?.day?.toString(),
     month: birthdate?.month?.toString(),
     year:  birthdate?.year?.toString(),

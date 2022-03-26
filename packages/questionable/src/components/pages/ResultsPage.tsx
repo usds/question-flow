@@ -1,7 +1,7 @@
 import { Action }     from '../wizard/Action';
 import { CSS_CLASS }  from '../../lib';
 import { IPageData }  from '../../survey/IPageData';
-import { noel }       from '../../lib/noop';
+import { noel }       from '../../lib/noel';
 import { Pages }      from '../lib';
 import { Span }       from '../factories/NodeFactory';
 import { StepLayout } from '../wizard/StepLayout';

@@ -2,14 +2,17 @@
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { merge }                     from 'lodash';
 import { DateTime }                  from 'luxon';
-import { QuestionableConfig }        from '../../composable/Config';
-import { getDateTime }               from '../../lib/date';
-import { ACTION_TYPE, CSS_CLASS }    from '../../lib/enums';
-import { TDateOfBirth }              from '../../lib/types';
-import { IQuestion }                 from '../../survey';
-import { IQuestionData }             from '../../survey/IQuestionData';
-import { IRef }                      from '../../survey/IRef';
-import { Steps }                     from './Steps';
+import {
+  TDateOfBirthCore,
+  getDateTime,
+  ACTION_TYPE,
+} from '@usds.gov/questionable-core';
+import { QuestionableConfig } from '../../composable/QuestionableConfig';
+import { IQuestion }          from '../../survey';
+import { IQuestionData }      from '../../survey/IQuestionData';
+import { IRef }               from '../../survey/IRef';
+import { Steps }              from './Steps';
+import { CSS_CLASS }          from '../../lib/enums';
 
 /**
  * Static utility methods for question components
@@ -193,7 +196,7 @@ export abstract class Questions {
    * @param dob
    * @returns
    */
-  public static toBirthdate(dob: TDateOfBirth): string | undefined {
+  public static toBirthdate(dob: TDateOfBirthCore): string | undefined {
     if (dob.month && dob.day && dob.year) {
       if (+dob.month < 1 || +dob.month > 12) {
         return undefined;

@@ -1,10 +1,11 @@
-import { SiteAlert }              from '@trussworks/react-uswds';
-import FileSaver                  from 'file-saver';
-import { QuestionableConfig }     from '../../composable/Config';
-import { ACTION_TYPE, CSS_CLASS } from '../../lib/enums';
-import { noel }                   from '../../lib/noop';
-import { IStepData }              from '../../survey/IStepData';
-import { Span }                   from '../factories/NodeFactory';
+import { SiteAlert }          from '@trussworks/react-uswds';
+import FileSaver              from 'file-saver';
+import { ACTION_TYPE }        from '@usds.gov/questionable-core';
+import { QuestionableConfig } from '../../composable/QuestionableConfig';
+import {  CSS_CLASS }         from '../../lib/enums';
+import { noel }               from '../../lib/noel';
+import { IStepData }          from '../../survey/IStepData';
+import { Span }               from '../factories/NodeFactory';
 
 export abstract class Wizard {
   public static getCssClass(

@@ -1,5 +1,5 @@
 import { merge }                            from 'lodash';
-import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '../lib/enums';
+import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '@usds.gov/questionable-core';
 import { IPageData }                        from '../survey/IPageData';
 import { IQuestionData }                    from '../survey/IQuestionData';
 import { survey }                           from './survey';

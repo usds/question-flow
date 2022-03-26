@@ -1,4 +1,4 @@
 export * from './Form';
-export * from './Config';
+export * from './QuestionableConfig';
 export * from './EventEmitter';
 export * from './Questionnaire';

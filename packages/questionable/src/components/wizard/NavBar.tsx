@@ -1,10 +1,10 @@
+import { TVerticalPositionCore }      from '@usds.gov/questionable-core';
 import { NextButton, PreviousButton } from './Button';
-import { TVerticalPosition }          from '../../lib';
 import { CSS_CLASS }                  from '../../lib/enums';
 import { IStepData }                  from '../../survey/IStepData';
 
 interface INavBar extends IStepData {
-  verticalPos: TVerticalPosition;
+  verticalPos: TVerticalPositionCore;
 }
 
 /**

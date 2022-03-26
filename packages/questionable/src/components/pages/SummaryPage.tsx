@@ -3,7 +3,7 @@ import { ReactNode }  from 'react';
 import { CSS_CLASS }  from '../../lib/enums';
 import { IPageData }  from '../../survey/IPageData';
 import { IQuestion }  from '../../survey';
-import { noel }       from '../../lib/noop';
+import { noel }       from '../../lib/noel';
 import { StepLayout } from '../wizard/StepLayout';
 import { Steps }      from '../lib';
 /* eslint-disable no-script-url */

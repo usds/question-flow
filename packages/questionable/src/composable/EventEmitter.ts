@@ -1,6 +1,9 @@
-import { catchError }         from '../lib/error';
-import { error as log, noop } from '../lib';
-import { IForm }              from '../survey';
+import {
+  catchError, error as log,
+  EventEmitterCore,
+  noop,
+} from '@usds.gov/questionable-core';
+import { IForm } from '../survey';
 import {
   IEvent,
   TAnswerData,
@@ -11,7 +14,7 @@ import {
   TResultData,
 } from '../survey/IEvent';
 
-export class EventEmitter implements IEvent {
+export class EventEmitter extends EventEmitterCore implements IEvent {
   onActionClick: TOnEvent = noop;
 
   onAnswer: TOnEvent = noop;
@@ -29,6 +32,7 @@ export class EventEmitter implements IEvent {
   onNoResults: TOnEvent = noop;
 
   constructor(obj: Partial<EventEmitter>) {
+    super(obj);
     Object.assign(this, obj);
   }
 

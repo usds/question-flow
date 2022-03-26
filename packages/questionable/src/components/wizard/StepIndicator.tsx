@@ -2,7 +2,7 @@ import {
   StepIndicator as SI,
   StepIndicatorStep,
 } from '@trussworks/react-uswds';
-import { noel }      from '../../lib/noop';
+import { noel }      from '../../lib/noel';
 import { useGlobal } from '../../state/GlobalState';
 import { ISection }  from '../../survey/IStep';
 import { IStepData } from '../../survey/IStepData';

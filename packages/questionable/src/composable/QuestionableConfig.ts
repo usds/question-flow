@@ -1,7 +1,13 @@
-import { isString, merge }    from 'lodash';
-import { EventEmitter }       from './EventEmitter';
-import { getQueryParams }     from '../lib/params';
-import { isEnum, MODE, noop } from '../lib';
+import { isString, merge } from 'lodash';
+import {
+  isEnum,
+  MODE,
+  noop,
+  QuestionableConfigCore,
+  TStringDictionaryCore,
+} from '@usds.gov/questionable-core';
+import { EventEmitter }   from './EventEmitter';
+import { getQueryParams } from '../lib/params';
 import {
   INavigationConfig,
   IPagesConfig,
@@ -16,10 +22,10 @@ import {
  *
  * The config has opinionated defaults, but is easily modified using Partial updates
  */
-export class QuestionableConfig implements IQuestionableConfig {
-  #mode = MODE.VIEW;
+export class QuestionableConfig extends QuestionableConfigCore implements IQuestionableConfig {
+  protected _mode = MODE.VIEW;
 
-  #nav: INavigationConfig = {
+  protected _nav: INavigationConfig = {
     next: {
       defaultLabel:  'Next',
       horizontalPos: 'left',
@@ -36,7 +42,7 @@ export class QuestionableConfig implements IQuestionableConfig {
     },
   };
 
-  #pages: IPagesConfig = {
+  protected _pages: IPagesConfig = {
     landing: {
       visible: true,
     },
@@ -51,7 +57,7 @@ export class QuestionableConfig implements IQuestionableConfig {
     },
   };
 
-  #progressBar: IProgressBarConfig = {
+  protected _progressBar: IProgressBarConfig = {
     baseBgColor: '#f0f0f0',
     bgColor:     '#005ea2',
     hide:        false,
@@ -59,99 +65,116 @@ export class QuestionableConfig implements IQuestionableConfig {
     type:        'progress-bar',
   };
 
-  #questions: IQuestionConfig = {
+  protected _questions: IQuestionConfig = {
     showAnswerBorder: true,
   };
 
-  #steps: IStepConfig = {
+  protected _steps: IStepConfig = {
     borderClass: 'border-0',
     showStepId:  false,
     titleClass:  '',
   };
 
-  #events: EventEmitter = new EventEmitter({
-    onAnswer:   noop,
-    onAnyEvent: noop,
-    onError:    noop,
-    onPage:     noop,
+  protected _events: EventEmitter = new EventEmitter({
+    onActionClick: noop,
+    onAnswer:      noop,
+    onAnyEvent:    noop,
+    onBranch:      noop,
+    onError:       noop,
+    onGateSwitch:  noop,
+    onInit:        noop,
+    onNoResults:   noop,
+    onPage:        noop,
+    onResults:     noop,
   });
 
+  protected _params: TStringDictionaryCore = {};
+
   constructor(config: Partial<IQuestionableConfig> = {}) {
+    super(config);
     merge(this, config);
     const params = getQueryParams();
     if (params.dev) {
-      this.#mode = MODE.DEV;
+      this._mode = MODE.DEV;
     }
     if (this.dev || params.showStepId) {
-      this.#steps.showStepId = true;
+      this._steps.showStepId = true;
     }
   }
 
   get dev(): boolean {
-    return this.#mode === MODE.DEV;
+    return this._mode === MODE.DEV;
   }
 
   get events(): EventEmitter {
-    return this.#events;
+    return this._events;
   }
 
   set events(val: Partial<EventEmitter>) {
-    merge(this.#events, val);
+    merge(this._events, val);
   }
 
   get mode(): MODE {
-    return this.#mode;
+    return this._mode;
   }
 
   set mode(val: MODE | string) {
     if (isString(val)) {
       if (isEnum(MODE, val)) {
-        this.#mode = val as MODE;
+        this._mode = val as MODE;
       } else {
-        this.#mode = MODE.VIEW;
+        this._mode = MODE.VIEW;
       }
     } else {
-      this.#mode = val;
+      this._mode = val;
     }
   }
 
   get nav(): INavigationConfig {
-    return { ...this.#nav };
+    return { ...this._nav };
   }
 
   set nav(val: Partial<INavigationConfig>) {
-    merge(this.#nav, val);
+    merge(this._nav, val);
   }
 
   get pages(): IPagesConfig {
-    return this.#pages;
+    return this._pages;
   }
 
   set pages(val: Partial<IPagesConfig>) {
-    merge(this.#pages, val);
+    merge(this._pages, val);
+  }
+
+  get params(): TStringDictionaryCore {
+    return this._params;
+  }
+
+  set params(val: TStringDictionaryCore) {
+    merge(this._pages, val);
   }
 
   get progressBar(): IProgressBarConfig {
-    return { ...this.#progressBar };
+    return { ...this._progressBar };
   }
 
   set progressBar(val: Partial<IProgressBarConfig>) {
-    merge(this.#progressBar, val);
+    merge(this._progressBar, val);
   }
 
   get questions(): IQuestionConfig {
-    return { ...this.#questions };
+    return { ...this._questions };
   }
 
   set questions(val: Partial<IQuestionConfig>) {
-    merge(this.#questions, val);
+    merge(this._questions, val);
   }
 
   get steps(): IStepConfig {
-    return { ...this.#steps };
+    return { ...this._steps };
   }
 
   set steps(val: Partial<IStepConfig>) {
-    merge(this.#steps, val);
+    merge(this._steps, val);
   }
 }

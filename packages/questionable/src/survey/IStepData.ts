@@ -1,14 +1,13 @@
-import { ReactNode } from 'react';
-import { IWizard }   from 'use-wizard/lib/cjs/useWizard/types/IWizard';
-import { TStep }     from 'use-wizard/lib/cjs/useWizard/types/TStep';
-import { TReducer }  from '../lib/types';
-import { IForm }     from './IForm';
-import { IStep }     from './IStep';
+import { IStepDataCore, TReducerCore } from '@usds.gov/questionable-core';
+import { ReactNode }                   from 'react';
+import { IWizard }                     from 'use-wizard/lib/cjs/useWizard/types/IWizard';
+import { IForm }                       from './IForm';
+import { IStep }                       from './IStep';
 
 /**
  * Data defintion for base wizard step
  */
-export interface IStepData {
+export interface IStepData extends IStepDataCore {
   /**
    * Child component(s) to render
    *
@@ -20,7 +19,7 @@ export interface IStepData {
    *
    * @hidden JSON Schema doesn't support functions
    */
-  dispatchForm: TReducer;
+  dispatchForm: TReducerCore;
   /**
    * The user's current form state
    *
@@ -39,7 +38,7 @@ export interface IStepData {
    * @title Step Id
    * @hidden Not viewable/editable in Design Mode
    */
-  stepId: TStep;
+  stepId: string | number;
   /**
    * `use-Wizard` instance for this instance of Questionable
    *

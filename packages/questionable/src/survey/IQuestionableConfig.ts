@@ -1,17 +1,25 @@
-import { MODE }        from '../lib/enums';
 import {
-  TButtonMode,
-  THorizontalPosition,
-  TProgressBarType,
-  TVerticalPosition,
-} from '../lib/types';
+  IButtonConfigCore,
+  INavigationConfigCore,
+  IPageConfigCore,
+  IPagesConfigCore,
+  IProgressBarConfigCore,
+  IQuestionableConfigCore,
+  IQuestionConfigCore,
+  IStepConfigCore,
+  MODE,
+  TButtonModeCore,
+  THorizontalPositionCore,
+  TProgressBarTypeCore,
+  TVerticalPositionCore,
+} from '@usds.gov/questionable-core';
 import { IButton } from './IButton';
 import { IEvent }  from './IEvent';
 
 /**
  * Configuration for customized behavior of Questionable
  */
-export interface IQuestionableConfig {
+export interface IQuestionableConfig extends IQuestionableConfigCore {
   /**
    * Enables all developer tools (NOT for production use!)
    *
@@ -70,7 +78,7 @@ export interface IQuestionableConfig {
 /**
  * Customizations for styling and formatting of the steps
  */
-export interface IStepConfig {
+export interface IStepConfig extends IStepConfigCore {
   /**
    * Class determines whether cards have borders
    *
@@ -97,7 +105,7 @@ export interface IStepConfig {
 /**
  * Configuration options for the progress bar
  */
-export interface IProgressBarConfig {
+export interface IProgressBarConfig extends IProgressBarConfigCore {
   /**
    * Color of the non-completed pb
    *
@@ -123,7 +131,7 @@ export interface IProgressBarConfig {
    * @title Position
    * @default 'bottom'
    */
-  position: TVerticalPosition;
+  position: TVerticalPositionCore;
   /**
    * Component type
    *
@@ -134,13 +142,13 @@ export interface IProgressBarConfig {
    * @title Type
    * @default 'progress-bar'
    */
-  type: TProgressBarType;
+  type: TProgressBarTypeCore;
 }
 
 /**
  * Configuration for question display
  */
-export interface IQuestionConfig {
+export interface IQuestionConfig extends IQuestionConfigCore {
   /**
    * Determines whether to show border on radios and checkboxes
    *
@@ -153,7 +161,7 @@ export interface IQuestionConfig {
 /**
  * Configuration for buttons
  */
-export interface IButtonConfig extends IButton {
+export interface IButtonConfig extends IButton, IButtonConfigCore {
   /**
    * Default text to display if none is defined
    */
@@ -164,19 +172,19 @@ export interface IButtonConfig extends IButton {
    * @title Horizontal Position
    * @default left
    */
-  horizontalPos: THorizontalPosition;
+  horizontalPos: THorizontalPositionCore;
   /**
    * Render mode (link or button)
    *
    * @title Mode
    */
-  type: TButtonMode;
+  type: TButtonModeCore;
   /**
    * Vertical orientation (top or bottom)
    *
    * @title Vertical Position
    */
-  verticalPos: TVerticalPosition;
+  verticalPos: TVerticalPositionCore;
   /**
    * Toggle whether button is visible
    *
@@ -188,7 +196,7 @@ export interface IButtonConfig extends IButton {
 /**
  * Configuration for navigation
  */
-export interface INavigationConfig {
+export interface INavigationConfig extends INavigationConfigCore {
   /**
    * Next/Forward button
    */
@@ -199,11 +207,11 @@ export interface INavigationConfig {
   prev: Partial<IButtonConfig>;
 }
 
-export interface IPageConfig {
+export interface IPageConfig extends IPageConfigCore {
   visible: boolean,
 }
 
-export interface IPagesConfig {
+export interface IPagesConfig extends IPagesConfigCore {
   landing?: Partial<IPageConfig>,
   noresults?: Partial<IPageConfig>,
   results?: Partial<IPageConfig>,

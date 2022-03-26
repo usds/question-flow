@@ -1,4 +1,12 @@
-import { DIRECTION }     from '../lib/enums';
+import {
+  DIRECTION,
+  TAnswerDataCore,
+  TPageDataCore,
+  TResultDataCore,
+  TOnEventCore,
+  IEventCore,
+  TOnErrorCore,
+} from '@usds.gov/questionable-core';
 import { IForm }         from './IForm';
 import { IQuestionData } from './IQuestionData';
 import { IStepData }     from './IStepData';
@@ -7,7 +15,7 @@ import { IStepData }     from './IStepData';
  * Event data structure to be sent with event callbacks
  * @title Event Data Type
  */
-export type TPageData = {
+export type TPageData = TPageDataCore & {
   dir: DIRECTION;
   /**
    * @hidden
@@ -20,7 +28,7 @@ export type TPageData = {
  * Event data structure to be sent with event callbacks
  * @title Event Data Type
  */
-export type TAnswerData = {
+export type TAnswerData = TAnswerDataCore & {
   answer: string;
   /**
    * @hidden
@@ -29,7 +37,7 @@ export type TAnswerData = {
   step: string;
 }
 
-export type TResultData = {
+export type TResultData = TResultDataCore & {
   props: IStepData;
   results: {
     id: string;
@@ -48,7 +56,7 @@ export type TEvent = TPageData | TAnswerData | TResultData | IForm;
  * @title Event Type
  * @hidden
  */
-export type TOnEvent = (data: TEvent) => void;
+export type TOnEvent = TOnEventCore;
 
 /**
  * Error function type to be used as a callback
@@ -56,9 +64,9 @@ export type TOnEvent = (data: TEvent) => void;
  * @title Error Type
  * @hidden
  */
-export type TOnError = (e: Error, data?: TEvent) => void;
+export type TOnError = TOnErrorCore;
 
-export interface IEvent {
+export interface IEvent extends IEventCore {
   onActionClick: TOnEvent | undefined,
   onAnswer: TOnEvent | undefined,
   onAnyEvent: TOnEvent | undefined,

@@ -1,4 +1,4 @@
-import { noel }       from '../../lib/noop';
+import { noel }       from '../../lib/noel';
 import { IPageData }  from '../../survey/IPageData';
 import { Span }       from '../factories/NodeFactory';
 import { StepLayout } from '../wizard/StepLayout';

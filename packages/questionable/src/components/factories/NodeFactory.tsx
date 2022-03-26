@@ -1,7 +1,7 @@
 import {
   createElement, isValidElement, ReactHTML, ReactNode,
 } from 'react';
-import { noel } from '../../lib/noop';
+import { noel } from '../../lib/noel';
 
 type TEl = {
   className?: string;

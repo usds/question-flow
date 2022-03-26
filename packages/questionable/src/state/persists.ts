@@ -1,6 +1,5 @@
-import { kebabCase }    from 'lodash';
-import { catchError }   from '../lib/error';
-import { error as log } from '../lib/log';
+import { kebabCase }                from 'lodash';
+import { catchError, error as log } from '@usds.gov/questionable-core';
 
 interface IPersists {
   age: number;

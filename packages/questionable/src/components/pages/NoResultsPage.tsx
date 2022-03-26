@@ -1,10 +1,11 @@
-import { ACTION, CSS_CLASS } from '../../lib';
-import { Action }            from '../wizard/Action';
-import { IPageData }         from '../../survey/IPageData';
-import { noel }              from '../../lib/noop';
-import { Span }              from '../factories/NodeFactory';
-import { StepLayout }        from '../wizard/StepLayout';
-import { useGlobal }         from '../../state/GlobalState';
+import { ACTION }     from '@usds.gov/questionable-core';
+import { CSS_CLASS }  from '../../lib/enums';
+import { Action }     from '../wizard/Action';
+import { IPageData }  from '../../survey/IPageData';
+import { noel }       from '../../lib/noel';
+import { Span }       from '../factories/NodeFactory';
+import { StepLayout } from '../wizard/StepLayout';
+import { useGlobal }  from '../../state/GlobalState';
 
 /**
  * Displays the wizard results

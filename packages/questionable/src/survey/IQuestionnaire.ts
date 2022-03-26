@@ -1,3 +1,4 @@
+import { IQuestionnaireCore }  from '@usds.gov/questionable-core';
 import { IAction }             from './IAction';
 import { IBranch }             from './IBranch';
 import { IPages }              from './IPages';
@@ -8,13 +9,12 @@ import { IResult }             from './IResult';
 /**
  * Definition for survey data input
  */
-export interface IQuestionnaire {
-  readonly actions: IAction[];
-  readonly branches: IBranch[];
-  readonly config: IQuestionableConfig;
-  readonly header: string;
-  readonly pages: IPages;
-  readonly questions: IQuestion[];
-  readonly results: IResult[];
-  readonly sections: ISection[];
+export interface IQuestionnaire extends IQuestionnaireCore {
+   actions: IAction[];
+   branches: IBranch[];
+   config: IQuestionableConfig;
+   pages: IPages;
+   questions: IQuestion[];
+   results: IResult[];
+   sections: ISection[];
 }

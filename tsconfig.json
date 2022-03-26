@@ -38,6 +38,9 @@
       "@usds.gov/questionable": [
         "questionable"
       ],
+      "@usds.gov/questionable-core": [
+        "core"
+      ],
       "@usds.gov/ssa-eligibility": [
         "ssa-eligibility"
       ],

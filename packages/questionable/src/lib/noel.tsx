@@ -1,10 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { log } from './log';
-
-/**
- * Generic no-operation
- */
-export const noop = (): void => { };
+import { log } from '@usds.gov/questionable-core';
 
 /**
  * Generic no-element

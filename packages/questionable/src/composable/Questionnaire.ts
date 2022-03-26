@@ -1,19 +1,11 @@
 import { ArrayUnique }             from 'class-validator';
 import { groupBy, isEmpty, merge } from 'lodash';
-import { IAction }                 from '../survey/IAction';
-import { IBranch }                 from '../survey/IBranch';
-import { IForm }                   from '../survey/IForm';
-import { IPageConfig }             from '../survey/IQuestionableConfig';
-import { IPages }                  from '../survey/IPages';
-import { IQuestionnaire }          from '../survey/IQuestionnaire';
-import { IResult }                 from '../survey/IResult';
-import { IStepData }               from '../survey/IStepData';
-import { log }                     from '../lib/log';
-import { matches }                 from '../lib/helpers';
-import { QuestionableConfig }      from './Config';
-import { setBranch }               from '../state/persists';
-import { TAge, TAgeCalc }          from '../lib/types';
 import {
+  log,
+  QuestionnaireCore,
+  matches,
+  TAgeCore,
+  TAgeCalcCore,
   ACTION,
   DIRECTION,
   isEnum,
@@ -22,7 +14,17 @@ import {
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   STEP_TYPE,
-} from '../lib/enums';
+}                     from '@usds.gov/questionable-core';
+import { IAction }            from '../survey/IAction';
+import { IBranch }            from '../survey/IBranch';
+import { IForm }              from '../survey/IForm';
+import { IPageConfig }        from '../survey/IQuestionableConfig';
+import { IPages }             from '../survey/IPages';
+import { IQuestionnaire }     from '../survey/IQuestionnaire';
+import { IResult }            from '../survey/IResult';
+import { IStepData }          from '../survey/IStepData';
+import { QuestionableConfig } from './QuestionableConfig';
+import { setBranch }          from '../state/persists';
 import {
   IPage,
   IQuestion,
@@ -35,32 +37,33 @@ import {
 /**
  * Utility wrapper for survey state
  */
-export class Questionnaire implements IQuestionnaire {
+export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
   @ArrayUnique((action: IAction) => action.id)
-  readonly actions!: IAction[];
+  public actions: IAction[] = [];
 
-  readonly branches!: IBranch[];
+  public branches: IBranch[] = [];
 
-  readonly config!: QuestionableConfig;
+  public config: QuestionableConfig = new QuestionableConfig();
 
-  readonly flow: string[];
+  public flow: string[] = [];
 
-  readonly header!: string;
+  public header = '';
 
   @ArrayUnique((result: IResult) => result.label)
-  readonly results!: IResult[];
+  public results: IResult[] = [];
 
-  readonly pages!: IPages;
+  public pages!: IPages;
 
   @ArrayUnique((question: IQuestion) => question.id)
-  readonly questions!: IQuestion[];
+  public questions: IQuestion[] = [];
 
   @ArrayUnique((section: ISection) => section.id)
-  readonly sections!: ISection[];
+  public sections: ISection[] = [];
 
-  private readonly steps: IStep[];
+  protected steps: IStep[] = [];
 
-  constructor(data: Partial<IQuestionnaire | Questionnaire>) {
+  constructor(data: Partial<IQuestionnaire>) {
+    super(data);
     merge(this, data);
 
     // Create a new collection for our flow logic
@@ -288,7 +291,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param step
    * @returns string[]
    */
-  private getBranchQuestions(step: IQuestion): string[] {
+  protected getBranchQuestions(step: IQuestion): string[] {
     const question = step as IQuestion;
 
     if (question.branch) {
@@ -307,7 +310,7 @@ export class Questionnaire implements IQuestionnaire {
    * Gets all of the questions regardless of branch
    * @returns string[]
    */
-  private getQuestionsWithoutBranches(): string[] {
+  protected getQuestionsWithoutBranches(): string[] {
     return this.steps
       .filter((q) => isEnum(QUESTION_TYPE, q.type))
       .map((q) => q.id);
@@ -430,7 +433,7 @@ export class Questionnaire implements IQuestionnaire {
    * Internal wrapper to create error, log, and throw
    * @param e Error as string
    */
-  private throw(e: string): never {
+  protected throw(e: string): never {
     const error = new Error(e);
     this.config.events.error(error);
     throw error;
@@ -439,7 +442,7 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Ensure the survey is constructed with (minimally) valid data
    */
-  private validateInput() {
+  protected validateInput() {
     if (this.questions?.length <= 0) {
       this.throw('No questions have been defined.');
     }
@@ -457,7 +460,7 @@ export class Questionnaire implements IQuestionnaire {
    * Top level branches that have questions assigned will update the question reference to use the branch
    * Each question that defines a branch relationship will establish a reference to a top level branch
    */
-  private syncBranches(): void {
+  protected syncBranches(): void {
     // Branches defined take priority; sync these first
     this.branches.forEach((b) => {
       b.questions.forEach((bq) => {
@@ -490,7 +493,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param type Page Type
    * @returns
    */
-  private getPageSet = (
+  protected getPageSet = (
     type: PAGE_TYPE,
   ): {
     config?: Partial<IPageConfig>;
@@ -527,7 +530,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param idx index of the page in `this.steps`
    * @param type LANDING, RESULTS, etc
    */
-  private setPage(idx: number, type: PAGE_TYPE): void {
+  protected setPage(idx: number, type: PAGE_TYPE): void {
     const error = 'step is not correctly defined or defined more than once';
 
     const page = this.getPageSet(type);
@@ -560,7 +563,7 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Sets step defaults for landing, summary and results if none are defined.
    */
-  private setPageDefaults(): void {
+  protected setPageDefaults(): void {
     this.setPage(0, PAGE_TYPE.LANDING);
     this.setPage(this.steps.length - 1, PAGE_TYPE.SUMMARY);
     this.setPage(this.steps.length - 1, PAGE_TYPE.RESULTS);
@@ -570,7 +573,7 @@ export class Questionnaire implements IQuestionnaire {
   /**
    * Performs constructor validation on the survery inputs.
    */
-  private init(): void {
+  protected init(): void {
     this.validateInput();
     this.syncBranches();
     this.setPageDefaults();
@@ -600,7 +603,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param minAge a TAge object or undefined
    * @returns true if no min age, else true if age is >= min age
    */
-  public static meetsMinAgeRequirements(form: IForm, minAge?: TAge): boolean {
+  public static meetsMinAgeRequirements(form: IForm, minAge?: TAgeCore): boolean {
     if (!minAge) return true;
 
     if (form.age === undefined) {
@@ -622,7 +625,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param maxAge a TAge object or undefined
    * @returns true if no max age, else true if age is <= max age
    */
-  public static meetsMaxAgeRequirements(form: IForm, maxAge?: TAge): boolean {
+  public static meetsMaxAgeRequirements(form: IForm, maxAge?: TAgeCore): boolean {
     if (!maxAge) return true;
     if (form.age === undefined) {
       return false;
@@ -643,9 +646,9 @@ export class Questionnaire implements IQuestionnaire {
    * @param ageCalc A callback function that operates on an age
    * @returns
    */
-  private static meetsAgeCalcRequirements(
+  protected static meetsAgeCalcRequirements(
     form: IForm,
-    ageCalc?: TAgeCalc,
+    ageCalc?: TAgeCalcCore,
   ): boolean {
     if (!ageCalc) return true;
     if (form.birthdate === undefined) {
@@ -664,7 +667,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param id answer id
    * @returns true if the answer is a match
    */
-  private matchesAnswer(
+  protected matchesAnswer(
     questionAnswer?: string,
     matchAnswer?: string,
     allowUnanswered = false,
@@ -695,7 +698,7 @@ export class Questionnaire implements IQuestionnaire {
    * @param allowUnanswered if true, consider questions that are not yet answered
    * @returns true if all answers are valid or if no answers are required
    */
-  private meetsAnswerRequirements(
+  protected meetsAnswerRequirements(
     answers?: IResponse[],
     allowUnanswered = false,
   ): boolean {

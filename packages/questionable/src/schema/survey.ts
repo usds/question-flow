@@ -3,19 +3,6 @@
 export const survey = {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "DESIGN_TYPE": {
-      "const": "Edit",
-      "description": "Defines the known component types for design",
-      "type": "string"
-    },
-    "DIRECTION": {
-      "description": "Navigation direction for steps by array index (+1 or -1)",
-      "enum": [
-        1,
-        -1
-      ],
-      "type": "number"
-    },
     "IAction": {
       "description": "Represents something the customer can do in response to receiving a result",
       "properties": {
@@ -76,10 +63,10 @@ export const survey = {
       "description": "Represents a navigation button",
       "properties": {
         "horizontalPos": {
-          "$ref": "#/definitions/THorizontalPosition",
           "default": "left",
           "description": "Horizontal orientation (left or right)",
-          "title": "Horizontal Position"
+          "title": "Horizontal Position",
+          "type": "string"
         },
         "id": {
           "description": "Unique identifier",
@@ -101,14 +88,14 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TButtonMode",
           "description": "Render mode (link or button)",
-          "title": "Mode"
+          "title": "Mode",
+          "type": "string"
         },
         "verticalPos": {
-          "$ref": "#/definitions/TVerticalPosition",
           "description": "Vertical orientation (top or bottom)",
-          "title": "Vertical Position"
+          "title": "Vertical Position",
+          "type": "string"
         },
         "visible": {
           "description": "Visibility status of the button (show/hide)",
@@ -124,15 +111,22 @@ export const survey = {
     "IButtonConfig": {
       "description": "Configuration for buttons",
       "properties": {
+        "core": {
+          "enum": [
+            "IButtonConfig",
+            "I"
+          ],
+          "type": "string"
+        },
         "defaultLabel": {
           "description": "Default text to display if none is defined",
           "type": "string"
         },
         "horizontalPos": {
-          "$ref": "#/definitions/THorizontalPosition",
           "default": "left",
           "description": "Horizontal orientation (left or right)",
-          "title": "Horizontal Position"
+          "title": "Horizontal Position",
+          "type": "string"
         },
         "id": {
           "description": "Unique identifier",
@@ -154,14 +148,14 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TButtonMode",
           "description": "Render mode (link or button)",
-          "title": "Mode"
+          "title": "Mode",
+          "type": "string"
         },
         "verticalPos": {
-          "$ref": "#/definitions/TVerticalPosition",
           "description": "Vertical orientation (top or bottom)",
-          "title": "Vertical Position"
+          "title": "Vertical Position",
+          "type": "string"
         },
         "visible": {
           "description": "Toggle whether button is visible",
@@ -183,18 +177,200 @@ export const survey = {
       "description": "Data defintion for design step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
-          "title": "Form"
+          "properties": {
+            "age": {
+              "description": "Customer's age in years/months/days",
+              "properties": {
+                "days": {
+                  "maximum": 31,
+                  "minimum": 0,
+                  "title": "Days",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "months": {
+                  "maximum": 31,
+                  "minimum": 0,
+                  "title": "Months",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "years": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "title": "Years",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "months",
+                "years"
+              ],
+              "title": "Age",
+              "type": "object"
+            },
+            "birthdate": {
+              "description": "Customer's entered birthdate",
+              "title": "Birthdate",
+              "type": "string"
+            },
+            "finished": {
+              "description": "Time the survey was completed",
+              "format": "date-time",
+              "title": "Finished",
+              "type": "string"
+            },
+            "responses": {
+              "description": "All currently provided responses",
+              "items": {
+                "description": "Defines step content for Question type",
+                "properties": {
+                  "answers": {
+                    "description": "Collection of allowed answers",
+                    "items": {
+                      "description": "Generic reference object",
+                      "properties": {
+                        "id": {
+                          "description": "Unique identifier",
+                          "title": "Id",
+                          "type": "string"
+                        },
+                        "title": {
+                          "title": "Title",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "title": "Answers",
+                    "type": "array"
+                  },
+                  "entryRequirements": {
+                    "description": "Collection of requirements to view/enter this step",
+                    "items": {
+                      "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                    },
+                    "title": "Requirements",
+                    "type": "array"
+                  },
+                  "exitRequirements": {
+                    "description": "Collection of requirements to leave this step",
+                    "items": {
+                      "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                    },
+                    "title": "Exit Requirements",
+                    "type": "array"
+                  },
+                  "footer": {
+                    "description": "Optional footer text to display at the bottom of the step",
+                    "title": "Footer",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "Unique identifier",
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "info": {
+                    "description": "Contextual content to display below the step contents and above the footer",
+                    "title": "Info",
+                    "type": "string"
+                  },
+                  "internalNotes": {
+                    "description": "Private/internal use only notes for documenting this step",
+                    "title": "Internal Notes",
+                    "type": "string"
+                  },
+                  "section": {
+                    "description": "Section to which this step belongs",
+                    "properties": {
+                      "id": {},
+                      "requirements": {
+                        "description": "Collection of requirements to enable display of this status",
+                        "items": {
+                          "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                        },
+                        "title": "Requirements",
+                        "type": "array"
+                      },
+                      "title": {}
+                    },
+                    "title": "Section",
+                    "type": "object"
+                  },
+                  "subTitle": {
+                    "description": "Text to display below the title",
+                    "title": "Subtitle",
+                    "type": "string"
+                  },
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "Type of question",
+                    "enum": [
+                      "dob",
+                      "multiple_choice",
+                      "multiple_select"
+                    ],
+                    "title": "Question Type",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "answers",
+                  "id",
+                  "section",
+                  "type"
+                ],
+                "type": "object"
+              },
+              "title": "Responses",
+              "type": "array"
+            },
+            "started": {
+              "description": "Time the survey was started",
+              "format": "date-time",
+              "title": "Started",
+              "type": "string"
+            }
+          },
+          "required": [
+            "responses",
+            "started"
+          ],
+          "title": "FormCore",
+          "type": "object"
         },
         "step": {
           "$ref": "#/definitions/IStep",
           "description": "Current step"
+        },
+        "stepId": {
+          "description": "Internally unique identifier",
+          "title": "Step ID",
+          "type": [
+            "string",
+            "number"
+          ]
         }
       },
       "required": [
         "form",
-        "step"
+        "step",
+        "stepId"
       ],
       "type": "object"
     },
@@ -210,6 +386,9 @@ export const survey = {
           "not": {}
         },
         "onError": {
+          "not": {}
+        },
+        "onGateSwitch": {
           "not": {}
         },
         "onInit": {
@@ -231,9 +410,42 @@ export const survey = {
       "description": "Represents the survey as completed by the user",
       "properties": {
         "age": {
-          "$ref": "#/definitions/TAge",
           "description": "Customer's age in years/months/days",
-          "title": "Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Age",
+          "type": "object"
         },
         "birthdate": {
           "description": "Customer's entered birthdate",
@@ -270,32 +482,40 @@ export const survey = {
     "INavigationConfig": {
       "description": "Configuration for navigation",
       "properties": {
+        "core": {
+          "enum": [
+            "INavigationConfig",
+            "I"
+          ],
+          "type": "string"
+        },
         "next": {
           "description": "Next/Forward button",
           "properties": {
+            "core": {},
             "defaultLabel": {
               "description": "Default text to display if none is defined",
               "type": "string"
             },
             "horizontalPos": {
-              "$ref": "#/definitions/THorizontalPosition",
               "default": "left",
               "description": "Horizontal orientation (left or right)",
-              "title": "Horizontal Position"
+              "title": "Horizontal Position",
+              "type": "string"
             },
             "id": {},
             "link": {},
             "outline": {},
             "title": {},
             "type": {
-              "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
-              "title": "Mode"
+              "title": "Mode",
+              "type": "string"
             },
             "verticalPos": {
-              "$ref": "#/definitions/TVerticalPosition",
               "description": "Vertical orientation (top or bottom)",
-              "title": "Vertical Position"
+              "title": "Vertical Position",
+              "type": "string"
             },
             "visible": {
               "description": "Toggle whether button is visible",
@@ -308,29 +528,30 @@ export const survey = {
         "prev": {
           "description": "Previous/Go back button",
           "properties": {
+            "core": {},
             "defaultLabel": {
               "description": "Default text to display if none is defined",
               "type": "string"
             },
             "horizontalPos": {
-              "$ref": "#/definitions/THorizontalPosition",
               "default": "left",
               "description": "Horizontal orientation (left or right)",
-              "title": "Horizontal Position"
+              "title": "Horizontal Position",
+              "type": "string"
             },
             "id": {},
             "link": {},
             "outline": {},
             "title": {},
             "type": {
-              "$ref": "#/definitions/TButtonMode",
               "description": "Render mode (link or button)",
-              "title": "Mode"
+              "title": "Mode",
+              "type": "string"
             },
             "verticalPos": {
-              "$ref": "#/definitions/TVerticalPosition",
               "description": "Vertical orientation (top or bottom)",
-              "title": "Vertical Position"
+              "title": "Vertical Position",
+              "type": "string"
             },
             "visible": {
               "description": "Toggle whether button is visible",
@@ -451,9 +672,15 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/PAGE_TYPE",
-          "description": "Type of page",
-          "title": "Page Type"
+          "description": "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
+          "enum": [
+            "Landing",
+            "No Results",
+            "Results",
+            "Summary"
+          ],
+          "title": "Step Type",
+          "type": "string"
         }
       },
       "required": [
@@ -465,6 +692,13 @@ export const survey = {
     },
     "IPageConfig": {
       "properties": {
+        "core": {
+          "enum": [
+            "IPageConfig",
+            "I"
+          ],
+          "type": "string"
+        },
         "visible": {
           "type": "boolean"
         }
@@ -478,18 +712,200 @@ export const survey = {
       "description": "Data defintion for page step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
-          "title": "Form"
+          "properties": {
+            "age": {
+              "description": "Customer's age in years/months/days",
+              "properties": {
+                "days": {
+                  "maximum": 31,
+                  "minimum": 0,
+                  "title": "Days",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "months": {
+                  "maximum": 31,
+                  "minimum": 0,
+                  "title": "Months",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "years": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "title": "Years",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "months",
+                "years"
+              ],
+              "title": "Age",
+              "type": "object"
+            },
+            "birthdate": {
+              "description": "Customer's entered birthdate",
+              "title": "Birthdate",
+              "type": "string"
+            },
+            "finished": {
+              "description": "Time the survey was completed",
+              "format": "date-time",
+              "title": "Finished",
+              "type": "string"
+            },
+            "responses": {
+              "description": "All currently provided responses",
+              "items": {
+                "description": "Defines step content for Question type",
+                "properties": {
+                  "answers": {
+                    "description": "Collection of allowed answers",
+                    "items": {
+                      "description": "Generic reference object",
+                      "properties": {
+                        "id": {
+                          "description": "Unique identifier",
+                          "title": "Id",
+                          "type": "string"
+                        },
+                        "title": {
+                          "title": "Title",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "title": "Answers",
+                    "type": "array"
+                  },
+                  "entryRequirements": {
+                    "description": "Collection of requirements to view/enter this step",
+                    "items": {
+                      "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                    },
+                    "title": "Requirements",
+                    "type": "array"
+                  },
+                  "exitRequirements": {
+                    "description": "Collection of requirements to leave this step",
+                    "items": {
+                      "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                    },
+                    "title": "Exit Requirements",
+                    "type": "array"
+                  },
+                  "footer": {
+                    "description": "Optional footer text to display at the bottom of the step",
+                    "title": "Footer",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "Unique identifier",
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "info": {
+                    "description": "Contextual content to display below the step contents and above the footer",
+                    "title": "Info",
+                    "type": "string"
+                  },
+                  "internalNotes": {
+                    "description": "Private/internal use only notes for documenting this step",
+                    "title": "Internal Notes",
+                    "type": "string"
+                  },
+                  "section": {
+                    "description": "Section to which this step belongs",
+                    "properties": {
+                      "id": {},
+                      "requirements": {
+                        "description": "Collection of requirements to enable display of this status",
+                        "items": {
+                          "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                        },
+                        "title": "Requirements",
+                        "type": "array"
+                      },
+                      "title": {}
+                    },
+                    "title": "Section",
+                    "type": "object"
+                  },
+                  "subTitle": {
+                    "description": "Text to display below the title",
+                    "title": "Subtitle",
+                    "type": "string"
+                  },
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "Type of question",
+                    "enum": [
+                      "dob",
+                      "multiple_choice",
+                      "multiple_select"
+                    ],
+                    "title": "Question Type",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "answers",
+                  "id",
+                  "section",
+                  "type"
+                ],
+                "type": "object"
+              },
+              "title": "Responses",
+              "type": "array"
+            },
+            "started": {
+              "description": "Time the survey was started",
+              "format": "date-time",
+              "title": "Started",
+              "type": "string"
+            }
+          },
+          "required": [
+            "responses",
+            "started"
+          ],
+          "title": "FormCore",
+          "type": "object"
         },
         "step": {
           "$ref": "#/definitions/IPage",
           "description": "Current step"
+        },
+        "stepId": {
+          "description": "Internally unique identifier",
+          "title": "Step ID",
+          "type": [
+            "string",
+            "number"
+          ]
         }
       },
       "required": [
         "form",
-        "step"
+        "step",
+        "stepId"
       ],
       "type": "object"
     },
@@ -526,8 +942,16 @@ export const survey = {
     },
     "IPagesConfig": {
       "properties": {
+        "core": {
+          "enum": [
+            "IPagesConfig",
+            "I"
+          ],
+          "type": "string"
+        },
         "landing": {
           "properties": {
+            "core": {},
             "visible": {
               "type": "boolean"
             }
@@ -536,6 +960,7 @@ export const survey = {
         },
         "noresults": {
           "properties": {
+            "core": {},
             "visible": {
               "type": "boolean"
             }
@@ -544,6 +969,7 @@ export const survey = {
         },
         "results": {
           "properties": {
+            "core": {},
             "visible": {
               "type": "boolean"
             }
@@ -552,6 +978,7 @@ export const survey = {
         },
         "summary": {
           "properties": {
+            "core": {},
             "visible": {
               "type": "boolean"
             }
@@ -574,6 +1001,13 @@ export const survey = {
           "title": "Background Color",
           "type": "string"
         },
+        "core": {
+          "enum": [
+            "IProgressBarConfig",
+            "I"
+          ],
+          "type": "string"
+        },
         "hide": {
           "default": false,
           "description": "Toggles whether to show progress bar",
@@ -581,16 +1015,16 @@ export const survey = {
           "type": "boolean"
         },
         "position": {
-          "$ref": "#/definitions/TVerticalPosition",
           "default": "bottom",
           "description": "Vertical orientation of the progress bar",
-          "title": "Position"
+          "title": "Position",
+          "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TProgressBarType",
           "default": "progress-bar",
           "description": "Component type\n\nCan be one of two types: (1) The USWDS Step Indicator @see https://trussworks.github.io/react-uswds/?path=/docs/components-step-indicator (2) React progress bar @see https://katerinalupacheva.github.io/react-progress-bar/",
-          "title": "Type"
+          "title": "Type",
+          "type": "string"
         }
       },
       "required": [
@@ -608,7 +1042,22 @@ export const survey = {
         "answers": {
           "description": "Collection of allowed answers",
           "items": {
-            "$ref": "#/definitions/IRef"
+            "description": "Generic reference object",
+            "properties": {
+              "id": {
+                "description": "Unique identifier",
+                "title": "Id",
+                "type": "string"
+              },
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "type": "object"
           },
           "title": "Answers",
           "type": "array"
@@ -699,9 +1148,14 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/QUESTION_TYPE",
-          "description": "Type of question",
-          "title": "Question Type"
+          "description": "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
+          "enum": [
+            "dob",
+            "multiple_choice",
+            "multiple_select"
+          ],
+          "title": "Step Type",
+          "type": "string"
         }
       },
       "required": [
@@ -715,6 +1169,13 @@ export const survey = {
     "IQuestionConfig": {
       "description": "Configuration for question display",
       "properties": {
+        "core": {
+          "enum": [
+            "IQuestionConfig",
+            "I"
+          ],
+          "type": "string"
+        },
         "showAnswerBorder": {
           "default": true,
           "description": "Determines whether to show border on radios and checkboxes",
@@ -730,19 +1191,219 @@ export const survey = {
     "IQuestionData": {
       "description": "Data defintion for question step",
       "properties": {
+        "core": {
+          "enum": [
+            "IQuestionData",
+            "I"
+          ],
+          "type": "string"
+        },
         "form": {
-          "$ref": "#/definitions/IForm",
           "description": "The user's current form state",
-          "title": "Form"
+          "properties": {
+            "age": {
+              "description": "Customer's age in years/months/days",
+              "properties": {
+                "days": {
+                  "maximum": 31,
+                  "minimum": 0,
+                  "title": "Days",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "months": {
+                  "maximum": 31,
+                  "minimum": 0,
+                  "title": "Months",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "years": {
+                  "maximum": 100,
+                  "minimum": 0,
+                  "title": "Years",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "months",
+                "years"
+              ],
+              "title": "Age",
+              "type": "object"
+            },
+            "birthdate": {
+              "description": "Customer's entered birthdate",
+              "title": "Birthdate",
+              "type": "string"
+            },
+            "finished": {
+              "description": "Time the survey was completed",
+              "format": "date-time",
+              "title": "Finished",
+              "type": "string"
+            },
+            "responses": {
+              "description": "All currently provided responses",
+              "items": {
+                "description": "Defines step content for Question type",
+                "properties": {
+                  "answers": {
+                    "description": "Collection of allowed answers",
+                    "items": {
+                      "description": "Generic reference object",
+                      "properties": {
+                        "id": {
+                          "description": "Unique identifier",
+                          "title": "Id",
+                          "type": "string"
+                        },
+                        "title": {
+                          "title": "Title",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "title": "Answers",
+                    "type": "array"
+                  },
+                  "entryRequirements": {
+                    "description": "Collection of requirements to view/enter this step",
+                    "items": {
+                      "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                    },
+                    "title": "Requirements",
+                    "type": "array"
+                  },
+                  "exitRequirements": {
+                    "description": "Collection of requirements to leave this step",
+                    "items": {
+                      "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                    },
+                    "title": "Exit Requirements",
+                    "type": "array"
+                  },
+                  "footer": {
+                    "description": "Optional footer text to display at the bottom of the step",
+                    "title": "Footer",
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "Unique identifier",
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "info": {
+                    "description": "Contextual content to display below the step contents and above the footer",
+                    "title": "Info",
+                    "type": "string"
+                  },
+                  "internalNotes": {
+                    "description": "Private/internal use only notes for documenting this step",
+                    "title": "Internal Notes",
+                    "type": "string"
+                  },
+                  "section": {
+                    "description": "Section to which this step belongs",
+                    "properties": {
+                      "id": {},
+                      "requirements": {
+                        "description": "Collection of requirements to enable display of this status",
+                        "items": {
+                          "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                        },
+                        "title": "Requirements",
+                        "type": "array"
+                      },
+                      "title": {}
+                    },
+                    "title": "Section",
+                    "type": "object"
+                  },
+                  "subTitle": {
+                    "description": "Text to display below the title",
+                    "title": "Subtitle",
+                    "type": "string"
+                  },
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "Type of question",
+                    "enum": [
+                      "dob",
+                      "multiple_choice",
+                      "multiple_select"
+                    ],
+                    "title": "Question Type",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "answers",
+                  "id",
+                  "section",
+                  "type"
+                ],
+                "type": "object"
+              },
+              "title": "Responses",
+              "type": "array"
+            },
+            "started": {
+              "description": "Time the survey was started",
+              "format": "date-time",
+              "title": "Started",
+              "type": "string"
+            }
+          },
+          "required": [
+            "responses",
+            "started"
+          ],
+          "title": "FormCore",
+          "type": "object"
         },
         "step": {
           "$ref": "#/definitions/IQuestion",
           "description": "Current step"
+        },
+        "stepId": {
+          "description": "Internally unique identifier",
+          "title": "Step ID",
+          "type": [
+            "string",
+            "number"
+          ]
         }
       },
       "required": [
         "form",
-        "step"
+        "step",
+        "stepId"
+      ],
+      "type": "object"
+    },
+    "IQuestionable": {
+      "properties": {
+        "questionnaire": {
+          "$ref": "#/definitions/Questionnaire"
+        }
+      },
+      "required": [
+        "questionnaire"
       ],
       "type": "object"
     },
@@ -750,40 +1411,47 @@ export const survey = {
       "description": "Configuration for customized behavior of Questionable",
       "properties": {
         "mode": {
-          "$ref": "#/definitions/MODE",
           "default": "MODE.VIEW",
           "description": "View or edit mode",
-          "title": "Mode"
+          "enum": [
+            "dev",
+            "edit",
+            "view"
+          ],
+          "title": "Mode",
+          "type": "string"
         },
         "nav": {
           "description": "Navigation configuration",
           "properties": {
+            "core": {},
             "next": {
               "description": "Next/Forward button",
               "properties": {
+                "core": {},
                 "defaultLabel": {
                   "description": "Default text to display if none is defined",
                   "type": "string"
                 },
                 "horizontalPos": {
-                  "$ref": "#/definitions/THorizontalPosition",
                   "default": "left",
                   "description": "Horizontal orientation (left or right)",
-                  "title": "Horizontal Position"
+                  "title": "Horizontal Position",
+                  "type": "string"
                 },
                 "id": {},
                 "link": {},
                 "outline": {},
                 "title": {},
                 "type": {
-                  "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
-                  "title": "Mode"
+                  "title": "Mode",
+                  "type": "string"
                 },
                 "verticalPos": {
-                  "$ref": "#/definitions/TVerticalPosition",
                   "description": "Vertical orientation (top or bottom)",
-                  "title": "Vertical Position"
+                  "title": "Vertical Position",
+                  "type": "string"
                 },
                 "visible": {
                   "description": "Toggle whether button is visible",
@@ -796,29 +1464,30 @@ export const survey = {
             "prev": {
               "description": "Previous/Go back button",
               "properties": {
+                "core": {},
                 "defaultLabel": {
                   "description": "Default text to display if none is defined",
                   "type": "string"
                 },
                 "horizontalPos": {
-                  "$ref": "#/definitions/THorizontalPosition",
                   "default": "left",
                   "description": "Horizontal orientation (left or right)",
-                  "title": "Horizontal Position"
+                  "title": "Horizontal Position",
+                  "type": "string"
                 },
                 "id": {},
                 "link": {},
                 "outline": {},
                 "title": {},
                 "type": {
-                  "$ref": "#/definitions/TButtonMode",
                   "description": "Render mode (link or button)",
-                  "title": "Mode"
+                  "title": "Mode",
+                  "type": "string"
                 },
                 "verticalPos": {
-                  "$ref": "#/definitions/TVerticalPosition",
                   "description": "Vertical orientation (top or bottom)",
-                  "title": "Vertical Position"
+                  "title": "Vertical Position",
+                  "type": "string"
                 },
                 "visible": {
                   "description": "Toggle whether button is visible",
@@ -835,8 +1504,10 @@ export const survey = {
         "pages": {
           "description": "Page configuration",
           "properties": {
+            "core": {},
             "landing": {
               "properties": {
+                "core": {},
                 "visible": {
                   "type": "boolean"
                 }
@@ -845,6 +1516,7 @@ export const survey = {
             },
             "noresults": {
               "properties": {
+                "core": {},
                 "visible": {
                   "type": "boolean"
                 }
@@ -853,6 +1525,7 @@ export const survey = {
             },
             "results": {
               "properties": {
+                "core": {},
                 "visible": {
                   "type": "boolean"
                 }
@@ -861,6 +1534,7 @@ export const survey = {
             },
             "summary": {
               "properties": {
+                "core": {},
                 "visible": {
                   "type": "boolean"
                 }
@@ -884,6 +1558,7 @@ export const survey = {
               "title": "Background Color",
               "type": "string"
             },
+            "core": {},
             "hide": {
               "default": false,
               "description": "Toggles whether to show progress bar",
@@ -891,16 +1566,16 @@ export const survey = {
               "type": "boolean"
             },
             "position": {
-              "$ref": "#/definitions/TVerticalPosition",
               "default": "bottom",
               "description": "Vertical orientation of the progress bar",
-              "title": "Position"
+              "title": "Position",
+              "type": "string"
             },
             "type": {
-              "$ref": "#/definitions/TProgressBarType",
               "default": "progress-bar",
               "description": "Component type\n\nCan be one of two types: (1) The USWDS Step Indicator @see https://trussworks.github.io/react-uswds/?path=/docs/components-step-indicator (2) React progress bar @see https://katerinalupacheva.github.io/react-progress-bar/",
-              "title": "Type"
+              "title": "Type",
+              "type": "string"
             }
           },
           "title": "Progress Bar",
@@ -909,6 +1584,7 @@ export const survey = {
         "questions": {
           "description": "Question configuration",
           "properties": {
+            "core": {},
             "showAnswerBorder": {
               "default": true,
               "description": "Determines whether to show border on radios and checkboxes",
@@ -932,6 +1608,7 @@ export const survey = {
               "title": "Border Class",
               "type": "string"
             },
+            "core": {},
             "showStepId": {
               "default": false,
               "description": "Toggles whether steps' ids are shown next to the question text",
@@ -1042,14 +1719,80 @@ export const survey = {
           "type": "string"
         },
         "maxAge": {
-          "$ref": "#/definitions/TAge",
           "description": "Optional maximum age allowed for this requirement",
-          "title": "Maximum Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Maximum Age",
+          "type": "object"
         },
         "minAge": {
-          "$ref": "#/definitions/TAge",
           "description": "Optional minimum age allowed for this requirement",
-          "title": "Minimum Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Minimum Age",
+          "type": "object"
         },
         "responses": {
           "description": "Map of step id to required answer values",
@@ -1088,27 +1831,100 @@ export const survey = {
         "question": {
           "properties": {
             "answers": {
-              "description": "Collection of allowed answers",
-              "items": {
-                "$ref": "#/definitions/IRef"
-              },
-              "title": "Answers",
-              "type": "array"
+              "properties": {},
+              "type": "object"
             },
-            "buttons": {},
-            "entryRequirements": {},
-            "exitRequirements": {},
-            "footer": {},
+            "buttons": {
+              "description": "Collection of navigation buttons",
+              "properties": {
+                "next": {
+                  "$ref": "#/definitions/IButton",
+                  "default": {
+                    "label": "Next"
+                  },
+                  "description": "Next button",
+                  "title": "Next Button"
+                },
+                "prev": {
+                  "$ref": "#/definitions/IButton",
+                  "default": {
+                    "label": "Prev"
+                  },
+                  "description": "Previous / Back button",
+                  "title": "Prev Button"
+                }
+              },
+              "title": "Buttons",
+              "type": "object"
+            },
+            "entryRequirements": {
+              "description": "Collection of requirements to view/enter this step",
+              "properties": {},
+              "title": "Requirements",
+              "type": "object"
+            },
+            "exitRequirements": {
+              "description": "Collection of requirements to leave this step",
+              "properties": {},
+              "title": "Exit Requirements",
+              "type": "object"
+            },
+            "footer": {
+              "description": "Optional footer text to display at the bottom of the step",
+              "title": "Footer",
+              "type": "string"
+            },
             "id": {},
-            "info": {},
-            "internalNotes": {},
-            "section": {},
-            "subTitle": {},
+            "info": {
+              "description": "Contextual content to display below the step contents and above the footer",
+              "title": "Info",
+              "type": "string"
+            },
+            "internalNotes": {
+              "description": "Private/internal use only notes for documenting this step",
+              "title": "Internal Notes",
+              "type": "string"
+            },
+            "section": {
+              "description": "Section to which this step belongs",
+              "properties": {
+                "id": {},
+                "requirements": {
+                  "description": "Collection of requirements to enable display of this status",
+                  "items": {
+                    "$ref": "#/definitions/IRequirement"
+                  },
+                  "title": "Requirements",
+                  "type": "array"
+                },
+                "title": {}
+              },
+              "title": "Section",
+              "type": "object"
+            },
+            "subTitle": {
+              "description": "Text to display below the title",
+              "title": "Subtitle",
+              "type": "string"
+            },
             "title": {},
             "type": {
-              "$ref": "#/definitions/QUESTION_TYPE",
-              "description": "Type of question",
-              "title": "Question Type"
+              "anyOf": [
+                {
+                  "properties": {},
+                  "type": "object"
+                },
+                {
+                  "properties": {},
+                  "type": "object"
+                },
+                {
+                  "properties": {},
+                  "type": "object"
+                }
+              ],
+              "description": "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
+              "title": "Step Type"
             }
           },
           "type": "object"
@@ -1278,9 +2094,19 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TStepType",
           "description": "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
-          "title": "Step Type"
+          "enum": [
+            "Landing",
+            "No Results",
+            "Results",
+            "Summary",
+            "dob",
+            "multiple_choice",
+            "multiple_select",
+            "Edit"
+          ],
+          "title": "Step Type",
+          "type": "string"
         }
       },
       "required": [
@@ -1301,6 +2127,13 @@ export const survey = {
             "border-0"
           ],
           "title": "Border Class",
+          "type": "string"
+        },
+        "core": {
+          "enum": [
+            "IStepConfig",
+            "I"
+          ],
           "type": "string"
         },
         "showStepId": {
@@ -1339,73 +2172,173 @@ export const survey = {
           "$ref": "#/definitions/IStep",
           "description": "Current step",
           "title": "Step"
+        },
+        "stepId": {
+          "description": "Internally unique identifier",
+          "title": "Step ID",
+          "type": [
+            "string",
+            "number"
+          ]
         }
       },
       "required": [
-        "form"
+        "form",
+        "stepId"
       ],
       "type": "object"
     },
-    "MODE": {
-      "enum": [
-        "dev",
-        "edit",
-        "view"
-      ],
-      "type": "string"
-    },
-    "PAGE_TYPE": {
-      "description": "Defines the known component types for pages",
-      "enum": [
-        "Landing",
-        "No Results",
-        "Results",
-        "Summary"
-      ],
-      "type": "string"
-    },
-    "QUESTION_TYPE": {
-      "description": "Defines the known component types for questions",
-      "enum": [
-        "dob",
-        "multiple_choice",
-        "multiple_select"
-      ],
-      "type": "string"
-    },
-    "TAge": {
+    "QuestionableConfig": {
+      "description": "Configuration class for customizing the Questionable components\n\nThe config has opinionated defaults, but is easily modified using Partial updates",
       "properties": {
-        "days": {
-          "maximum": 31,
-          "minimum": 0,
-          "title": "Days",
-          "type": [
-            "number",
-            "null"
-          ]
+        "mode": {
+          "default": "MODE.VIEW",
+          "description": "View or edit mode",
+          "enum": [
+            "dev",
+            "edit",
+            "view"
+          ],
+          "title": "Mode",
+          "type": "string"
         },
-        "months": {
-          "maximum": 31,
-          "minimum": 0,
-          "title": "Months",
-          "type": [
-            "number",
-            "null"
-          ]
+        "nav": {
+          "description": "Navigation configuration",
+          "properties": {
+            "core": {
+              "enum": [
+                "INavigationConfig",
+                "I"
+              ],
+              "type": "string"
+            }
+          },
+          "title": "Navigation",
+          "type": "object"
         },
-        "years": {
-          "maximum": 100,
-          "minimum": 0,
-          "title": "Years",
-          "type": [
-            "number",
-            "null"
-          ]
+        "pages": {
+          "description": "Page configuration",
+          "properties": {
+            "core": {
+              "enum": [
+                "IPagesConfig",
+                "I"
+              ],
+              "type": "string"
+            }
+          },
+          "title": "Pages",
+          "type": "object"
+        },
+        "progressBar": {
+          "description": "Progress Bar configuration",
+          "properties": {
+            "core": {
+              "enum": [
+                "IProgressBarConfig",
+                "I"
+              ],
+              "type": "string"
+            }
+          },
+          "title": "Progress Bar",
+          "type": "object"
+        },
+        "questions": {
+          "description": "Question configuration",
+          "properties": {
+            "core": {
+              "enum": [
+                "IQuestionConfig",
+                "I"
+              ],
+              "type": "string"
+            }
+          },
+          "title": "Question Configuration",
+          "type": "object"
+        },
+        "steps": {
+          "description": "Step configuration",
+          "properties": {
+            "core": {
+              "enum": [
+                "IStepConfig",
+                "I"
+              ],
+              "type": "string"
+            }
+          },
+          "title": "Step Configuration",
+          "type": "object"
         }
       },
       "required": [
-        "months",
-        "years"
+        "mode",
+        "nav",
+        "pages"
+      ],
+      "type": "object"
+    },
+    "Questionnaire": {
+      "description": "Utility wrapper for survey state",
+      "properties": {
+        "actions": {
+          "items": {
+            "$ref": "#/definitions/IAction"
+          },
+          "type": "array"
+        },
+        "branches": {
+          "items": {
+            "$ref": "#/definitions/IBranch"
+          },
+          "type": "array"
+        },
+        "config": {
+          "$ref": "#/definitions/QuestionableConfig"
+        },
+        "flow": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "header": {
+          "type": "string"
+        },
+        "pages": {
+          "$ref": "#/definitions/IPages"
+        },
+        "questions": {
+          "items": {
+            "$ref": "#/definitions/IQuestion"
+          },
+          "type": "array"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/definitions/IResult"
+          },
+          "type": "array"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/definitions/ISection"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "actions",
+        "branches",
+        "config",
+        "flow",
+        "header",
+        "pages",
+        "questions",
+        "results",
+        "sections"
       ],
       "type": "object"
     },
@@ -1426,13 +2359,6 @@ export const survey = {
       "title": "Event Data Type",
       "type": "object"
     },
-    "TButtonMode": {
-      "enum": [
-        "link",
-        "button"
-      ],
-      "type": "string"
-    },
     "TEvent": {
       "anyOf": [
         {
@@ -1449,18 +2375,16 @@ export const survey = {
         }
       ]
     },
-    "THorizontalPosition": {
-      "enum": [
-        "left",
-        "right"
-      ],
-      "type": "string"
-    },
     "TPageData": {
       "description": "Event data structure to be sent with event callbacks",
       "properties": {
         "dir": {
-          "$ref": "#/definitions/DIRECTION"
+          "description": "Navigation direction for steps by array index (+1 or -1)",
+          "enum": [
+            1,
+            -1
+          ],
+          "type": "number"
         },
         "step": {
           "type": "string"
@@ -1473,17 +2397,624 @@ export const survey = {
       "title": "Event Data Type",
       "type": "object"
     },
-    "TProgressBarType": {
-      "enum": [
-        "step-indicator",
-        "progress-bar"
-      ],
-      "type": "string"
-    },
     "TResultData": {
       "properties": {
         "props": {
-          "$ref": "#/definitions/IStepData"
+          "description": "Data defintion for base wizard step",
+          "properties": {
+            "form": {
+              "description": "The user's current form state",
+              "properties": {
+                "age": {
+                  "description": "Customer's age in years/months/days",
+                  "properties": {
+                    "days": {
+                      "maximum": 31,
+                      "minimum": 0,
+                      "title": "Days",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "months": {
+                      "maximum": 31,
+                      "minimum": 0,
+                      "title": "Months",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "years": {
+                      "maximum": 100,
+                      "minimum": 0,
+                      "title": "Years",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "months",
+                    "years"
+                  ],
+                  "title": "Age",
+                  "type": "object"
+                },
+                "birthdate": {
+                  "description": "Customer's entered birthdate",
+                  "title": "Birthdate",
+                  "type": "string"
+                },
+                "finished": {
+                  "description": "Time the survey was completed",
+                  "format": "date-time",
+                  "title": "Finished",
+                  "type": "string"
+                },
+                "responses": {
+                  "description": "All currently provided responses",
+                  "items": {
+                    "description": "Defines step content for Question type",
+                    "properties": {
+                      "answers": {
+                        "description": "Collection of allowed answers",
+                        "items": {
+                          "description": "Generic reference object",
+                          "properties": {
+                            "id": {
+                              "description": "Unique identifier",
+                              "title": "Id",
+                              "type": "string"
+                            },
+                            "title": {
+                              "title": "Title",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id"
+                          ],
+                          "type": "object"
+                        },
+                        "title": "Answers",
+                        "type": "array"
+                      },
+                      "entryRequirements": {
+                        "description": "Collection of requirements to view/enter this step",
+                        "items": {
+                          "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                        },
+                        "title": "Requirements",
+                        "type": "array"
+                      },
+                      "exitRequirements": {
+                        "description": "Collection of requirements to leave this step",
+                        "items": {
+                          "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                        },
+                        "title": "Exit Requirements",
+                        "type": "array"
+                      },
+                      "footer": {
+                        "description": "Optional footer text to display at the bottom of the step",
+                        "title": "Footer",
+                        "type": "string"
+                      },
+                      "id": {
+                        "description": "Unique identifier",
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "info": {
+                        "description": "Contextual content to display below the step contents and above the footer",
+                        "title": "Info",
+                        "type": "string"
+                      },
+                      "internalNotes": {
+                        "description": "Private/internal use only notes for documenting this step",
+                        "title": "Internal Notes",
+                        "type": "string"
+                      },
+                      "section": {
+                        "description": "Section to which this step belongs",
+                        "properties": {
+                          "id": {},
+                          "requirements": {
+                            "description": "Collection of requirements to enable display of this status",
+                            "items": {
+                              "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                            },
+                            "title": "Requirements",
+                            "type": "array"
+                          },
+                          "title": {}
+                        },
+                        "title": "Section",
+                        "type": "object"
+                      },
+                      "subTitle": {
+                        "description": "Text to display below the title",
+                        "title": "Subtitle",
+                        "type": "string"
+                      },
+                      "title": {
+                        "title": "Title",
+                        "type": "string"
+                      },
+                      "type": {
+                        "description": "Type of question",
+                        "enum": [
+                          "dob",
+                          "multiple_choice",
+                          "multiple_select"
+                        ],
+                        "title": "Question Type",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "answers",
+                      "id",
+                      "section",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "title": "Responses",
+                  "type": "array"
+                },
+                "started": {
+                  "description": "Time the survey was started",
+                  "format": "date-time",
+                  "title": "Started",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "responses",
+                "started"
+              ],
+              "title": "FormCore",
+              "type": "object"
+            },
+            "step": {
+              "description": "Current step",
+              "properties": {
+                "entryRequirements": {
+                  "description": "Collection of requirements to view/enter this step",
+                  "items": {
+                    "description": "Defines an individual requirement for accessing a step",
+                    "properties": {
+                      "explanation": {
+                        "description": "User facing description of this requirement",
+                        "title": "Exlanation",
+                        "type": "string"
+                      },
+                      "maxAge": {
+                        "description": "Optional maximum age allowed for this requirement",
+                        "properties": {
+                          "days": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Days",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "months": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Months",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "years": {
+                            "maximum": 100,
+                            "minimum": 0,
+                            "title": "Years",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "months",
+                          "years"
+                        ],
+                        "title": "Maximum Age",
+                        "type": "object"
+                      },
+                      "minAge": {
+                        "description": "Optional minimum age allowed for this requirement",
+                        "properties": {
+                          "days": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Days",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "months": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Months",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "years": {
+                            "maximum": 100,
+                            "minimum": 0,
+                            "title": "Years",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "months",
+                          "years"
+                        ],
+                        "title": "Minimum Age",
+                        "type": "object"
+                      },
+                      "responses": {
+                        "description": "Map of step id to required answer values",
+                        "items": {
+                          "description": "Acceptable responses",
+                          "properties": {
+                            "answers": {
+                              "items": {
+                                "properties": {
+                                  "id": {
+                                    "description": "Unique identifier",
+                                    "title": "Id",
+                                    "type": "string"
+                                  },
+                                  "title": {
+                                    "title": "Title",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "question": {
+                              "properties": {
+                                "answers": {
+                                  "description": "Collection of allowed answers",
+                                  "items": {
+                                    "description": "Generic reference object",
+                                    "properties": {
+                                      "id": {
+                                        "description": "Unique identifier",
+                                        "title": "Id",
+                                        "type": "string"
+                                      },
+                                      "title": {
+                                        "title": "Title",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "id"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "title": "Answers",
+                                  "type": "array"
+                                },
+                                "entryRequirements": {},
+                                "exitRequirements": {},
+                                "footer": {},
+                                "id": {},
+                                "info": {},
+                                "internalNotes": {},
+                                "section": {},
+                                "subTitle": {},
+                                "title": {},
+                                "type": {
+                                  "description": "Type of question",
+                                  "enum": [
+                                    "dob",
+                                    "multiple_choice",
+                                    "multiple_select"
+                                  ],
+                                  "title": "Question Type",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "required": [
+                            "answers",
+                            "question"
+                          ],
+                          "type": "object"
+                        },
+                        "title": "Answers",
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "responses"
+                    ],
+                    "type": "object"
+                  },
+                  "title": "Requirements",
+                  "type": "array"
+                },
+                "exitRequirements": {
+                  "description": "Collection of requirements to leave this step",
+                  "items": {
+                    "description": "Defines an individual requirement for accessing a step",
+                    "properties": {
+                      "explanation": {
+                        "description": "User facing description of this requirement",
+                        "title": "Exlanation",
+                        "type": "string"
+                      },
+                      "maxAge": {
+                        "description": "Optional maximum age allowed for this requirement",
+                        "properties": {
+                          "days": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Days",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "months": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Months",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "years": {
+                            "maximum": 100,
+                            "minimum": 0,
+                            "title": "Years",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "months",
+                          "years"
+                        ],
+                        "title": "Maximum Age",
+                        "type": "object"
+                      },
+                      "minAge": {
+                        "description": "Optional minimum age allowed for this requirement",
+                        "properties": {
+                          "days": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Days",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "months": {
+                            "maximum": 31,
+                            "minimum": 0,
+                            "title": "Months",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "years": {
+                            "maximum": 100,
+                            "minimum": 0,
+                            "title": "Years",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "months",
+                          "years"
+                        ],
+                        "title": "Minimum Age",
+                        "type": "object"
+                      },
+                      "responses": {
+                        "description": "Map of step id to required answer values",
+                        "items": {
+                          "description": "Acceptable responses",
+                          "properties": {
+                            "answers": {
+                              "items": {
+                                "properties": {
+                                  "id": {
+                                    "description": "Unique identifier",
+                                    "title": "Id",
+                                    "type": "string"
+                                  },
+                                  "title": {
+                                    "title": "Title",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "question": {
+                              "properties": {
+                                "answers": {
+                                  "description": "Collection of allowed answers",
+                                  "items": {
+                                    "description": "Generic reference object",
+                                    "properties": {
+                                      "id": {
+                                        "description": "Unique identifier",
+                                        "title": "Id",
+                                        "type": "string"
+                                      },
+                                      "title": {
+                                        "title": "Title",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "id"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "title": "Answers",
+                                  "type": "array"
+                                },
+                                "entryRequirements": {},
+                                "exitRequirements": {},
+                                "footer": {},
+                                "id": {},
+                                "info": {},
+                                "internalNotes": {},
+                                "section": {},
+                                "subTitle": {},
+                                "title": {},
+                                "type": {
+                                  "description": "Type of question",
+                                  "enum": [
+                                    "dob",
+                                    "multiple_choice",
+                                    "multiple_select"
+                                  ],
+                                  "title": "Question Type",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "required": [
+                            "answers",
+                            "question"
+                          ],
+                          "type": "object"
+                        },
+                        "title": "Answers",
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "responses"
+                    ],
+                    "type": "object"
+                  },
+                  "title": "Exit Requirements",
+                  "type": "array"
+                },
+                "footer": {
+                  "description": "Optional footer text to display at the bottom of the step",
+                  "title": "Footer",
+                  "type": "string"
+                },
+                "id": {
+                  "description": "Unique identifier",
+                  "title": "Id",
+                  "type": "string"
+                },
+                "info": {
+                  "description": "Contextual content to display below the step contents and above the footer",
+                  "title": "Info",
+                  "type": "string"
+                },
+                "internalNotes": {
+                  "description": "Private/internal use only notes for documenting this step",
+                  "title": "Internal Notes",
+                  "type": "string"
+                },
+                "section": {
+                  "description": "Section to which this step belongs",
+                  "properties": {
+                    "id": {},
+                    "requirements": {
+                      "description": "Collection of requirements to enable display of this status",
+                      "items": {
+                        "$ref": "#/definitions/interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476"
+                      },
+                      "title": "Requirements",
+                      "type": "array"
+                    },
+                    "title": {}
+                  },
+                  "title": "Section",
+                  "type": "object"
+                },
+                "subTitle": {
+                  "description": "Text to display below the title",
+                  "title": "Subtitle",
+                  "type": "string"
+                },
+                "title": {
+                  "title": "Title",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
+                  "enum": [
+                    "Landing",
+                    "No Results",
+                    "Results",
+                    "Summary",
+                    "dob",
+                    "multiple_choice",
+                    "multiple_select",
+                    "Edit"
+                  ],
+                  "title": "Step Type",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "section",
+                "type"
+              ],
+              "title": "Step",
+              "type": "object"
+            },
+            "stepId": {
+              "description": "Internally unique identifier",
+              "title": "Step ID",
+              "type": [
+                "string",
+                "number"
+              ]
+            }
+          },
+          "required": [
+            "form",
+            "stepId"
+          ],
+          "type": "object"
         },
         "results": {
           "items": {
@@ -1522,25 +3053,174 @@ export const survey = {
       ],
       "type": "object"
     },
-    "TStepType": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/PAGE_TYPE"
+    "interface-ex.d.ts-6246-7023-ex.d.ts-0-58866408250476": {
+      "description": "Defines an individual requirement for accessing a step",
+      "properties": {
+        "explanation": {
+          "description": "User facing description of this requirement",
+          "title": "Exlanation",
+          "type": "string"
         },
-        {
-          "$ref": "#/definitions/QUESTION_TYPE"
+        "maxAge": {
+          "description": "Optional maximum age allowed for this requirement",
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Maximum Age",
+          "type": "object"
         },
-        {
-          "$ref": "#/definitions/DESIGN_TYPE"
+        "minAge": {
+          "description": "Optional minimum age allowed for this requirement",
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Minimum Age",
+          "type": "object"
+        },
+        "responses": {
+          "description": "Map of step id to required answer values",
+          "items": {
+            "description": "Acceptable responses",
+            "properties": {
+              "answers": {
+                "items": {
+                  "properties": {
+                    "id": {
+                      "description": "Unique identifier",
+                      "title": "Id",
+                      "type": "string"
+                    },
+                    "title": {
+                      "title": "Title",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "question": {
+                "properties": {
+                  "answers": {
+                    "description": "Collection of allowed answers",
+                    "items": {
+                      "description": "Generic reference object",
+                      "properties": {
+                        "id": {
+                          "description": "Unique identifier",
+                          "title": "Id",
+                          "type": "string"
+                        },
+                        "title": {
+                          "title": "Title",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ],
+                      "type": "object"
+                    },
+                    "title": "Answers",
+                    "type": "array"
+                  },
+                  "entryRequirements": {},
+                  "exitRequirements": {},
+                  "footer": {},
+                  "id": {},
+                  "info": {},
+                  "internalNotes": {},
+                  "section": {},
+                  "subTitle": {},
+                  "title": {},
+                  "type": {
+                    "description": "Type of question",
+                    "enum": [
+                      "dob",
+                      "multiple_choice",
+                      "multiple_select"
+                    ],
+                    "title": "Question Type",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "required": [
+              "answers",
+              "question"
+            ],
+            "type": "object"
+          },
+          "title": "Answers",
+          "type": "array"
         }
-      ]
-    },
-    "TVerticalPosition": {
-      "enum": [
-        "top",
-        "bottom"
+      },
+      "required": [
+        "responses"
       ],
-      "type": "string"
+      "type": "object"
     }
   }
 };

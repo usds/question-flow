@@ -1,7 +1,7 @@
 import {
   isEnum, MODE, PAGE_TYPE, QUESTION_TYPE,
-} from '../../lib/enums';
-import { noel }            from '../../lib/noop';
+} from '@usds.gov/questionable-core';
+import { noel }            from '../../lib/noel';
 import { useGlobal }       from '../../state/GlobalState';
 import { IStep }           from '../../survey/IStep';
 import { IStepData }       from '../../survey/IStepData';

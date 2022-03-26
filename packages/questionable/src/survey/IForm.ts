@@ -1,16 +1,16 @@
-import { TAge }      from '../lib/types';
-import { IQuestion } from './IStep';
+import { IFormCore, TAgeCore } from '@usds.gov/questionable-core';
+import { IQuestion }           from './IStep';
 
 /**
  * Represents the survey as completed by the user
  */
-export interface IForm {
+export interface IForm extends IFormCore {
   /**
    * Customer's age in years/months/days
    *
    * @title Age
    */
-  age?: TAge;
+  age?: TAgeCore;
   /**
    * Customer's entered birthdate
    *

@@ -1,6 +1,6 @@
 import { Link }         from '@trussworks/react-uswds';
 import { CSS_CLASS }    from '../../lib';
-import { noel }         from '../../lib/noop';
+import { noel }         from '../../lib/noel';
 import { useGlobal }    from '../../state';
 import { IForm }        from '../../survey';
 import { IAction }      from '../../survey/IAction';

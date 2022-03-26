@@ -1,6 +1,6 @@
 import { kebabCase, values }                   from 'lodash';
+import { DIRECTION, QUESTION_TYPE, STEP_TYPE } from '@usds.gov/questionable-core';
 import { Questionnaire }                       from '../../composable/Questionnaire';
-import { DIRECTION, QUESTION_TYPE, STEP_TYPE } from '../../lib/enums';
 import { IForm }                               from '../../survey/IForm';
 import { IQuestionData }                       from '../../survey/IQuestionData';
 import { IStepData }                           from '../../survey/IStepData';

@@ -1,31 +1,32 @@
-import { IPage } from './IStep';
+import { IPagesCore } from '@usds.gov/questionable-core';
+import { IPage }      from './IStep';
 
 /**
  * Defines required pages for the survey flow
  */
-export interface IPages {
+export interface IPages extends IPagesCore {
   /**
    * First step of the survey
    *
    * @title Landing Page
    */
-  readonly landingPage?: IPage;
+  landingPage?: IPage;
   /**
    * Last step of the survey if there are 0 results
    *
    * @title No Results Page
    */
-  readonly noResultsPage: IPage;
+  noResultsPage: IPage;
   /**
    * Last step of the survey if there are 1 or more results
    *
    * @title Results Page
    */
-  readonly resultsPage: IPage;
+  resultsPage: IPage;
   /**
    * Preview of survery before submitting to receive results
    *
    * @title Summary Page
    */
-  readonly summaryPage: IPage;
+  summaryPage: IPage;
 }

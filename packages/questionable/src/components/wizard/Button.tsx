@@ -1,12 +1,12 @@
-import { Button as B } from '@trussworks/react-uswds';
+import { Button as B }     from '@trussworks/react-uswds';
 import {
-  CSS_CLASS,
   MODE,
   STEP_TYPE,
-  TButtonMode,
-  TVerticalPosition,
-} from '../../lib';
-import { noel }      from '../../lib/noop';
+  TButtonModeCore,
+  TVerticalPositionCore,
+} from '@usds.gov/questionable-core';
+import { CSS_CLASS } from '../../lib/enums';
+import { noel }      from '../../lib/noel';
 import { useGlobal } from '../../state/GlobalState';
 import { IStepData } from '../../survey/IStepData';
 import { Steps }     from '../lib/Steps';
@@ -15,7 +15,7 @@ type TButtonConfig = {
   dir: 'next' | 'prev';
   disabled: () => boolean;
   label: string;
-  mode: TButtonMode;
+  mode: TButtonModeCore;
   onClick: () => void;
   stepId: string;
 };
@@ -35,7 +35,7 @@ const Button = (props: TButtonConfig): JSX.Element => (
 );
 
 interface INavBar extends IStepData {
-  verticalPos: TVerticalPosition;
+  verticalPos: TVerticalPositionCore;
 }
 
 export const PreviousButton = (props: INavBar): JSX.Element => {

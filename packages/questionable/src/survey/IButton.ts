@@ -1,21 +1,21 @@
 import {
-  TButtonMode,
-  THorizontalPosition,
-  TVerticalPosition,
-} from '../lib/types';
-import { IRef } from './IRef';
+  IButtonCore,
+  TButtonModeCore,
+  THorizontalPositionCore,
+  TVerticalPositionCore,
+} from '@usds.gov/questionable-core';
 
 /**
  * Represents a navigation button
  */
-export interface IButton extends IRef {
+export interface IButton extends IButtonCore {
   /**
    * Horizontal orientation (left or right)
    *
    * @title Horizontal Position
    * @default left
    */
-  horizontalPos?: THorizontalPosition;
+  horizontalPos?: THorizontalPositionCore;
   /**
    * Link to tie to button click
    *
@@ -33,13 +33,13 @@ export interface IButton extends IRef {
    *
    * @title Mode
    */
-  type?: TButtonMode;
+  type?: TButtonModeCore;
   /**
    * Vertical orientation (top or bottom)
    *
    * @title Vertical Position
    */
-  verticalPos?: TVerticalPosition;
+  verticalPos?: TVerticalPositionCore;
   /**
    * Visibility status of the button (show/hide)
    *

@@ -1,7 +1,7 @@
 import PB            from '@ramonak/react-progress-bar';
 import { useGlobal } from '../../state/GlobalState';
 import { IStepData } from '../../survey/IStepData';
-import { noel }      from '../../lib/noop';
+import { noel }      from '../../lib/noel';
 import { CSS_CLASS } from '../../lib';
 
 export const ProgressBar = (props: IStepData): JSX.Element => {

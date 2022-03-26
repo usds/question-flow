@@ -1,17 +1,24 @@
-import { DateInput, DateInputGroup }                      from '@trussworks/react-uswds';
-import { capitalize }                                     from 'lodash';
+import { DateInput, DateInputGroup } from '@trussworks/react-uswds';
+import { capitalize }                from 'lodash';
 import {
-  ChangeEvent, Dispatch, KeyboardEvent, SetStateAction,
+  ChangeEvent,
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
 } from 'react';
-import { noel }                              from '../../../lib/noop';
-import { QuestionableConfig }                from '../../../composable';
-import { getAge }                            from '../../../lib/date';
-import { ACTION_TYPE, CSS_CLASS, DATE_UNIT } from '../../../lib/enums';
-import { TDateOfBirth }                      from '../../../lib/types';
-import { setAge }                            from '../../../state/persists';
-import { IQuestionData }                     from '../../../survey/IQuestionData';
-import { Questions }                         from '../../lib/Questions';
-import { Steps }                             from '../../lib/Steps';
+import {
+  ACTION_TYPE,
+  DATE_UNIT,
+  getAge,
+  TDateOfBirthCore,
+} from '@usds.gov/questionable-core';
+import { noel }               from '../../../lib/noel';
+import { QuestionableConfig } from '../../../composable';
+import { setAge }             from '../../../state/persists';
+import { IQuestionData }      from '../../../survey/IQuestionData';
+import { Questions }          from '../../lib/Questions';
+import { Steps }              from '../../lib/Steps';
+import { CSS_CLASS }          from '../../../lib/enums';
 
 type TInfoBox = 'error' | 'warning' | 'info';
 
@@ -25,8 +32,8 @@ export type TDoBUtilParams = {
   error: IInfoBox;
   setCookieName: Dispatch<SetStateAction<string>>;
   setError: Dispatch<SetStateAction<IInfoBox>>;
-  setState: Dispatch<SetStateAction<TDateOfBirth>>;
-  state: TDateOfBirth;
+  setState: Dispatch<SetStateAction<TDateOfBirthCore>>;
+  state: TDateOfBirthCore;
 };
 
 export const isValid = (

@@ -1,5 +1,5 @@
 import { merge }       from 'lodash';
-import { ACTION_TYPE } from '../lib/enums';
+import { ACTION_TYPE } from '@usds.gov/questionable-core';
 import { Form }        from '../composable/Form';
 import { IForm }       from '../survey/IForm';
 

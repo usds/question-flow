@@ -1,21 +1,21 @@
-import { IForm }         from '../survey/IForm';
-import { IQuestion }     from '../survey/IStep';
-import { Questionnaire } from './Questionnaire';
-import { TAge }          from '../lib/types';
+import { TAgeCore, FormCore } from '@usds.gov/questionable-core';
+import { IForm }              from '../survey/IForm';
+import { IQuestion }          from '../survey/IStep';
+import { Questionnaire }      from './Questionnaire';
 
 interface IFormConstructor {
   form?: Partial<Form>;
   questionnaire?: Questionnaire;
 }
 
-export class Form implements IForm {
+export class Form extends FormCore implements IForm {
   public readonly started: Date;
 
   #finished?: Date;
 
   public birthdate?: string;
 
-  public age?: TAge;
+  public age?: TAgeCore;
 
   public get finish(): Date | undefined {
     return this.#finished;
@@ -30,6 +30,7 @@ export class Form implements IForm {
   public responses: IQuestion[] = [];
 
   constructor(data: IFormConstructor = { form: {} }) {
+    super(data);
     const { form, questionnaire } = data;
     Object.assign(this, form);
     this.started = new Date();
