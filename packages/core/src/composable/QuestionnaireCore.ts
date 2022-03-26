@@ -44,7 +44,7 @@ export class QuestionnaireCore implements IQuestionnaireCore {
 
   public branches: IBranchCore[] = [];
 
-  public config!: QuestionableConfigCore;
+  public config: QuestionableConfigCore = new QuestionableConfigCore();
 
   public flow: string[] = [];
 
