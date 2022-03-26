@@ -1,14 +1,12 @@
 import { MODE }                                      from '../lib/enums';
 import { TGetDictionaryCore, TStringDictionaryCore } from '../lib/types';
 import { IButtonCore }                               from './IButtonCore';
-import { ICore }                                     from './ICore';
 import { IEventCore }                                from './IEventCore';
 
 /**
  * Configuration for customized behavior of Questionable
  */
-export interface IQuestionableConfigCore extends ICore {
-  readonly core?: 'IQuestionableConfig';
+export interface IQuestionableConfigCore {
   /**
    * Enables all developer tools (NOT for production use!)
    *
@@ -80,43 +78,43 @@ export interface IQuestionableConfigCore extends ICore {
 /**
  * Customizations for styling and formatting of the steps
  */
-export interface IStepConfigCore extends ICore {
-  readonly core?: 'IStepConfig';
+export interface IStepConfigCore {
+  readonly core?: 'IStepConfig' | 'I';
 }
 
 /**
  * Configuration options for the progress bar
  */
-export interface IProgressBarConfigCore extends ICore {
-  readonly core?: 'IProgressBarConfig';
+export interface IProgressBarConfigCore {
+  readonly core?: 'IProgressBarConfig' | 'I';
 }
 
 /**
  * Configuration for question display
  */
-export interface IQuestionConfigCore extends ICore {
-  readonly core?: 'IQuestionConfig';
+export interface IQuestionConfigCore {
+  readonly core?: 'IQuestionConfig' | 'I';
 }
 
 /**
  * Configuration for buttons
  */
 export interface IButtonConfigCore extends IButtonCore {
-  readonly core?: 'IButtonConfig';
+  readonly core?: 'IButtonConfig' | 'I';
 }
 
 /**
  * Configuration for navigation
  */
-export interface INavigationConfigCore extends ICore {
-  readonly core?: 'INavigationConfig';
+export interface INavigationConfigCore {
+  readonly core?: 'INavigationConfig' | 'I';
 }
 
-export interface IPageConfigCore extends ICore {
-  readonly core?: 'IPageConfig';
+export interface IPageConfigCore {
+  readonly core?: 'IPageConfig' | 'I';
   visible?: boolean;
 }
 
-export interface IPagesConfigCore extends ICore {
-  readonly core?: 'IPagesConfig';
+export interface IPagesConfigCore {
+  readonly core?: 'IPagesConfig' | 'I';
 }

@@ -1,7 +1,6 @@
 export * from './IActionCore';
 export * from './IBranchCore';
 export * from './IButtonCore';
-export * from './ICore';
 export * from './IDesignDataCore';
 export * from './IEventCore';
 export * from './IFormCore';

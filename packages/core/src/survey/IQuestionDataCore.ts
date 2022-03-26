@@ -6,5 +6,6 @@ import { IStepDataCore } from './IStepDataCore';
  */
 
 export interface IQuestionDataCore extends IStepDataCore {
+  readonly core?: 'IQuestionData' | 'I';
   step: IQuestionCore;
 }

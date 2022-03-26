@@ -55,7 +55,7 @@ export interface TDateOfBirthCore {
 
 export type TProgressBarTypeCore = string;
 
-export type TVerticalPositionCoreCore = string;
+export type TVerticalPositionCore = string;
 
 export type THorizontalPositionCore = string;
 

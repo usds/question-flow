@@ -71,7 +71,10 @@ export const survey = {
       "description": "Configuration for buttons",
       "properties": {
         "core": {
-          "const": "IButtonConfig",
+          "enum": [
+            "IButtonConfig",
+            "I"
+          ],
           "type": "string"
         },
         "id": {
@@ -135,15 +138,6 @@ export const survey = {
       "required": [
         "id"
       ],
-      "type": "object"
-    },
-    "ICore": {
-      "description": "A base interface to allow downstream consumers to extend from stubbed core interfaces",
-      "properties": {
-        "core": {
-          "$ref": "#/definitions/TCore"
-        }
-      },
       "type": "object"
     },
     "IDesignDataCore": {
@@ -252,7 +246,10 @@ export const survey = {
       "description": "Configuration for navigation",
       "properties": {
         "core": {
-          "const": "INavigationConfig",
+          "enum": [
+            "INavigationConfig",
+            "I"
+          ],
           "type": "string"
         }
       },
@@ -261,7 +258,10 @@ export const survey = {
     "IPageConfigCore": {
       "properties": {
         "core": {
-          "const": "IPageConfig",
+          "enum": [
+            "IPageConfig",
+            "I"
+          ],
           "type": "string"
         },
         "visible": {
@@ -394,7 +394,10 @@ export const survey = {
     "IPagesConfigCore": {
       "properties": {
         "core": {
-          "const": "IPagesConfig",
+          "enum": [
+            "IPagesConfig",
+            "I"
+          ],
           "type": "string"
         }
       },
@@ -403,18 +406,42 @@ export const survey = {
     "IPagesCore": {
       "description": "Defines required pages for the survey flow",
       "properties": {
-        "core": {
-          "const": "IPages",
-          "type": "string"
+        "landingPage": {
+          "$ref": "#/definitions/IPageCore",
+          "description": "First step of the survey",
+          "title": "Landing Page"
+        },
+        "noResultsPage": {
+          "$ref": "#/definitions/IPageCore",
+          "description": "Last step of the survey if there are 0 results",
+          "title": "No Results Page"
+        },
+        "resultsPage": {
+          "$ref": "#/definitions/IPageCore",
+          "description": "Last step of the survey if there are 1 or more results",
+          "title": "Results Page"
+        },
+        "summaryPage": {
+          "$ref": "#/definitions/IPageCore",
+          "description": "Preview of survery before submitting to receive results",
+          "title": "Summary Page"
         }
       },
+      "required": [
+        "noResultsPage",
+        "resultsPage",
+        "summaryPage"
+      ],
       "type": "object"
     },
     "IProgressBarConfigCore": {
       "description": "Configuration options for the progress bar",
       "properties": {
         "core": {
-          "const": "IProgressBarConfig",
+          "enum": [
+            "IProgressBarConfig",
+            "I"
+          ],
           "type": "string"
         }
       },
@@ -424,7 +451,10 @@ export const survey = {
       "description": "Configuration for question display",
       "properties": {
         "core": {
-          "const": "IQuestionConfig",
+          "enum": [
+            "IQuestionConfig",
+            "I"
+          ],
           "type": "string"
         }
       },
@@ -520,6 +550,13 @@ export const survey = {
     "IQuestionDataCore": {
       "description": "Data defintion for question step",
       "properties": {
+        "core": {
+          "enum": [
+            "IQuestionData",
+            "I"
+          ],
+          "type": "string"
+        },
         "form": {
           "$ref": "#/definitions/IFormCore",
           "description": "The user's current form state",
@@ -548,10 +585,6 @@ export const survey = {
     "IQuestionableConfigCore": {
       "description": "Configuration for customized behavior of Questionable",
       "properties": {
-        "core": {
-          "const": "IQuestionableConfig",
-          "type": "string"
-        },
         "mode": {
           "$ref": "#/definitions/MODE",
           "default": "MODE.VIEW",
@@ -562,7 +595,10 @@ export const survey = {
           "description": "Navigation configuration",
           "properties": {
             "core": {
-              "const": "INavigationConfig",
+              "enum": [
+                "INavigationConfig",
+                "I"
+              ],
               "type": "string"
             }
           },
@@ -573,7 +609,10 @@ export const survey = {
           "description": "Page configuration",
           "properties": {
             "core": {
-              "const": "IPagesConfig",
+              "enum": [
+                "IPagesConfig",
+                "I"
+              ],
               "type": "string"
             }
           },
@@ -584,7 +623,10 @@ export const survey = {
           "description": "Progress Bar configuration",
           "properties": {
             "core": {
-              "const": "IProgressBarConfig",
+              "enum": [
+                "IProgressBarConfig",
+                "I"
+              ],
               "type": "string"
             }
           },
@@ -595,7 +637,10 @@ export const survey = {
           "description": "Question configuration",
           "properties": {
             "core": {
-              "const": "IQuestionConfig",
+              "enum": [
+                "IQuestionConfig",
+                "I"
+              ],
               "type": "string"
             }
           },
@@ -606,7 +651,10 @@ export const survey = {
           "description": "Step configuration",
           "properties": {
             "core": {
-              "const": "IStepConfig",
+              "enum": [
+                "IStepConfig",
+                "I"
+              ],
               "type": "string"
             }
           },
@@ -853,7 +901,10 @@ export const survey = {
       "description": "Customizations for styling and formatting of the steps",
       "properties": {
         "core": {
-          "const": "IStepConfig",
+          "enum": [
+            "IStepConfig",
+            "I"
+          ],
           "type": "string"
         }
       },
@@ -1046,21 +1097,6 @@ export const survey = {
       "type": "object"
     },
     "TButtonModeCore": {
-      "type": "string"
-    },
-    "TCore": {
-      "enum": [
-        "IQuestionableConfig",
-        "IStepConfig",
-        "IProgressBarConfig",
-        "IQuestionConfig",
-        "IButtonCore",
-        "IButtonConfig",
-        "IPageConfig",
-        "IPagesConfig",
-        "IPages",
-        "INavigationConfig"
-      ],
       "type": "string"
     },
     "TEventCore": {
