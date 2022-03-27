@@ -17,7 +17,7 @@
     "@rjsf/core": "^4.1.0",
     "@rjsf/semantic-ui": "^4.1.0",
     "@trussworks/react-uswds": "^2.8.0",
-    "@usds.gov/questionable-core": "^1.0.1",
+    "@usds.gov/questionable-core": "^1.0.2",
     "class-validator": "^0.13.2",
     "cross-env": "^7.0.3",
     "file-saver": "^2.0.5",
@@ -130,5 +130,5 @@
     "semantic-release": "semantic-release",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
-  "version": "1.5.8"
+  "version": "1.5.9"
 }

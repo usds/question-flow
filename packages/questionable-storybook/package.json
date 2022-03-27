@@ -9,8 +9,8 @@
     "@storybook/react": "^6.4.19",
     "@storybook/storybook-deployer": "^2.8.11",
     "@trussworks/react-uswds": "^2.8.0",
-    "@usds.gov/questionable-react-component": "1.5.8",
-    "@usds.gov/ssa-eligibility": "1.1.12",
+    "@usds.gov/questionable-react-component": "^1.5.9",
+    "@usds.gov/ssa-eligibility": "^1.1.13",
     "lodash": "^4.17.21",
     "semantic-ui-css": "^2.4.1",
     "storybook-readme": "^5.0.9"
@@ -67,6 +67,6 @@
     "start": "start-storybook -p 9009 -s public",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true
 }
