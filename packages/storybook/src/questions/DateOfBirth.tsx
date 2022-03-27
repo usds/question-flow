@@ -1,7 +1,8 @@
 import {
-  DateOfBirth, Form, IQuestionData, QUESTION_TYPE, stepReducer,
+  DateOfBirth, Form, IQuestionData, stepReducer,
 } from '@usds.gov/questionable';
-import { Meta, Story } from '@storybook/react';
+import { QUESTION_TYPE } from '@usds.gov/questionable-core';
+import { Meta, Story }   from '@storybook/react';
 import '../styles';
 /* eslint-disable max-len,
     import/no-extraneous-dependencies

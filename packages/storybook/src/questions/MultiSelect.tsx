@@ -1,7 +1,8 @@
 import {
-  Form, IQuestionData, MultipleSelect, QUESTION_TYPE, stepReducer,
+  Form, IQuestionData, MultiSelect, stepReducer,
 } from '@usds.gov/questionable';
-import { Meta, Story } from '@storybook/react';
+import { QUESTION_TYPE } from '@usds.gov/questionable-core';
+import { Meta, Story }   from '@storybook/react';
 import '../styles';
 /* eslint-disable max-len, import/no-extraneous-dependencies */
 
@@ -9,11 +10,11 @@ export default {
   argTypes: {
     step: { control: { type: 'object' } },
   },
-  component: MultipleSelect,
-  title:     'Questions/MultipleSelect',
+  component: MultiSelect,
+  title:     'Questions/MultiSelect',
 } as Meta;
 
-const Template: Story<IQuestionData> = (args) => <MultipleSelect {...args} />;
+const Template: Story<IQuestionData> = (args) => <MultiSelect {...args} />;
 
 export const Checklist = Template.bind({});
 Checklist.args = {

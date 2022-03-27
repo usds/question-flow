@@ -1,7 +1,8 @@
 import {
-  Form, IQuestionData, MultipleChoice, QUESTION_TYPE, stepReducer,
+  Form, IQuestionData, MultipleChoice, stepReducer,
 } from '@usds.gov/questionable';
-import { Meta, Story } from '@storybook/react';
+import { QUESTION_TYPE } from '@usds.gov/questionable-core';
+import { Meta, Story }   from '@storybook/react';
 import '../styles';
 /* eslint-disable max-len */
 /*
