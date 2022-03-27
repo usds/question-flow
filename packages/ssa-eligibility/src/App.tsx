@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   noop,
-  log,
   Questionable,
   Questionnaire,
 } from '@usds.gov/questionable';
-import { merge }    from 'lodash';
-import { useFetch } from 'react-async';
+import { isEmpty, merge } from 'lodash';
+import { useFetch }       from 'react-async';
+import { ErrorBoundary }  from 'react-error-boundary';
 import {
   Attributes,
   CMS,
@@ -15,11 +15,28 @@ import {
   IFetchAPI,
   IQuestionData,
 } from './lib/interfaces';
-import { buildEligibility } from './flow/eligibility.flow';
+import { buildEligibility }         from './flow/eligibility.flow';
+import { catchError, handleErrors } from './lib/error';
+
+type TErrFallback = { error: Error, resetErrorBoundary: () => void };
+function ErrorFallback({ error, resetErrorBoundary }: TErrFallback) {
+  const e = catchError(error);
+  return (
+    <div className={'usds-q-dob-error usds-q-visible'}>
+      <div className={'usa-alert usa-alert--error usa-alert--slim'}>
+        <div className="usa-alert__body">
+          <pre className="usa-alert__text">{e.message}</pre>
+          <button onClick={resetErrorBoundary}>Try again</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const API_URL = '/jsonapi/question/eligibility';
 
-export const AppContainer = (json?: CMS, error = ''): JSX.Element => {
+export const AppContainer = (data: any = {}): JSX.Element => {
+  const json: CMS   = (isEmpty(data) ? {} : data) as CMS;
   const eligibility = buildEligibility(json);
   if (Object.keys(eligibility).length === 0) {
     return <></>;
@@ -35,7 +52,6 @@ export const AppContainer = (json?: CMS, error = ''): JSX.Element => {
   return (
     <div>
       <Questionable {...args} />
-      <div>{error}</div>
     </div>
   );
 };
@@ -61,7 +77,7 @@ const transformDataToCMS = (data: any) => {
       }, {});
       json = merge(json, { questions });
     } catch (e) {
-      log('API error', e);
+      handleErrors('There was an error parsing the API response.', e);
     }
   }
   return json as CMS;
@@ -76,7 +92,7 @@ const Container = ({ url }: IFetchAPI) => {
   const { data, error } = useFetch(url, {
     headers: { accept: 'application/json' },
   });
-  if (error) log(error.message);
+  handleErrors('There was an error fetching content from the API.', error);
   if (data) {
     const json = transformDataToCMS(data);
     return AppContainer(json);
@@ -86,4 +102,13 @@ const Container = ({ url }: IFetchAPI) => {
 
 export const App = (config: IFetchAPI = {
   url: API_URL,
-}) => <Container url={config.url} />;
+}) => (
+  <ErrorBoundary
+    FallbackComponent={ErrorFallback}
+    onReset={(e) => {
+      handleErrors('An error occurred', e);
+    }}
+  >
+    <Container url={config.url} />
+  </ErrorBoundary>
+);
