@@ -42,7 +42,7 @@
   ],
   "references": [
     {
-      "path": "../questionable-react-component"
+      "path": "../questionable-core"
     }
   ]
 }

@@ -25,23 +25,25 @@
     "strict": true,
     "target": "ES2019",
     "paths": {
-      "@usds.gov/questionable": [
-        "questionable"
+      "@usds.gov/questionable-react-component": [
+        "questionable-react-component"
       ],
       "@usds.gov/questionable-core": [
-        "core"
+        "questionable-core"
       ],
       "@usds.gov/ssa-eligibility": [
         "ssa-eligibility"
+      ],
+      "@usds.gov/questionable-tests": [
+        "questionable-tests"
+      ],
+      "@usds.gov/questionable-storybook": [
+        "questionable-storybook"
       ],
     }
   },
   "exclude": [
     "node_modules",
-    "src/stories",
-    "**/*.stories.ts",
-    "**/*.css",
-    "**/*.test.ts"
   ],
   "include": [
     "types.d.ts",

@@ -5655,9 +5655,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usds.gov/questionable-core@workspace:*, @usds.gov/questionable-core@workspace:packages/core":
+"@usds.gov/questionable-core@workspace:*, @usds.gov/questionable-core@workspace:packages/questionable-core":
   version: 0.0.0-use.local
-  resolution: "@usds.gov/questionable-core@workspace:packages/core"
+  resolution: "@usds.gov/questionable-core@workspace:packages/questionable-core"
   dependencies:
     "@babel/core": ^7.17.8
     "@babel/plugin-transform-runtime": ^7.17.0
@@ -5712,235 +5712,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@usds.gov/questionable-project@workspace:.":
+"@usds.gov/questionable-react-component@workspace:*, @usds.gov/questionable-react-component@workspace:packages/questionable-react-component":
   version: 0.0.0-use.local
-  resolution: "@usds.gov/questionable-project@workspace:."
-  dependencies:
-    "@babel/core": ^7.17.8
-    "@babel/plugin-transform-runtime": ^7.17.0
-    "@babel/preset-env": ^7.16.11
-    "@commitlint/cli": ^16.2.3
-    "@commitlint/config-conventional": ^16.2.1
-    "@fortawesome/fontawesome-free": ^6.1.1
-    "@mdx-js/react": ^2.1.0
-    "@rjsf/semantic-ui": ^4.1.0
-    "@rollup/plugin-commonjs": ^21.0.3
-    "@rollup/plugin-node-resolve": ^13.1.3
-    "@semantic-release/changelog": ^6.0.1
-    "@semantic-release/commit-analyzer": ^9.0.2
-    "@semantic-release/git": ^10.0.1
-    "@semantic-release/npm": ^9.0.1
-    "@semantic-release/release-notes-generator": ^10.0.3
-    "@storybook/addon-actions": ^6.4.19
-    "@storybook/addon-docs": ^6.4.19
-    "@storybook/addon-essentials": ^6.4.19
-    "@storybook/addon-knobs": ^6.4.0
-    "@storybook/addon-links": ^6.4.19
-    "@storybook/node-logger": ^6.4.19
-    "@storybook/react": ^6.4.19
-    "@storybook/storybook-deployer": ^2.8.11
-    "@testing-library/jest-dom": ^5.16.3
-    "@testing-library/react": ^12.1.4
-    "@testing-library/user-event": ^13.5.0
-    "@trussworks/react-uswds": ^2.8.0
-    "@types/file-saver": ^2.0.5
-    "@types/gtag.js": ^0.0.10
-    "@types/jest": ^27.4.1
-    "@types/lodash": ^4.14.180
-    "@types/luxon": ^2.3.1
-    "@types/node": ^17.0.23
-    "@types/react": ^17.0.43
-    "@types/react-dom": ^17.0.14
-    "@types/react-jsonschema-form": ^1.7.8
-    "@typescript-eslint/eslint-plugin": ^5.16.0
-    "@typescript-eslint/parser": ^5.16.0
-    all-contributors-cli: ^6.20.0
-    babel-loader: ^8.2.4
-    babel-preset-react-app: ^10.0.1
-    cross-env: 7.0.3
-    eslint: ^8.12.0
-    eslint-config-airbnb-base: ^15.0.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-align-assignments: ^1.1.2
-    eslint-plugin-align-import: ^1.0.0
-    eslint-plugin-flowtype: ^8.0.3
-    eslint-plugin-import: ^2.25.4
-    eslint-plugin-jest: ^26.1.3
-    eslint-plugin-json-files: ^1.3.0
-    eslint-plugin-jsx-a11y: ^6.5.1
-    eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-react: ^7.29.4
-    eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.12.0
-    eslint-plugin-sort-keys-fix: ^1.1.2
-    eslint-plugin-testing-library: ^5.1.0
-    eslint-plugin-typescript-sort-keys: ^2.1.0
-    eslint-plugin-yaml: ^0.5.0
-    gh-pages: ^3.2.3
-    husky: ^7.0.4
-    jest: ^27.5.1
-    lint-staged: ^12.3.7
-    lodash: ^4.17.21
-    luxon: ^2.3.1
-    prettier: ^2.6.1
-    prettier-plugin-organize-imports: ^2.3.4
-    pretty-quick: ^3.1.3
-    react: ^17.0.2
-    react-async: ^10.0.1
-    react-docgen-typescript-loader: ^3.7.2
-    react-dom: ^17.0.2
-    react-scripts: 5.0.0
-    rimraf: ^3.0.2
-    rollup: ^2.70.1
-    rollup-plugin-copy: ^3.4.0
-    rollup-plugin-dts: ^4.2.0
-    rollup-plugin-peer-deps-external: ^2.2.4
-    rollup-plugin-terser: ^7.0.2
-    rollup-plugin-ts: ^2.0.5
-    semantic-release: ^19.0.2
-    semantic-ui-css: ^2.4.1
-    storybook-readme: ^5.0.9
-    ts-jest: ^27.1.4
-    ts-json-schema-generator: ^1.0.0
-    ts-loader: ^9.2.8
-    ts-node: ^10.7.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@usds.gov/questionable-storybook@workspace:packages/storybook":
-  version: 0.0.0-use.local
-  resolution: "@usds.gov/questionable-storybook@workspace:packages/storybook"
-  dependencies:
-    "@babel/core": ^7.17.8
-    "@babel/plugin-transform-runtime": ^7.17.0
-    "@babel/preset-env": ^7.16.11
-    "@fortawesome/fontawesome-free": ^6.1.1
-    "@mdx-js/react": ^2.1.0
-    "@storybook/addon-actions": ^6.4.19
-    "@storybook/addon-docs": ^6.4.19
-    "@storybook/addon-essentials": ^6.4.19
-    "@storybook/addon-links": ^6.4.19
-    "@storybook/node-logger": ^6.4.19
-    "@storybook/react": ^6.4.19
-    "@storybook/storybook-deployer": ^2.8.11
-    "@trussworks/react-uswds": ^2.8.0
-    "@types/node": ^17.0.23
-    "@types/react": ^17.0.43
-    "@types/react-dom": ^17.0.14
-    "@typescript-eslint/eslint-plugin": ^5.16.0
-    "@typescript-eslint/parser": ^5.16.0
-    "@usds.gov/questionable": "workspace:*"
-    "@usds.gov/ssa-eligibility": "workspace:*"
-    babel-loader: ^8.2.4
-    babel-preset-react-app: ^10.0.1
-    eslint: ^8.12.0
-    eslint-config-airbnb-base: ^15.0.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-align-assignments: ^1.1.2
-    eslint-plugin-align-import: ^1.0.0
-    eslint-plugin-flowtype: ^8.0.3
-    eslint-plugin-import: ^2.25.4
-    eslint-plugin-jest: ^26.1.3
-    eslint-plugin-json-files: ^1.3.0
-    eslint-plugin-jsx-a11y: ^6.5.1
-    eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-react: ^7.29.4
-    eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.12.0
-    eslint-plugin-sort-keys-fix: ^1.1.2
-    eslint-plugin-testing-library: ^5.1.0
-    eslint-plugin-typescript-sort-keys: ^2.1.0
-    eslint-plugin-yaml: ^0.5.0
-    lodash: ^4.17.21
-    prettier: ^2.6.1
-    prettier-plugin-organize-imports: ^2.3.4
-    pretty-quick: ^3.1.3
-    semantic-ui-css: ^2.4.1
-    storybook-readme: ^5.0.9
-    ts-node: ^10.7.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@usds.gov/questionable-tests@workspace:packages/tests":
-  version: 0.0.0-use.local
-  resolution: "@usds.gov/questionable-tests@workspace:packages/tests"
-  dependencies:
-    "@babel/core": ^7.17.8
-    "@commitlint/cli": ^16.2.3
-    "@commitlint/config-conventional": ^16.2.1
-    "@fortawesome/fontawesome-free": ^6.1.1
-    "@rollup/plugin-commonjs": ^21.0.3
-    "@rollup/plugin-node-resolve": ^13.1.3
-    "@testing-library/jest-dom": ^5.16.3
-    "@testing-library/react": ^12.1.4
-    "@testing-library/user-event": ^13.5.0
-    "@types/file-saver": ^2.0.5
-    "@types/gtag.js": ^0.0.10
-    "@types/jest": ^27.4.1
-    "@types/lodash": ^4.14.180
-    "@types/luxon": ^2.3.1
-    "@types/node": ^17.0.23
-    "@types/react": ^17.0.43
-    "@types/react-dom": ^17.0.14
-    "@types/react-test-renderer": ^17.0.1
-    "@typescript-eslint/eslint-plugin": ^5.16.0
-    "@typescript-eslint/parser": ^5.16.0
-    "@usds.gov/ssa-eligibility": "workspace:*"
-    all-contributors-cli: ^6.20.0
-    babel-loader: 8.2.4
-    babel-preset-react-app: ^10.0.1
-    eslint: ^8.12.0
-    eslint-config-airbnb-base: ^15.0.0
-    eslint-config-prettier: ^8.5.0
-    eslint-config-react-app: ^7.0.0
-    eslint-plugin-align-assignments: ^1.1.2
-    eslint-plugin-align-import: ^1.0.0
-    eslint-plugin-flowtype: ^8.0.3
-    eslint-plugin-import: ^2.25.4
-    eslint-plugin-jest: ^26.1.3
-    eslint-plugin-json-files: ^1.3.0
-    eslint-plugin-jsx-a11y: ^6.5.1
-    eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-react: ^7.29.4
-    eslint-plugin-react-hooks: ^4.3.0
-    eslint-plugin-sonarjs: ^0.12.0
-    eslint-plugin-sort-keys-fix: ^1.1.2
-    eslint-plugin-testing-library: ^5.1.0
-    eslint-plugin-typescript-sort-keys: ^2.1.0
-    eslint-plugin-yaml: ^0.5.0
-    gh-pages: ^3.2.3
-    husky: ^7.0.4
-    lint-staged: ^12.3.7
-    lodash: ^4.17.21
-    prettier: ^2.6.1
-    prettier-plugin-organize-imports: ^2.3.4
-    pretty-quick: ^3.1.3
-    react: ^17.0.2
-    react-docgen-typescript-loader: ^3.7.2
-    react-dom: ^17.0.2
-    react-scripts: 5.0.0
-    react-test-renderer: ^17.0.2
-    rimraf: ^3.0.2
-    rollup: ^2.70.1
-    rollup-plugin-copy: ^3.4.0
-    rollup-plugin-dts: ^4.2.0
-    rollup-plugin-peer-deps-external: ^2.2.4
-    rollup-plugin-terser: ^7.0.2
-    rollup-plugin-ts: ^2.0.5
-    semantic-release: ^19.0.2
-    ts-jest: ^27.1.4
-    ts-loader: ^9.2.8
-    ts-node: ^10.7.0
-    typescript: ^4.6.3
-    web-vitals: ^2.1.4
-  languageName: unknown
-  linkType: soft
-
-"@usds.gov/questionable@workspace:*, @usds.gov/questionable@workspace:packages/questionable":
-  version: 0.0.0-use.local
-  resolution: "@usds.gov/questionable@workspace:packages/questionable"
+  resolution: "@usds.gov/questionable-react-component@workspace:packages/questionable-react-component"
   dependencies:
     "@babel/core": ^7.17.8
     "@babel/plugin-transform-runtime": ^7.17.0
@@ -6019,6 +5793,136 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@usds.gov/questionable-storybook@workspace:packages/questionable-storybook":
+  version: 0.0.0-use.local
+  resolution: "@usds.gov/questionable-storybook@workspace:packages/questionable-storybook"
+  dependencies:
+    "@babel/core": ^7.17.8
+    "@babel/plugin-transform-runtime": ^7.17.0
+    "@babel/preset-env": ^7.16.11
+    "@fortawesome/fontawesome-free": ^6.1.1
+    "@mdx-js/react": ^2.1.0
+    "@storybook/addon-actions": ^6.4.19
+    "@storybook/addon-docs": ^6.4.19
+    "@storybook/addon-essentials": ^6.4.19
+    "@storybook/addon-links": ^6.4.19
+    "@storybook/node-logger": ^6.4.19
+    "@storybook/react": ^6.4.19
+    "@storybook/storybook-deployer": ^2.8.11
+    "@trussworks/react-uswds": ^2.8.0
+    "@types/node": ^17.0.23
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@typescript-eslint/eslint-plugin": ^5.16.0
+    "@typescript-eslint/parser": ^5.16.0
+    "@usds.gov/questionable-react-component": "workspace:*"
+    "@usds.gov/ssa-eligibility": "workspace:*"
+    babel-loader: ^8.2.4
+    babel-preset-react-app: ^10.0.1
+    eslint: ^8.12.0
+    eslint-config-airbnb-base: ^15.0.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-align-assignments: ^1.1.2
+    eslint-plugin-align-import: ^1.0.0
+    eslint-plugin-flowtype: ^8.0.3
+    eslint-plugin-import: ^2.25.4
+    eslint-plugin-jest: ^26.1.3
+    eslint-plugin-json-files: ^1.3.0
+    eslint-plugin-jsx-a11y: ^6.5.1
+    eslint-plugin-prettier: ^4.0.0
+    eslint-plugin-react: ^7.29.4
+    eslint-plugin-react-hooks: ^4.3.0
+    eslint-plugin-sonarjs: ^0.12.0
+    eslint-plugin-sort-keys-fix: ^1.1.2
+    eslint-plugin-testing-library: ^5.1.0
+    eslint-plugin-typescript-sort-keys: ^2.1.0
+    eslint-plugin-yaml: ^0.5.0
+    lodash: ^4.17.21
+    prettier: ^2.6.1
+    prettier-plugin-organize-imports: ^2.3.4
+    pretty-quick: ^3.1.3
+    semantic-ui-css: ^2.4.1
+    storybook-readme: ^5.0.9
+    ts-node: ^10.7.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@usds.gov/questionable-tests@workspace:packages/questionable-tests":
+  version: 0.0.0-use.local
+  resolution: "@usds.gov/questionable-tests@workspace:packages/questionable-tests"
+  dependencies:
+    "@babel/core": ^7.17.8
+    "@commitlint/cli": ^16.2.3
+    "@commitlint/config-conventional": ^16.2.1
+    "@fortawesome/fontawesome-free": ^6.1.1
+    "@rollup/plugin-commonjs": ^21.0.3
+    "@rollup/plugin-node-resolve": ^13.1.3
+    "@testing-library/jest-dom": ^5.16.3
+    "@testing-library/react": ^12.1.4
+    "@testing-library/user-event": ^13.5.0
+    "@types/file-saver": ^2.0.5
+    "@types/gtag.js": ^0.0.10
+    "@types/jest": ^27.4.1
+    "@types/lodash": ^4.14.180
+    "@types/luxon": ^2.3.1
+    "@types/node": ^17.0.23
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/react-test-renderer": ^17.0.1
+    "@typescript-eslint/eslint-plugin": ^5.16.0
+    "@typescript-eslint/parser": ^5.16.0
+    "@usds.gov/ssa-eligibility": "workspace:*"
+    all-contributors-cli: ^6.20.0
+    babel-loader: 8.2.4
+    babel-preset-react-app: ^10.0.1
+    eslint: ^8.12.0
+    eslint-config-airbnb-base: ^15.0.0
+    eslint-config-prettier: ^8.5.0
+    eslint-config-react-app: ^7.0.0
+    eslint-plugin-align-assignments: ^1.1.2
+    eslint-plugin-align-import: ^1.0.0
+    eslint-plugin-flowtype: ^8.0.3
+    eslint-plugin-import: ^2.25.4
+    eslint-plugin-jest: ^26.1.3
+    eslint-plugin-json-files: ^1.3.0
+    eslint-plugin-jsx-a11y: ^6.5.1
+    eslint-plugin-prettier: ^4.0.0
+    eslint-plugin-react: ^7.29.4
+    eslint-plugin-react-hooks: ^4.3.0
+    eslint-plugin-sonarjs: ^0.12.0
+    eslint-plugin-sort-keys-fix: ^1.1.2
+    eslint-plugin-testing-library: ^5.1.0
+    eslint-plugin-typescript-sort-keys: ^2.1.0
+    eslint-plugin-yaml: ^0.5.0
+    gh-pages: ^3.2.3
+    husky: ^7.0.4
+    lint-staged: ^12.3.7
+    lodash: ^4.17.21
+    prettier: ^2.6.1
+    prettier-plugin-organize-imports: ^2.3.4
+    pretty-quick: ^3.1.3
+    react: ^17.0.2
+    react-docgen-typescript-loader: ^3.7.2
+    react-dom: ^17.0.2
+    react-scripts: 5.0.0
+    react-test-renderer: ^17.0.2
+    rimraf: ^3.0.2
+    rollup: ^2.70.1
+    rollup-plugin-copy: ^3.4.0
+    rollup-plugin-dts: ^4.2.0
+    rollup-plugin-peer-deps-external: ^2.2.4
+    rollup-plugin-terser: ^7.0.2
+    rollup-plugin-ts: ^2.0.5
+    semantic-release: ^19.0.2
+    ts-jest: ^27.1.4
+    ts-loader: ^9.2.8
+    ts-node: ^10.7.0
+    typescript: ^4.6.3
+    web-vitals: ^2.1.4
+  languageName: unknown
+  linkType: soft
+
 "@usds.gov/ssa-eligibility@workspace:*, @usds.gov/ssa-eligibility@workspace:packages/ssa-eligibility":
   version: 0.0.0-use.local
   resolution: "@usds.gov/ssa-eligibility@workspace:packages/ssa-eligibility"
@@ -6040,8 +5944,8 @@ __metadata:
     "@types/react-dom": ^17.0.14
     "@typescript-eslint/eslint-plugin": ^5.16.0
     "@typescript-eslint/parser": ^5.16.0
-    "@usds.gov/questionable": "workspace:*"
     "@usds.gov/questionable-core": "workspace:*"
+    "@usds.gov/questionable-react-component": "workspace:*"
     axios: ^0.26.1
     babel-loader: ^8.2.4
     babel-preset-react-app: ^10.0.1
@@ -19592,6 +19496,102 @@ __metadata:
   checksum: 7b83b45d641e75fd39cd6625ddfd44e7618e741c61e95281b57bbae8fde0afcc12cf851924559e5cc1ef9baa3b1e06e22b164ea1397d65dd94b801f678d9c8ce
   languageName: node
   linkType: hard
+
+"questionable@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "questionable@workspace:."
+  dependencies:
+    "@babel/core": ^7.17.8
+    "@babel/plugin-transform-runtime": ^7.17.0
+    "@babel/preset-env": ^7.16.11
+    "@commitlint/cli": ^16.2.3
+    "@commitlint/config-conventional": ^16.2.1
+    "@fortawesome/fontawesome-free": ^6.1.1
+    "@mdx-js/react": ^2.1.0
+    "@rjsf/semantic-ui": ^4.1.0
+    "@rollup/plugin-commonjs": ^21.0.3
+    "@rollup/plugin-node-resolve": ^13.1.3
+    "@semantic-release/changelog": ^6.0.1
+    "@semantic-release/commit-analyzer": ^9.0.2
+    "@semantic-release/git": ^10.0.1
+    "@semantic-release/npm": ^9.0.1
+    "@semantic-release/release-notes-generator": ^10.0.3
+    "@storybook/addon-actions": ^6.4.19
+    "@storybook/addon-docs": ^6.4.19
+    "@storybook/addon-essentials": ^6.4.19
+    "@storybook/addon-knobs": ^6.4.0
+    "@storybook/addon-links": ^6.4.19
+    "@storybook/node-logger": ^6.4.19
+    "@storybook/react": ^6.4.19
+    "@storybook/storybook-deployer": ^2.8.11
+    "@testing-library/jest-dom": ^5.16.3
+    "@testing-library/react": ^12.1.4
+    "@testing-library/user-event": ^13.5.0
+    "@trussworks/react-uswds": ^2.8.0
+    "@types/file-saver": ^2.0.5
+    "@types/gtag.js": ^0.0.10
+    "@types/jest": ^27.4.1
+    "@types/lodash": ^4.14.180
+    "@types/luxon": ^2.3.1
+    "@types/node": ^17.0.23
+    "@types/react": ^17.0.43
+    "@types/react-dom": ^17.0.14
+    "@types/react-jsonschema-form": ^1.7.8
+    "@typescript-eslint/eslint-plugin": ^5.16.0
+    "@typescript-eslint/parser": ^5.16.0
+    all-contributors-cli: ^6.20.0
+    babel-loader: ^8.2.4
+    babel-preset-react-app: ^10.0.1
+    cross-env: 7.0.3
+    eslint: ^8.12.0
+    eslint-config-airbnb-base: ^15.0.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-align-assignments: ^1.1.2
+    eslint-plugin-align-import: ^1.0.0
+    eslint-plugin-flowtype: ^8.0.3
+    eslint-plugin-import: ^2.25.4
+    eslint-plugin-jest: ^26.1.3
+    eslint-plugin-json-files: ^1.3.0
+    eslint-plugin-jsx-a11y: ^6.5.1
+    eslint-plugin-prettier: ^4.0.0
+    eslint-plugin-react: ^7.29.4
+    eslint-plugin-react-hooks: ^4.3.0
+    eslint-plugin-sonarjs: ^0.12.0
+    eslint-plugin-sort-keys-fix: ^1.1.2
+    eslint-plugin-testing-library: ^5.1.0
+    eslint-plugin-typescript-sort-keys: ^2.1.0
+    eslint-plugin-yaml: ^0.5.0
+    gh-pages: ^3.2.3
+    husky: ^7.0.4
+    jest: ^27.5.1
+    lint-staged: ^12.3.7
+    lodash: ^4.17.21
+    luxon: ^2.3.1
+    prettier: ^2.6.1
+    prettier-plugin-organize-imports: ^2.3.4
+    pretty-quick: ^3.1.3
+    react: ^17.0.2
+    react-async: ^10.0.1
+    react-docgen-typescript-loader: ^3.7.2
+    react-dom: ^17.0.2
+    react-scripts: 5.0.0
+    rimraf: ^3.0.2
+    rollup: ^2.70.1
+    rollup-plugin-copy: ^3.4.0
+    rollup-plugin-dts: ^4.2.0
+    rollup-plugin-peer-deps-external: ^2.2.4
+    rollup-plugin-terser: ^7.0.2
+    rollup-plugin-ts: ^2.0.5
+    semantic-release: ^19.0.2
+    semantic-ui-css: ^2.4.1
+    storybook-readme: ^5.0.9
+    ts-jest: ^27.1.4
+    ts-json-schema-generator: ^1.0.0
+    ts-loader: ^9.2.8
+    ts-node: ^10.7.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
 
 "queue-microtask@npm:^1.2.2":
   version: 1.2.3

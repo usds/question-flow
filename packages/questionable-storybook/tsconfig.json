@@ -42,6 +42,12 @@
   ],
   "references": [
     {
+      "path": "../questionable-core"
+    },
+    {
+      "path": "../ssa-eligibility"
+    },
+    {
       "path": "../questionable-react-component"
     }
   ]
