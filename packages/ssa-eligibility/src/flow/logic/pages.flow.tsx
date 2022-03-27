@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { merge }             from 'lodash';
-import { PAGE_TYPE, IPages } from '@usds.gov/questionable';
+import { PAGE_TYPE, IPages } from '@usds.gov/questionable-react-component';
 
 const pageLogic: IPages = {
   noResultsPage: {

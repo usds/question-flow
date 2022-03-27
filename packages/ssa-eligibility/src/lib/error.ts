@@ -1,4 +1,4 @@
-import { error } from '@usds.gov/questionable';
+import { error } from '@usds.gov/questionable-react-component';
 
 export const catchError = (e: unknown): Error => {
   if (e instanceof Error) {

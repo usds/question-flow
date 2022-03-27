@@ -6,7 +6,7 @@ import {
   log,
   TOnError,
   TEventCore,
-} from '@usds.gov/questionable';
+} from '@usds.gov/questionable-react-component';
 import { isDebug }        from '../flow/lib/debug';
 import { DrupalSettings } from './drupal';
 

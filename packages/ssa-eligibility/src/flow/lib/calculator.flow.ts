@@ -1,4 +1,4 @@
-import { getDateTime, getDateTimeAge } from '@usds.gov/questionable';
+import { getDateTime, getDateTimeAge } from '@usds.gov/questionable-react-component';
 
 /**
  * Custom SSA calculator to compute Full Retirement Age (FRA)

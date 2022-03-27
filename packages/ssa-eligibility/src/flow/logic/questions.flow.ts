@@ -3,7 +3,7 @@
                 sonarjs/no-duplicate-string,
  */
 import { merge }                             from 'lodash';
-import { QUESTION_TYPE, IQuestion, IBranch } from '@usds.gov/questionable';
+import { QUESTION_TYPE, IQuestion, IBranch } from '@usds.gov/questionable-react-component';
 import { isFraCalculator }                   from '../lib/calculator.flow';
 import {
   CHILD_FAMILY,

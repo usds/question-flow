@@ -3,7 +3,7 @@
                 sonarjs/no-duplicate-string,
  */
 import { merge }            from 'lodash';
-import { IAction, IButton } from '@usds.gov/questionable';
+import { IAction, IButton } from '@usds.gov/questionable-react-component';
 import { ACTION }           from '@usds.gov/questionable-core';
 import { TActionMap }       from '../lib/contentMap';
 

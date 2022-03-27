@@ -4,7 +4,7 @@
                 camelcase,
  */
 import { merge }           from 'lodash';
-import { IResult }         from '@usds.gov/questionable';
+import { IResult }         from '@usds.gov/questionable-react-component';
 import { isFraCalculator } from '../lib/calculator.flow';
 import {
   LEARN_HOW_TO_APPLY_ACTION,

@@ -1,6 +1,6 @@
 import {
   IButton, IQuestion, IResult, ISection,
-} from '@usds.gov/questionable';
+} from '@usds.gov/questionable-react-component';
 
 type TActionContent = {
   buttons: Partial<IButton>[];

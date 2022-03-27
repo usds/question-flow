@@ -3,7 +3,7 @@
                 sonarjs/no-duplicate-string,
                 camelcase
  */
-import { IResult }    from '@usds.gov/questionable';
+import { IResult }    from '@usds.gov/questionable-react-component';
 import { TResultMap } from '../lib/contentMap';
 
 const name = '';

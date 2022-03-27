@@ -4,7 +4,7 @@ import {
   noop,
   Questionable,
   Questionnaire,
-} from '@usds.gov/questionable';
+} from '@usds.gov/questionable-react-component';
 import { isEmpty, merge } from 'lodash';
 import { useFetch }       from 'react-async';
 import { ErrorBoundary }  from 'react-error-boundary';
