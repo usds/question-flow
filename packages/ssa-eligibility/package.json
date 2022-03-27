@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@usds.gov/questionable": "workspace:*",
+    "@usds.gov/questionable-core": "workspace:*",
     "axios": "^0.26.1",
     "cross-env": "^7.0.3",
     "lodash": "^4.17.21",
@@ -58,7 +59,6 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-sonarjs": "^0.12.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-testing-library": "^5.1.0",
@@ -108,10 +108,6 @@
   "main": "dist/main.js",
   "module": "dist/main.esm.js",
   "name": "@usds.gov/ssa-eligibility",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/usds/ssa-eligibility.git"
-  },
   "scripts": {
     "build": "yarn lint && yarn build:rollup",
     "build:gh": "react-scripts build",

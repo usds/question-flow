@@ -6,8 +6,8 @@ import {
   Questionable,
   Questionnaire,
 } from '@usds.gov/questionable';
-import { merge } from 'lodash';
-import { useFetch } from './lib/fetch';
+import { merge }    from 'lodash';
+import { useFetch } from 'react-async';
 import {
   Attributes,
   CMS,
@@ -19,10 +19,7 @@ import { buildEligibility } from './flow/eligibility.flow';
 
 const API_URL = '/jsonapi/question/eligibility';
 
-export const AppContainer = (json?: CMS): JSX.Element => {
-  if (!json) {
-    return <div></div>;
-  }
+export const AppContainer = (json?: CMS, error = ''): JSX.Element => {
   const eligibility = buildEligibility(json);
   if (Object.keys(eligibility).length === 0) {
     return <></>;
@@ -38,6 +35,7 @@ export const AppContainer = (json?: CMS): JSX.Element => {
   return (
     <div>
       <Questionable {...args} />
+      <div>{error}</div>
     </div>
   );
 };
@@ -74,25 +72,18 @@ const transformDataToCMS = (data: any) => {
  * @param config - object representing the Fetch configuration
  * @returns
  */
+const Container = ({ url }: IFetchAPI) => {
+  const { data, error } = useFetch(url, {
+    headers: { accept: 'application/json' },
+  });
+  if (error) log(error.message);
+  if (data) {
+    const json = transformDataToCMS(data);
+    return AppContainer(json);
+  }
+  return AppContainer();
+};
+
 export const App = (config: IFetchAPI = {
   url: API_URL,
-}): JSX.Element => {
-  let json: Partial<CMS> = {};
-  try {
-    const {
-      data, error, loading,
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-    } = useFetch(`${config.url}`);
-    // const res = useAsync({ promiseFn: () => getData(config) });
-    if (error) {
-      throw error;
-    }
-    if (loading) {
-      return (<div></div>);
-    }
-    json = transformDataToCMS(data);
-  } catch (e) {
-    log('API error', e);
-  }
-  return AppContainer(json as CMS);
-};
+}) => <Container url={config.url} />;

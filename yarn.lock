@@ -6039,7 +6039,7 @@ __metadata:
     serialize-error: ^9.1.0
     storybook-readme: ^5.0.9
     ts-jest: ^27.1.3
-    ts-json-schema-generator: ^0.98.0
+    ts-json-schema-generator: ^1.0.0
     ts-loader: ^9.2.8
     ts-node: ^10.7.0
     typescript: ^4.6.2
@@ -6071,6 +6071,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.15.0
     "@typescript-eslint/parser": ^5.15.0
     "@usds.gov/questionable": "workspace:*"
+    "@usds.gov/questionable-core": "workspace:*"
     all-contributors-cli: ^6.20.0
     axios: ^0.26.1
     babel-loader: ^8.2.3
@@ -23321,22 +23322,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-json-schema-generator@npm:^0.98.0":
-  version: 0.98.0
-  resolution: "ts-json-schema-generator@npm:0.98.0"
-  dependencies:
-    "@types/json-schema": ^7.0.9
-    commander: ^9.0.0
-    glob: ^7.2.0
-    json5: ^2.2.0
-    safe-stable-stringify: ^2.3.1
-    typescript: ~4.5.4
-  bin:
-    ts-json-schema-generator: bin/ts-json-schema-generator
-  checksum: a00eef4a4a9c58e7b400c9345df7076beced370763969c29e00201000bc97b163aadde86218e5d6eaddc7273c401ad876e58c6b181d93a002070fcaf385ad418
-  languageName: node
-  linkType: hard
-
 "ts-json-schema-generator@npm:^1.0.0":
   version: 1.0.0
   resolution: "ts-json-schema-generator@npm:1.0.0"
@@ -23598,16 +23583,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.5.4":
-  version: 4.5.5
-  resolution: "typescript@npm:4.5.5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 506f4c919dc8aeaafa92068c997f1d213b9df4d9756d0fae1a1e7ab66b585ab3498050e236113a1c9e57ee08c21ec6814ca7a7f61378c058d79af50a4b1f5a5e
-  languageName: node
-  linkType: hard
-
 "typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>, typescript@patch:typescript@~4.6.2#~builtin<compat/typescript>":
   version: 4.6.3
   resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"
@@ -23615,16 +23590,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 6bf45caf847062420592e711bc9c28bf5f9a9a7fa8245343b81493e4ededae33f1774009d1234d911422d1646a2c839f44e1a23ecb111b40a60ac2ea4c1482a8
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@~4.5.4#~builtin<compat/typescript>":
-  version: 4.5.5
-  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=bda367"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 858c61fa63f7274ca4aaaffeced854d550bf416cff6e558c4884041b3311fb662f476f167cf5c9f8680c607239797e26a2ee0bcc6467fbc05bfcb218e1c6c671
   languageName: node
   linkType: hard
 

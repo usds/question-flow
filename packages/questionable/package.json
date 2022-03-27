@@ -105,7 +105,7 @@
     "semantic-ui-css": "^2.4.1",
     "storybook-readme": "^5.0.9",
     "ts-jest": "^27.1.3",
-    "ts-json-schema-generator": "^0.98.0",
+    "ts-json-schema-generator": "^1.0.0",
     "ts-loader": "^9.2.8",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.2"
@@ -174,9 +174,10 @@
     "url": "https://github.com/usds/questionable.git"
   },
   "scripts": {
-    "build": "yarn lint && yarn build:rollup && yarn build:schema",
+    "build": "yarn lint && yarn build:tsc && yarn build:rollup && yarn build:schema",
     "build:rollup": "rollup --config --environment NODE_ENV:production",
     "build:schema": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true && node ./scripts/parseSchema.js",
+    "build:tsc": "tsc -p tsconfig.json",
     "build:watch": "yarn build -w",
     "clean": "rimraf ./dist",
     "deploy": "npm publish",

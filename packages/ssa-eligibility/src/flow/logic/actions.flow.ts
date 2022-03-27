@@ -2,9 +2,10 @@
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
  */
-import { merge }                    from 'lodash';
-import { ACTION, IAction, IButton } from '@usds.gov/questionable';
-import { TActionMap }               from '../lib/contentMap';
+import { merge }            from 'lodash';
+import { IAction, IButton } from '@usds.gov/questionable';
+import { ACTION }           from '@usds.gov/questionable-core';
+import { TActionMap }       from '../lib/contentMap';
 
 const online = {
   id:   'ab1',

@@ -1,7 +1,7 @@
+export * from '@usds.gov/questionable-core';
 export * from './components';
 export * from './composable';
 export * from './lib';
-export * from './schema';
 export * from './survey';
 
 export { DateOfBirth } from './components/questions/DateOfBirth';

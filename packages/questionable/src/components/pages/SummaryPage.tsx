@@ -1,4 +1,3 @@
-import { Link }       from '@trussworks/react-uswds';
 import { ReactNode }  from 'react';
 import { CSS_CLASS }  from '../../lib/enums';
 import { IPageData }  from '../../survey/IPageData';
@@ -14,17 +13,22 @@ import { Steps }      from '../lib';
  * @returns
  */
 const getAnswers = (props: IPageData, onClick: (question: IQuestion) => void): ReactNode => {
-  const answers = props.form.responses.map((question) => (
+  const answers = props.form.responses.map((question, i) => (
       <li key={question.id} className={CSS_CLASS.SUMMARY_QA_LIST}>
         <span className="text-light">
-          <Link href={'javascript:void(0)'}
+        <span role={'link'} tabIndex={i}
+          // eslint-disable-next-line max-len
+          dangerouslySetInnerHTML={{ __html: `<a class="usa-link" href="javascript:void(0)">${question.title}</a>` }}
           onClick={() => {
             onClick(question);
             return false;
           }}
+          onKeyDown={() => {
+            onClick(question);
+            return false;
+          }}
           >
-            {question.title}
-          </Link>
+          </span>
           {'  '}
           <span className="text-bold">{question.answer}</span>
         </span>
