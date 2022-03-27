@@ -12,8 +12,8 @@
     ]
   },
   "dependencies": {
-    "@usds.gov/questionable-core": "workspace:*",
-    "@usds.gov/questionable-react-component": "workspace:*",
+    "@usds.gov/questionable-core": "1.0.1",
+    "@usds.gov/questionable-react-component": "1.5.8",
     "axios": "^0.26.1",
     "cross-env": "^7.0.3",
     "lodash": "^4.17.21",

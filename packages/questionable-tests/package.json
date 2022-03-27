@@ -16,7 +16,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/react": "^17.0.43",
-    "@usds.gov/ssa-eligibility": "workspace:*",
+    "@usds.gov/ssa-eligibility": "1.5.8",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

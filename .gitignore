@@ -24,10 +24,10 @@
 .env.production.local
 
 # Dev files
-.log
-.orig
-.eslintcache
-.husky/_/
+**/*.log
+**/*.orig
+*.eslintcache
+*.husky/_/
 
 # yarn v2
 .yarn/cache
