@@ -79,6 +79,18 @@ export class QuestionnaireCore implements IQuestionnaireCore {
   }
 
   /**
+   * Fetches the first step
+   * @returns
+   */
+  getFirstStep(): IStepCore {
+    const ret = this.steps[0];
+    if (!ret) {
+      this.throw('There is no step');
+    }
+    return ret;
+  }
+
+  /**
    * Fetches a question by its id
    * @param id unique identifier of the question
    * @returns
@@ -504,10 +516,23 @@ export class QuestionnaireCore implements IQuestionnaireCore {
   ): {
     config?: Partial<IPageConfigCore>;
     data?: IPageCore;
-  } => ({
-    config: {},
-    data:   { id: '', section: {}, type },
-  });
+  } => {
+    const data: IPageCore = Object.values(this.pages).find((p: IPageCore) => p.type === type);
+    if (data) {
+      return {
+        config: {},
+        data,
+      };
+    }
+    return {
+      config: {},
+      data:   {
+        id:      '-1',
+        section: {},
+        type,
+      },
+    };
+  };
 
   /**
    * If configured, sets a default page if required for the page type

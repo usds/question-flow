@@ -30,7 +30,7 @@ export const stepReducer = (
         },
       );
 
-    // Effective a noop that triggers a re-render of the page
+    // Effectively a noop that triggers a re-render of the page
     case ACTION_TYPE.RERENDER:
       return ({
         ...previousState,
