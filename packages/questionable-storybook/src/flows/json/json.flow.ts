@@ -4,7 +4,10 @@ import {
   QuestionableConfig,
   Questionnaire,
 } from '@usds.gov/questionable-react-component';
-import { content, logic } from './data';
+import {
+  ssa_eligibility_copy_all as content,
+  ssa_eligibility_logic_all as logic,
+} from '@usds.gov/questionable-mocks';
 
 const header = 'JSON Eligibility Survey';
 

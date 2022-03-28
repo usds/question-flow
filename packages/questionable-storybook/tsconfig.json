@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "useDefineForClassFields": false,
     "noEmit": false,
     "composite": true,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "alwaysStrict": true,
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
@@ -20,25 +18,27 @@
       "es2019"
     ],
     "module": "CommonJS",
+    "rootDir": "src",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "outDir": "dist",
+    "outDir": "out-tsc",
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
     "target": "ES2019",
   },
   "include": [
-    "src"
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "public",
+    ".storybook"
   ],
   "references": [
     {
@@ -49,6 +49,9 @@
     },
     {
       "path": "../questionable-react-component"
+    },
+    {
+      "path": "../questionable-mocks"
     }
   ]
 }

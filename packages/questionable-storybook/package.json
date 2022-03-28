@@ -9,6 +9,7 @@
     "@storybook/react": "^6.4.19",
     "@storybook/storybook-deployer": "^2.8.11",
     "@trussworks/react-uswds": "^2.8.0",
+    "@usds.gov/questionable-mocks": "workspace:*",
     "@usds.gov/questionable-react-component": "workspace:*",
     "@usds.gov/ssa-eligibility": "workspace:*",
     "lodash": "^4.17.21",
@@ -54,9 +55,10 @@
   "name": "@usds.gov/questionable-storybook",
   "scripts": {
     "build": "build-storybook -s public",
-    "clean": "rimraf storybook-static",
+    "build:ts": "tsc -p tsconfig.json",
+    "clean": "rimraf dist public out-tsc",
     "deploy": "yarn clean && yarn build && yarn _deploy",
-    "_deploy": "yarn storybook-to-ghpages -- -e=storybook-static --source-branch=main --host-token-env-variable=GITHUB_TOKEN --ci",
+    "_deploy": "yarn storybook-to-ghpages -- --source-branch=main --host-token-env-variable=GITHUB_TOKEN --ci",
     "lint": "yarn lint:ts && yarn type-check",
     "lint:fix": "pretty-quick --staged && eslint --cache --fix \"src/**/*.{ts,tsx,json,js}\"",
     "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
@@ -67,6 +69,6 @@
     "start": "start-storybook -p 9009 -s public",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true
 }

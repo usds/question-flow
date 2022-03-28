@@ -3,19 +3,17 @@
   "packageManager": "yarn@3.2.0",
   "main": "dist/index.js",
   "devDependencies": {
-    "eslint": "^8.12.0",
-    "prettier": "^2.6.1",
     "typescript": "^4.6.3"
   },
   "scripts": {
     "build": "yarn lint && yarn build:tsc",
     "build:tsc": "tsc -p tsconfig.json",
     "clean": "rimraf ./dist",
-    "lint": "yarn lint:ts && yarn type-check",
-    "lint:fix": "pretty-quick --staged && eslint --fix \"src/**/*.{ts,tsx,json,js}\"",
-    "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
-    "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\"",
+    "lint": "",
+    "lint:fix": "",
+    "lint:ts": "",
+    "pretty": "",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
-  "version": "0.0.1"
+  "version": "0.0.2"
 }

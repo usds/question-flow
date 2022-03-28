@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@usds.gov/questionable-core": "workspace:*",
+    "@usds.gov/questionable-mocks": "workspace:*",
     "@usds.gov/questionable-react-component": "workspace:*",
     "axios": "^0.26.1",
     "cross-env": "^7.0.3",
@@ -103,10 +104,11 @@
   "module": "dist/main.esm.js",
   "name": "@usds.gov/ssa-eligibility",
   "scripts": {
-    "build": "yarn lint && yarn build:rollup",
+    "build": "yarn lint && yarn build:ts && yarn build:rollup",
     "build:gh": "react-scripts build",
     "build:rollup": "rollup --config --environment NODE_ENV:production",
     "build:ts": "tsc -p tsconfig.json",
+    "clean": "rimraf dist out-tsc",
     "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
     "lint": "yarn lint:ts && yarn type-check",
@@ -119,5 +121,5 @@
     "type-check": "tsc --noEmit"
   },
   "types": "dist/main.d.ts",
-  "version": "1.1.12"
+  "version": "1.1.13"
 }
