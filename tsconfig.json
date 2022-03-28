@@ -40,6 +40,9 @@
       "@usds.gov/questionable-storybook": [
         "questionable-storybook"
       ],
+      "@usds.gov/questionable-mocks": [
+        "questionable-mocks"
+      ]
     }
   },
   "exclude": [

@@ -5055,6 +5055,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/inquirer@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@types/inquirer@npm:8.2.0"
+  dependencies:
+    "@types/through": "*"
+    rxjs: ^7.2.0
+  checksum: bb4b550ca01e892bab9483dfc8f8122dc4eb3291e8b9e1d038fbb6d883335f6ff61692331ae90af452e878c0335b119269ad9909c1ba4b6ec10da6fcf1568011
+  languageName: node
+  linkType: hard
+
 "@types/is-function@npm:^1.0.0":
   version: 1.0.1
   resolution: "@types/is-function@npm:1.0.1"
@@ -5431,6 +5441,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/through@npm:*":
+  version: 0.0.30
+  resolution: "@types/through@npm:0.0.30"
+  dependencies:
+    "@types/node": "*"
+  checksum: 9578470db0b527c26e246a1220ae9bffc6bf47f20f89c54aac467c083ab1f7e16c00d9a7b4bb6cb4e2dfae465027270827e5908a6236063f6214625e50585d78
+  languageName: node
+  linkType: hard
+
 "@types/trusted-types@npm:^2.0.2":
   version: 2.0.2
   resolution: "@types/trusted-types@npm:2.0.2"
@@ -5655,6 +5674,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@usds.gov/questionable-console@workspace:packages/questionable-console":
+  version: 0.0.0-use.local
+  resolution: "@usds.gov/questionable-console@workspace:packages/questionable-console"
+  dependencies:
+    "@types/inquirer": ^8.2.0
+    "@types/node": ^17.0.23
+    "@usds.gov/questionable-core": "workspace:*"
+    inquirer: ^8.2.2
+    rxjs: ^7.5.5
+    ts-loader: ^9.2.8
+    ts-node: ^10.7.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
 "@usds.gov/questionable-core@workspace:*, @usds.gov/questionable-core@workspace:packages/questionable-core":
   version: 0.0.0-use.local
   resolution: "@usds.gov/questionable-core@workspace:packages/questionable-core"
@@ -5708,6 +5742,16 @@ __metadata:
     ts-json-schema-generator: ^1.0.0
     ts-loader: ^9.2.8
     ts-node: ^10.7.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@usds.gov/questionable-mocks@workspace:*, @usds.gov/questionable-mocks@workspace:packages/questionable-mocks":
+  version: 0.0.0-use.local
+  resolution: "@usds.gov/questionable-mocks@workspace:packages/questionable-mocks"
+  dependencies:
+    eslint: ^8.12.0
+    prettier: ^2.6.1
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
@@ -5815,6 +5859,7 @@ __metadata:
     "@types/react-dom": ^17.0.14
     "@typescript-eslint/eslint-plugin": ^5.16.0
     "@typescript-eslint/parser": ^5.16.0
+    "@usds.gov/questionable-mocks": "workspace:*"
     "@usds.gov/questionable-react-component": "workspace:*"
     "@usds.gov/ssa-eligibility": "workspace:*"
     babel-loader: ^8.2.4
@@ -5945,6 +5990,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.16.0
     "@typescript-eslint/parser": ^5.16.0
     "@usds.gov/questionable-core": "workspace:*"
+    "@usds.gov/questionable-mocks": "workspace:*"
     "@usds.gov/questionable-react-component": "workspace:*"
     axios: ^0.26.1
     babel-loader: ^8.2.4
@@ -7494,7 +7540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base64-js@npm:^1.0.2":
+"base64-js@npm:^1.0.2, base64-js@npm:^1.3.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
@@ -7599,6 +7645,17 @@ __metadata:
   dependencies:
     file-uri-to-path: 1.0.0
   checksum: 65b6b48095717c2e6105a021a7da4ea435aa8d3d3cd085cb9e85bcb6e5773cf318c4745c3f7c504412855940b585bdf9b918236612a1c7a7942491de176f1ae7
+  languageName: node
+  linkType: hard
+
+"bl@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "bl@npm:4.1.0"
+  dependencies:
+    buffer: ^5.5.0
+    inherits: ^2.0.4
+    readable-stream: ^3.4.0
+  checksum: 9e8521fa7e83aa9427c6f8ccdcba6e8167ef30cc9a22df26effcc5ab682ef91d2cbc23a239f945d099289e4bbcfae7a192e9c28c84c6202e710a0dfec3722662
   languageName: node
   linkType: hard
 
@@ -7916,6 +7973,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"buffer@npm:^5.5.0":
+  version: 5.7.1
+  resolution: "buffer@npm:5.7.1"
+  dependencies:
+    base64-js: ^1.3.1
+    ieee754: ^1.1.13
+  checksum: e2cf8429e1c4c7b8cbd30834ac09bd61da46ce35f5c22a78e6c2f04497d6d25541b16881e30a019c6fd3154150650ccee27a308eff3e26229d788bbdeb08ab84
+  languageName: node
+  linkType: hard
+
 "builtin-modules@npm:^3.1.0":
   version: 3.2.0
   resolution: "builtin-modules@npm:3.2.0"
@@ -8202,7 +8269,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.2":
+"chalk@npm:4.1.2, chalk@npm:^4.0.0, chalk@npm:^4.0.2, chalk@npm:^4.1.0, chalk@npm:^4.1.1, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:
@@ -8469,6 +8536,13 @@ __metadata:
   dependencies:
     restore-cursor: ^3.1.0
   checksum: 2692784c6cd2fd85cfdbd11f53aea73a463a6d64a77c3e098b2b4697a20443f430c220629e1ca3b195ea5ac4a97a74c2ee411f3807abf6df2b66211fec0c0a29
+  languageName: node
+  linkType: hard
+
+"cli-spinners@npm:^2.5.0":
+  version: 2.6.1
+  resolution: "cli-spinners@npm:2.6.1"
+  checksum: 423409baaa7a58e5104b46ca1745fbfc5888bbd0b0c5a626e052ae1387060839c8efd512fb127e25769b3dc9562db1dc1b5add6e0b93b7ef64f477feb6416a45
   languageName: node
   linkType: hard
 
@@ -13350,7 +13424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ieee754@npm:^1.1.4":
+"ieee754@npm:^1.1.13, ieee754@npm:^1.1.4":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
   checksum: 5144c0c9815e54ada181d80a0b810221a253562422e7c6c3a60b1901154184f49326ec239d618c416c1c5945a2e197107aee8d986a3dd836b53dffefd99b5e7e
@@ -13529,6 +13603,28 @@ __metadata:
     strip-ansi: ^6.0.0
     through: ^2.3.6
   checksum: 4d387fc1eb6126acbd58cbdb9ad99d2887d181df86ab0c2b9abdf734e751093e2d5882c2b6dc7144d9ab16b7ab30a78a1d7f01fb6a2850a44aeb175d1e3f8778
+  languageName: node
+  linkType: hard
+
+"inquirer@npm:^8.2.2":
+  version: 8.2.2
+  resolution: "inquirer@npm:8.2.2"
+  dependencies:
+    ansi-escapes: ^4.2.1
+    chalk: ^4.1.1
+    cli-cursor: ^3.1.0
+    cli-width: ^3.0.0
+    external-editor: ^3.0.3
+    figures: ^3.0.0
+    lodash: ^4.17.21
+    mute-stream: 0.0.8
+    ora: ^5.4.1
+    run-async: ^2.4.0
+    rxjs: ^7.5.5
+    string-width: ^4.1.0
+    strip-ansi: ^6.0.0
+    through: ^2.3.6
+  checksum: 69a2cf32f51af0e94dd66c597fdca42b890ff521b537dbfe1fd532c19a751d54893b7896523691ec30357f6212a80a2417fec7bf34411f369bbf151bdbc95ae9
   languageName: node
   linkType: hard
 
@@ -13901,6 +13997,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-interactive@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "is-interactive@npm:1.0.0"
+  checksum: 824808776e2d468b2916cdd6c16acacebce060d844c35ca6d82267da692e92c3a16fdba624c50b54a63f38bdc4016055b6f443ce57d7147240de4f8cdabaf6f9
+  languageName: node
+  linkType: hard
+
 "is-lambda@npm:^1.0.1":
   version: 1.0.1
   resolution: "is-lambda@npm:1.0.1"
@@ -14141,6 +14244,13 @@ __metadata:
   version: 1.0.0
   resolution: "is-typedarray@npm:1.0.0"
   checksum: 3508c6cd0a9ee2e0df2fa2e9baabcdc89e911c7bd5cf64604586697212feec525aa21050e48affb5ffc3df20f0f5d2e2cf79b08caa64e1ccc9578e251763aef7
+  languageName: node
+  linkType: hard
+
+"is-unicode-supported@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "is-unicode-supported@npm:0.1.0"
+  checksum: a2aab86ee7712f5c2f999180daaba5f361bdad1efadc9610ff5b8ab5495b86e4f627839d085c6530363c6d6d4ecbde340fb8e54bdb83da4ba8e0865ed5513c52
   languageName: node
   linkType: hard
 
@@ -15782,6 +15892,16 @@ __metadata:
   dependencies:
     chalk: ^2.0.1
   checksum: 4c95e3b65f0352dbe91dc4989c10baf7a44e2ef5b0db7e6721e1476268e2b6f7090c3aa880d4f833a05c5c3ff18f4ec5215a09bd0099986d64a8186cfeb48ac8
+  languageName: node
+  linkType: hard
+
+"log-symbols@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "log-symbols@npm:4.1.0"
+  dependencies:
+    chalk: ^4.1.0
+    is-unicode-supported: ^0.1.0
+  checksum: fce1497b3135a0198803f9f07464165e9eb83ed02ceb2273930a6f8a508951178d8cf4f0378e9d28300a2ed2bc49050995d2bd5f53ab716bb15ac84d58c6ef74
   languageName: node
   linkType: hard
 
@@ -17486,6 +17606,23 @@ __metadata:
     type-check: ^0.4.0
     word-wrap: ^1.2.3
   checksum: dbc6fa065604b24ea57d734261914e697bd73b69eff7f18e967e8912aa2a40a19a9f599a507fa805be6c13c24c4eae8c71306c239d517d42d4c041c942f508a0
+  languageName: node
+  linkType: hard
+
+"ora@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "ora@npm:5.4.1"
+  dependencies:
+    bl: ^4.1.0
+    chalk: ^4.1.0
+    cli-cursor: ^3.1.0
+    cli-spinners: ^2.5.0
+    is-interactive: ^1.0.0
+    is-unicode-supported: ^0.1.0
+    log-symbols: ^4.1.0
+    strip-ansi: ^6.0.0
+    wcwidth: ^1.0.1
+  checksum: 28d476ee6c1049d68368c0dc922e7225e3b5600c3ede88fade8052837f9ed342625fdaa84a6209302587c8ddd9b664f71f0759833cbdb3a4cf81344057e63c63
   languageName: node
   linkType: hard
 
@@ -20368,7 +20505,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:3, readable-stream@npm:^3.0.0, readable-stream@npm:^3.0.6, readable-stream@npm:^3.6.0":
+"readable-stream@npm:3, readable-stream@npm:^3.0.0, readable-stream@npm:^3.0.6, readable-stream@npm:^3.4.0, readable-stream@npm:^3.6.0":
   version: 3.6.0
   resolution: "readable-stream@npm:3.6.0"
   dependencies:
@@ -21127,7 +21264,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:^7.5.5":
+"rxjs@npm:^7.2.0, rxjs@npm:^7.5.5":
   version: 7.5.5
   resolution: "rxjs@npm:7.5.5"
   dependencies:
@@ -24272,7 +24409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wcwidth@npm:^1.0.0":
+"wcwidth@npm:^1.0.0, wcwidth@npm:^1.0.1":
   version: 1.0.1
   resolution: "wcwidth@npm:1.0.1"
   dependencies:
