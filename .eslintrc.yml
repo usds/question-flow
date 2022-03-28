@@ -8,20 +8,10 @@ extends:
   - plugin:import/errors
   - plugin:import/typescript
   - plugin:import/warnings
-  - plugin:jsx-a11y/recommended
-  - plugin:react/recommended
   - plugin:sonarjs/recommended
   - plugin:typescript-sort-keys/recommended
-ignorePatterns:
-  - '*.stories.tsx'
-overrides:
-  - files: '*.test.ts'
-    rules:
-      no-unused-expressions: 'off'
 parser: '@typescript-eslint/parser'
 parserOptions:
-  ecmaFeatures:
-    jsx: true
   ecmaVersion: 12
   sourceType: module
 plugins:
@@ -30,9 +20,6 @@ plugins:
   - align-import
   - import
   - json-files
-  - jsx-a11y
-  - react
-  - react-hooks
   - sonarjs
   - sort-keys-fix
   - typescript-sort-keys
@@ -50,6 +37,9 @@ rules:
     - warn
   brace-style: 0
   curly: error
+  camelcase:
+    - warn
+    - ignoreImports: true
   implicit-arrow-linebreak: 'off'
   import/extensions: 0
   import/no-cycle: 2
@@ -67,6 +57,7 @@ rules:
     - code: 100
       ignoreComments: true
       ignoreUrls: true
+  no-underscore-dangle: off
   no-multi-spaces:
     - off
     - exceptions:
@@ -76,11 +67,6 @@ rules:
   no-shadow: 0
   no-use-before-define: 0
   no-param-reassign: warn
-  react-hooks/exhaustive-deps: warn
-  react-hooks/rules-of-hooks: error
-  react/jsx-uses-react: 'off'
-  react/prop-types: 0
-  react/react-in-jsx-scope: 'off'
   sort-keys:
     - error
     - asc

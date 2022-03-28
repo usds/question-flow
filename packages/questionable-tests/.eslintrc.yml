@@ -1,0 +1,99 @@
+---
+env:
+  browser: true
+  es2021: true
+extends:
+  - airbnb-base
+  - plugin:@typescript-eslint/recommended
+  - plugin:import/errors
+  - plugin:import/typescript
+  - plugin:import/warnings
+  - plugin:jsx-a11y/recommended
+  - plugin:react/recommended
+  - plugin:sonarjs/recommended
+  - plugin:typescript-sort-keys/recommended
+ignorePatterns:
+  - '*.stories.tsx'
+overrides:
+  - files: '*.test.ts'
+    rules:
+      no-unused-expressions: 'off'
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaVersion: 12
+  sourceType: module
+plugins:
+  - '@typescript-eslint'
+  - align-assignments
+  - align-import
+  - import
+  - json-files
+  - jsx-a11y
+  - react
+  - react-hooks
+  - sonarjs
+  - sort-keys-fix
+  - typescript-sort-keys
+rules:
+  '@typescript-eslint/brace-style':
+    - 2
+    - 1tbs
+  '@typescript-eslint/no-shadow':
+    - error
+  '@typescript-eslint/no-use-before-define': 1
+  align-assignments/align-assignments:
+    - 2
+    - requiresOnly: false
+  align-import/align-import:
+    - warn
+  brace-style: 0
+  curly: error
+  implicit-arrow-linebreak: 'off'
+  import/extensions: 0
+  import/no-cycle: 2
+  import/prefer-default-export: 'off'
+  json-files/sort-package-json: 1
+  key-spacing:
+    - error
+    - align: value
+      mode: strict
+  lines-between-class-members:
+    - error
+    - always
+  max-len:
+    - 2
+    - code: 100
+      ignoreComments: true
+      ignoreUrls: true
+  no-underscore-dangle: off
+  no-multi-spaces:
+    - off
+    - exceptions:
+        ImportDeclaration: true
+        Property: true
+        VariableDeclarator: true
+  no-shadow: 0
+  no-use-before-define: 0
+  no-param-reassign: warn
+  react-hooks/exhaustive-deps: warn
+  react-hooks/rules-of-hooks: error
+  react/jsx-uses-react: 'off'
+  react/prop-types: 0
+  react/react-in-jsx-scope: 'off'
+  sort-keys:
+    - error
+    - asc
+    - caseSensitive: true
+      minKeys: 2
+      natural: false
+  sort-keys-fix/sort-keys-fix: warn
+settings:
+  import/resolver:
+    node:
+      extensions:
+        - .ts
+        - .tsx
+      paths:
+        - ./src
+  react:
+    version: detect

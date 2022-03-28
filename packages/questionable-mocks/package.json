@@ -1,0 +1,19 @@
+{
+  "name": "@usds.gov/questionable-mocks",
+  "packageManager": "yarn@3.2.0",
+  "main": "dist/index.js",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  },
+  "scripts": {
+    "build": "yarn lint && yarn build:tsc",
+    "build:tsc": "tsc -p tsconfig.json",
+    "clean": "rimraf ./dist",
+    "lint": "",
+    "lint:fix": "",
+    "lint:ts": "",
+    "pretty": "",
+    "type-check": "tsc --noEmit -p tsconfig.json"
+  },
+  "version": "0.0.2"
+}

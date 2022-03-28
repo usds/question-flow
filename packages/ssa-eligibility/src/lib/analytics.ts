@@ -2,8 +2,11 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  IResult, log, TEvent, TOnError,
-} from '@usds.gov/questionable';
+  IResult,
+  log,
+  TOnError,
+  TEventCore,
+} from '@usds.gov/questionable-react-component';
 import { isDebug }        from '../flow/lib/debug';
 import { DrupalSettings } from './drupal';
 
@@ -34,7 +37,7 @@ export const gtag = (...args: any[]) => {
   }
 };
 
-export const onActionClick = (data?: TEvent) => {
+export const onActionClick = (data?: TEventCore) => {
   const action = (data as any).buttons;
   if (!action?.length) return;
 
@@ -54,14 +57,14 @@ export const onActionClick = (data?: TEvent) => {
   });
 };
 
-export const onInit = (data?: TEvent) => {
+export const onInit = (data?: TEventCore) => {
   gtag({
     event: 'begin_benefits_quest',
     ...data,
   });
 };
 
-export const onResults = (data?: TEvent) => {
+export const onResults = (data?: TEventCore) => {
   const results = (data as any).results as IResult[];
   for (const r of results) {
     if (!r.category) {
@@ -74,14 +77,14 @@ export const onResults = (data?: TEvent) => {
   });
 };
 
-export const onNoResults = (data?: TEvent) => {
+export const onNoResults = (data?: TEventCore) => {
   gtag({
     event: 'defer_benefits_quest',
     ...data,
   });
 };
 
-export const onError: TOnError = (e: Error, data?: TEvent) => {
+export const onError: TOnError = (e: Error, data?: TEventCore) => {
   gtag({
     description: e.message,
     event:       'exception',

@@ -1,0 +1,18 @@
+{
+  "name": "@usds.gov/questionable-console",
+  "packageManager": "yarn@3.2.0",
+  "version": "0.0.2",
+  "dependencies": {
+    "@usds.gov/questionable-core": "workspace:*",
+    "@usds.gov/questionable-mocks": "workspace:*",
+    "inquirer": "^8.2.2",
+    "rxjs": "^7.5.5"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^8.2.0",
+    "@types/node": "^17.0.23",
+    "ts-loader": "^9.2.8",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  }
+}

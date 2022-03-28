@@ -2,7 +2,7 @@
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
  */
-import { IButton }    from '@usds.gov/questionable';
+import { IButton }    from '@usds.gov/questionable-react-component';
 import { TActionMap } from '../lib/contentMap';
 
 const online: Partial<IButton> = {

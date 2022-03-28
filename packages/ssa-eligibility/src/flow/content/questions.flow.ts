@@ -9,7 +9,7 @@
  * If you need to make changes to copy, contact your CMS admin.
  */
 
-import { QUESTION_TYPE, IQuestion } from '@usds.gov/questionable';
+import { QUESTION_TYPE, IQuestion } from '@usds.gov/questionable-react-component';
 import {
   IDK, NO, YES, TQuestionMap,
 } from '../lib';

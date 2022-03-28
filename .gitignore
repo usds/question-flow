@@ -9,6 +9,7 @@
 # production / NPM
 **/dist/**
 **/build/**
+**/out-tsc/**
 
 # Storybook
 **/storybook-static/**
@@ -24,10 +25,11 @@
 .env.production.local
 
 # Dev files
-.log
-.orig
+*.log
+*.orig
 .eslintcache
 .husky/_/
+*.tsbuildinfo
 
 # yarn v2
 .yarn/cache

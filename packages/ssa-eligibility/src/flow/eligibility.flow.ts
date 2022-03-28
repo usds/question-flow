@@ -1,4 +1,4 @@
-import { IQuestionnaire, QuestionableConfig } from '@usds.gov/questionable';
+import { IQuestionnaire, QuestionableConfig } from '@usds.gov/questionable-react-component';
 import {
   onActionClick,
   onError,

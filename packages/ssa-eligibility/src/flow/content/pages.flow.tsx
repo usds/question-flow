@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { PAGE_TYPE } from '@usds.gov/questionable';
+import { PAGE_TYPE } from '@usds.gov/questionable-react-component';
 
 export const pageContent = {
   noResultsPage: {

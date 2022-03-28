@@ -1,4 +1,4 @@
-import { log }       from '@usds.gov/questionable';
+import { log }       from '@usds.gov/questionable-react-component';
 import { kebabCase } from 'lodash';
 
 const getKeyName = (keyName: string) => kebabCase(keyName.trim().toLowerCase());

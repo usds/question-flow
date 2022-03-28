@@ -1,0 +1,57 @@
+{
+  "compilerOptions": {
+    "noEmit": false,
+    "composite": true,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationMap": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "ES2015",
+      "es2019"
+    ],
+    "module": "CommonJS",
+    "rootDir": "src",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "outDir": "out-tsc",
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2019",
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "public",
+    ".storybook"
+  ],
+  "references": [
+    {
+      "path": "../questionable-core"
+    },
+    {
+      "path": "../ssa-eligibility"
+    },
+    {
+      "path": "../questionable-react-component"
+    },
+    {
+      "path": "../questionable-mocks"
+    }
+  ]
+}
