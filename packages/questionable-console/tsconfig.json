@@ -45,6 +45,9 @@
   "references": [
     {
       "path": "../questionable-core"
+    },
+    {
+      "path": "../questionable-mocks"
     }
   ]
 }

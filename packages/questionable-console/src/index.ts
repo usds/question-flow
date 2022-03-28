@@ -1,6 +1,7 @@
-import { Answers, DistinctQuestion, prompt } from 'inquirer';
-import { Subject }                           from 'rxjs';
-// import { IQuestionableCore }                 from '@usds.gov/questionable-core';
+import { Answers, DistinctQuestion, prompt }     from 'inquirer';
+import { Subject }                               from 'rxjs';
+import { simple_all }                            from '@usds.gov/questionable-mocks';
+import { IQuestionnaireCore, QuestionnaireCore } from '@usds.gov/questionable-core';
 
 export const Questionable = (): any => {
   // if (!questionnaire) {
@@ -8,12 +9,17 @@ export const Questionable = (): any => {
   // }
   // const prompts = new Subject();
   // const inq     = prompt(prompts);
-
-  const observe     = new Subject<DistinctQuestion<Answers>>();
-  const { process } = prompt(observe).ui;
+  const data          = simple_all as unknown as IQuestionnaireCore;
+  const questionnaire = new QuestionnaireCore(data);
+  const observe       = new Subject<DistinctQuestion<Answers>>();
+  const { process }   = prompt(observe).ui;
 
   process.subscribe({
     next: (val) => {
+      if (questionnaire) {
+        // do something
+      }
+      // questionnaire.getNextStep()
       console.log(val);
     },
   });
