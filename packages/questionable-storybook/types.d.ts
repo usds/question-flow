@@ -87,6 +87,9 @@ declare module '*.json' {
 
 /* Markdown */
 declare module '*.md';
-declare module '*.mdx';
+declare module '*.md' {
+  const content: string;
+  export default content;
+}
 
 declare module '@rjsf/semantic-ui';

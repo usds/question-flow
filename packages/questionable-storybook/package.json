@@ -1,11 +1,8 @@
 {
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.1.1",
-    "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-docs": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
-    "@storybook/addon-links": "^6.4.19",
-    "@storybook/node-logger": "^6.4.19",
     "@storybook/react": "^6.4.19",
     "@storybook/storybook-deployer": "^2.8.11",
     "@trussworks/react-uswds": "^2.8.0",
@@ -13,8 +10,7 @@
     "@usds.gov/questionable-react-component": "workspace:*",
     "@usds.gov/ssa-eligibility": "workspace:*",
     "lodash": "^4.17.21",
-    "semantic-ui-css": "^2.4.1",
-    "storybook-readme": "^5.0.9"
+    "semantic-ui-css": "^2.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
@@ -54,7 +50,7 @@
   },
   "name": "@usds.gov/questionable-storybook",
   "scripts": {
-    "build": "build-storybook -s public",
+    "build": "build-storybook --quiet --loglevel silent",
     "build:ts": "tsc -p tsconfig.json",
     "clean": "rimraf dist public out-tsc",
     "deploy": "yarn clean && yarn build && yarn _deploy",
@@ -66,7 +62,7 @@
     "prebuild": "yarn clean",
     "predeploy": "npm run build",
     "prepare": "husky install",
-    "start": "start-storybook -p 9009 -s public",
+    "start": "start-storybook -p 9009 --quiet --loglevel warn",
     "type-check": "tsc --noEmit -p tsconfig.json"
   },
   "version": "1.0.1",

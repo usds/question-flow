@@ -49,6 +49,7 @@ export const Questionable = (): any => {
     type:    'input',
     validate(value) {
       const pass = value.match(
+        // eslint-disable-next-line max-len
         /^([01]{1})?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$/i,
       );
       if (pass) {

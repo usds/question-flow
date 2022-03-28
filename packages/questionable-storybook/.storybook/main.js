@@ -1,19 +1,20 @@
 const path = require('path')
 
 const main = {
-  "stories": [
-    "../src/**/**"
+  stories: [
+    "../src/**/*.@(tsx|mdx)"
   ],
+  staticDirs: ['../public'],
   "addons": [
-    "@storybook/addon-links",
+    //"@storybook/addon-links",
     {
        name: '@storybook/addon-docs',
        options: { configureJSX: true }
     },
     "@storybook/addon-essentials",
-    "@storybook/addon-actions",
-    '@storybook/addon-controls',
-    'storybook-readme',
+    //"@storybook/addon-actions",
+    //'@storybook/addon-controls',
+    //'storybook-readme',
   ],
   typescript: {
     check: false,
