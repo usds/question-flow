@@ -5681,6 +5681,7 @@ __metadata:
     "@types/inquirer": ^8.2.0
     "@types/node": ^17.0.23
     "@usds.gov/questionable-core": "workspace:*"
+    "@usds.gov/questionable-mocks": "workspace:*"
     inquirer: ^8.2.2
     rxjs: ^7.5.5
     ts-loader: ^9.2.8

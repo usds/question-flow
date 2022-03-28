@@ -37,6 +37,9 @@ rules:
     - warn
   brace-style: 0
   curly: error
+  camelcase:
+    - warn
+    - ignoreImports: true
   implicit-arrow-linebreak: 'off'
   import/extensions: 0
   import/no-cycle: 2
