@@ -1,5 +1,5 @@
 import { merge }       from 'lodash';
-import { ACTION_TYPE } from '../lib/enums';
+import { ACTION_TYPE } from '../util/enums';
 import { FormCore }    from '../composable/FormCore';
 import { IFormCore }   from '../survey/IFormCore';
 
@@ -30,7 +30,7 @@ export const stepReducer = (
         },
       );
 
-    // Effective a noop that triggers a re-render of the page
+    // Effectively a noop that triggers a re-render of the page
     case ACTION_TYPE.RERENDER:
       return ({
         ...previousState,

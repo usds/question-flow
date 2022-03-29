@@ -1,7 +1,7 @@
 import { IFormCore }         from '../survey/IFormCore';
 import { IQuestionCore }     from '../survey/IStepCore';
 import { QuestionnaireCore } from './QuestionnaireCore';
-import { TAgeCore }          from '../lib/types';
+import { TAgeCore }          from '../util/types';
 
 export interface IFormConstructorCore {
   form?: Partial<IFormCore>;

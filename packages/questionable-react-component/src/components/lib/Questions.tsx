@@ -1,72 +1,16 @@
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
-import { merge }                     from 'lodash';
-import { DateTime }                  from 'luxon';
-import {
-  TDateOfBirthCore,
-  getDateTime,
-  ACTION_TYPE,
-} from '@usds.gov/questionable-core';
-import { QuestionableConfig } from '../../composable/QuestionableConfig';
-import { IQuestion }          from '../../survey';
-import { IQuestionData }      from '../../survey/IQuestionData';
-import { IRef }               from '../../survey/IRef';
-import { Steps }              from './Steps';
-import { CSS_CLASS }          from '../../lib/enums';
+import { QuestionsCore }             from '@usds.gov/questionable-core';
+import { QuestionableConfig }        from '../../composable/QuestionableConfig';
+import { IQuestionData }             from '../../survey/IQuestionData';
+import { IRef }                      from '../../survey/IRef';
+import { Steps }                     from './Steps';
+import { CSS_CLASS }                 from '../../lib/enums';
 
 /**
  * Static utility methods for question components
  */
-export abstract class Questions {
-  /**
-   * Updates the form with the current selected answer(s)
-   * @param answer
-   * @param props
-   * @returns
-   */
-  public static updateForm(answer: string, props: IQuestionData, config: QuestionableConfig): void {
-    if (answer.length > 0) {
-      Object.assign(props.step, { answer });
-    }
-    // TODO: circle back and fix this logic. The problem is that our reducer is merging by KEY,
-    // which in the case of arrays is the index, and the index will always be 0 if we're passing in new arrays
-    // There are cleaner ways to do this.
-    props.form.responses = props.form.responses || [];
-    const value          = props.form.responses.find((r) => r.id === props.step.id);
-    if (!value) {
-      props.form.responses.push(props.step);
-    } else {
-      merge(value, props.step);
-    }
-    config.events.answer({ answer, props, step: props.step.id });
-    return props.dispatchForm({
-      type:  ACTION_TYPE.UPDATE,
-      value: { ...props.form },
-    });
-  }
-
-  /**
-   * Determines if the answer is valid and selected
-   * @param answer
-   * @param props
-   * @returns
-   */
-  private static isSelected(
-    answer: string,
-    props: IQuestionData,
-  ): boolean | undefined {
-    if (!props?.form) {
-      return undefined;
-    }
-    const q: IQuestion | undefined = props.form.responses.find(
-      (a: IQuestion) => a.id === props.step.id,
-    );
-    if (!q) {
-      return undefined;
-    }
-    return Steps.isValid(props.form, props.step.id) && q.answer === answer;
-  }
-
+export abstract class Questions extends QuestionsCore {
   /**
    * Generates a radio button given a question definition
    * @param answer
@@ -118,20 +62,13 @@ export abstract class Questions {
     );
   }
 
-  private static getString(ref: Partial<IRef> = {}): string {
-    if (!ref.title || ref.title === undefined || ref.title?.length <= 0) {
-      throw new Error(`Value is required; ${ref.id} does not have a title`);
-    }
-    return ref.title;
-  }
-
   /**
    * Generates a checkbox given a question definition
    * @param answer
    * @param props
    * @returns
    */
-  private static getCheckbox(
+  protected static getCheckbox(
     answer: IRef,
     props: IQuestionData,
     config: QuestionableConfig,
@@ -174,41 +111,5 @@ export abstract class Questions {
         {props.step.answers.map((a) => Questions.getCheckbox(a, props, config))}
       </Fieldset>
     );
-  }
-
-  /**
-   * Gets a birthdate's DateTime from a form
-   * @param props
-   * @returns
-   */
-  public static getBirthdate(props: IQuestionData): DateTime | undefined {
-    if (props.step?.answer) {
-      return getDateTime(props.step.answer);
-    }
-    if (props.form?.birthdate) {
-      return getDateTime(props.form.birthdate);
-    }
-    return undefined;
-  }
-
-  /**
-   * Converts a Date of Birth type into a string
-   * @param dob
-   * @returns
-   */
-  public static toBirthdate(dob: TDateOfBirthCore): string | undefined {
-    if (dob.month && dob.day && dob.year) {
-      if (+dob.month < 1 || +dob.month > 12) {
-        return undefined;
-      }
-      if (+dob.day < 1 || +dob.day > 31) {
-        return undefined;
-      }
-      if (+dob.year < 1900 || +dob.year > new Date().getFullYear()) {
-        return undefined;
-      }
-      return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${dob.year}`;
-    }
-    return undefined;
   }
 }

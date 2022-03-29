@@ -1,6 +1,6 @@
 import {
   TButtonModeCore,
-} from '../lib/types';
+} from '../util/types';
 import { IRefCore } from './IRefCore';
 
 /**
