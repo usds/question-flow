@@ -1,4 +1,4 @@
-import { ACTION }      from '../lib/enums';
+import { ACTION }      from '../util/enums';
 import { IButtonCore } from './IButtonCore';
 import { IRefCore }    from './IRefCore';
 

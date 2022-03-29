@@ -1,5 +1,5 @@
-import { MODE }                                      from '../lib/enums';
-import { TGetDictionaryCore, TStringDictionaryCore } from '../lib/types';
+import { MODE }                                      from '../util/enums';
+import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
 import { IButtonCore }                               from './IButtonCore';
 import { IEventCore }                                from './IEventCore';
 

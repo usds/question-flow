@@ -1,5 +1,5 @@
-import { DIRECTION }             from '../lib/enums';
-import { TStringDictionaryCore } from '../lib/types';
+import { DIRECTION }             from '../util/enums';
+import { TStringDictionaryCore } from '../util/types';
 import { IFormCore }             from './IFormCore';
 import { IQuestionDataCore }     from './IQuestionDataCore';
 import { IStepDataCore }         from './IStepDataCore';

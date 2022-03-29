@@ -7,10 +7,10 @@ import { IPagesCore }              from '../survey/IPagesCore';
 import { IQuestionnaireCore }      from '../survey/IQuestionnaireCore';
 import { IResultCore }             from '../survey/IResultCore';
 import { IStepDataCore }           from '../survey/IStepDataCore';
-import { log }                     from '../lib/log';
-import { matches }                 from '../lib/helpers';
+import { log }                     from '../util/log';
+import { matches }                 from '../util/helpers';
 import { QuestionableConfigCore }  from './QuestionableConfigCore';
-import { TAgeCore, TAgeCalcCore }  from '../lib/types';
+import { TAgeCore, TAgeCalcCore }  from '../util/types';
 import {
   ACTION,
   DIRECTION,
@@ -20,7 +20,7 @@ import {
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   STEP_TYPE,
-} from '../lib/enums';
+} from '../util/enums';
 import {
   IPageCore,
   IQuestionCore,
@@ -82,11 +82,17 @@ export class QuestionnaireCore implements IQuestionnaireCore {
    * Fetches the first step
    * @returns
    */
-  getFirstStep(): IStepCore {
-    const ret = this.steps[0];
+  getFirstStep<T extends IStepCore>(): T {
+    const ret = this.steps[0] as T;
     if (!ret) {
       this.throw('There is no step');
     }
+    // if (isEnum(QUESTION_TYPE, ret.type) && (ret instanceof T)) {
+    //   return ret as IQuestionCore;
+    // }
+    // if (isEnum(PAGE_TYPE, ret.type)) {
+    //   return ret as IPageCore;
+    // }
     return ret;
   }
 
@@ -140,6 +146,18 @@ export class QuestionnaireCore implements IQuestionnaireCore {
     }
     return ret as IQuestionCore;
   }
+
+  // protected isValidExit(question: IQuestionCore, form: IFormCore, skip = 0) {
+  //   let allowExit = true;
+  //   if (skip === 0
+  //     && direction === DIRECTION.FORWARD
+  //     && thisQuestion.exitRequirements
+  //     && thisQuestion.exitRequirements.length > 0) {
+  //     allowExit = thisQuestion.exitRequirements.every((r) =>
+  //       this.meetsAllRequirements(r, form));
+  //   }
+  //   return allowExit;
+  // }
 
   /**
    * Returns the next step in the sequence which is permitted by the current state of the form

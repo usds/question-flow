@@ -1,5 +1,5 @@
 import { merge }       from 'lodash';
-import { ACTION_TYPE } from '../lib/enums';
+import { ACTION_TYPE } from '../util/enums';
 import { FormCore }    from '../composable/FormCore';
 import { IFormCore }   from '../survey/IFormCore';
 

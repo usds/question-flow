@@ -6,7 +6,7 @@
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "luxon": "^2.3.1",
-    "serialize-error": "^9.1.1"
+    "serialize-error": "9.1.0"
   },
   "engines": {
     "node": "14.x - 16.x"
