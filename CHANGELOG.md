@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/usds/questionable/compare/v1.5.8...v1.6.0) (2022-03-29)
+
+
+### Features
+
+* **core:** encapsulates core logic in separate workspace ([#224](https://github.com/usds/questionable/issues/224)) ([6cd80b4](https://github.com/usds/questionable/commit/6cd80b4dc4e7cdb3c80b5265f16c7d0fc7c491f7))
+
 ## [1.5.8](https://github.com/usds/questionable/compare/v1.5.7...v1.5.8) (2022-03-18)
 
 
