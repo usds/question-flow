@@ -16,6 +16,7 @@
 
 #ide
 /.idea
+.vscode/settings.json
 
 # misc
 .DS_Store
