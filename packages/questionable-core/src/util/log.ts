@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { serializeError } from 'serialize-error';
+// import { serializeError } from 'serialize-error';
+
+import { noop } from './noop';
+
+const serializeError = noop;
 
 const { log: logInfo, error: logError } = console;
 

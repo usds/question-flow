@@ -4,8 +4,8 @@ import {
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   TStepType,
-} from '../lib/enums';
-import { TAgeCore, TAgeCalcCore } from '../lib/types';
+} from '../util/enums';
+import { TAgeCore, TAgeCalcCore } from '../util/types';
 import { IBranchCore }            from './IBranchCore';
 import { IRefCore }               from './IRefCore';
 

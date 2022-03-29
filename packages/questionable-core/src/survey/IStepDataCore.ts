@@ -1,4 +1,4 @@
-import { TReducerCore } from '../lib/types';
+import { TReducerCore } from '../util/types';
 import { IFormCore }    from './IFormCore';
 import { IStepCore }    from './IStepCore';
 

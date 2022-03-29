@@ -49,5 +49,8 @@
     {
       "path": "../questionable-mocks"
     }
-  ]
+  ],
+  "ts-node": {
+    "swc": true
+  }
 }

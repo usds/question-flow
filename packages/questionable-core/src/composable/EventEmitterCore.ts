@@ -1,5 +1,5 @@
-import { catchError }         from '../lib/error';
-import { error as log, noop } from '../lib';
+import { catchError }         from '../util/error';
+import { error as log, noop } from '../util';
 import { IFormCore }          from '../survey';
 import {
   IEventCore,

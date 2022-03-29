@@ -2,7 +2,7 @@ import { isString, merge }                     from 'lodash';
 import { EventEmitterCore }                    from './EventEmitterCore';
 import {
   isEnum, MODE, noop, TStringDictionaryCore,
-} from '../lib';
+} from '../util';
 import {
   INavigationConfigCore,
   IPagesConfigCore,
