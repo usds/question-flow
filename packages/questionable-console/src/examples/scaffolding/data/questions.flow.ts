@@ -4,17 +4,13 @@
  */
 import { QUESTION_TYPE } from '@usds.gov/questionable-core';
 import { noop }          from 'lodash';
-// import { chalk, fs }     from 'zx';
-import { IQuestion } from '../../../survey/IStep';
+import chalk             from 'chalk';
+import { IQuestion }     from '../../../survey/IStep';
 
 const YES = { id: '0', key: 'y', title: 'Yes' };
 const NO  = { id: '1', key: 'n', title: 'No' };
 // eslint-disable-next-line sonarjs/no-unused-collection
 const ANSWERS = [YES, NO];
-const chalk   = {
-  blue:  (params:string) => params,
-  white: (params:string) => params,
-};
 
 const A: IQuestion = {
   answers:   [YES, NO],
