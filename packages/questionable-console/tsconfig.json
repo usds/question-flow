@@ -18,7 +18,7 @@
       "es2019",
       "es2021"
     ],
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -32,11 +32,13 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "ES2021",
+    "target": "ESNext",
     "useDefineForClassFields": false,
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "examples/**/*.ts",
+    "test.ts"
   ],
   "exclude": [
     "node_modules",

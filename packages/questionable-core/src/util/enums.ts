@@ -5,6 +5,7 @@ export enum QUESTION_TYPE {
   DOB = 'dob',
   MULTIPLE_CHOICE = 'multiple_choice',
   MULTIPLE_SELECT = 'multiple_select',
+  TEXT = 'text'
 }
 
 /**

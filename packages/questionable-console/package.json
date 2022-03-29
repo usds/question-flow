@@ -13,10 +13,11 @@
     "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.5",
+    "which": "^2.0.2",
     "zx": "^6.0.7"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.160",
+    "@swc/core": "^1.2.161",
     "@swc/helpers": "^0.3.8",
     "@types/inquirer": "^8.2.0",
     "@types/node": "^17.0.23",
@@ -26,5 +27,6 @@
   },
   "scripts": {
     "start": "ts-node src/index.ts"
-  }
+  },
+  "type": "module"
 }
