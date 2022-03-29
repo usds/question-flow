@@ -132,13 +132,14 @@ export class Iterable {
         return undefined;
       }
       if (this.validate(val.answer, this.current)) {
-        this.current.exec(this.props(this.current));
+        this.current.onAnswer(this.props(this.current));
         const nextStepId = this.questionnaire.getNextStep(this.props(this.current));
         const nextStep   = this.questionnaire.getStepById(nextStepId);
         this.makeStep(nextStep);
       } else {
         this.makeStep(this.current);
       }
+      this.current.onDisplay();
       return this.current;
     } catch (e) {
       this.bottomBar.log.write(e);
@@ -176,6 +177,7 @@ export class Iterable {
   }
 
   validate(answer: string, question: IQuestion) {
+    if (question.validate && !question.validate(answer)) return false;
     QuestionsCore.updateForm(answer, this.props(question), this.config);
     return StepsCore.isNextEnabled(this.props(question));
   }
