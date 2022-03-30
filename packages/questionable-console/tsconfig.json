@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+   "allowUmdGlobalAccess": true,
     "composite": true,
     "outDir": "dist",
     "noEmit": false,

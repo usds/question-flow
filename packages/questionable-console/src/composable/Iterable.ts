@@ -4,26 +4,26 @@ import {
   IStepCore,
   QuestionableConfigCore,
   QuestionsCore,
-  QUESTION_TYPE,
   stepReducer,
   StepsCore,
 } from '@usds.gov/questionable-core';
 import {
-  Answers, DistinctQuestion, prompt,
+  Answers, DistinctQuestion, prompt, registerPrompt,
 } from 'inquirer';
 import BottomBar               from 'inquirer/lib/ui/bottom-bar';
 import PromptUI                from 'inquirer/lib/ui/prompt';
+import { merge }               from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import { IQuestion }           from '../survey/IStep';
+import { IQuestion, IStep }    from '../survey/IStep';
+import { error, log, white }   from '../util/logger';
+import { TVal }                from '../util/types';
+import { PromptFactory }       from './PromptFactory';
 import { Questionnaire }       from './Questionnaire';
 
-type TVal = { answer: any, name: string };
-type TChoice = { answer: string, key: string, name: string }
-type TAnswerType = {
-  type: 'number' | 'input' | 'password' | 'list' | 'expand' |
-  'checkbox' | 'confirm' | 'editor' | 'rawlist',
-  values?: string[] | TChoice[]
-};
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+registerPrompt('date', require('inquirer-date-prompt'));
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
 
 export class Iterable {
   protected current: IQuestion;
@@ -58,32 +58,6 @@ export class Iterable {
     this.makeProgressBar();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getType(q: IQuestion): TAnswerType {
-    let ret: TAnswerType = { type: 'confirm' };
-    switch (q.type) {
-      case QUESTION_TYPE.MULTIPLE_CHOICE:
-        ret = {
-          type:   'list',
-          values: q.answers.map((e, i) => ({
-            answer: e.type || '',
-            key:    `${i}`,
-            name:   e.title || '',
-          })),
-        };
-        break;
-      case QUESTION_TYPE.DOB:
-        ret = {
-          type: 'input',
-        };
-        break;
-      default:
-        ret = { type: 'confirm' };
-        break;
-    }
-    return ret;
-  }
-
   makePage(step: IStepCore) {
     this.observable.next({
       message: step.title,
@@ -94,21 +68,21 @@ export class Iterable {
   }
 
   makeQuestion(question: IQuestion) {
-    const { type, values } = this.getType(question);
-    this.observable.next({
-      choices:  values,
+    const mould = PromptFactory(question);
+    const prmpt = merge(mould, {
+      default:  question.default,
       message:  question.title,
       name:     question.id,
       // suffix:   question.subTitle,
-      type,
-      validate: (answer) => {
-        QuestionsCore.updateForm(answer, this.props(question), this.config);
-        return StepsCore.isNextEnabled(this.props(question));
-      },
-    });
+      validate: (a: TVal) => this.validate(a, question),
+    }) as DistinctQuestion<Answers>;
+    this.observable.next(prmpt);
   }
 
-  makeStep(step: IStepCore) {
+  makeStep(step: IStep) {
+    if (step.onDisplay) {
+      step.onDisplay(step);
+    }
     if (StepsCore.getStepType(step) === 'question') {
       const nextQuestion = step as IQuestion;
       this.makeQuestion(nextQuestion);
@@ -127,19 +101,22 @@ export class Iterable {
       if (val.name) {
         this.current = this.questionnaire.getStepById(val.name) as IQuestion;
       }
-      if (this.questionnaire.isComplete(this.current.id)) {
+      const progress = this.questionnaire.getProgressPercent(this.props(this.current));
+      if (progress === 100 || this.questionnaire.isComplete(this.current.id)) {
         this.observable.complete();
         return undefined;
       }
-      if (this.validate(val.answer, this.current)) {
-        this.current.onAnswer(this.props(this.current));
+      if (this.validate(val, this.current)) {
+        if (this.current.onAnswer) {
+          this.current.onAnswer(val, this.current);
+        }
         const nextStepId = this.questionnaire.getNextStep(this.props(this.current));
         const nextStep   = this.questionnaire.getStepById(nextStepId);
         this.makeStep(nextStep);
       } else {
         this.makeStep(this.current);
       }
-      this.current.onDisplay();
+      log(`${this.questionnaire.getProgressPercent(this.props(this.current))}%`);
       return this.current;
     } catch (e) {
       this.bottomBar.log.write(e);
@@ -166,20 +143,43 @@ export class Iterable {
     });
     this.process.subscribe({
       complete: () => {
-        console.log('log');
+        white('complete');
       },
       error: (e) => {
-        console.error(e);
+        error(e);
       },
     });
     this.makeQuestion(this.current);
     this.started = true;
   }
 
-  validate(answer: string, question: IQuestion) {
-    if (question.validate && !question.validate(answer)) return false;
-    QuestionsCore.updateForm(answer, this.props(question), this.config);
-    return StepsCore.isNextEnabled(this.props(question));
+  validate(a: TVal, question: IQuestion) {
+    let isValid = true;
+    function getAnswer() {
+      function isString(val: unknown) {
+        return (val instanceof String || typeof val === 'string');
+      }
+      if (isString(a.answer)) {
+        return a.answer;
+      }
+      if (isString(a.value)) {
+        return a.value;
+      }
+      if (isString(a)) {
+        return a;
+      }
+      if (isString(a.short)) {
+        return a.short;
+      }
+      error(`Could not determine value of answer ${a}`);
+      return `${a}`;
+    }
+    if (question.validate && !question.validate(a, question)) {
+      isValid = false;
+    }
+    QuestionsCore.updateForm(getAnswer(), this.props(question), this.config);
+    isValid = isValid && StepsCore.isNextEnabled(this.props(question));
+    return isValid;
   }
 
   private makeProgressBar(spinnerText = 'Working') {
@@ -189,7 +189,7 @@ export class Iterable {
       `\\ ${spinnerText}`,
       `- ${spinnerText}`,
     ];
-    let i          = 0;
+    let i          = loader.length - 4;  // 0;
     this.bottomBar = new BottomBar();
     // this.bottomBar = new BottomBar({ bottomBar: `\r\n${loader[i]}` });
 

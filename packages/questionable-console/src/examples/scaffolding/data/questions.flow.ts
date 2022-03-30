@@ -2,10 +2,13 @@
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
  */
-import { QUESTION_TYPE } from '@usds.gov/questionable-core';
-import { noop }          from 'lodash';
-import chalk             from 'chalk';
-import { IQuestion }     from '../../../survey/IStep';
+import { QUESTION_TYPE }    from '@usds.gov/questionable-core';
+import fs                   from 'fs-extra';
+import { noop }             from 'lodash';
+import os                   from 'os';
+import { IQuestion }        from '../../../survey/IStep';
+import { TVal }             from '../../../util/types';
+import { blue, red, white } from '../../../util/logger';
 
 const YES = { id: '0', key: 'y', title: 'Yes' };
 const NO  = { id: '1', key: 'n', title: 'No' };
@@ -17,7 +20,7 @@ const A: IQuestion = {
   id:        'A',
   onAnswer:  noop,
   onDisplay: () => {
-    console.log(chalk.blue('This is the scaffolding project. You will be asked a series of questions which will guide you through the setup process.)'));
+    blue('This is the scaffolding project. You will be asked a series of questions which will guide you through the setup process.)');
   },
   section: { id: 'introduction' },
   title:   'Is this your first time configuring this environment to run VA.gov?',
@@ -26,27 +29,37 @@ const A: IQuestion = {
 
 const B: IQuestion = {
   answers:           [YES, NO],
+  componentType:     'path',
+  default:           os.homedir,
   entryRequirements: [
     {
       responses: [
         {
-          answers:  [NO],
+          answers:  [YES],
           question: A,
         },
       ],
     },
   ],
   id:       'B',
-  onAnswer: (path) => {
-    console.log(chalk.white(`Working directory has been set to ${path}`));
+  onAnswer: (a) => {
+    const path = a.value || a.answer || a.short;
+    white(`Working directory has been set to ${path}`);
   },
   onDisplay: () => {
-    console.log(chalk.blue('Welcome aboard. We\'ll have you up and running in no time. The first step is to choose where your working directory is located. You can select either the current directory or you can specify your own path (note: this can be changed later, but it may be very time consuming)'));
+    blue('Welcome aboard. We\'ll have you up and running in no time. The first step is to choose where your working directory is located. You can select either the current directory or you can specify your own path (note: this can be changed later, but it may be very time consuming)');
   },
   section:  { id: 'confirmation' },
   title:    'What directory do you want to use for this project?',
   type:     QUESTION_TYPE.TEXT,
-  validate: () => true, // fs.existsSync(`${path}`),
+  validate: (a) => {
+    const path   = a.value || a.answer || a.short;
+    const exists = fs.existsSync(`${path}`);
+    if (!exists) {
+      red(`"${path}" isn't a valid path. Please enter another path.`);
+    }
+    return exists;
+  },
 };
 
 const ALL_REPOSITORIES = {
@@ -96,22 +109,22 @@ const C: IQuestion = {
     {
       responses: [
         {
-          answers:  [YES],
+          answers:  [YES, NO],
           question: A,
         },
       ],
     },
   ],
   id:       'C',
-  onAnswer: (selected) => {
-    console.log(chalk.white(`You selected ${selected}`));
+  onAnswer: (selected: TVal) => {
+    white(`You selected ${selected.answer}`);
   },
   onDisplay: () => {
-    console.log(chalk.blue('The next step is to pull down the source code for the projects you will need to work on. You can have everything, just the frontend, just the backed or decide for each repo.'));
+    blue('The next step is to pull down the source code for the projects you will need to work on. You can have everything, just the frontend, just the backed or decide for each repo.');
   },
   section:  { id: 'confirmation' },
   title:    'Which repositories do you need?',
-  type:     QUESTION_TYPE.MULTIPLE_SELECT,
+  type:     QUESTION_TYPE.MULTIPLE_CHOICE,
   validate: () => true, // fs.existsSync(`${path}`),
 };
 

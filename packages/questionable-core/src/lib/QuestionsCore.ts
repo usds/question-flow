@@ -24,7 +24,7 @@ export abstract class QuestionsCore {
     props: IQuestionDataCore,
     config: QuestionableConfigCore = new QuestionableConfigCore(),
   ): void {
-    if (answer.length > 0) {
+    if (answer?.length > 0) {
       Object.assign(props.step, { answer });
     }
     // TODO: circle back and fix this logic. The problem is that our reducer is merging by KEY,

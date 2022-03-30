@@ -1,13 +1,7 @@
-import {
-  registerPrompt,
-} from 'inquirer';
 import { simple_all }     from '@usds.gov/questionable-mocks';
 import { Questionnaire }  from './composable/Questionnaire';
 import { Iterable }       from './composable/Iterable';
 import { IQuestionnaire } from './survey/IQuestionnaire';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-registerPrompt('date', require('inquirer-date-prompt'));
 
 export const Questionable = (): any => {
   // if (!questionnaire) {

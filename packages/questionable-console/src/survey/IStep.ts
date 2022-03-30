@@ -6,14 +6,14 @@ import {
   QUESTION_TYPE,
   IRefCore,
 } from '@usds.gov/questionable-core';
-
-type TExec = (...params: unknown[]) => void;
-type TValidate = (...params: unknown[]) => boolean;
+import {
+  TStringFn, TOnDisplay, TOnAnswer, TValidateFn,
+} from '../util/types';
 
 export interface IStep extends IStepCore {
-  onAnswer?: TExec;
-  onDisplay?: TExec;
-  validate?: TValidate;
+  onAnswer?: TOnAnswer;
+  onDisplay?: TOnDisplay;
+  validate?: TValidateFn;
 }
 
 export interface IAnswer extends IRefCore {
@@ -22,13 +22,11 @@ export interface IAnswer extends IRefCore {
 
 export interface IQuestion extends IStep, IQuestionCore {
   answers: IAnswer[];
-  onAnswer: TExec;
-  onDisplay: TExec;
+  componentType?: 'date' | 'path';
+  default?: string | TStringFn;
   type: QUESTION_TYPE;
 }
 
 export interface IPage extends IStep, IPageCore {
-  onAnswer: TExec;
-  onDisplay: TExec;
   type: PAGE_TYPE;
 }

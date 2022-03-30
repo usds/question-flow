@@ -7,9 +7,12 @@
     "@usds.gov/questionable-mocks": "workspace:*",
     "chalk": "4.1.2",
     "cross-env": "^7.0.3",
+    "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",
     "inquirer-date-prompt": "^2.0.1",
+    "inquirer-fuzzy-path": "^2.3.0",
     "lodash": "^4.17.21",
+    "loglevel": "^1.8.0",
     "npm-check-updates": "^12.5.4",
     "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
@@ -24,6 +27,9 @@
     "ts-loader": "^9.2.8",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
+  },
+  "resolutions": {
+    "chalk": "4.1.2"
   },
   "scripts": {
     "start": "ts-node src/index.ts"
