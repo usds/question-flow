@@ -1,16 +1,22 @@
-import { ArrayUnique }             from 'class-validator';
-import { groupBy, isEmpty, merge } from 'lodash';
-import { IActionCore }             from '../survey/IActionCore';
-import { IBranchCore }             from '../survey/IBranchCore';
-import { IFormCore }               from '../survey/IFormCore';
-import { IPagesCore }              from '../survey/IPagesCore';
-import { IQuestionnaireCore }      from '../survey/IQuestionnaireCore';
-import { IResultCore }             from '../survey/IResultCore';
-import { IStepDataCore }           from '../survey/IStepDataCore';
-import { log }                     from '../util/log';
-import { matches }                 from '../util/helpers';
-import { QuestionableConfigCore }  from './QuestionableConfigCore';
-import { TAgeCore, TAgeCalcCore }  from '../util/types';
+/* eslint-disable import/no-cycle */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable max-classes-per-file */
+import { ArrayUnique } from 'class-validator';
+import {
+  groupBy, isEmpty,
+} from 'lodash';
+import { IActionCore }            from '../survey/IActionCore';
+import { IBranchCore }            from '../survey/IBranchCore';
+import { IFormCore }              from '../survey/IFormCore';
+import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
+import { IResultCore }            from '../survey/IResultCore';
+import { IStepDataCore }          from '../survey/IStepDataCore';
+import { log }                    from '../util/log';
+import { matches }                from '../util/helpers';
+import { QuestionableConfigCore } from './QuestionableConfigCore';
+import { TAgeCore, TAgeCalcCore } from '../util/types';
 import {
   ACTION,
   DIRECTION,
@@ -23,22 +29,32 @@ import {
 } from '../util/enums';
 import {
   IPageCore,
-  IQuestionCore,
   IRequirementCore,
   IResponseCore,
   ISectionCore,
-  IStepCore,
 } from '../survey/IStepCore';
 import { IPageConfigCore } from '../survey';
+import { BaseCore }        from './BaseCore';
+import { PageCore }        from './PageCore';
+import { PagesCore }       from './PagesCore';
+import { QuestionCore }    from './QuestionCore';
+import { StepCore }        from './StepCore';
+
+type TPageSet = {
+  config?: Partial<IPageConfigCore>;
+  data?: PageCore;
+} | undefined;
 
 export interface IQuestionableCore {
   questionnaire: QuestionnaireCore,
 }
+type TQuestionnaireCtor = Partial<IQuestionnaireCore> &
+  Pick<IQuestionnaireCore, 'questions' | 'form'>
 
 /**
  * Utility wrapper for survey state
  */
-export class QuestionnaireCore implements IQuestionnaireCore {
+export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
   @ArrayUnique((action: IActionCore) => action.id)
   public actions: IActionCore[] = [];
 
@@ -53,24 +69,28 @@ export class QuestionnaireCore implements IQuestionnaireCore {
   @ArrayUnique((result: IResultCore) => result.label)
   public results: IResultCore[] = [];
 
-  public pages!: IPagesCore;
+  public pages!: PagesCore;
 
-  @ArrayUnique((question: IQuestionCore) => question.id)
-  public questions: IQuestionCore[] = [];
+  @ArrayUnique((question: QuestionCore) => question.id)
+  public questions: QuestionCore[] = [];
 
   @ArrayUnique((section: ISectionCore) => section.id)
   public sections: ISectionCore[] = [];
 
-  protected steps: IStepCore[] = [];
+  protected steps: StepCore[] = [];
 
-  constructor(data: Partial<IQuestionnaireCore>) {
-    merge(this, data);
+  constructor(data: TQuestionnaireCtor) {
+    super(data);
 
-    // Create a new collection for our flow logic
-    this.steps = this.questions.map((q, i) => ({
-      order: i,
+    this.pages = new PagesCore(data.pages);
+
+    this.questions = data.questions.map((q, i) => new QuestionCore({
+      order:         i,
       ...q,
+      questionnaire: this,
     }));
+    // Create a new collection for our flow logic
+    this.steps = this.questions.map((q) => q as StepCore);
 
     this.init();
 
@@ -82,13 +102,13 @@ export class QuestionnaireCore implements IQuestionnaireCore {
    * Fetches the first step
    * @returns
    */
-  getFirstStep<T extends IStepCore>(): T {
+  getFirstStep<T extends StepCore>(): T {
     const ret = this.steps[0] as T;
     if (!ret) {
       this.throw('There is no step');
     }
     // if (isEnum(QUESTION_TYPE, ret.type) && (ret instanceof T)) {
-    //   return ret as IQuestionCore;
+    //   return ret as QuestionCore;
     // }
     // if (isEnum(PAGE_TYPE, ret.type)) {
     //   return ret as IPageCore;
@@ -101,7 +121,7 @@ export class QuestionnaireCore implements IQuestionnaireCore {
    * @param id unique identifier of the question
    * @returns
    */
-  getStepById(id: string): IStepCore {
+  getStepById(id: string): StepCore {
     const ret = this.steps.find((q) => q.id === id);
     if (!ret) {
       this.throw(`Step id: ${id} not found in survery`);
@@ -127,7 +147,7 @@ export class QuestionnaireCore implements IQuestionnaireCore {
    * @param id unique identifier of the question
    * @returns
    */
-  getQuestion(q: Partial<IQuestionCore>): IQuestionCore {
+  getQuestion(q: Partial<QuestionCore>): QuestionCore {
     if (!q.id) {
       this.throw(`Question ${q} is not defined`);
     }
@@ -139,15 +159,15 @@ export class QuestionnaireCore implements IQuestionnaireCore {
    * @param id unique identifier of the question
    * @returns
    */
-  getQuestionById(id: string): IQuestionCore {
+  getQuestionById(id: string): QuestionCore {
     const ret = this.getStepById(id);
     if (!isEnum(QUESTION_TYPE, ret.type)) {
       this.throw(`Step id: ${id} not a question`);
     }
-    return ret as IQuestionCore;
+    return ret as QuestionCore;
   }
 
-  // protected isValidExit(question: IQuestionCore, form: IFormCore, skip = 0) {
+  // protected isValidExit(question: QuestionCore, form: IFormCore, skip = 0) {
   //   let allowExit = true;
   //   if (skip === 0
   //     && direction === DIRECTION.FORWARD
@@ -310,7 +330,7 @@ export class QuestionnaireCore implements IQuestionnaireCore {
     }
 
     if (this.branches.length) {
-      const question = step as IQuestionCore;
+      const question = step as QuestionCore;
       return this.getBranchQuestions(question);
     }
     return this.getQuestionsWithoutBranches();
@@ -321,8 +341,8 @@ export class QuestionnaireCore implements IQuestionnaireCore {
    * @param step
    * @returns string[]
    */
-  protected getBranchQuestions(step: IQuestionCore): string[] {
-    const question = step as IQuestionCore;
+  protected getBranchQuestions(step: QuestionCore): string[] {
+    const question = step as QuestionCore;
 
     if (question.branch) {
       this.config.events.gate({
@@ -531,25 +551,15 @@ export class QuestionnaireCore implements IQuestionnaireCore {
   // eslint-disable-next-line class-methods-use-this
   protected getPageSet = (
     type: PAGE_TYPE,
-  ): {
-    config?: Partial<IPageConfigCore>;
-    data?: IPageCore;
-  } => {
-    const data: IPageCore = Object.values(this.pages).find((p: IPageCore) => p.type === type);
+  ): TPageSet => {
+    const data = Object.values(this.pages).find((p: PageCore | undefined) => p?.type === type);
     if (data) {
       return {
         config: {},
         data,
       };
     }
-    return {
-      config: {},
-      data:   {
-        id:      '-1',
-        section: {},
-        type,
-      },
-    };
+    return undefined;
   };
 
   /**
@@ -561,6 +571,7 @@ export class QuestionnaireCore implements IQuestionnaireCore {
     const error = 'step is not correctly defined or defined more than once';
 
     const page = this.getPageSet(type);
+    if (!page) return;
     // visible is truthy unless explicitly set to false
     if (!page.data || page?.config?.visible === false) {
       if (this.steps.filter((q) => q.type === type).length > 0) {

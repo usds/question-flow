@@ -5,3 +5,5 @@
  * Generic no-operation
  */
 export const noop = (..._params: unknown[]): void => { };
+
+export const noopAsync = async (..._params: unknown[]) => noop(..._params);

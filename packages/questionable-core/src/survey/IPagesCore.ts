@@ -4,6 +4,7 @@ import { IPageCore } from './IStepCore';
  * Defines required pages for the survey flow
  */
 export interface IPagesCore {
+  [key: string]: IPageCore | undefined;
   /**
    * First step of the survey
    *
@@ -15,17 +16,17 @@ export interface IPagesCore {
    *
    * @title No Results Page
    */
-  noResultsPage: IPageCore;
+  noResultsPage?: IPageCore;
   /**
    * Last step of the survey if there are 1 or more results
    *
    * @title Results Page
    */
-  resultsPage: IPageCore;
+  resultsPage?: IPageCore;
   /**
    * Preview of survery before submitting to receive results
    *
    * @title Summary Page
    */
-  summaryPage: IPageCore;
+  summaryPage?: IPageCore;
 }

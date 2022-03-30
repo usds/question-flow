@@ -404,6 +404,16 @@ export const survey = {
       "type": "object"
     },
     "IPagesCore": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/IPageCore"
+          },
+          {
+            "not": {}
+          }
+        ]
+      },
       "description": "Defines required pages for the survey flow",
       "properties": {
         "landingPage": {
@@ -427,11 +437,6 @@ export const survey = {
           "title": "Summary Page"
         }
       },
-      "required": [
-        "noResultsPage",
-        "resultsPage",
-        "summaryPage"
-      ],
       "type": "object"
     },
     "IProgressBarConfigCore": {
@@ -687,6 +692,9 @@ export const survey = {
         "config": {
           "$ref": "#/definitions/IQuestionableConfigCore"
         },
+        "form": {
+          "$ref": "#/definitions/IFormCore"
+        },
         "header": {
           "type": "string"
         },
@@ -716,6 +724,7 @@ export const survey = {
         "actions",
         "branches",
         "config",
+        "form",
         "header",
         "pages",
         "questions",

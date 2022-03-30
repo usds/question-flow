@@ -7,7 +7,7 @@ import { IRefCore }               from '../survey/IRefCore';
 import { getDateTime }            from '../util/date';
 import { ACTION_TYPE }            from '../util/enums';
 import { TDateOfBirthCore }       from '../util/types';
-import { StepsCore }              from './StepsCore';
+import { StepsCore }              from './HelpersStepsCore';
 
 /**
  * Static utility methods for question components

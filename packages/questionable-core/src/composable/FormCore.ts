@@ -1,12 +1,9 @@
-import { IFormCore }         from '../survey/IFormCore';
-import { IQuestionCore }     from '../survey/IStepCore';
-import { QuestionnaireCore } from './QuestionnaireCore';
-import { TAgeCore }          from '../util/types';
-
-export interface IFormConstructorCore {
-  form?: Partial<IFormCore>;
-  questionnaire?: QuestionnaireCore;
-}
+import { merge }         from 'lodash';
+import { eventedCore }   from '../state';
+import { IFormCore }     from '../survey/IFormCore';
+import { IQuestionCore } from '../survey/IStepCore';
+import { TAgeCore }      from '../util/types';
+import { ACTION_TYPE }   from '../util/enums';
 
 export class FormCore implements IFormCore {
   public readonly started: Date;
@@ -24,17 +21,53 @@ export class FormCore implements IFormCore {
   public set finish(date: Date | undefined) {
     if (date) {
       this.#finished = date;
+      eventedCore.publish({ event: this, type: 'finish' });
     }
   }
 
   public responses: IQuestionCore[] = [];
 
-  constructor(data: IFormConstructorCore = { form: {} }) {
-    const { form, questionnaire } = data;
-    Object.assign(this, form);
+  constructor(data: Partial<IFormCore> = {}) {
+    Object.assign(this, data);
     this.started = new Date();
-    if (questionnaire?.config.events.onInit) {
-      questionnaire.config.events.onInit(this);
-    }
+    eventedCore.publish({ event: this, type: 'start' });
   }
 }
+
+/**
+ * Merges the form's answer state as the user progresses through the survey
+ * @param previousState
+ * @param action
+ * @returns
+ */
+export const stepReducer = (
+  previousState: IFormCore,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  action: { type: ACTION_TYPE; value: any },
+): IFormCore => {
+  // Action should never be null,
+  // except when we attempt to storybook/test individual components in isolation
+  switch (action?.type) {
+    case ACTION_TYPE.RESET:
+      return new FormCore();
+
+    case ACTION_TYPE.UPDATE:
+      return merge(
+        {
+          ...previousState,
+        },
+        {
+          ...action.value,
+        },
+      );
+
+    // Effectively a noop that triggers a re-render of the page
+    case ACTION_TYPE.RERENDER:
+      return ({
+        ...previousState,
+      });
+
+    default:
+      return previousState;
+  }
+};
