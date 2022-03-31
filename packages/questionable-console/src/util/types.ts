@@ -1,6 +1,12 @@
 import { IStepCore } from '@usds.gov/questionable-core';
 
-export type TVal = { answer: any, name: string, short?: string, value?: string };
+export type TVal = {
+  answer: string | number | boolean | string[],
+  name: string,
+  short?: string,
+  value?: string
+};
+export type TTypeVal = TVal | string[];
 export type TChoice = { answer: string, key: string, name: string }
 export type TChoices = string[] | TChoice[] | number[];
 export type TAnswerType = {
@@ -24,9 +30,9 @@ export type TAnswerType = {
   validate?: TBoolFn,
   values?: string[] | TChoice[]
 };
-export type TOnAnswer = (answer: TVal, step: IStepCore, ...params: unknown[]) => void;
-export type TOnDisplay = (step: IStepCore, ...params: unknown[]) => void;
-export type TValidateFn = (answer: TVal, step: IStepCore, ...params: unknown[]) => boolean;
+export type TOnAnswer = (answer: TVal, step: IStepCore, ...params: unknown[]) => Promise<void>;
+export type TOnDisplay = (step: IStepCore, ...params: unknown[]) => Promise<void>;
+export type TValidateFn = (answer: TVal, step: IStepCore, ...params: unknown[]) => Promise<boolean>;
 export type TStringFn = (...params: unknown[]) => string;
 export type TBoolFn = (...params: unknown[]) => boolean;
 export type TNumberFn = (...params: unknown[]) => number;

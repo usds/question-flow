@@ -13,7 +13,7 @@ import {
 const header                  = 'Project bootstrapping';
 const branches: IBranchCore[] = [];
 
-export const walkthroughFlow: Partial<IQuestionnaire> = {
+export const walkthroughFlow = {
   actions,
   branches,
   config: new QuestionableConfigCore(),
@@ -22,4 +22,5 @@ export const walkthroughFlow: Partial<IQuestionnaire> = {
   questions,
   results,
   sections,
-};
+  steps:  [],
+} as unknown as IQuestionnaire;

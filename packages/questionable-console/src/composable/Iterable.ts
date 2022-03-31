@@ -1,24 +1,23 @@
 import {
-  FormCore,
-  IQuestionDataCore,
-  IStepCore,
   QuestionableConfigCore,
   QuestionsCore,
   stepReducer,
   StepsCore,
+  IQuestionDataCore,
 } from '@usds.gov/questionable-core';
 import {
   Answers, DistinctQuestion, prompt, registerPrompt,
 } from 'inquirer';
-import BottomBar               from 'inquirer/lib/ui/bottom-bar';
 import PromptUI                from 'inquirer/lib/ui/prompt';
 import { merge }               from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import { IQuestion, IStep }    from '../survey/IStep';
+import { getAnswer }           from '../util/helper';
 import { error, log, white }   from '../util/logger';
 import { TVal }                from '../util/types';
 import { PromptFactory }       from './PromptFactory';
+import { Question }            from './Question';
 import { Questionnaire }       from './Questionnaire';
+import { Step }                from './Step';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 registerPrompt('date', require('inquirer-date-prompt'));
@@ -26,13 +25,15 @@ registerPrompt('date', require('inquirer-date-prompt'));
 registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
 
 export class Iterable {
-  protected current: IQuestion;
+  protected current: Question;
 
   protected started = false;
 
   protected observable = new Subject<DistinctQuestion<Answers>>();
 
-  protected form = new FormCore();
+  protected get form() {
+    return this.questionnaire.form;
+  }
 
   protected process: Observable<TVal>;
 
@@ -44,8 +45,6 @@ export class Iterable {
 
   protected questionnaire: Questionnaire;
 
-  protected bottomBar!: BottomBar;
-
   constructor(
     questionnaire: Questionnaire,
     config: QuestionableConfigCore = new QuestionableConfigCore(),
@@ -55,10 +54,9 @@ export class Iterable {
     this.prompt        = prompt(this.observable);
     this.process       = this.prompt.ui.process;
     [this.current]     = this.questionnaire.questions;
-    this.makeProgressBar();
   }
 
-  makePage(step: IStepCore) {
+  makePage(step: Step) {
     this.observable.next({
       message: step.title,
       name:    step.id,
@@ -67,7 +65,7 @@ export class Iterable {
     });
   }
 
-  makeQuestion(question: IQuestion) {
+  makeQuestion(question: Question) {
     const mould = PromptFactory(question);
     const prmpt = merge(mould, {
       default:  question.default,
@@ -79,12 +77,12 @@ export class Iterable {
     this.observable.next(prmpt);
   }
 
-  makeStep(step: IStep) {
+  makeStep(step: Step) {
     if (step.onDisplay) {
       step.onDisplay(step);
     }
     if (StepsCore.getStepType(step) === 'question') {
-      const nextQuestion = step as IQuestion;
+      const nextQuestion = step as Question;
       this.makeQuestion(nextQuestion);
       this.current = nextQuestion;
     } else {
@@ -92,14 +90,14 @@ export class Iterable {
     }
   }
 
-  next(val: TVal): IQuestion | undefined {
+  next(val: TVal): Question | undefined {
     try {
       if (!this.current) {
         this.current = this.questionnaire.getFirstStep();
         return this.next({ answer: val.answer, name: this.current.id });
       }
       if (val.name) {
-        this.current = this.questionnaire.getStepById(val.name) as IQuestion;
+        this.current = this.questionnaire.getStepById(val.name) as Question;
       }
       const progress = this.questionnaire.getProgressPercent(this.props(this.current));
       if (progress === 100 || this.questionnaire.isComplete(this.current.id)) {
@@ -116,15 +114,15 @@ export class Iterable {
       } else {
         this.makeStep(this.current);
       }
-      log(`${this.questionnaire.getProgressPercent(this.props(this.current))}%`);
+      log(`${this.questionnaire.getProgressPercent(this.current)}%`);
       return this.current;
     } catch (e) {
-      this.bottomBar.log.write(e);
+      error(e);
     }
     return undefined;
   }
 
-  props(question: IQuestion = this.current): IQuestionDataCore {
+  props(question: Question = this.current): IQuestionDataCore {
     return ({
       dispatchForm: stepReducer,
       form:         this.form,
@@ -153,54 +151,14 @@ export class Iterable {
     this.started = true;
   }
 
-  validate(a: TVal, question: IQuestion) {
-    let isValid = true;
-    function getAnswer() {
-      function isString(val: unknown) {
-        return (val instanceof String || typeof val === 'string');
-      }
-      if (isString(a.answer)) {
-        return a.answer;
-      }
-      if (isString(a.value)) {
-        return a.value;
-      }
-      if (isString(a)) {
-        return a;
-      }
-      if (isString(a.short)) {
-        return a.short;
-      }
-      error(`Could not determine value of answer ${a}`);
-      return `${a}`;
-    }
+  validate(a: TVal, question: Question) {
+    let isValid  = true;
+    const answer = getAnswer(a);
     if (question.validate && !question.validate(a, question)) {
       isValid = false;
     }
-    QuestionsCore.updateForm(getAnswer(), this.props(question), this.config);
+    QuestionsCore.updateForm(answer, this.props(question), this.config);
     isValid = isValid && StepsCore.isNextEnabled(this.props(question));
     return isValid;
-  }
-
-  private makeProgressBar(spinnerText = 'Working') {
-    const loader   = [
-      `/ ${spinnerText}`,
-      `| ${spinnerText}`,
-      `\\ ${spinnerText}`,
-      `- ${spinnerText}`,
-    ];
-    let i          = loader.length - 4;  // 0;
-    this.bottomBar = new BottomBar();
-    // this.bottomBar = new BottomBar({ bottomBar: `\r\n${loader[i]}` });
-
-    setInterval(() => {
-      // this.bottomBar.updateBottomBar('');
-      // this.bottomBar.updateBottomBar(`\r\n${loader[i]}`);
-      if (i >= 3) {
-        i = 0;
-      } else {
-        i += 1;
-      }
-    }, 300);
   }
 }
