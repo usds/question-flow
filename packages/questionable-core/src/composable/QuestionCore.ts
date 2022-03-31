@@ -17,7 +17,7 @@ import {
 import { stepReducer }         from './FormCore';
 import { StepCore, TStepCtor } from './StepCore';
 
-type ctor = TStepCtor & Partial<IQuestionCore>;
+export type TQuestionCoreCtor = TStepCtor & Partial<IQuestionCore>;
 
 export class QuestionCore extends StepCore implements IQuestionCore {
   type: QUESTION_TYPE;
@@ -28,7 +28,7 @@ export class QuestionCore extends StepCore implements IQuestionCore {
 
   section: Partial<ISectionCore> = {};
 
-  constructor(data: ctor) {
+  constructor(data: TQuestionCoreCtor) {
     super(data);
     merge(this, data);
     this.type = data.type;

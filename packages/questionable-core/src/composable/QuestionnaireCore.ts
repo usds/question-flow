@@ -9,7 +9,6 @@ import {
 } from 'lodash';
 import { IActionCore }            from '../survey/IActionCore';
 import { IBranchCore }            from '../survey/IBranchCore';
-import { IFormCore }              from '../survey/IFormCore';
 import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
 import { IResultCore }            from '../survey/IResultCore';
 import { IStepDataCore }          from '../survey/IStepDataCore';
@@ -28,10 +27,10 @@ import {
   STEP_TYPE,
 } from '../util/enums';
 import {
-  IPageCore,
   IRequirementCore,
   IResponseCore,
   ISectionCore,
+  IStepCore,
 } from '../survey/IStepCore';
 import { IPageConfigCore } from '../survey';
 import { BaseCore }        from './BaseCore';
@@ -39,6 +38,7 @@ import { PageCore }        from './PageCore';
 import { PagesCore }       from './PagesCore';
 import { QuestionCore }    from './QuestionCore';
 import { StepCore }        from './StepCore';
+import { FormCore }        from './FormCore';
 
 type TPageSet = {
   config?: Partial<IPageConfigCore>;
@@ -48,8 +48,11 @@ type TPageSet = {
 export interface IQuestionableCore {
   questionnaire: QuestionnaireCore,
 }
-type TQuestionnaireCtor = Partial<IQuestionnaireCore> &
-  Pick<IQuestionnaireCore, 'questions' | 'form'>
+type TQuestionnaireCtor = Partial<IQuestionnaireCore> & {
+  form: FormCore,
+} & Pick<IQuestionnaireCore, 'questions'>;
+
+type TToTransmog = IStepDataCore | IStepCore | string | StepCore;
 
 /**
  * Utility wrapper for survey state
@@ -134,12 +137,12 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param id unique identifier of the question
    * @returns
    */
-  getPageById(id: string): IPageCore {
+  getPageById(id: string): PageCore {
     const ret = this.getStepById(id);
     if (!isEnum(PAGE_TYPE, ret.type)) {
       this.throw(`Step id: ${id} is not a page`);
     }
-    return ret as IPageCore;
+    return ret as PageCore;
   }
 
   /**
@@ -167,7 +170,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return ret as QuestionCore;
   }
 
-  // protected isValidExit(question: QuestionCore, form: IFormCore, skip = 0) {
+  // protected isValidExit(question: QuestionCore, form: FormCore, skip = 0) {
   //   let allowExit = true;
   //   if (skip === 0
   //     && direction === DIRECTION.FORWARD
@@ -183,16 +186,16 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  getStep(thisStep: string, form: IFormCore, direction: DIRECTION, skip = 0): string {
-    const nextStep =      this.flow.indexOf(thisStep) !== -1
-      ? this.flow[this.flow.indexOf(thisStep) + direction]
+  getStep(data: TToTransmog, form: FormCore, direction: DIRECTION, skip = 0): string {
+    const thisQuestion = this.transmogrify(data);
+    const nextStep     = this.flow.indexOf(thisQuestion.id) !== -1
+      ? this.flow[this.flow.indexOf(thisQuestion.id) + direction]
       : undefined;
     // If there are no more steps, stay on current
     if (!nextStep) {
-      return thisStep;
+      return thisQuestion.id;
     }
 
-    const thisQuestion = this.getStepById(thisStep);
     if (skip === 0
       && direction === DIRECTION.FORWARD
       && thisQuestion.exitRequirements
@@ -200,7 +203,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
       const allowExit = thisQuestion.exitRequirements.every((r) =>
         this.meetsAllRequirements(r, form));
       if (!allowExit) {
-        return thisStep;
+        return thisQuestion.id;
       }
     }
 
@@ -245,7 +248,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     if (n !== nextStep) {
       return n;
     }
-    return thisStep;
+    return thisQuestion.id;
   }
 
   /**
@@ -253,10 +256,10 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props step context
    * @returns step id
    */
-  getNextStep(props: IStepDataCore): string {
-    const thisStep = props.stepId as string;
+  getNextStep(props: TToTransmog): string {
+    const thisStep = this.transmogrify(props);
     const dir      = DIRECTION.FORWARD;
-    return this.getStep(thisStep, props.form, dir);
+    return this.getStep(thisStep, thisStep.form, dir);
   }
 
   /**
@@ -264,10 +267,10 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props step context
    * @returns step id
    */
-  getPreviousStep(props: IStepDataCore): string {
-    const thisStep = props.stepId as string;
+  getPreviousStep(props: TToTransmog): string {
+    const thisStep = this.transmogrify(props);
     const dir      = DIRECTION.BACKWARD;
-    return this.getStep(thisStep, props.form, dir);
+    return this.getStep(thisStep, thisStep.form, dir);
   }
 
   /**
@@ -275,9 +278,8 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns
    */
-  getProgressPercent(props: IStepDataCore): number {
-    const stepId = `${props.stepId}`;
-    const step   = this.getStepById(stepId);
+  getProgressPercent(props: TToTransmog): number {
+    const step = this.transmogrify(props);
     if (matches(step.type, PAGE_TYPE.LANDING)) {
       // Landing page exists before progress starts
       // less than 0% progress can be interpretted as 'do not display'
@@ -304,7 +306,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     if (lastStep <= 0) {
       return 0.1;
     }
-    const thisStepIdx = answerable.indexOf(stepId) + 1;
+    const thisStepIdx = answerable.indexOf(step.id) + 1;
     // add 2 to account for the summary and result steps
     let lastStepIdx = lastStep + 2;
     if (this.config.mode === MODE.EDIT) {
@@ -322,9 +324,8 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns string[]
    */
-  getAllAnswerableQuestions(props: IStepDataCore): string[] {
-    const stepId = `${props.stepId}`;
-    const step   = this.getStepById(stepId);
+  getAllAnswerableQuestions(data: TToTransmog): string[] {
+    const step = this.transmogrify(data);
     if (!isEnum(QUESTION_TYPE, step.type)) {
       return [];
     }
@@ -341,7 +342,8 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param step
    * @returns string[]
    */
-  protected getBranchQuestions(step: QuestionCore): string[] {
+  protected getBranchQuestions(data: TToTransmog): string[] {
+    const step     = this.transmogrify(data);
     const question = step as QuestionCore;
 
     if (question.branch) {
@@ -376,14 +378,15 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns
    */
-  getAnswerableQuestions(props: IStepDataCore): string[] {
+  getAnswerableQuestions(data: TToTransmog): string[] {
+    const step = this.transmogrify(data);
     return this.questions
       .filter(
         (q) =>
           !q.entryRequirements
           || q.entryRequirements.length === 0
           || q.entryRequirements.some((r) =>
-            this.meetsAllRequirements(r, props.form, true)),
+            this.meetsAllRequirements(r, step.form, true)),
       )
       .map((q) => q.id);
   }
@@ -393,20 +396,19 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns
    */
-  getSections(props: IStepDataCore): ISectionCore[] {
+  getSections(props: TToTransmog): ISectionCore[] {
     if (!props || !this.sections || this.sections.length === 0) {
       return [];
     }
 
-    const thisStep        = props.stepId as string;
-    const thisQuestion    = this.getStepById(thisStep);
+    const thisQuestion    = this.transmogrify(props);
     const thisQuestionIdx = this.steps.indexOf(thisQuestion);
 
     // Get all sections that meet the requirements based on current answers
     let sections = this.sections.filter(
       (s) =>
         s.requirements.length === 0
-        || s.requirements.some((r) => this.meetsAllRequirements(r, props.form)),
+        || s.requirements.some((r) => this.meetsAllRequirements(r, thisQuestion.form)),
     );
     if (this.config.mode === MODE.EDIT) {
       // In design mode, all sections are valid
@@ -439,7 +441,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param form
    * @returns
    */
-  getResults(form: IFormCore): IResultCore[] {
+  getResults(form: FormCore): IResultCore[] {
     return this.results.filter((r) =>
       r.requirements.some((match) => {
         if (this.meetsAllRequirements(match, form)) {
@@ -619,7 +621,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
 
   public meetsAllRequirements(
     requirement: IRequirementCore,
-    form: IFormCore,
+    form: FormCore,
     allowUnanswered = false,
   ) {
     const {
@@ -641,7 +643,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param minAge a TAge object or undefined
    * @returns true if no min age, else true if age is >= min age
    */
-  public static meetsMinAgeRequirements(form: IFormCore, minAge?: TAgeCore): boolean {
+  public static meetsMinAgeRequirements(form: FormCore, minAge?: TAgeCore): boolean {
     if (!minAge) return true;
 
     if (form.age === undefined) {
@@ -663,7 +665,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param maxAge a TAge object or undefined
    * @returns true if no max age, else true if age is <= max age
    */
-  public static meetsMaxAgeRequirements(form: IFormCore, maxAge?: TAgeCore): boolean {
+  public static meetsMaxAgeRequirements(form: FormCore, maxAge?: TAgeCore): boolean {
     if (!maxAge) return true;
     if (form.age === undefined) {
       return false;
@@ -685,7 +687,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @returns
    */
   protected static meetsAgeCalcRequirements(
-    form: IFormCore,
+    form: FormCore,
     ageCalc?: TAgeCalcCore,
   ): boolean {
     if (!ageCalc) return true;
@@ -764,5 +766,23 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
       // If no answers are defined, this passes
       return true;
     });
+  }
+
+  protected transmogrify(data: TToTransmog): StepCore {
+    if (data instanceof StepCore) {
+      return data;
+    }
+    if (data instanceof String || typeof data === 'string') {
+      return this.getStepById(`${data}`);
+    }
+    const sdc = data as unknown as IStepDataCore;
+    if (sdc && sdc?.stepId) {
+      return this.getStepById(`${sdc.stepId}`);
+    }
+    const sc = data as unknown as IStepCore;
+    if (sc && sc.id) {
+      return this.getStepById(sc.id);
+    }
+    return data as StepCore;
   }
 }

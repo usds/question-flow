@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { IFormCore } from '../survey/IFormCore';
 import { FormCore }  from './FormCore';
 

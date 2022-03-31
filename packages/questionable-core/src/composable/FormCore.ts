@@ -1,9 +1,10 @@
-import { merge }         from 'lodash';
-import { eventedCore }   from '../state';
-import { IFormCore }     from '../survey/IFormCore';
-import { IQuestionCore } from '../survey/IStepCore';
-import { TAgeCore }      from '../util/types';
-import { ACTION_TYPE }   from '../util/enums';
+/* eslint-disable import/no-cycle */
+import { merge }        from 'lodash';
+import { eventedCore }  from '../state';
+import { IFormCore }    from '../survey/IFormCore';
+import { TAgeCore }     from '../util/types';
+import { ACTION_TYPE }  from '../util/enums';
+import { QuestionCore } from './QuestionCore';
 
 export class FormCore implements IFormCore {
   public readonly started: Date;
@@ -25,7 +26,7 @@ export class FormCore implements IFormCore {
     }
   }
 
-  public responses: IQuestionCore[] = [];
+  public responses: QuestionCore[] = [];
 
   constructor(data: Partial<IFormCore> = {}) {
     Object.assign(this, data);

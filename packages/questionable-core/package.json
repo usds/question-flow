@@ -71,7 +71,7 @@
   "main": "dist/index.js",
   "name": "@usds.gov/questionable-core",
   "scripts": {
-    "build": "yarn lint && yarn build:tsc && yarn build:rollup && yarn build:schema",
+    "build": "yarn clean && yarn lint && yarn build:tsc && yarn build:rollup && yarn build:schema",
     "build:rollup": "rollup --config --environment NODE_ENV:production",
     "build:schema": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true && node ./parseSchema.js",
     "build:watch": "yarn build -w",
