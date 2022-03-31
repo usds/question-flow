@@ -3,9 +3,9 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-classes-per-file */
-import { ArrayUnique } from 'class-validator';
+import { ArrayUnique }       from 'class-validator';
 import {
-  groupBy, isEmpty,
+  groupBy, isEmpty, merge,
 } from 'lodash';
 import { IActionCore }            from '../survey/IActionCore';
 import { IBranchCore }            from '../survey/IBranchCore';
@@ -84,6 +84,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
 
   constructor(data: TQuestionnaireCtor) {
     super(data.form);
+    merge(this, data);
 
     if (data.pages) {
       this.pages = new PagesCore(data.pages, this);
@@ -503,9 +504,9 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     if (this.questions?.length <= 0) {
       this.throw('No questions have been defined.');
     }
-    if (this.header?.length <= 0) {
-      this.throw('No header has been defined.');
-    }
+    // if (this.header?.length <= 0) {
+    //   this.throw('No header has been defined.');
+    // }
     if (this.results?.length <= 0) {
       this.throw('No results have been defined.');
     }
