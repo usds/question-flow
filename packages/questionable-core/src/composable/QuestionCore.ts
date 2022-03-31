@@ -15,6 +15,7 @@ import {
   TDateOfBirthCore,
 } from '../util';
 import { stepReducer }         from './FormCore';
+import { QuestionnaireCore }   from './QuestionnaireCore';
 import { StepCore, TStepCtor } from './StepCore';
 
 export type TQuestionCoreCtor = TStepCtor & Partial<IQuestionCore>;
@@ -28,8 +29,8 @@ export class QuestionCore extends StepCore implements IQuestionCore {
 
   section: Partial<ISectionCore> = {};
 
-  constructor(data: TQuestionCoreCtor) {
-    super(data);
+  constructor(data: TQuestionCoreCtor, questionnaire: QuestionnaireCore) {
+    super(data, questionnaire);
     merge(this, data);
     this.type = data.type;
     this.id   = data.id;

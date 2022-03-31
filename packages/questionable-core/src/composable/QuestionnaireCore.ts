@@ -83,15 +83,15 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
   protected steps: StepCore[] = [];
 
   constructor(data: TQuestionnaireCtor) {
-    super(data);
+    super(data.form);
 
-    this.pages = new PagesCore(data.pages);
-
+    if (data.pages) {
+      this.pages = new PagesCore(data.pages, this);
+    }
     this.questions = data.questions.map((q, i) => new QuestionCore({
-      order:         i,
+      order: i,
       ...q,
-      questionnaire: this,
-    }));
+    }, this));
     // Create a new collection for our flow logic
     this.steps = this.questions.map((q) => q as StepCore);
 

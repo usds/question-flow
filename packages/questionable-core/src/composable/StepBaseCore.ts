@@ -3,8 +3,8 @@ import { BaseCore }          from './BaseCore';
 import { QuestionnaireCore } from './QuestionnaireCore';
 
 export class StepBaseCore extends BaseCore {
-  constructor({ questionnaire }: { questionnaire: QuestionnaireCore}) {
-    super({ form: questionnaire.form });
+  constructor(questionnaire: QuestionnaireCore) {
+    super(questionnaire.form);
     this.questionnaire = questionnaire;
   }
 

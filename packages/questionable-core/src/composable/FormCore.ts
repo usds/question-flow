@@ -29,7 +29,7 @@ export class FormCore implements IFormCore {
   public responses: QuestionCore[] = [];
 
   constructor(data: Partial<IFormCore> = {}) {
-    Object.assign(this, data);
+    merge(this, data);
     this.started = new Date();
     eventedCore.publish({ event: this, type: 'start' });
   }

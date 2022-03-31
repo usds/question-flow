@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-constructor */
 /* eslint-disable import/no-cycle */
 /* eslint-disable max-classes-per-file */
 import {
@@ -25,13 +26,11 @@ import { QuestionnaireCore } from './QuestionnaireCore';
 import { StepBaseCore }      from './StepBaseCore';
 
 export type TStepCtor = Partial<IStepCore> &
-  Pick<IStepCore, 'type' | 'id'> & {
-    questionnaire: QuestionnaireCore,
-  };
+  Pick<IStepCore, 'type' | 'id'>;
 
 export class StepCore extends StepBaseCore implements IStepCore {
-  constructor(data: TStepCtor) {
-    super(data);
+  constructor(data: TStepCtor, questionnaire: QuestionnaireCore) {
+    super(questionnaire);
     merge(this, data);
   }
 
