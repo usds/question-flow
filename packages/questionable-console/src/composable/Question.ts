@@ -23,7 +23,7 @@ export class Question extends QuestionCore implements Step, IQuestion {
     this.type = data.type;
   }
 
-  answers: IAnswer[] = [];
+  answers!: IAnswer[];
 
   componentType?: 'date' | 'path' | undefined;
 
