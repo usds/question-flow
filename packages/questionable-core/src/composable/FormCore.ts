@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
 import { merge }        from 'lodash';
-import { eventedCore }  from '../state';
+import { eventedCore }  from '../state/pubsub';
 import { IFormCore }    from '../survey/IFormCore';
 import { TAgeCore }     from '../util/types';
 import { ACTION_TYPE }  from '../util/enums';
-import { QuestionCore } from './QuestionCore';
+import { QuestionCore } from './StepCore';
 import {
   checkInstanceOf,
   getClassName,

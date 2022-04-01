@@ -3,18 +3,33 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-classes-per-file */
-import { ArrayUnique }       from 'class-validator';
+import { ArrayUnique } from 'class-validator';
 import {
-  groupBy, isEmpty, merge,
+  groupBy,
+  isEmpty,
+  merge,
 } from 'lodash';
-import { ActionCore }             from './ActionCore';
-import { BranchCore }             from './BranchCore';
-import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
-import { log, toggleOut }         from '../util/logger';
+import { ActionCore } from './ActionCore';
+import {
+  BranchCore,
+  QuestionCore,
+  RequirementCore,
+  ResponseCore,
+  SectionCore,
+  StepCore,
+}         from './StepCore';
+import { IQuestionnaireCore } from '../survey/IQuestionnaireCore';
+import {
+  log,
+  toggleOut,
+} from '../util/logger';
 import { matches }                from '../util/helpers';
 import { QuestionableConfigCore } from './QuestionableConfigCore';
-import { TAgeCore, TAgeCalcCore } from '../util/types';
-import { getNextLabel }           from '../util/labels';
+import {
+  TAgeCore,
+  TAgeCalcCore,
+} from '../util/types';
+import { getNextLabel } from '../util/labels';
 import {
   ACTION,
   DIRECTION,
@@ -25,20 +40,18 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../util/enums';
-import { IPageConfigCore }                              from '../survey';
-import { BaseCore }                                     from './BaseCore';
-import { PageCore }                                     from './PageCore';
-import { PagesCore }                                    from './PagesCore';
-import { QuestionCore }                                 from './QuestionCore';
-import { StepCore }                                     from './StepCore';
-import { FormCore }                                     from './FormCore';
+import { IPageConfigCore } from '../survey/IQuestionableConfigCore';
+import { BaseCore }        from './BaseCore';
+import { PageCore }        from './PageCore';
+import { PagesCore }       from './PagesCore';
+import { FormCore }        from './FormCore';
 import {
-  checkInstanceOf, getClassName, PREFIX, TInstanceOf,
+  checkInstanceOf,
+  getClassName,
+  PREFIX,
+  TInstanceOf,
 } from '../util/instanceOf';
-import { ResultCore }      from './ResultCore';
-import { SectionCore }     from './SectionCore';
-import { RequirementCore } from './RequirementCore';
-import { ResponseCore }    from './ResponseCore';
+import { ResultCore } from './ResultCore';
 
 type TPageSet = {
   config?: Partial<IPageConfigCore>;

@@ -10,7 +10,7 @@ import {
 import { ActionCore }        from './ActionCore';
 import { ComposableCore }    from './ComposableCore';
 import { QuestionnaireCore } from './QuestionnaireCore';
-import { RequirementCore }   from './RequirementCore';
+import { RequirementCore }   from './StepCore';
 
 const resultDefaults = {
   action:       {},

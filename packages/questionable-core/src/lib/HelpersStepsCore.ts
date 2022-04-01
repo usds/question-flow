@@ -1,10 +1,14 @@
-import { kebabCase, values }                                from 'lodash';
-import { FormCore, StepCore }                               from '../composable';
-import { noop }                                             from '../util/noop';
+import { kebabCase, values }      from 'lodash';
+import { StepCore, QuestionCore } from '../composable/StepCore';
+import { FormCore }               from '../composable/FormCore';
+import { noop }                   from '../util/noop';
 import {
-  DIRECTION, isEnum, PAGE_TYPE, QUESTION_TYPE, STEP_TYPE,
+  DIRECTION,
+  isEnum,
+  PAGE_TYPE,
+  QUESTION_TYPE,
+  STEP_TYPE,
 } from '../util/enums';
-import { QuestionDataCore, StepDataCore } from '../composable/DataCore';
 
 export abstract class StepsCore {
   public static goToStep(step: StepCore, cb = noop): void {
@@ -38,25 +42,25 @@ export abstract class StepsCore {
    * @param props
    * @returns
    */
-  public static isNextEnabled(props: StepDataCore): boolean {
-    if (!props?.step) {
+  public static isNextEnabled(step: StepCore): boolean {
+    if (!step) {
       throw new Error('This survery is not defined');
     }
-    if (props.stepId === STEP_TYPE.LANDING) {
+    if (step.type === STEP_TYPE.LANDING) {
       return true;
     }
-    if (props.stepId === STEP_TYPE.SUMMARY) {
+    if (step.type === STEP_TYPE.SUMMARY) {
       return true;
     }
     // KLUDGE Alert: this is not an elegant way to solve this
-    if (props.step?.type === QUESTION_TYPE.DOB) {
-      const yearsOld = props.form.age?.years || 0;
+    if (step?.type === QUESTION_TYPE.DOB) {
+      const yearsOld = step.form.age?.years || 0;
       return yearsOld > 0;
     }
-    if (!props.form) {
+    if (!step.form) {
       return false;
     }
-    return StepsCore.isValid(props.form, props.step?.id);
+    return StepsCore.isValid(step.form, step?.id);
   }
 
   public static isValid(form: FormCore, questionId: string): boolean {
@@ -92,12 +96,12 @@ export abstract class StepsCore {
     return ret;
   }
 
-  public static getFieldSetName(props: QuestionDataCore): string {
-    return kebabCase(props.step.title);
+  public static getFieldSetName(step: QuestionCore): string {
+    return kebabCase(step.title);
   }
 
-  public static getDomId(answer: string, props: QuestionDataCore): string {
-    const name = StepsCore.getFieldSetName(props);
+  public static getDomId(answer: string, step: QuestionCore): string {
+    const name = StepsCore.getFieldSetName(step);
     return `${name}-${kebabCase(answer)}`;
   }
 

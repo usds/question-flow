@@ -2,7 +2,7 @@
 /* eslint-disable no-restricted-syntax */
 import { merge }                           from 'lodash';
 import { IPagesCore }                      from '../survey/IPagesCore';
-import { PAGE_TYPE }                       from '../util';
+import { PAGE_TYPE }                       from '../util/enums';
 import {
   checkInstanceOf, getClassName, PREFIX,
 } from '../util/instanceOf';

@@ -1,12 +1,11 @@
-import { merge }   from 'lodash';
+import { merge }                    from 'lodash';
+import { IPageCore, IQuestionCore } from '../survey/IStepCore';
 import {
   isEnum,
   PAGE_TYPE,
   QUESTION_TYPE,
 } from '../util/enums';
-import { IPageDataCore }     from '../survey/IPageDataCore';
-import { IQuestionDataCore } from '../survey/IQuestionDataCore';
-import { survey }            from './survey';
+import { survey } from './survey';
 
 const schemaPart = {
   properties: {
@@ -26,11 +25,11 @@ const schemaFull: any = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getStepSchema = (props: IQuestionDataCore | IPageDataCore): any => {
+export const getStepSchema = (step: IQuestionCore | IPageCore): any => {
   const schemaProps = { ...schemaPart };
-  if (isEnum(PAGE_TYPE, props.step.type)) {
+  if (isEnum(PAGE_TYPE, step.type)) {
     schemaProps.properties.step.$ref = '#/definitions/IPageCore';
-  } else if (isEnum(QUESTION_TYPE, props.step.type)) {
+  } else if (isEnum(QUESTION_TYPE, step.type)) {
     schemaProps.properties.step.$ref = '#/definitions/IQuestionCore';
   }
   return merge(schemaProps, schemaFull);

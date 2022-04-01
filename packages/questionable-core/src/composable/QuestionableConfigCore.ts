@@ -9,8 +9,10 @@ import { EventEmitterCore } from './EventEmitterCore';
 import {
   isEnum,
   MODE,
+} from '../util/enums';
+import {
   TStringDictionaryCore,
-} from '../util';
+} from '../util/types';
 import {
   INavigationConfigCore,
   IPagesConfigCore,

@@ -1,12 +1,8 @@
-import {
-  FormCore,
-  QuestionCore,
-  ResponseCore,
-  ResultCore,
-  StepCore,
-} from '../composable';
-import { DIRECTION }             from '../util/enums';
-import { TStringDictionaryCore } from '../util/types';
+import { DIRECTION }                               from '../util/enums';
+import { TStringDictionaryCore }                   from '../util/types';
+import { IFormCore }                               from './IFormCore';
+import { IResultCore }                             from './IResultCore';
+import { IQuestionCore, IResponseCore, IStepCore } from './IStepCore';
 
 /**
  * Event data structure to be sent with event callbacks
@@ -17,7 +13,7 @@ export type TPageDataCore = {
   /**
    * @hidden
    */
-  step: StepCore
+  step: IStepCore
 }
 /**
  * Event data structure to be sent with event callbacks
@@ -25,11 +21,11 @@ export type TPageDataCore = {
  */
 export type TAnswerDataCore = {
   answer: string;
-  responses: ResponseCore[] | QuestionCore[];
+  responses: IResponseCore[] | IQuestionCore[];
   /**
    * @hidden
    */
-  step: QuestionCore
+  step: IQuestionCore
 }
 
 /**
@@ -37,8 +33,8 @@ export type TAnswerDataCore = {
  * @title Event Result Type
  */
 export type TResultDataCore = {
-  results: ResultCore[];
-  step: StepCore;
+  results: IResultCore[];
+  step: IStepCore;
 }
 
 /**
@@ -58,7 +54,7 @@ export type TGateDataCore = {
  * Generic data input for event context
  */
 export type TEventCore = TPageDataCore
-  | TAnswerDataCore | TResultDataCore | FormCore | TGateDataCore;
+  | TAnswerDataCore | TResultDataCore | IFormCore | TGateDataCore;
 
 /**
  * Event function type to be used as a callback

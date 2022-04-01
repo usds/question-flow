@@ -1,7 +1,6 @@
 import { merge }            from 'lodash';
 import { DateTime }         from 'luxon';
-import { QuestionDataCore } from '../composable/DataCore';
-import { QuestionCore }     from '../composable/QuestionCore';
+import { QuestionCore }     from '../composable/StepCore';
 import { RefCore }          from '../composable/RefCore';
 import { getDateTime }      from '../util/date';
 import { ACTION_TYPE }      from '../util/enums';
@@ -51,18 +50,18 @@ export abstract class QuestionsCore {
    */
   protected static isSelected(
     answer: string,
-    props: QuestionDataCore,
+    step: QuestionCore,
   ): boolean | undefined {
-    if (!props?.form) {
+    if (!step?.form) {
       return undefined;
     }
-    const q: QuestionCore | undefined = props.form.responses.find(
-      (a: QuestionCore) => a.id === props.step.id,
+    const q: QuestionCore | undefined = step.form.responses.find(
+      (a: QuestionCore) => a.id === step.id,
     );
     if (!q) {
       return undefined;
     }
-    return StepsCore.isValid(props.form, props.step.id) && q.answer === answer;
+    return StepsCore.isValid(step.form, step.id) && q.answer === answer;
   }
 
   protected static getString(ref: Partial<RefCore> = {}): string {
@@ -77,12 +76,12 @@ export abstract class QuestionsCore {
    * @param props
    * @returns
    */
-  public static getBirthdate(props: QuestionDataCore): DateTime | undefined {
-    if (props.step?.answer) {
-      return getDateTime(props.step.answer);
+  public static getBirthdate(step: QuestionCore): DateTime | undefined {
+    if (step?.answer) {
+      return getDateTime(step.answer);
     }
-    if (props.form?.birthdate) {
-      return getDateTime(props.form.birthdate);
+    if (step.form?.birthdate) {
+      return getDateTime(step.form.birthdate);
     }
     return undefined;
   }

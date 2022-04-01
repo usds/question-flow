@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { merge, noop }  from 'lodash';
 import { catchError }   from '../util/error';
-import { error as log } from '../util';
+import { error as log } from '../util/logger';
 import {
   IEventCore,
   TAnswerDataCore,
@@ -12,9 +12,12 @@ import {
   TPageDataCore,
   TResultDataCore,
 } from '../survey/IEventCore';
-import { BaseCore }                                     from './BaseCore';
+import { BaseCore } from './BaseCore';
 import {
-  checkInstanceOf, getClassName, PREFIX, TInstanceOf,
+  checkInstanceOf,
+  getClassName,
+  PREFIX,
+  TInstanceOf,
 } from '../util/instanceOf';
 import { FormCore } from './FormCore';
 
