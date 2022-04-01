@@ -7,15 +7,14 @@ import { ArrayUnique }       from 'class-validator';
 import {
   groupBy, isEmpty, merge,
 } from 'lodash';
-import { IActionCore }            from '../survey/IActionCore';
-import { IBranchCore }            from '../survey/IBranchCore';
+import { ActionCore }             from './ActionCore';
+import { BranchCore }             from './BranchCore';
 import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
-import { IResultCore }            from '../survey/IResultCore';
-import { IStepDataCore }          from '../survey/IStepDataCore';
-import { log }                    from '../util/log';
+import { log, toggleOut }         from '../util/logger';
 import { matches }                from '../util/helpers';
 import { QuestionableConfigCore } from './QuestionableConfigCore';
 import { TAgeCore, TAgeCalcCore } from '../util/types';
+import { getNextLabel }           from '../util/labels';
 import {
   ACTION,
   DIRECTION,
@@ -26,19 +25,20 @@ import {
   QUESTION_TYPE,
   STEP_TYPE,
 } from '../util/enums';
+import { IPageConfigCore }                              from '../survey';
+import { BaseCore }                                     from './BaseCore';
+import { PageCore }                                     from './PageCore';
+import { PagesCore }                                    from './PagesCore';
+import { QuestionCore }                                 from './QuestionCore';
+import { StepCore }                                     from './StepCore';
+import { FormCore }                                     from './FormCore';
 import {
-  IRequirementCore,
-  IResponseCore,
-  ISectionCore,
-  IStepCore,
-} from '../survey/IStepCore';
-import { IPageConfigCore } from '../survey';
-import { BaseCore }        from './BaseCore';
-import { PageCore }        from './PageCore';
-import { PagesCore }       from './PagesCore';
-import { QuestionCore }    from './QuestionCore';
-import { StepCore }        from './StepCore';
-import { FormCore }        from './FormCore';
+  checkInstanceOf, getClassName, PREFIX, TInstanceOf,
+} from '../util/instanceOf';
+import { ResultCore }      from './ResultCore';
+import { SectionCore }     from './SectionCore';
+import { RequirementCore } from './RequirementCore';
+import { ResponseCore }    from './ResponseCore';
 
 type TPageSet = {
   config?: Partial<IPageConfigCore>;
@@ -48,58 +48,98 @@ type TPageSet = {
 export interface IQuestionableCore {
   questionnaire: QuestionnaireCore,
 }
-type TQuestionnaireCtor = Partial<IQuestionnaireCore> & {
-  form: FormCore,
-} & Pick<IQuestionnaireCore, 'questions'>;
+type TQuestionnaireCtor = Partial<IQuestionnaireCore>
+  & Pick<IQuestionnaireCore, 'questions'>;
 
-type TToTransmog = IStepDataCore | IStepCore | string | StepCore;
+const defaults = {
+  actions:   [],
+  branches:  [],
+  config:    {},
+  flow:      [],
+  header:    'Questionnaire',
+  questions: [],
+  results:   [],
+  sections:  [],
+  steps:     [],
+  type:      'questionnaire',
+};
 
 /**
  * Utility wrapper for survey state
  */
 export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
-  @ArrayUnique((action: IActionCore) => action.id)
-  public actions: IActionCore[] = [];
+  protected static override _name = getClassName(PREFIX.QUESTIONNAIRE);
 
-  public branches: IBranchCore[] = [];
+  protected override instanceOfCheck: TInstanceOf = QuestionnaireCore._name;
 
-  public config: QuestionableConfigCore = new QuestionableConfigCore();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static override[Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([QuestionnaireCore._name, BaseCore._name], obj);
+  }
 
-  public flow: string[] = [];
+  @ArrayUnique((action: ActionCore) => action.id)
+  public actions!: ActionCore[];
 
-  public header = '';
+  public branches!: BranchCore[];
 
-  @ArrayUnique((result: IResultCore) => result.label)
-  public results: IResultCore[] = [];
+  public config!: QuestionableConfigCore;
+
+  public flow: string[];
+
+  public header!: string;
+
+  @ArrayUnique((result: ResultCore) => result.label)
+  public results!: ResultCore[];
 
   public pages!: PagesCore;
 
   @ArrayUnique((question: QuestionCore) => question.id)
-  public questions: QuestionCore[] = [];
+  public questions: QuestionCore[];
 
-  @ArrayUnique((section: ISectionCore) => section.id)
-  public sections: ISectionCore[] = [];
+  @ArrayUnique((section: SectionCore) => section.id)
+  public sections!: SectionCore[];
 
-  protected steps: StepCore[] = [];
+  protected steps: StepCore[];
 
-  constructor(data: TQuestionnaireCtor) {
-    super(data.form);
+  constructor(data: TQuestionnaireCtor, form: FormCore = new FormCore()) {
+    super(form);
+    const config = merge({ ...defaults.config }, { ...data.config });
+    merge(this, defaults);
     merge(this, data);
 
+    this.config = new QuestionableConfigCore(config, form);
     if (data.pages) {
       this.pages = new PagesCore(data.pages, this);
     }
-    this.questions = data.questions.map((q, i) => new QuestionCore({
+    this.questions = data.questions?.map((q, i) => new QuestionCore({
+      label: getNextLabel(),
       order: i,
       ...q,
-    }, this));
+    }, this)) || [];
+    this.actions   = data.actions?.map((q, i) => new ActionCore({
+      order: i,
+      ...q,
+    }, this)) || [];
     // Create a new collection for our flow logic
-    this.steps = this.questions.map((q) => q as StepCore);
-
+    this.steps    = this.questions.map((q) => q) || [];
+    this.branches = data.branches?.map((b) => new BranchCore(b, this)) || [];
+    this.sections = data.sections?.map((s) => new SectionCore(s, this)) || [];
     this.init();
 
     // Wizard flow is defined as linear sequence of unique ids
     this.flow = this.steps.map((q) => q.id);
+  }
+
+  public enableLog() {
+    if (this.config.dev) {
+      // Fork for future enhancements to dev logging
+      QuestionnaireCore.enableLogging();
+    }
+    return QuestionnaireCore.enableLogging();
+  }
+
+  public static enableLogging() {
+    toggleOut('on');
   }
 
   /**
@@ -187,14 +227,14 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  getStep(data: TToTransmog, form: FormCore, direction: DIRECTION, skip = 0): string {
-    const thisQuestion = this.transmogrify(data);
-    const nextStep     = this.flow.indexOf(thisQuestion.id) !== -1
+  getStep(data: StepCore, form: FormCore, direction: DIRECTION, skip = 0): StepCore {
+    const thisQuestion = data;
+    const nextStepId   = this.flow.indexOf(thisQuestion.id) !== -1
       ? this.flow[this.flow.indexOf(thisQuestion.id) + direction]
       : undefined;
     // If there are no more steps, stay on current
-    if (!nextStep) {
-      return thisQuestion.id;
+    if (!nextStepId) {
+      return thisQuestion;
     }
 
     if (skip === 0
@@ -204,25 +244,25 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
       const allowExit = thisQuestion.exitRequirements.every((r) =>
         this.meetsAllRequirements(r, form));
       if (!allowExit) {
-        return thisQuestion.id;
+        return thisQuestion;
       }
     }
 
     if (this.config.mode === MODE.EDIT) {
-      return nextStep;
+      return this.getStepById(nextStepId);
     }
     // Special handling for results
     const hasResults = this.getResults(form).length > 0;
-    if (nextStep === STEP_TYPE.RESULTS && !hasResults) {
-      return STEP_TYPE.NO_RESULTS;
+    if (nextStepId === STEP_TYPE.RESULTS && !hasResults) {
+      return this.pages.noResultsPage;
     }
-    if (nextStep === STEP_TYPE.NO_RESULTS && hasResults) {
-      return STEP_TYPE.RESULTS;
+    if (nextStepId === STEP_TYPE.NO_RESULTS && hasResults) {
+      return this.pages.resultsPage;
     }
 
-    const nextQuestion = this.getStepById(nextStep);
+    const nextQuestion = this.getStepById(nextStepId);
     if (!nextQuestion?.entryRequirements) {
-      return nextStep;
+      return nextQuestion;
     }
 
     // match is a tri-state (undefined === unset)
@@ -242,14 +282,14 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
 
     // If the requested step meets all requirements, return it
     if (match) {
-      return nextStep;
+      return nextQuestion;
     }
     // Get the next step whose requirements are met
-    const n = this.getStep(nextStep, form, direction, skip + 1);
-    if (n !== nextStep) {
+    const n = this.getStep(nextQuestion, form, direction, skip + 1);
+    if (n !== nextQuestion) {
       return n;
     }
-    return thisQuestion.id;
+    return thisQuestion;
   }
 
   /**
@@ -257,10 +297,9 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props step context
    * @returns step id
    */
-  getNextStep(props: TToTransmog): string {
-    const thisStep = this.transmogrify(props);
-    const dir      = DIRECTION.FORWARD;
-    return this.getStep(thisStep, thisStep.form, dir);
+  getNextStep(props: StepCore): StepCore {
+    const dir = DIRECTION.FORWARD;
+    return this.getStep(props, props.form, dir);
   }
 
   /**
@@ -268,10 +307,9 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props step context
    * @returns step id
    */
-  getPreviousStep(props: TToTransmog): string {
-    const thisStep = this.transmogrify(props);
-    const dir      = DIRECTION.BACKWARD;
-    return this.getStep(thisStep, thisStep.form, dir);
+  getPreviousStep(props: StepCore): StepCore {
+    const dir = DIRECTION.BACKWARD;
+    return this.getStep(props, props.form, dir);
   }
 
   /**
@@ -279,8 +317,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns
    */
-  getProgressPercent(props: TToTransmog): number {
-    const step = this.transmogrify(props);
+  getProgressPercent(step: StepCore): number {
     if (matches(step.type, PAGE_TYPE.LANDING)) {
       // Landing page exists before progress starts
       // less than 0% progress can be interpretted as 'do not display'
@@ -300,7 +337,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     }
 
     // if we have branches then we need to do this, otherwise we need to get the number of steps
-    const answerable = this.getAllAnswerableQuestions(props);
+    const answerable = this.getAllAnswerableQuestions(step);
     const lastStep   = answerable.length; // sections[sections.length - 1]?.lastStep;
 
     // if there is no step, the questionnaire has just started
@@ -325,8 +362,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns string[]
    */
-  getAllAnswerableQuestions(data: TToTransmog): string[] {
-    const step = this.transmogrify(data);
+  getAllAnswerableQuestions(step: StepCore): string[] {
     if (!isEnum(QUESTION_TYPE, step.type)) {
       return [];
     }
@@ -343,8 +379,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param step
    * @returns string[]
    */
-  protected getBranchQuestions(data: TToTransmog): string[] {
-    const step     = this.transmogrify(data);
+  protected getBranchQuestions(step: StepCore): string[] {
     const question = step as QuestionCore;
 
     if (question.branch) {
@@ -379,8 +414,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns
    */
-  getAnswerableQuestions(data: TToTransmog): string[] {
-    const step = this.transmogrify(data);
+  getAnswerableQuestions(step: StepCore): string[] {
     return this.questions
       .filter(
         (q) =>
@@ -397,12 +431,11 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param props
    * @returns
    */
-  getSections(props: TToTransmog): ISectionCore[] {
-    if (!props || !this.sections || this.sections.length === 0) {
+  getSections(thisQuestion: StepCore): SectionCore[] {
+    if (!thisQuestion || !this.sections || this.sections.length === 0) {
       return [];
     }
 
-    const thisQuestion    = this.transmogrify(props);
     const thisQuestionIdx = this.steps.indexOf(thisQuestion);
 
     // Get all sections that meet the requirements based on current answers
@@ -416,7 +449,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
       sections = [...this.sections];
     }
     return sections.map((s) => {
-      const section    = { ...s };
+      const section    = new SectionCore({ ...s }, this);
       section.lastStep = this.questions.reduce(
         (acc, q, index) => (q.section.id === s.id ? index : acc),
         -1,
@@ -442,7 +475,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @param form
    * @returns
    */
-  getResults(form: FormCore): IResultCore[] {
+  getResults(form: FormCore): ResultCore[] {
     return this.results.filter((r) =>
       r.requirements.some((match) => {
         if (this.meetsAllRequirements(match, form)) {
@@ -457,7 +490,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * Gets the appropriate action given a set of results
    * @returns
    */
-  getActionByType(type: ACTION): IActionCore {
+  getActionByType(type: ACTION): ActionCore {
     const action = this.actions.find((a) => a.type === type);
     if (!action) {
       this.throw(`No matching action found for ${type}`);
@@ -469,7 +502,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * Gets the appropriate action given a set of results
    * @returns
    */
-  getAction(results: IResultCore[]): IActionCore {
+  getAction(results: ResultCore[]): ActionCore {
     const groupedByAction = groupBy(results, 'action.id');
     const hybrid          = this.actions.find((a) => a.type === ACTION.HYBRID);
     // If group above has more than one type of action, the resolved action will be a hybrid
@@ -535,7 +568,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
         return;
       }
       const exists         = this.branches.find((b) => b.id === q.branch?.id);
-      const validateBranch = exists || (q.branch as IBranchCore);
+      const validateBranch = exists || (q.branch as BranchCore);
       if (!exists) {
         this.branches.push(validateBranch);
       }
@@ -621,7 +654,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
   }
 
   public meetsAllRequirements(
-    requirement: IRequirementCore,
+    requirement: RequirementCore,
     form: FormCore,
     allowUnanswered = false,
   ) {
@@ -740,7 +773,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
    * @returns true if all answers are valid or if no answers are required
    */
   protected meetsAnswerRequirements(
-    answers?: IResponseCore[],
+    answers?: ResponseCore[],
     allowUnanswered = false,
   ): boolean {
     if (!answers || answers.length <= 0) return true;
@@ -767,23 +800,5 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
       // If no answers are defined, this passes
       return true;
     });
-  }
-
-  protected transmogrify(data: TToTransmog): StepCore {
-    if (data instanceof StepCore) {
-      return data;
-    }
-    if (data instanceof String || typeof data === 'string') {
-      return this.getStepById(`${data}`);
-    }
-    const sdc = data as unknown as IStepDataCore;
-    if (sdc && sdc?.stepId) {
-      return this.getStepById(`${sdc.stepId}`);
-    }
-    const sc = data as unknown as IStepCore;
-    if (sc && sc.id) {
-      return this.getStepById(sc.id);
-    }
-    return data as StepCore;
   }
 }

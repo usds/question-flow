@@ -1,13 +1,16 @@
 {
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.0",
+    "chalk": "^5.0.1",
     "class-validator": "^0.13.2",
-    "cross-env": "^7.0.3",
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
+    "loglevel": "^1.8.0",
     "luxon": "^2.3.1",
     "redux": "^4.1.2",
-    "serialize-error": "9.1.0"
+    "serialize-error": "9.1.0",
+    "short-unique-id": "^4.4.4",
+    "uuid": "^8.3.2"
   },
   "engines": {
     "node": "14.x - 16.x"
@@ -24,6 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "babel-loader": "^8.2.4",
+    "cross-env": "^7.0.3",
     "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",

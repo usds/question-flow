@@ -1,6 +1,7 @@
-import { catchError }         from '../util/error';
-import { error as log, noop } from '../util';
-import { IFormCore }          from '../survey';
+/* eslint-disable import/no-cycle */
+import { merge, noop }  from 'lodash';
+import { catchError }   from '../util/error';
+import { error as log } from '../util';
 import {
   IEventCore,
   TAnswerDataCore,
@@ -11,33 +12,61 @@ import {
   TPageDataCore,
   TResultDataCore,
 } from '../survey/IEventCore';
+import { BaseCore }                                     from './BaseCore';
+import {
+  checkInstanceOf, getClassName, PREFIX, TInstanceOf,
+} from '../util/instanceOf';
+import { FormCore } from './FormCore';
 
-export class EventEmitterCore implements IEventCore {
-  onActionClick: TOnEventCore = noop;
+const defaults = {
+  onActionClick: noop,
+  onAnswer:      noop,
+  onAnyEvent:    noop,
+  onError:       noop,
+  onGateSwitch:  noop,
+  onInit:        noop,
+  onNoResults:   noop,
+  onPage:        noop,
+  onResults:     noop,
+};
 
-  onAnswer: TOnEventCore = noop;
+export class EventEmitterCore extends BaseCore implements IEventCore {
+  protected static override _name = getClassName(PREFIX.EVENT_EMITTER);
 
-  onBranch: TOnErrorCore = noop;
+  protected override instanceOfCheck: TInstanceOf = EventEmitterCore._name;
 
-  onAnyEvent: TOnEventCore = noop;
-
-  onGateSwitch: TOnEventCore = noop;
-
-  onError: TOnErrorCore = noop;
-
-  onPage: TOnEventCore = noop;
-
-  onInit: TOnEventCore = noop;
-
-  onResults: TOnEventCore = noop;
-
-  onNoResults: TOnEventCore = noop;
-
-  constructor(obj: Partial<EventEmitterCore>) {
-    Object.assign(this, obj);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static override[Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([EventEmitterCore._name, BaseCore._name], obj);
   }
 
-  action(data: IFormCore): void {
+  onActionClick!: TOnEventCore;
+
+  onAnswer!: TOnEventCore;
+
+  onBranch!: TOnErrorCore;
+
+  onAnyEvent!: TOnEventCore;
+
+  onGateSwitch!: TOnEventCore;
+
+  onError!: TOnErrorCore;
+
+  onPage!: TOnEventCore;
+
+  onInit!: TOnEventCore;
+
+  onResults!: TOnEventCore;
+
+  onNoResults!: TOnEventCore;
+
+  constructor(data: Partial<EventEmitterCore>, form: FormCore) {
+    super(form);
+    merge(this, defaults);
+    merge(this, data);
+  }
+
+  action(data: FormCore): void {
     this.#event(data, this.onActionClick);
   }
 
@@ -57,11 +86,11 @@ export class EventEmitterCore implements IEventCore {
     }
   }
 
-  init(data: IFormCore): void {
+  init(data: FormCore): void {
     this.#event(data, this.onInit);
   }
 
-  noResult(data: IFormCore): void {
+  noResult(data: FormCore): void {
     this.#event(data, this.onNoResults);
   }
 

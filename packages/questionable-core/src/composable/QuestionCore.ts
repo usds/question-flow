@@ -4,36 +4,70 @@ import { DateTime }    from 'luxon';
 import { eventedCore } from '../state';
 import {
   IQuestionCore,
-  IRefCore,
-  IBranchCore,
-  ISectionCore,
-}        from '../survey';
+} from '../survey';
 import {
   QUESTION_TYPE,
   ACTION_TYPE,
   getDateTime,
   TDateOfBirthCore,
 } from '../util';
+import {
+  checkInstanceOf, getClassName, PREFIX, TInstanceOf,
+} from '../util/instanceOf';
+import { AnswerCore }          from './AnswerCore';
+import { BranchCore }          from './BranchCore';
 import { stepReducer }         from './FormCore';
 import { QuestionnaireCore }   from './QuestionnaireCore';
+import { SectionCore }         from './SectionCore';
 import { StepCore, TStepCtor } from './StepCore';
 
 export type TQuestionCoreCtor = TStepCtor & Partial<IQuestionCore>;
 
+const defaults = {
+  answers: [],
+  branch:  {},
+  section: {},
+  type:    QUESTION_TYPE.DEFAULT,
+};
+
 export class QuestionCore extends StepCore implements IQuestionCore {
-  type: QUESTION_TYPE;
+  protected static override _name = getClassName(PREFIX.QUESTION);
 
-  answers: IRefCore[] = [];
+  protected override instanceOfCheck: TInstanceOf = QuestionCore._name;
 
-  branch: Partial<IBranchCore> = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static override[Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([QuestionCore._name, StepCore._name], obj);
+  }
 
-  section: Partial<ISectionCore> = {};
+  type!: QUESTION_TYPE;
+
+  answers!: AnswerCore[];
+
+  branch!: BranchCore;
+
+  section!: SectionCore;
 
   constructor(data: TQuestionCoreCtor, questionnaire: QuestionnaireCore) {
     super(data, questionnaire);
+    merge(this, defaults);
     merge(this, data);
-    this.type = data.type;
-    this.id   = data.id;
+    if (data.answers) {
+      this.answers = data.answers.map((a) => new AnswerCore(a, questionnaire));
+    }
+    if (data.branch) {
+      this.branch = new BranchCore(data.branch, questionnaire);
+    }
+    if (data.section) {
+      this.section = new SectionCore(data.section, questionnaire);
+    }
+    this.#init();
+  }
+
+  #init() {
+    if (!this.type || `${this.type}` === `${QUESTION_TYPE.DEFAULT}`) {
+      this.type = QUESTION_TYPE.DEFAULT;
+    }
   }
 
   #answer = '';

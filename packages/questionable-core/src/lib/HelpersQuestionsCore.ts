@@ -1,13 +1,12 @@
-import { merge }                  from 'lodash';
-import { DateTime }               from 'luxon';
-import { QuestionableConfigCore } from '../composable/QuestionableConfigCore';
-import { IQuestionCore }          from '../survey';
-import { IQuestionDataCore }      from '../survey/IQuestionDataCore';
-import { IRefCore }               from '../survey/IRefCore';
-import { getDateTime }            from '../util/date';
-import { ACTION_TYPE }            from '../util/enums';
-import { TDateOfBirthCore }       from '../util/types';
-import { StepsCore }              from './HelpersStepsCore';
+import { merge }            from 'lodash';
+import { DateTime }         from 'luxon';
+import { QuestionDataCore } from '../composable/DataCore';
+import { QuestionCore }     from '../composable/QuestionCore';
+import { RefCore }          from '../composable/RefCore';
+import { getDateTime }      from '../util/date';
+import { ACTION_TYPE }      from '../util/enums';
+import { TDateOfBirthCore } from '../util/types';
+import { StepsCore }        from './HelpersStepsCore';
 
 /**
  * Static utility methods for question components
@@ -21,29 +20,26 @@ export abstract class QuestionsCore {
    */
   public static updateForm(
     answer: string,
-    props: IQuestionDataCore,
-    config: QuestionableConfigCore = new QuestionableConfigCore(),
+    step: QuestionCore,
   ): void {
     if (answer?.length > 0) {
-      Object.assign(props.step, { answer });
+      Object.assign(step, { answer });
     }
     // TODO: circle back and fix this logic. The problem is that our reducer is merging by KEY,
     // which in the case of arrays is the index, and the index will always be 0 if we're passing in new arrays
     // There are cleaner ways to do this.
     // eslint-disable-next-line no-param-reassign
-    props.form.responses = props.form.responses || [];
-    const value          = props.form.responses.find((r) => r.id === props.step.id);
+    step.form.responses = step.form.responses || [];
+    const value         = step.form.responses.find((r) => r.id === step.id);
     if (!value) {
-      props.form.responses.push(props.step);
+      step.form.responses.push(step);
     } else {
-      merge(value, props.step);
+      merge(value, step);
     }
-    if (config.events?.answer) {
-      config.events.answer({ answer, props, step: props.step.id });
-    }
-    return props.dispatchForm({
+    step.questionnaire.config.events?.answer({ answer, responses: step.form.responses, step });
+    step.form.dispatchForm({
       type:  ACTION_TYPE.UPDATE,
-      value: { ...props.form },
+      value: { ...step.form },
     });
   }
 
@@ -55,13 +51,13 @@ export abstract class QuestionsCore {
    */
   protected static isSelected(
     answer: string,
-    props: IQuestionDataCore,
+    props: QuestionDataCore,
   ): boolean | undefined {
     if (!props?.form) {
       return undefined;
     }
-    const q: IQuestionCore | undefined = props.form.responses.find(
-      (a: IQuestionCore) => a.id === props.step.id,
+    const q: QuestionCore | undefined = props.form.responses.find(
+      (a: QuestionCore) => a.id === props.step.id,
     );
     if (!q) {
       return undefined;
@@ -69,7 +65,7 @@ export abstract class QuestionsCore {
     return StepsCore.isValid(props.form, props.step.id) && q.answer === answer;
   }
 
-  protected static getString(ref: Partial<IRefCore> = {}): string {
+  protected static getString(ref: Partial<RefCore> = {}): string {
     if (!ref.title || ref.title === undefined || ref.title?.length <= 0) {
       throw new Error(`Value is required; ${ref.id} does not have a title`);
     }
@@ -81,7 +77,7 @@ export abstract class QuestionsCore {
    * @param props
    * @returns
    */
-  public static getBirthdate(props: IQuestionDataCore): DateTime | undefined {
+  public static getBirthdate(props: QuestionDataCore): DateTime | undefined {
     if (props.step?.answer) {
       return getDateTime(props.step.answer);
     }

@@ -1,39 +1,36 @@
 import { kebabCase, values }                                from 'lodash';
-import { QuestionnaireCore }                                from '../composable';
+import { FormCore, StepCore }                               from '../composable';
 import { noop }                                             from '../util/noop';
 import {
   DIRECTION, isEnum, PAGE_TYPE, QUESTION_TYPE, STEP_TYPE,
 } from '../util/enums';
-import { IFormCore }         from '../survey/IFormCore';
-import { IStepDataCore }     from '../survey/IStepDataCore';
-import { IQuestionDataCore } from '../survey/IQuestionDataCore';
-import { IStepCore }         from '../survey';
+import { QuestionDataCore, StepDataCore } from '../composable/DataCore';
 
 export abstract class StepsCore {
-  public static goToStep(step: string, props: IStepDataCore, cb = noop): void {
+  public static goToStep(step: StepCore, cb = noop): void {
     if (cb) {
-      cb(step, props);
+      cb(step, this);
     }
   }
 
   public static goToNextStep(
-    props: IStepDataCore,
-    questionnaire: QuestionnaireCore,
+    props: StepCore,
   ): void {
-    const step = questionnaire.getNextStep(props);
+    const step = props.questionnaire.getNextStep(props);
     const dir  = DIRECTION.FORWARD;
-    questionnaire.config.events.page({ dir, props, step });
-    StepsCore.goToStep(step, props);
+    props.questionnaire.config.events?.page({
+      dir, step,
+    });
+    StepsCore.goToStep(step, step.goToStep);
   }
 
   public static goToPrevStep(
-    props: IStepDataCore,
-    questionnaire: QuestionnaireCore,
+    props: StepCore,
   ): void {
-    const step = questionnaire.getPreviousStep(props);
+    const step = props.questionnaire.getPreviousStep(props);
     const dir  = DIRECTION.BACKWARD;
-    questionnaire.config.events.page({ dir, props, step });
-    StepsCore.goToStep(step, props);
+    props.questionnaire.config.events?.page({ dir, step });
+    StepsCore.goToStep(step, step.goToStep);
   }
 
   /**
@@ -41,7 +38,7 @@ export abstract class StepsCore {
    * @param props
    * @returns
    */
-  public static isNextEnabled(props: IStepDataCore): boolean {
+  public static isNextEnabled(props: StepDataCore): boolean {
     if (!props?.step) {
       throw new Error('This survery is not defined');
     }
@@ -62,7 +59,7 @@ export abstract class StepsCore {
     return StepsCore.isValid(props.form, props.step?.id);
   }
 
-  public static isValid(form: IFormCore, questionId: string): boolean {
+  public static isValid(form: FormCore, questionId: string): boolean {
     const q = form.responses.find((a) => a?.id === questionId);
     let ret = true;
     if (!q) {
@@ -95,16 +92,16 @@ export abstract class StepsCore {
     return ret;
   }
 
-  public static getFieldSetName(props: IQuestionDataCore): string {
+  public static getFieldSetName(props: QuestionDataCore): string {
     return kebabCase(props.step.title);
   }
 
-  public static getDomId(answer: string, props: IQuestionDataCore): string {
+  public static getDomId(answer: string, props: QuestionDataCore): string {
     const name = StepsCore.getFieldSetName(props);
     return `${name}-${kebabCase(answer)}`;
   }
 
-  public static getStepType(step: IStepCore) {
+  public static getStepType(step: StepCore) {
     if (isEnum(QUESTION_TYPE, step.type)) {
       return 'question';
     }

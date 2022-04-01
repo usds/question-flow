@@ -5,87 +5,118 @@ import {
   kebabCase,
   merge,
   values,
+  noop,
 } from 'lodash';
 import {
-  IRequirementCore,
-  ISectionCore,
   IStepCore,
 }              from '../survey/IStepCore';
-import { IStepDataCore } from '../survey/IStepDataCore';
 import {
   DIRECTION,
   isEnum,
   PAGE_TYPE,
   QUESTION_TYPE,
   STEP_TYPE,
+  BASE,
   TStepType,
 } from '../util/enums';
-import { noop }              from '../util/noop';
-import { stepReducer }       from './FormCore';
-import { QuestionnaireCore } from './QuestionnaireCore';
-import { StepBaseCore }      from './StepBaseCore';
+import { QuestionnaireCore }                            from './QuestionnaireCore';
+import { ComposableCore }                               from './ComposableCore';
+import {
+  checkInstanceOf, getClassName, PREFIX, TInstanceOf,
+} from '../util/instanceOf';
+import { RequirementCore } from './RequirementCore';
+import { SectionCore }     from './SectionCore';
 
-export type TStepCtor = Partial<IStepCore> &
-  Pick<IStepCore, 'type' | 'id'>;
+export type TStepCtor = Partial<IStepCore>;
 
-export class StepCore extends StepBaseCore implements IStepCore {
-  constructor(data: TStepCtor, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
-    merge(this, data);
+const stepDefaults = {
+  entryRequirements: [],
+  exitRequirements:  [],
+  footer:            '',
+  info:              '',
+  internalNotes:     '',
+  order:             0,
+  section:           {},
+  subTitle:          '',
+};
+
+export class StepCore extends ComposableCore implements IStepCore {
+  protected static override _name = getClassName(PREFIX.STEP);
+
+  protected override instanceOfCheck: TInstanceOf = StepCore._name;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static override[Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([StepCore._name, ComposableCore._name], obj);
   }
 
+  constructor(data: TStepCtor, questionnaire: QuestionnaireCore) {
+    super(questionnaire);
+    merge(this, stepDefaults);
+    merge(this, data);
+    if (data.entryRequirements) {
+      this.entryRequirements = data.entryRequirements.map((r) =>
+        new RequirementCore(r, questionnaire));
+    }
+    if (data.exitRequirements) {
+      this.exitRequirements = data.exitRequirements.map((r) =>
+        new RequirementCore(r, questionnaire));
+    }
+    this.#initStep();
+  }
+
+  #initStep() {
+    if (!this.type || `${this.type}` === `${BASE.DEFAULT}`) {
+      this.type = BASE.DEFAULT;
+    }
+  }
+
+  public toString() {
+    return this.id;
+  }
   // static create(props: IStepDataCore, questionnaire: QuestionnaireCore) {
   //   return new StepCore({ ...props.step, ...props, questionnaire } as TStepCtor);
   // }
 
-  get dataCore(): IStepDataCore {
-    return ({
-      dispatchForm: stepReducer,
-      form:         this.form,
-      step:         this,
-      stepId:       this.id,
-    });
-  }
+  public entryRequirements!: RequirementCore[];
 
-  public entryRequirements: IRequirementCore[] = [];
+  public exitRequirements!: RequirementCore[];
 
-  public exitRequirements: IRequirementCore[] = [];
+  public footer! : string;
 
-  public footer = '';
+  public info!: string;
 
-  public info = '';
+  public internalNotes!: string;
 
-  public internalNotes = '';
+  public order!: number;
 
-  public order?: number = 0;
+  public section!: SectionCore;
 
-  section: Partial<ISectionCore> = {};
+  public subTitle!: string;
 
-  subTitle = '';
+  public type!: TStepType;
 
-  type!: TStepType;
+  public title!: string;
 
-  id!: string;
-
-  title!: string;
-
-  public goToStep(step: string, cb = noop): void {
+  public goToStep(step: StepCore, cb = noop): void {
     if (cb) {
       cb(step, this);
     }
   }
 
   public goToNextStep(): void {
-    const step = this.questionnaire.getNextStep(this.dataCore);
+    const step = this.questionnaire.getNextStep(this);
     const dir  = DIRECTION.FORWARD;
-    this.questionnaire.config.events.page({ dir, props: this.dataCore, step });
+    this.questionnaire.config.events?.page({
+      dir, step,
+    });
     this.goToStep(step);
   }
 
   public goToPrevStep(): void {
-    const step = this.questionnaire.getPreviousStep(this.dataCore);
+    const step = this.questionnaire.getPreviousStep(this);
     const dir  = DIRECTION.BACKWARD;
-    this.questionnaire.config.events.page({ dir, props: this.dataCore, step });
+    this.questionnaire.config.events?.page({ dir, step });
     this.goToStep(step);
   }
 

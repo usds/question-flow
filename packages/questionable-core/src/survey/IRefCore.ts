@@ -7,6 +7,11 @@ export interface IRefCore {
    */
   id: string;
   /**
+   * @title Optional label
+   * @hidden
+   */
+  label?: string;
+  /**
    * Optional order
    *
    * @title Order

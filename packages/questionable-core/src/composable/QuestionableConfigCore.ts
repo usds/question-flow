@@ -1,7 +1,15 @@
-import { isString, merge }                     from 'lodash';
-import { EventEmitterCore }                    from './EventEmitterCore';
+/* eslint-disable import/no-cycle */
 import {
-  isEnum, MODE, noop, TStringDictionaryCore,
+  isEmpty,
+  isString,
+  merge,
+  noop,
+} from 'lodash';
+import { EventEmitterCore } from './EventEmitterCore';
+import {
+  isEnum,
+  MODE,
+  TStringDictionaryCore,
 } from '../util';
 import {
   INavigationConfigCore,
@@ -11,26 +19,17 @@ import {
   IQuestionConfigCore,
   IStepConfigCore,
 } from '../survey/IQuestionableConfigCore';
+import { BaseCore } from './BaseCore';
+import { FormCore } from './FormCore';
+import {
+  checkInstanceOf,
+  getClassName,
+  PREFIX,
+  TInstanceOf,
+} from '../util/instanceOf';
 
-/**
- * Configuration class for customizing the Questionable components
- *
- * The config has opinionated defaults, but is easily modified using Partial updates
- */
-export class QuestionableConfigCore implements IQuestionableConfigCore {
-  protected _mode = MODE.VIEW;
-
-  protected _nav: INavigationConfigCore = {};
-
-  protected _pages: IPagesConfigCore = {};
-
-  protected _progressBar: IProgressBarConfigCore = {};
-
-  protected _questions: IQuestionConfigCore = {};
-
-  protected _steps: IStepConfigCore = {};
-
-  protected _events: EventEmitterCore = new EventEmitterCore({
+const defaults = {
+  events: {
     onActionClick: noop,
     onAnswer:      noop,
     onAnyEvent:    noop,
@@ -41,18 +40,57 @@ export class QuestionableConfigCore implements IQuestionableConfigCore {
     onNoResults:   noop,
     onPage:        noop,
     onResults:     noop,
-  });
+  },
+  mode:        MODE.VIEW,
+  nav:         {},
+  pages:       {},
+  params:      { dev: false },
+  progressBar: {},
+  questions:   {},
+};
 
-  protected _params: TStringDictionaryCore = {};
+/**
+ * Configuration class for customizing the Questionable components
+ *
+ * The config has opinionated defaults, but is easily modified using Partial updates
+ */
+export class QuestionableConfigCore extends BaseCore implements IQuestionableConfigCore {
+  protected static override _name = getClassName(PREFIX.CONFIG);
 
-  constructor(config: Partial<IQuestionableConfigCore> = {}) {
-    merge(this, config);
-    if (config.getRuntimeConfig) {
-      this._params = config.getRuntimeConfig();
+  protected override instanceOfCheck: TInstanceOf = QuestionableConfigCore._name;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static override[Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([QuestionableConfigCore._name, BaseCore._name], obj);
+  }
+
+  protected _mode!: MODE;
+
+  protected _nav!: INavigationConfigCore;
+
+  protected _pages!: IPagesConfigCore;
+
+  protected _progressBar!: IProgressBarConfigCore;
+
+  protected _questions!: IQuestionConfigCore;
+
+  protected _steps!: IStepConfigCore;
+
+  protected _events!: EventEmitterCore;
+
+  protected _params!: TStringDictionaryCore;
+
+  constructor(data: Partial<IQuestionableConfigCore>, form: FormCore) {
+    super(form);
+    merge(defaults, data);
+    merge(this, data);
+    if (data.getRuntimeConfig) {
+      this._params = data.getRuntimeConfig();
     }
-    if (this._params.dev) {
+    if (data.params?.dev) {
       this._mode = MODE.DEV;
     }
+    this.events = new EventEmitterCore(data.events || {}, form);
   }
 
   get dev(): boolean {
@@ -63,8 +101,8 @@ export class QuestionableConfigCore implements IQuestionableConfigCore {
     return this._events;
   }
 
-  set events(val: Partial<EventEmitterCore>) {
-    merge(this._events, val);
+  private set events(val: EventEmitterCore) {
+    this._events = val;
   }
 
   get mode(): MODE {
@@ -84,10 +122,16 @@ export class QuestionableConfigCore implements IQuestionableConfigCore {
   }
 
   get params(): TStringDictionaryCore {
-    return this._params || {};
+    if (isEmpty(this._params)) {
+      this._params = {};
+    }
+    return this._params;
   }
 
   get nav(): INavigationConfigCore {
+    if (isEmpty(this._nav)) {
+      this._nav = {};
+    }
     return { ...this._nav };
   }
 
@@ -96,6 +140,9 @@ export class QuestionableConfigCore implements IQuestionableConfigCore {
   }
 
   get pages(): IPagesConfigCore {
+    if (isEmpty(this._pages)) {
+      this._pages = {};
+    }
     return this._pages;
   }
 
@@ -104,6 +151,9 @@ export class QuestionableConfigCore implements IQuestionableConfigCore {
   }
 
   get progressBar(): IProgressBarConfigCore {
+    if (isEmpty(this._progressBar)) {
+      this._progressBar = {};
+    }
     return { ...this._progressBar };
   }
 
@@ -112,6 +162,9 @@ export class QuestionableConfigCore implements IQuestionableConfigCore {
   }
 
   get questions(): IQuestionConfigCore {
+    if (isEmpty(this._questions)) {
+      this._questions = {};
+    }
     return { ...this._questions };
   }
 
@@ -120,6 +173,9 @@ export class QuestionableConfigCore implements IQuestionableConfigCore {
   }
 
   get steps(): IStepConfigCore {
+    if (isEmpty(this._steps)) {
+      this._steps = {};
+    }
     return { ...this._steps };
   }
 
