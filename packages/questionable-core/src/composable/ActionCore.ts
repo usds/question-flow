@@ -1,40 +1,43 @@
 /* eslint-disable import/no-cycle */
-import { merge }       from 'lodash';
-import { IActionCore } from '../survey/IActionCore';
-import { IButtonCore } from '../survey/IButtonCore';
-import { ACTION }      from '../util/enums';
+import { IRefCore }             from '../survey';
+import {
+  IActionCore,
+  ActionCoreClassName as className,
+  EActionCoreProperties as p,
+} from '../survey/IActionCore';
+import { IButtonCore }    from '../survey/IButtonCore';
+import { fromSet, toSet } from '../util';
+import { ACTION }         from '../util/enums';
 import {
   checkInstanceOf,
-  getClassName,
-  PREFIX,
   TInstanceOf,
 } from '../util/instanceOf';
 import { ComposableCore }    from './ComposableCore';
 import { QuestionnaireCore } from './QuestionnaireCore';
 
-const defaults = {
-  buttons:  [],
-  label:    '',
-  order:    0,
-  subTitle: '',
-  title:    '',
-  type:     ACTION.DEFAULT,
-};
+export class ActionCore extends ComposableCore implements IActionCore, IRefCore {
+  public static override readonly [p._name] = className;
 
-export class ActionCore extends ComposableCore implements IActionCore {
-  protected static override _name = getClassName(PREFIX.ACTION);
-
-  protected override instanceOfCheck: TInstanceOf = ActionCore._name;
+  public override readonly [p.instanceOfCheck]: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ActionCore._name, ComposableCore._name], obj);
+    return checkInstanceOf([className, ComposableCore._name], obj);
   }
 
-  constructor(data: Partial<IActionCore>, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
-    merge(this, defaults);
-    merge(this, data);
+  public static override create(data: Partial<ActionCore> = {}, questionnaire: Partial<QuestionnaireCore> = {}) {
+    if (data instanceof ActionCore) {
+      return data;
+    }
+    return new ActionCore(data, questionnaire);
+  }
+
+  constructor(data: Partial<ActionCore> = {}, questionnaire: Partial<QuestionnaireCore> = {}) {
+    super(data, questionnaire);
+    this[p._buttons]  = toSet(data.buttons || []);
+    this[p._label]    = data.label || '';
+    this[p._subTitle] = data.subTitle || '';
+    this[p._type]     = data.type || ACTION.DEFAULT;
   }
 
   /**
@@ -42,21 +45,40 @@ export class ActionCore extends ComposableCore implements IActionCore {
    * @title Buttons
    * @hidden
    */
-  buttons!: IButtonCore[];
+  public get [p.buttons](): IButtonCore[] {
+    return fromSet(this[p._buttons]);
+  }
 
-  /**
-   * @title Label
-   */
-  label!: string;
+  protected [p._buttons]: Set<IButtonCore>;
+
+  public add(data: IButtonCore) {
+    return this[p._buttons].add(data);
+  }
 
   /**
    * @title Description
    */
-  subTitle?: string;
+  public get [p.subTitle](): string {
+    return this[p._subTitle];
+  }
+
+  protected [p._subTitle]: string;
 
   /**
    * @title Type
    * @hidden
    */
-  type!: ACTION;
+  public override get [p.type](): ACTION {
+    return this[p._type];
+  }
+
+  protected override [p._type]: ACTION;
+
+  // public add(): ActionCore {
+  //   super.add();
+  //   if (!this.questionnaire.actions.some((a) => a === this || a.id === this.id)) {
+  //     this.questionnaire.actions.push(this);
+  //   }
+  //   return this;
+  // }
 }

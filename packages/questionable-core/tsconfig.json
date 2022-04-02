@@ -34,6 +34,11 @@
     "strictPropertyInitialization": true,
     "target": "ES2021",
     "useDefineForClassFields": false,
+    "plugins": [
+      {
+        "transform": "tst-reflect-transformer"
+      }
+    ],
   },
   "include": [
     "src/**/*.ts"
@@ -42,4 +47,12 @@
     "node_modules",
     "dist"
   ],
+  "ts-node": {
+    // This can be omitted when using ts-patch
+    "compiler": "ttypescript"
+  },
+  "reflection": {
+    "metadata": true,
+    "debugMode": false,
+  }
 }

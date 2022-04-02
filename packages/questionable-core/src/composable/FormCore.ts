@@ -1,57 +1,93 @@
 /* eslint-disable import/no-cycle */
-import { merge }        from 'lodash';
-import { eventedCore }  from '../state/pubsub';
-import { IFormCore }    from '../survey/IFormCore';
+import { merge }                    from 'lodash';
+import { eventedCore }              from '../state/pubsub';
+import {
+  IFormCore,
+  EFormCoreProperties as p,
+  FormCoreClassName as className,
+} from '../survey/IFormCore';
 import { TAgeCore }     from '../util/types';
 import { ACTION_TYPE }  from '../util/enums';
 import { QuestionCore } from './StepCore';
 import {
   checkInstanceOf,
-  getClassName,
-  PREFIX,
   TInstanceOf,
 } from '../util/instanceOf';
-
-const defaults = {
-  responses: [],
-};
+import { fromSet, toSet } from '../util/set';
 
 export class FormCore implements IFormCore {
-  protected static _name = getClassName(PREFIX.FORM);
+  public static readonly [p._name] = className;
 
-  protected instanceOfCheck: TInstanceOf = FormCore._name;
+  public readonly [p.instanceOfCheck]: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([FormCore._name], obj);
+    return checkInstanceOf([className], obj);
   }
 
-  public readonly started: Date;
-
-  #finished?: Date;
-
-  public birthdate?: string;
-
-  public age?: TAgeCore;
-
-  public get finish(): Date | undefined {
-    return this.#finished;
+  public static create(data: Partial<FormCore> = {}) {
+    if (data instanceof FormCore) {
+      return data;
+    }
+    return new FormCore(data);
   }
 
-  public set finish(date: Date | undefined) {
+  constructor(data: Partial<FormCore> = {}) {
+    this[p._started]   = new Date();
+    this[p._age]       = data.age;
+    this[p._birthdate] = data.birthdate || '';
+    this[p._finished]  = data.finished;
+    this[p._responses] = toSet(data.responses || []);
+    eventedCore.publish({ event: this, type: 'start' });
+  }
+
+  private [p._started]: Date;
+
+  public get [p.started]() {
+    return this[p._started];
+  }
+
+  private [p._birthdate]: string;
+
+  public get [p.birthdate]() {
+    return this[p._birthdate];
+  }
+
+  public set [p.birthdate](data: string) {
+    this[p._birthdate] = data;
+  }
+
+  private [p._age]: TAgeCore | undefined;
+
+  public get [p.age]() {
+    return this[p._age];
+  }
+
+  public set [p.age](data) {
+    this[p._age] = data;
+  }
+
+  private [p._finished]: Date | undefined;
+
+  public get [p.finished](): Date | undefined {
+    return this[p._finished];
+  }
+
+  public set [p.finished](date: Date | undefined) {
     if (date) {
-      this.#finished = date;
+      this[p._finished] = date;
       eventedCore.publish({ event: this, type: 'finish' });
     }
   }
 
-  public responses!: QuestionCore[];
+  private [p._responses]: Set<QuestionCore>;
 
-  constructor(data: Partial<IFormCore> = {}) {
-    merge(this, defaults);
-    merge(this, data);
-    this.started = new Date();
-    eventedCore.publish({ event: this, type: 'start' });
+  public get [p.responses](): QuestionCore[] {
+    return fromSet(this[p._responses]);
+  }
+
+  public add(response: QuestionCore) {
+    this[p._responses].add(response);
   }
 
   /**

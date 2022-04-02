@@ -1,6 +1,8 @@
 import { DIRECTION }                               from '../util/enums';
-import { TStringDictionaryCore }                   from '../util/types';
+import { getInstanceName, PREFIX }                 from '../util/instanceOf';
+import { ClassProperties, TStringDictionaryCore }  from '../util/types';
 import { IFormCore }                               from './IFormCore';
+import { ECommonCoreProperties }                   from './IRefCore';
 import { IResultCore }                             from './IResultCore';
 import { IQuestionCore, IResponseCore, IStepCore } from './IStepCore';
 
@@ -82,18 +84,47 @@ export type TOnErrorCore = (e: Error, data?: TEventCore) => void;
  */
 export type TOnGateSwitchCore = (gate: TGateCore, data: TStringDictionaryCore) => void;
 
+export const EventCoreClassName = getInstanceName(PREFIX.EVENT_EMITTER);
+export type TEEventCoreProperties = {
+  onActionClick: 'onActionClick',
+  onAnswer: 'onAnswer',
+  onAnyEvent: 'onAnyEvent',
+  onBranch: 'onBranch',
+  onError: 'onError',
+  onGateSwitch: 'onGateSwitch',
+  onInit: 'onInit',
+  onNoResults: 'onNoResults',
+  onPage: 'onPage',
+  onResults: 'onResults'
+};
+const EventProps: TEEventCoreProperties = {
+  onActionClick: 'onActionClick' as const,
+  onAnswer:      'onAnswer' as const,
+  onAnyEvent:    'onAnyEvent' as const,
+  onBranch:      'onBranch' as const,
+  onError:       'onError' as const,
+  onGateSwitch:  'onGateSwitch' as const,
+  onInit:        'onInit' as const,
+  onNoResults:   'onNoResults' as const,
+  onPage:        'onPage' as const,
+  onResults:     'onResults',
+};
+export const EEventCoreProperties = { ...ECommonCoreProperties, ...EventProps };
+export type EventCoreProperties = ClassProperties<typeof EEventCoreProperties>;
+// For (a little) brevity in interface members
+const p = EEventCoreProperties;
 /**
  * Event Model
  * @title Event
  */
 export interface IEventCore {
-  onActionClick: TOnEventCore | undefined,
-  onAnswer: TOnEventCore | undefined,
-  onAnyEvent: TOnEventCore | undefined,
-  onError: TOnErrorCore | undefined,
-  onGateSwitch: TOnEventCore | undefined,
-  onInit: TOnEventCore | undefined,
-  onNoResults: TOnEventCore | undefined,
-  onPage: TOnEventCore | undefined,
-  onResults: TOnEventCore | undefined
+  readonly [p.onActionClick]: TOnEventCore | undefined,
+  readonly [p.onAnswer]: TOnEventCore | undefined,
+  readonly [p.onAnyEvent]: TOnEventCore | undefined,
+  readonly [p.onError]: TOnErrorCore | undefined,
+  readonly [p.onGateSwitch]: TOnEventCore | undefined,
+  readonly [p.onInit]: TOnEventCore | undefined,
+  readonly [p.onNoResults]: TOnEventCore | undefined,
+  readonly [p.onPage]: TOnEventCore | undefined,
+  readonly [p.onResults]: TOnEventCore | undefined
 }

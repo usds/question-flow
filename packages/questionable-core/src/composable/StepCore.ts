@@ -41,8 +41,9 @@ import { stepReducer }                              from './FormCore';
 import { eventedCore }                              from '../state/pubsub';
 import { getDateTime }                              from '../util/date';
 import { IBranchCore }                              from '../survey/IBranchCore';
+import { getInstanceName }                          from '../util/factories';
 
-export type TStepCtor = Partial<IStepCore>;
+export type TStepCtor = Partial<StepCore>;
 
 const stepDefaults = {
   entryRequirements: [],
@@ -55,18 +56,20 @@ const stepDefaults = {
   subTitle:          '',
 };
 
-export class StepCore extends ComposableCore implements IStepCore {
-  protected static override _name = getClassName(PREFIX.STEP);
+const stepCoreClassName = getInstanceName(PREFIX.STEP);
 
-  protected override instanceOfCheck: TInstanceOf = StepCore._name;
+export class StepCore extends ComposableCore implements IStepCore {
+  public static override readonly _name = stepCoreClassName;
+
+  public override readonly instanceOfCheck: TInstanceOf = stepCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([StepCore._name, ComposableCore._name], obj);
+    return checkInstanceOf([stepCoreClassName, ComposableCore._name], obj);
   }
 
   constructor(data: TStepCtor, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
+    super(data, questionnaire);
     merge(this, stepDefaults);
     merge(this, data);
     if (data.entryRequirements) {
@@ -221,18 +224,21 @@ const sectionDefaults = {
   status:       undefined,
 };
 
-export class SectionCore extends ComposableCore implements ISectionCore {
-  protected static override _name = getClassName(PREFIX.SECTION);
+const sectionCoreClassName = getInstanceName(PREFIX.SECTION);
 
-  protected override instanceOfCheck: TInstanceOf = SectionCore._name;
+export class SectionCore extends ComposableCore implements ISectionCore {
+  public static override readonly _name = sectionCoreClassName;
+
+  public override readonly instanceOfCheck: TInstanceOf = sectionCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([SectionCore._name, ComposableCore._name], obj);
+    return checkInstanceOf([sectionCoreClassName, ComposableCore._name,
+    ], obj);
   }
 
-  constructor(data: Partial<ISectionCore>, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
+  constructor(data: Partial<SectionCore>, questionnaire: QuestionnaireCore) {
+    super(data, questionnaire);
     merge(this, sectionDefaults);
     merge(this, data);
     if (data.requirements) {
@@ -249,7 +255,7 @@ export class SectionCore extends ComposableCore implements ISectionCore {
   order?: number | undefined;
 }
 
-export type TQuestionCoreCtor = TStepCtor & Partial<IQuestionCore>;
+export type TQuestionCoreCtor = TStepCtor & Partial<QuestionCore>;
 
 const questionDefaults = {
   answers: [],
@@ -258,14 +264,16 @@ const questionDefaults = {
   type:    QUESTION_TYPE.DEFAULT,
 };
 
-export class QuestionCore extends StepCore implements IQuestionCore {
-  protected static override _name = getClassName(PREFIX.QUESTION);
+const questionCoreClassName = getInstanceName(PREFIX.QUESTION);
 
-  protected override instanceOfCheck: TInstanceOf = QuestionCore._name;
+export class QuestionCore extends StepCore implements IQuestionCore {
+  public static override readonly _name = questionCoreClassName;
+
+  public override readonly instanceOfCheck: TInstanceOf = questionCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([QuestionCore._name, StepCore._name], obj);
+    return checkInstanceOf([questionCoreClassName, StepCore._name], obj);
   }
 
   type!: QUESTION_TYPE;
@@ -418,18 +426,20 @@ const responseDefaults = {
   question: {},
 };
 
-export class ResponseCore extends ComposableCore implements IResponseCore {
-  protected static override _name = getClassName(PREFIX.RESPONSE);
+const responseCoreClassName = getInstanceName(PREFIX.RESPONSE);
 
-  protected override instanceOfCheck: TInstanceOf = ResponseCore._name;
+export class ResponseCore extends ComposableCore implements IResponseCore {
+  public static override readonly _name = responseCoreClassName;
+
+  public override readonly instanceOfCheck: TInstanceOf = responseCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ResponseCore._name, ComposableCore._name], obj);
+    return checkInstanceOf([responseCoreClassName, ComposableCore._name], obj);
   }
 
-  constructor(data: Partial<IResponseCore>, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
+  constructor(data: Partial<ResponseCore>, questionnaire: QuestionnaireCore) {
+    super(data, questionnaire);
     merge(this, responseDefaults);
     merge(this, data);
 
@@ -452,18 +462,20 @@ const requirementDefaults = {
   responses:   [],
 };
 
-export class RequirementCore extends ComposableCore implements IRequirementCore {
-  protected static override _name = getClassName(PREFIX.REQUIREMENT);
+const requirementCoreClassName = getInstanceName(PREFIX.REQUIREMENT);
 
-  protected override instanceOfCheck: TInstanceOf = RequirementCore._name;
+export class RequirementCore extends ComposableCore implements IRequirementCore {
+  public static override readonly _name = requirementCoreClassName;
+
+  public override readonly instanceOfCheck: TInstanceOf = requirementCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([RequirementCore._name, ComposableCore._name], obj);
+    return checkInstanceOf([requirementCoreClassName, ComposableCore._name], obj);
   }
 
-  constructor(data: Partial<IRequirementCore>, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
+  constructor(data: Partial<RequirementCore>, questionnaire: QuestionnaireCore) {
+    super(data, questionnaire);
     merge(this, requirementDefaults);
     merge(this, data);
 
@@ -487,18 +499,20 @@ const branchDefaults = {
   questions: [],
 };
 
-export class BranchCore extends ComposableCore implements IBranchCore {
-  protected static override _name = getClassName(PREFIX.BRANCH);
+const branchCoreClassName = getInstanceName(PREFIX.BRANCH);
 
-  protected override instanceOfCheck: TInstanceOf = BranchCore._name;
+export class BranchCore extends ComposableCore implements IBranchCore {
+  public static override readonly _name = branchCoreClassName;
+
+  public override readonly instanceOfCheck: TInstanceOf = branchCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([BranchCore._name, ComposableCore._name], obj);
+    return checkInstanceOf([branchCoreClassName, ComposableCore._name], obj);
   }
 
-  constructor(data: Partial<IBranchCore>, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
+  constructor(data: Partial<BranchCore>, questionnaire: QuestionnaireCore) {
+    super(data, questionnaire);
     merge(this, branchDefaults);
     merge(this, data);
 

@@ -11,6 +11,7 @@ import {
   MODE,
 } from '../util/enums';
 import {
+  TGetDictionaryCore,
   TStringDictionaryCore,
 } from '../util/types';
 import {
@@ -29,6 +30,7 @@ import {
   PREFIX,
   TInstanceOf,
 } from '../util/instanceOf';
+import { getInstanceName } from '../util/factories';
 
 const defaults = {
   events: {
@@ -51,19 +53,21 @@ const defaults = {
   questions:   {},
 };
 
+const refCoreClassName = getInstanceName(PREFIX.CONFIG);
+
 /**
  * Configuration class for customizing the Questionable components
  *
  * The config has opinionated defaults, but is easily modified using Partial updates
  */
 export class QuestionableConfigCore extends BaseCore implements IQuestionableConfigCore {
-  protected static override _name = getClassName(PREFIX.CONFIG);
+  public static override readonly _name = refCoreClassName;
 
-  protected override instanceOfCheck: TInstanceOf = QuestionableConfigCore._name;
+  public override readonly instanceOfCheck: TInstanceOf = refCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([QuestionableConfigCore._name, BaseCore._name], obj);
+    return checkInstanceOf([refCoreClassName, BaseCore._name], obj);
   }
 
   protected _mode!: MODE;
@@ -82,13 +86,13 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
 
   protected _params!: TStringDictionaryCore;
 
-  constructor(data: Partial<IQuestionableConfigCore>, form: FormCore) {
-    super(form);
+  readonly getRuntimeConfig?: TGetDictionaryCore;
+
+  constructor(data: Partial<QuestionableConfigCore>, form: FormCore) {
+    super(data, form);
     merge(defaults, data);
     merge(this, data);
-    if (data.getRuntimeConfig) {
-      this._params = data.getRuntimeConfig();
-    }
+    this._params = (data.getRuntimeConfig) ? data.getRuntimeConfig(this) : {};
     if (data.params?.dev) {
       this._mode = MODE.DEV;
     }

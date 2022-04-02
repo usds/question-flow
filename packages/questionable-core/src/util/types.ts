@@ -82,11 +82,9 @@ export interface TContentCore {
   title?: string;
 }
 
-// OneOf<T, V> is the main event:
-// take a type T and a tuple type V, and return the type of
-// T widened to relevant element(s) of V:
-export type OneOf<
-  T,
-  V extends any[],
-  NK extends keyof V = Exclude<keyof V, keyof any[]>
-  > = { [K in NK]: T extends V[K] ? V[K] : never }[NK];
+/** Flatten object */
+export type FlatStrings<T> = T extends object ? T[keyof T] : T
+/** Grab the properties */
+export type CoreProperties<X> = X[keyof X];
+/** Construct a type using property names */
+export type ClassProperties<T> = FlatStrings<CoreProperties<T>>;

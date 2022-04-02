@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { merge }       from 'lodash';
-import { IResultCore } from '../survey/IResultCore';
+import { merge }           from 'lodash';
+import { IResultCore }     from '../survey/IResultCore';
+import { getInstanceName } from '../util/factories';
 import {
   checkInstanceOf,
   getClassName,
@@ -21,18 +22,20 @@ const resultDefaults = {
   requirements: [],
 };
 
-export class ResultCore extends ComposableCore implements IResultCore {
-  protected static override _name = getClassName(PREFIX.RESULT);
+const refCoreClassName = getInstanceName(PREFIX.RESULT);
 
-  protected override instanceOfCheck: TInstanceOf = ResultCore._name;
+export class ResultCore extends ComposableCore implements IResultCore {
+  public static override readonly _name = refCoreClassName;
+
+  public override readonly instanceOfCheck: TInstanceOf = refCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ResultCore._name, ComposableCore._name], obj);
+    return checkInstanceOf([refCoreClassName, ComposableCore._name], obj);
   }
 
-  constructor(data: Partial<IResultCore>, questionnaire: QuestionnaireCore) {
-    super(questionnaire);
+  constructor(data: Partial<ResultCore>, questionnaire: QuestionnaireCore) {
+    super(data, questionnaire);
     merge(this, resultDefaults);
     merge(this, data);
     if (data.action) {

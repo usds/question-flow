@@ -9,5 +9,6 @@ export * from './labels';
 export * from './logger';
 export * from './merge';
 export * from './noop';
+export * from './set';
 export * from './types';
 export * from './uuid';

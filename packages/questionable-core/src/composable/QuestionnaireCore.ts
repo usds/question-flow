@@ -5,11 +5,13 @@
 /* eslint-disable max-classes-per-file */
 import { ArrayUnique } from 'class-validator';
 import {
+  extend,
   groupBy,
   isEmpty,
   merge,
 } from 'lodash';
-import { ActionCore } from './ActionCore';
+import { thisTypeAnnotation } from '@babel/types';
+import { ActionCore }         from './ActionCore';
 import {
   BranchCore,
   QuestionCore,
@@ -51,7 +53,10 @@ import {
   PREFIX,
   TInstanceOf,
 } from '../util/instanceOf';
-import { ResultCore } from './ResultCore';
+import { ResultCore }      from './ResultCore';
+import { getInstanceName } from '../util/factories';
+import { fromSet, toSet }  from '../util/set';
+import { ComposableCore }  from './ComposableCore';
 
 type TPageSet = {
   config?: Partial<IPageConfigCore>;
@@ -61,86 +66,204 @@ type TPageSet = {
 export interface IQuestionableCore {
   questionnaire: QuestionnaireCore,
 }
-type TQuestionnaireCtor = Partial<IQuestionnaireCore>
-  & Pick<IQuestionnaireCore, 'questions'>;
 
-const defaults = {
-  actions:   [],
-  branches:  [],
-  config:    {},
-  flow:      [],
-  header:    'Questionnaire',
-  questions: [],
-  results:   [],
-  sections:  [],
-  steps:     [],
-  type:      'questionnaire',
-};
+
+const className = getInstanceName(PREFIX.QUESTIONNAIRE);
 
 /**
  * Utility wrapper for survey state
  */
 export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
-  protected static override _name = getClassName(PREFIX.QUESTIONNAIRE);
+  public static override readonly _name = className;
 
-  protected override instanceOfCheck: TInstanceOf = QuestionnaireCore._name;
+  public override readonly instanceOfCheck: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([QuestionnaireCore._name, BaseCore._name], obj);
+    return checkInstanceOf([className, BaseCore._name], obj);
   }
 
-  @ArrayUnique((action: ActionCore) => action.id)
-  public actions!: ActionCore[];
+  _initProp<TClass extends ComposableCore>(
+    T: { new(...args: [TClass, QuestionnaireCore]): TClass },
+    ...args: [TClass, QuestionnaireCore]
+  ) {
+    const item: TClass = new T(...args);
+    let propName: 'actions' | 'branches' | 'questions';
+    switch (item.instanceOfCheck) {
+      case ActionCore._name:
+        propName = 'actions';
+        break;
+      default:
+        return item;
+    }
+    this[`_${propName}`] = this[`_${propName}`] || new Set<TClass>();
+    return item;
+  }
 
-  public branches!: BranchCore[];
+  _touch(property: TInternal) {
+    switch (property) {
+      case '_actions':
+        return this._initProp(ActionCore, {}, this);
+      case '_branches':
+        return this._initProp(BranchCore, {}, this);
+      default:
+        return undefined;
+    }
+  }
 
-  public config!: QuestionableConfigCore;
+  private _actions: Set<ActionCore>;
 
-  public flow: string[];
+  public get actions(): ActionCore[] {
+    if (!this._actions) {
+      this._actions = new Set<ActionCore>();
+    }
+    return [...this._actions];
+  }
 
-  public header!: string;
+  #branches: Set<BranchCore>;
 
-  @ArrayUnique((result: ResultCore) => result.label)
-  public results!: ResultCore[];
+  public get branches(): BranchCore[] {
+    if (!this.#branches) {
+      this.#branches = new Set<BranchCore>();
+    }
+    return [...this.#branches];
+  }
 
-  public pages!: PagesCore;
+  #config: QuestionableConfigCore;
+
+  public get config(): QuestionableConfigCore {
+    if (!this.#config) {
+      this.#config = new QuestionableConfigCore({}, this.form);
+    }
+    return this.#config;
+  }
+
+  private set config(data: Partial<QuestionableConfigCore>) {
+    merge(this.#config, data);
+  }
+
+  #flow: Set<string>;
+
+  public get flow(): string[] {
+    this.#flow = this.#flow || new Set<string>();
+    return fromSet(this.#flow);
+  }
+
+  private set flow(data: string[]) {
+    this.#flow = toSet(data, this.#flow);
+  }
+
+  #header: string;
+
+  public get header() {
+    return this.#header || '';
+  }
+
+  private set header(data: string) {
+    this.#header = data;
+  }
+
+  #results: Set<ResultCore>;
+
+  public get results(): ResultCore[] {
+    this.#results = this.#results || new Set<ResultCore>();
+    return fromSet(this.#results);
+  }
+
+  private set results(data: Partial<ResultCore>[]) {
+    const list    = [...this.#results].concat(data.map((l) => {
+      if (l instanceof ResultCore) {
+        return l as ResultCore;
+      }
+      return new ResultCore(l, this);
+    }));
+    this.#results = new Set<ResultCore>(list);
+  }
+
+  #pages!: PagesCore;
+
+  public get pages(): PagesCore {
+    if (!this.#pages) {
+      this.#pages = new PagesCore({}, this);
+    }
+    return this.#pages;
+  }
+
+  private set pages(data: Partial<PagesCore>) {
+    merge(this.#pages, data);
+  }
 
   @ArrayUnique((question: QuestionCore) => question.id)
-  public questions: QuestionCore[];
+    #questions: Set<QuestionCore>;
+
+  public get questions(): QuestionCore[] {
+    if (!this.#questions) {
+      this.#questions = new Set<QuestionCore>();
+    }
+    return [...this.#questions];
+  }
+
+  private set questions(data: Partial<QuestionCore>[]) {
+    const list      = [...this.#questions].concat(data.map((l) => {
+      if (l instanceof QuestionCore) {
+        return l as QuestionCore;
+      }
+      return new QuestionCore(l, this);
+    }));
+    this.#questions = new Set<QuestionCore>(list);
+  }
 
   @ArrayUnique((section: SectionCore) => section.id)
-  public sections!: SectionCore[];
+    #sections: Set<SectionCore>;
+
+  public get sections(): SectionCore[] {
+    if (!this.#sections) {
+      this.#sections = new Set<SectionCore>();
+    }
+    return [...this.#sections];
+  }
+
+  private set sections(data: Partial<SectionCore>[]) {
+    const list     = [...this.#sections].concat(data.map((l) => {
+      if (l instanceof SectionCore) {
+        return l as SectionCore;
+      }
+      return new SectionCore(l, this);
+    }));
+    this.#sections = new Set<SectionCore>(list);
+  }
 
   protected steps: StepCore[];
 
-  constructor(data: TQuestionnaireCtor, form: FormCore = new FormCore()) {
-    super(form);
-    const config = merge({ ...defaults.config }, { ...data.config });
-    merge(this, defaults);
-    merge(this, data);
-
-    this.config = new QuestionableConfigCore(config, form);
-    if (data.pages) {
-      this.pages = new PagesCore(data.pages, this);
+  public static override create(data: Partial<QuestionnaireCore> = {}, form: Partial<FormCore> = {}) {
+    if (data instanceof QuestionnaireCore) {
+      return data;
     }
-    this.questions = data.questions?.map((q, i) => new QuestionCore({
+    return new QuestionnaireCore(data, form);
+  }
+
+  constructor(data: Partial<QuestionnaireCore> = {}, form: Partial<FormCore> = {}) {
+    super(data, form);
+    const config = merge({ ...defaults.config }, { ...data.config });
+    // merge(this, defaults);
+    // merge(this, data);
+
+    this.#config = new QuestionableConfigCore(config, form);
+    if (data.pages) {
+      this.#pages = new PagesCore(data.pages, this);
+    }
+    this.#questions = toSet(data.questions?.map((q) => new QuestionCore({
       label: getNextLabel(),
-      order: i,
       ...q,
-    }, this)) || [];
-    this.actions   = data.actions?.map((q, i) => new ActionCore({
-      order: i,
-      ...q,
-    }, this)) || [];
-    // Create a new collection for our flow logic
-    this.steps    = this.questions.map((q) => q) || [];
-    this.branches = data.branches?.map((b) => new BranchCore(b, this)) || [];
-    this.sections = data.sections?.map((s) => new SectionCore(s, this)) || [];
+    }, this)) || []);
+    this.#actions   = toSet(data.actions?.map((q) => new ActionCore(q, this)) || []);
+    this.steps      = this.questions.map((q) => q) || [];
+    this.#branches  = toSet(data.branches?.map((b) => new BranchCore(b, this)) || []);
+    this.#sections  = toSet(data.sections?.map((s) => new SectionCore(s, this)) || []);
     this.init();
 
     // Wizard flow is defined as linear sequence of unique ids
-    this.flow = this.steps.map((q) => q.id);
+    this.#flow = this.#toSet(this.steps.map((q) => q.id));
   }
 
   public enableLog() {

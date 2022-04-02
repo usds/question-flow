@@ -5671,6 +5671,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
+  languageName: node
+  linkType: hard
+
 "@types/webpack-env@npm:^1.16.0":
   version: 1.16.3
   resolution: "@types/webpack-env@npm:1.16.3"
@@ -5997,10 +6004,12 @@ __metadata:
     "@swc/helpers": ^0.3.8
     "@types/inquirer": ^8.2.0
     "@types/node": ^17.0.23
+    "@types/uuid": ^8.3.4
     "@usds.gov/questionable-core": "workspace:*"
     "@usds.gov/questionable-mocks": "workspace:*"
     chalk: 4.1.2
     cross-env: ^7.0.3
+    eslint: ^8.12.0
     fs-extra: ^10.0.1
     inquirer: ^8.2.2
     inquirer-date-prompt: ^2.0.1
@@ -6011,9 +6020,11 @@ __metadata:
     regenerator-runtime: ^0.13.9
     rimraf: ^3.0.2
     rxjs: ^7.5.5
+    short-unique-id: ^4.4.4
     ts-loader: ^9.2.8
     ts-node: ^10.7.0
     typescript: ^4.6.3
+    uuid: ^8.3.2
     zx: ^6.0.7
   languageName: unknown
   linkType: soft
@@ -6027,6 +6038,7 @@ __metadata:
     "@babel/preset-env": ^7.16.11
     "@reduxjs/toolkit": ^1.8.0
     "@rollup/plugin-commonjs": ^21.0.3
+    "@rollup/plugin-node-resolve": ^13.1.3
     "@types/file-saver": ^2.0.5
     "@types/lodash": ^4.14.180
     "@types/luxon": ^2.3.1
@@ -6034,6 +6046,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.17.0
     "@typescript-eslint/parser": ^5.17.0
     babel-loader: ^8.2.4
+    chalk: ^5.0.1
     class-validator: ^0.13.2
     cross-env: ^7.0.3
     eslint: ^8.12.0
@@ -6055,10 +6068,12 @@ __metadata:
     husky: ^7.0.4
     lint-staged: ^12.3.7
     lodash: ^4.17.21
+    loglevel: ^1.8.0
     luxon: ^2.3.1
     prettier: ^2.6.1
     prettier-plugin-organize-imports: ^2.3.4
     pretty-quick: ^3.1.3
+    redux: ^4.1.2
     rimraf: ^3.0.2
     rollup: ^2.70.1
     rollup-plugin-copy: ^3.4.0
@@ -6066,12 +6081,18 @@ __metadata:
     rollup-plugin-peer-deps-external: ^2.2.4
     rollup-plugin-terser: ^7.0.2
     rollup-plugin-ts: ^2.0.5
+    rollup-plugin-typescript2: ^0.31.2
     semantic-release: ^19.0.2
     serialize-error: 9.1.0
+    short-unique-id: ^4.4.4
     ts-json-schema-generator: ^1.0.0
     ts-loader: ^9.2.8
     ts-node: ^10.7.0
+    tst-reflect: ^0.7.4
+    tst-reflect-transformer: ^0.9.5
+    ttypescript: ^1.5.13
     typescript: ^4.6.3
+    uuid: ^8.3.2
   languageName: unknown
   linkType: soft
 
@@ -6727,6 +6748,17 @@ __metadata:
   version: 4.2.2
   resolution: "@xtuc/long@npm:4.2.2"
   checksum: 8ed0d477ce3bc9c6fe2bf6a6a2cc316bb9c4127c5a7827bae947fa8ec34c7092395c5a283cc300c05b5fa01cbbfa1f938f410a7bf75db7c7846fea41949989ec
+  languageName: node
+  linkType: hard
+
+"@yarn-tool/resolve-package@npm:^1.0.40":
+  version: 1.0.46
+  resolution: "@yarn-tool/resolve-package@npm:1.0.46"
+  dependencies:
+    pkg-dir: < 6 >= 5
+    tslib: ^2.3.1
+    upath2: ^3.1.12
+  checksum: 5f392619dccbbd81b5c23f649f92ca00c6b530ef15cf680639ccb5980dc74659fa17da935a333078396c3f11b9e9aa85cef95e9af2dc67c62515adc115a85900
   languageName: node
   linkType: hard
 
@@ -12336,7 +12368,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-cache-dir@npm:^3.3.1":
+"find-cache-dir@npm:^3.3.1, find-cache-dir@npm:^3.3.2":
   version: 3.3.2
   resolution: "find-cache-dir@npm:3.3.2"
   dependencies:
@@ -18944,6 +18976,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"path-is-network-drive@npm:^1.0.13":
+  version: 1.0.13
+  resolution: "path-is-network-drive@npm:1.0.13"
+  dependencies:
+    tslib: ^2.3.1
+  checksum: 05a8d3ed3268079abccc70ed8d995a881ec16731542db0f669e2cf08c160c52b9ab721618d84710b592676e7f16220c8d59850ee89d7b796c677f6b97f613e72
+  languageName: node
+  linkType: hard
+
 "path-key@npm:^2.0.0, path-key@npm:^2.0.1":
   version: 2.0.1
   resolution: "path-key@npm:2.0.1"
@@ -18962,6 +19003,15 @@ __metadata:
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
   checksum: 49abf3d81115642938a8700ec580da6e830dde670be21893c62f4e10bd7dd4c3742ddc603fe24f898cba7eb0c6bc1777f8d9ac14185d34540c6d4d80cd9cae8a
+  languageName: node
+  linkType: hard
+
+"path-strip-sep@npm:^1.0.10":
+  version: 1.0.10
+  resolution: "path-strip-sep@npm:1.0.10"
+  dependencies:
+    tslib: ^2.3.1
+  checksum: 1553008356532bf772d1003ace9de618666c8642ce0c74e3e4879d721bf492aa7c4ee8cda2740a8708673c137ddfc561cba4ff2a61748b601a2e2e05534188b4
   languageName: node
   linkType: hard
 
@@ -19117,6 +19167,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pkg-dir@npm:< 6 >= 5, pkg-dir@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "pkg-dir@npm:5.0.0"
+  dependencies:
+    find-up: ^5.0.0
+  checksum: b167bb8dac7bbf22b1d5e30ec223e6b064b84b63010c9d49384619a36734caf95ed23ad23d4f9bd975e8e8082b60a83395f43a89bb192df53a7c25a38ecb57d9
+  languageName: node
+  linkType: hard
+
 "pkg-dir@npm:^3.0.0":
   version: 3.0.0
   resolution: "pkg-dir@npm:3.0.0"
@@ -19132,15 +19191,6 @@ __metadata:
   dependencies:
     find-up: ^4.0.0
   checksum: 9863e3f35132bf99ae1636d31ff1e1e3501251d480336edb1c211133c8d58906bed80f154a1d723652df1fda91e01c7442c2eeaf9dc83157c7ae89087e43c8d6
-  languageName: node
-  linkType: hard
-
-"pkg-dir@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "pkg-dir@npm:5.0.0"
-  dependencies:
-    find-up: ^5.0.0
-  checksum: b167bb8dac7bbf22b1d5e30ec223e6b064b84b63010c9d49384619a36734caf95ed23ad23d4f9bd975e8e8082b60a83395f43a89bb192df53a7c25a38ecb57d9
   languageName: node
   linkType: hard
 
@@ -21941,7 +21991,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.1.6, resolve@npm:^1.10.0, resolve@npm:^1.12.0, resolve@npm:^1.14.2, resolve@npm:^1.17.0, resolve@npm:^1.19.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.3.2":
+"resolve@npm:>=1.9.0, resolve@npm:^1.1.6, resolve@npm:^1.10.0, resolve@npm:^1.12.0, resolve@npm:^1.14.2, resolve@npm:^1.17.0, resolve@npm:^1.19.0, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.3.2":
   version: 1.22.0
   resolution: "resolve@npm:1.22.0"
   dependencies:
@@ -21964,7 +22014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>":
+"resolve@patch:resolve@>=1.9.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.3.2#~builtin<compat/resolve>":
   version: 1.22.0
   resolution: "resolve@patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"
   dependencies:
@@ -22172,6 +22222,23 @@ __metadata:
     "@swc/helpers":
       optional: true
   checksum: 0c8cb336676bd93b35146be6593f583b20dfed2b49696d6583c96cc5e488eb6552314e01f8816b3eaaf812943ec5fb3bc5e9292ff8b42c7bea6dd1289f9b73b6
+  languageName: node
+  linkType: hard
+
+"rollup-plugin-typescript2@npm:^0.31.2":
+  version: 0.31.2
+  resolution: "rollup-plugin-typescript2@npm:0.31.2"
+  dependencies:
+    "@rollup/pluginutils": ^4.1.2
+    "@yarn-tool/resolve-package": ^1.0.40
+    find-cache-dir: ^3.3.2
+    fs-extra: ^10.0.0
+    resolve: ^1.20.0
+    tslib: ^2.3.1
+  peerDependencies:
+    rollup: ">=1.26.3"
+    typescript: ">=2.4.0"
+  checksum: ceebc686195f8140ee64b89cbd3a284bda50435081bea8f55f404ea293c02ec9787e9147e33f8e078b2c4772d9f198e66f900f54ca77ccda63db9ec2511db665
   languageName: node
   linkType: hard
 
@@ -22818,6 +22885,16 @@ __metadata:
   bin:
     shjs: bin/shjs
   checksum: 7babc46f732a98f4c054ec1f048b55b9149b98aa2da32f6cf9844c434b43c6251efebd6eec120937bd0999e13811ebd45efe17410edb3ca938f82f9381302748
+  languageName: node
+  linkType: hard
+
+"short-unique-id@npm:^4.4.4":
+  version: 4.4.4
+  resolution: "short-unique-id@npm:4.4.4"
+  bin:
+    short-unique-id: bin/short-unique-id
+    suid: bin/short-unique-id
+  checksum: 3507f2e97326e49180dd4edbf41dd762a76c591df3fd5b7c1e7592bfb0c2f5724d63e626cc6f581c717d3111374811ca1d77a728ac07b0b9041b2355700124d4
   languageName: node
   linkType: hard
 
@@ -24550,6 +24627,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tst-reflect-transformer@npm:^0.9.5":
+  version: 0.9.5
+  resolution: "tst-reflect-transformer@npm:0.9.5"
+  dependencies:
+    tst-reflect: ^0.7.0
+    typescript: ^4.0.0
+  checksum: 69460febbdf688a0b8c77a872b8e48614f4827e0c140d59913f62cea9200ba4ba33f83c32ad28d8efb33dfa0f09b1d545ec35eaa05c117132f4b6397a5a39ab5
+  languageName: node
+  linkType: hard
+
+"tst-reflect@npm:^0.7.0, tst-reflect@npm:^0.7.4":
+  version: 0.7.4
+  resolution: "tst-reflect@npm:0.7.4"
+  checksum: 6bb8d9d77c4482f200a2ee81a4d6e6a70b83fb0f5f93fc65f65e04c34d0dc56aa79e4bb3300ad50df3f43ade4620c40ff6678b2ec1f2b8596d79d9548c4453d4
+  languageName: node
+  linkType: hard
+
 "tsutils@npm:^3.21.0":
   version: 3.21.0
   resolution: "tsutils@npm:3.21.0"
@@ -24565,6 +24659,21 @@ __metadata:
   version: 0.0.0
   resolution: "tty-browserify@npm:0.0.0"
   checksum: a06f746acc419cb2527ba19b6f3bd97b4a208c03823bfb37b2982629d2effe30ebd17eaed0d7e2fc741f3c4f2a0c43455bd5fb4194354b378e78cfb7ca687f59
+  languageName: node
+  linkType: hard
+
+"ttypescript@npm:^1.5.13":
+  version: 1.5.13
+  resolution: "ttypescript@npm:1.5.13"
+  dependencies:
+    resolve: ">=1.9.0"
+  peerDependencies:
+    ts-node: ">=8.0.2"
+    typescript: ">=3.2.2"
+  bin:
+    ttsc: bin/tsc
+    ttsserver: bin/tsserver
+  checksum: bd97f058520ebd6183446b2100bfc714c400455e2195c3711d00c3407521d99098a4a204f16200c14a115cd78a5005d4a790bf7fb73a1b21a513573291a9c1d0
   languageName: node
   linkType: hard
 
@@ -24696,7 +24805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.4.3, typescript@npm:^4.6.3, typescript@npm:~4.6.2":
+"typescript@npm:^4.0.0, typescript@npm:^4.4.3, typescript@npm:^4.6.3, typescript@npm:~4.6.2":
   version: 4.6.3
   resolution: "typescript@npm:4.6.3"
   bin:
@@ -24706,7 +24815,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>, typescript@patch:typescript@~4.6.2#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.0.0#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>, typescript@patch:typescript@~4.6.2#~builtin<compat/typescript>":
   version: 4.6.3
   resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"
   bin:
@@ -24975,6 +25084,19 @@ __metadata:
     has-value: ^0.3.1
     isobject: ^3.0.0
   checksum: 5990ecf660672be2781fc9fb322543c4aa592b68ed9a3312fa4df0e9ba709d42e823af090fc8f95775b4cd2c9a5169f7388f0cec39238b6d0d55a69fc2ab6b29
+  languageName: node
+  linkType: hard
+
+"upath2@npm:^3.1.12":
+  version: 3.1.12
+  resolution: "upath2@npm:3.1.12"
+  dependencies:
+    path-is-network-drive: ^1.0.13
+    path-strip-sep: ^1.0.10
+    tslib: ^2.3.1
+  peerDependencies:
+    "@types/node": "*"
+  checksum: b452e3b19a2e3cb172fad7f1c47188b1c12ef383f767262d3e9a9d45d9eb9b7adae981eab5086f362b08ec88fe1252dded892b7d3c4062f7052ed52db11374fc
   languageName: node
   linkType: hard
 

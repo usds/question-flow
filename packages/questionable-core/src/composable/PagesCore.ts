@@ -1,16 +1,19 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
-import { merge }                           from 'lodash';
-import { IPagesCore }                      from '../survey/IPagesCore';
-import { PAGE_TYPE }                       from '../util/enums';
+import { merge }             from 'lodash';
+import { IPagesCore }        from '../survey/IPagesCore';
+import { PAGE_TYPE }         from '../util/enums';
+import { getInstanceName }   from '../util/factories';
 import {
-  checkInstanceOf, getClassName, PREFIX,
+  checkInstanceOf, PREFIX,
 } from '../util/instanceOf';
 import { PageCore }          from './PageCore';
 import { QuestionnaireCore } from './QuestionnaireCore';
 
+const refCoreClassName = getInstanceName(PREFIX.PAGES);
+
 const defaults = {
-  instanceof:    getClassName(PREFIX.PAGES),
+  instanceof:    refCoreClassName,
   landingPage:   undefined,
   noResultsPage: undefined,
   resultsPage:   undefined,
@@ -18,19 +21,24 @@ const defaults = {
 };
 
 export class PagesCore implements IPagesCore {
-  protected static _name = defaults.instanceof;
+  protected static _name = refCoreClassName;
 
-  // protected instanceOfCheck: TInstanceOf = PagesCore._name;
+  // public readonly instanceOfCheck: TInstanceOf = refCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([PagesCore._name], obj);
+    return checkInstanceOf([refCoreClassName], obj);
   }
 
   [key: string]: PageCore | undefined;
 
-  constructor(data: Partial<IPagesCore>, questionnaire: QuestionnaireCore) {
+  constructor(data: Partial<PagesCore>, questionnaire: QuestionnaireCore) {
     merge(this, defaults);
+    Object.defineProperty(this, 'instanceOfCheck', {
+      get:      () => refCoreClassName,
+      writable: false,
+    });
+
     if (data.landingPage) {
       this.landingPage = new PageCore(data.landingPage, questionnaire);
     } else {

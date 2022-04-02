@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { merge, noop }  from 'lodash';
-import { catchError }   from '../util/error';
-import { error as log } from '../util/logger';
+import { noop }                from 'lodash';
+import { catchError }          from '../util/error';
+import { error as log }        from '../util/logger';
 import {
   IEventCore,
   TAnswerDataCore,
@@ -11,62 +11,63 @@ import {
   TOnEventCore,
   TPageDataCore,
   TResultDataCore,
+  EventCoreClassName as className,
+  EEventCoreProperties as p,
 } from '../survey/IEventCore';
 import { BaseCore } from './BaseCore';
 import {
   checkInstanceOf,
-  getClassName,
-  PREFIX,
   TInstanceOf,
 } from '../util/instanceOf';
 import { FormCore } from './FormCore';
 
-const defaults = {
-  onActionClick: noop,
-  onAnswer:      noop,
-  onAnyEvent:    noop,
-  onError:       noop,
-  onGateSwitch:  noop,
-  onInit:        noop,
-  onNoResults:   noop,
-  onPage:        noop,
-  onResults:     noop,
-};
+export class EventEmitterCore implements IEventCore {
+  public static readonly [p._name] = className;
 
-export class EventEmitterCore extends BaseCore implements IEventCore {
-  protected static override _name = getClassName(PREFIX.EVENT_EMITTER);
-
-  protected override instanceOfCheck: TInstanceOf = EventEmitterCore._name;
+  public readonly [p.instanceOfCheck]: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([EventEmitterCore._name, BaseCore._name], obj);
+  static [Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([className, BaseCore._name], obj);
   }
 
-  onActionClick!: TOnEventCore;
+  readonly [p.onActionClick]: TOnEventCore;
 
-  onAnswer!: TOnEventCore;
+  readonly [p.onAnswer]: TOnEventCore;
 
-  onBranch!: TOnErrorCore;
+  readonly [p.onBranch]: TOnErrorCore;
 
-  onAnyEvent!: TOnEventCore;
+  readonly [p.onAnyEvent]: TOnEventCore;
 
-  onGateSwitch!: TOnEventCore;
+  readonly [p.onGateSwitch]: TOnEventCore;
 
-  onError!: TOnErrorCore;
+  readonly [p.onError]: TOnErrorCore;
 
-  onPage!: TOnEventCore;
+  readonly [p.onPage]: TOnEventCore;
 
-  onInit!: TOnEventCore;
+  readonly [p.onInit]: TOnEventCore;
 
-  onResults!: TOnEventCore;
+  readonly [p.onResults]: TOnEventCore;
 
-  onNoResults!: TOnEventCore;
+  readonly [p.onNoResults]: TOnEventCore;
 
-  constructor(data: Partial<EventEmitterCore>, form: FormCore) {
-    super(form);
-    merge(this, defaults);
-    merge(this, data);
+  public static create(data: Partial<IEventCore> = {}) {
+    if (data instanceof EventEmitterCore) {
+      return data;
+    }
+    return new EventEmitterCore(data);
+  }
+
+  constructor(data: Partial<IEventCore> = {}) {
+    this[p.onActionClick] = data.onActionClick || noop;
+    this[p.onAnswer]      = data.onAnswer || noop;
+    this[p.onAnyEvent]    = data.onAnyEvent || noop;
+    this[p.onError]       = data.onError || noop;
+    this[p.onGateSwitch]  = data.onGateSwitch || noop;
+    this[p.onInit]        = data.onInit || noop;
+    this[p.onNoResults]   = data.onNoResults || noop;
+    this[p.onPage]        = data.onPage || noop;
+    this[p.onResults]     = data.onResults || noop;
   }
 
   action(data: FormCore): void {

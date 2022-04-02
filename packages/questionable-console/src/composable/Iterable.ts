@@ -56,7 +56,7 @@ export class Iterable {
     [this.current]     = this.questionnaire.questions;
   }
 
-  makePage(step: Step) {
+  async makePage(step: Step) {
     this.observable.next({
       message: step.title,
       name:    step.id,
@@ -65,21 +65,23 @@ export class Iterable {
     });
   }
 
-  makeQuestion(question: Question) {
+  async makeQuestion(question: Question) {
     const mould = PromptFactory(question);
     const prmpt = merge(mould, {
-      default:  question.default,
-      message:  question.title,
-      name:     question.id,
+      askAnswered: true,
+      default:     question.default,
+      loop:        true,
+      message:     question.title,
+      name:        question.id,
       // suffix:   question.subTitle,
-      validate: (a: TVal) => this.validate(a, question),
+      validate:    async (a: TVal) => this.validate(a, question),
     }) as DistinctQuestion<Answers>;
     this.observable.next(prmpt);
   }
 
-  makeStep(step: Step) {
+  async makeStep(step: Step) {
     if (step.onDisplay) {
-      step.onDisplay(step);
+      await step.onDisplay(step);
     }
     if (StepsCore.getStepType(step) === 'question') {
       const nextQuestion = step as Question;
@@ -90,7 +92,7 @@ export class Iterable {
     }
   }
 
-  next(val: TVal): Question | undefined {
+  async next(val: TVal): Promise<Question | undefined> {
     try {
       if (!this.current) {
         this.current = this.questionnaire.getFirstStep();
@@ -104,15 +106,15 @@ export class Iterable {
         this.observable.complete();
         return undefined;
       }
-      if (this.validate(val, this.current)) {
+      if (await this.validate(val, this.current)) {
         if (this.current.onAnswer) {
-          this.current.onAnswer(val, this.current);
+          await this.current.onAnswer(val, this.current);
         }
         const nextStepId = this.questionnaire.getNextStep(this.props(this.current));
         const nextStep   = this.questionnaire.getStepById(nextStepId);
-        this.makeStep(nextStep);
+        await this.makeStep(nextStep);
       } else {
-        this.makeStep(this.current);
+        await this.makeStep(this.current);
       }
       log(`${this.questionnaire.getProgressPercent(this.current)}%`);
       return this.current;
@@ -131,7 +133,7 @@ export class Iterable {
     });
   }
 
-  start() {
+  async start() {
     if (this.started) return;
 
     this.process.subscribe({
@@ -147,15 +149,15 @@ export class Iterable {
         error(e);
       },
     });
-    this.makeQuestion(this.current);
+    await this.makeQuestion(this.current);
     this.started = true;
   }
 
-  validate(a: TVal, question: Question) {
+  async validate(a: TVal, question: Question) {
     let isValid  = true;
     const answer = getAnswer(a);
-    if (question.validate && !question.validate(a, question)) {
-      isValid = false;
+    if (question.validate) {
+      isValid = await question.validate(a, question);
     }
     QuestionsCore.updateForm(answer, this.props(question), this.config);
     isValid = isValid && StepsCore.isNextEnabled(this.props(question));

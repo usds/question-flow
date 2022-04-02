@@ -1,30 +1,32 @@
 /* eslint-disable import/no-cycle */
-import { merge }                                        from 'lodash';
-import { IPageCore }                                    from '../survey/IStepCore';
-import { PAGE_TYPE }                                    from '../util/enums';
+import { merge }           from 'lodash';
+import { IPageCore }       from '../survey/IStepCore';
+import { PAGE_TYPE }       from '../util/enums';
 import {
-  checkInstanceOf, getClassName, PREFIX, TInstanceOf,
+  checkInstanceOf,
+  PREFIX,
+  TInstanceOf,
 } from '../util/instanceOf';
 import { QuestionnaireCore }   from './QuestionnaireCore';
 import { StepCore, TStepCtor } from './StepCore';
 
-type ctor = TStepCtor & Partial<IPageCore>;
+type ctor = TStepCtor & Partial<PageCore>;
 
-const defaults = {
+const defaults         = {
   body:          '',
   bodyHeader:    '',
   bodySubheader: '',
   type:          PAGE_TYPE.DEFAULT,
 };
-
+const className = getInstanceName(PREFIX.PAGE);
 export class PageCore extends StepCore implements IPageCore {
-  protected static override _name = getClassName(PREFIX.PAGE);
+  public static override readonly _name = className;
 
-  protected override instanceOfCheck: TInstanceOf = PageCore._name;
+  public override readonly instanceOfCheck: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([PageCore._name, StepCore._name], obj);
+    return checkInstanceOf([className, StepCore._name], obj);
   }
 
   constructor(data: ctor, questionnaire: QuestionnaireCore) {
