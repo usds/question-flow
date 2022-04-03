@@ -6,8 +6,9 @@ import { PAGE_TYPE }                                 from '../util/enums';
 import {
   checkInstanceOf, ClassList, PREFIX, TInstanceOf,
 } from '../util/instanceOf';
-import { PageCore } from './PageCore';
-import { BaseCore } from './BaseCore';
+import { PageCore }  from './PageCore';
+import { BaseCore }  from './BaseCore';
+import { IPageCore } from '../survey/IStepCore';
 
 const defaults = {
   instanceof:    PREFIX.PAGES,
@@ -88,5 +89,27 @@ export class PagesCore extends BaseCore implements IPagesCore {
 
   public get summaryPage() {
     return this.#summaryPage;
+  }
+
+  public set(data: Partial<IPageCore>) {
+    const page = PageCore.create(data);
+    switch (page.type) {
+      case PAGE_TYPE.LANDING:
+        this.#landingPage = page;
+        break;
+      case PAGE_TYPE.NO_RESULTS:
+        this.#noResultsPage = page;
+        break;
+      case PAGE_TYPE.RESULTS:
+        this.#resultsPage = page;
+        break;
+      case PAGE_TYPE.SUMMARY:
+        this.#summaryPage = page;
+        break;
+      default:
+        this.pages[page.title] = page;
+        break;
+    }
+    return page;
   }
 }

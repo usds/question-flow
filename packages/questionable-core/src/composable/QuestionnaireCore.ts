@@ -49,13 +49,13 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
 
   #actions: ActionCore[];
 
-  #steps: StepCore[];
+  #steps!: StepCore[];
 
   #branches: BranchCore[];
 
   #sections: SectionCore[];
 
-  #flow: string[];
+  #flow!: string[];
 
   #header: string;
 
@@ -70,12 +70,22 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     this.#pages     = PagesCore.create(data.pages);
     this.#questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
     this.#actions   = data.actions?.map((q) => ActionCore.create(q)) || [];
-    this.#steps     = this.#questions.map((q) => q) || [];
     this.#branches  = data.branches?.map((b) => BranchCore.create(b)) || [];
     this.#sections  = data.sections?.map((s) => SectionCore.create(s)) || [];
-    this.#flow      = this.#steps.map((q) => q.id);
     this.#header    = data.header || '';
     this.#results   = data.results?.map((r) => ResultCore.create(r)) || [];
+    this.init();
+  }
+
+  public init() {
+    this.#steps = this.#questions.map((q) => q) || [];
+    this.#flow  = this.#steps.map((q) => q.id);
+  }
+
+  public set<T extends QuestionableConfigCore | string>(obj: T) {
+    if (obj instanceof QuestionableConfigCore) {
+      this.#config = obj;
+    }
   }
 
   public get actions(): ActionCore[] {
