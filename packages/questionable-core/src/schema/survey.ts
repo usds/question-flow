@@ -29,7 +29,6 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "label": {
           "title": "Label",
           "type": "string"
@@ -45,7 +44,6 @@ export const survey = {
       },
       "required": [
         "id",
-        "instanceOfCheck",
         "label"
       ],
       "type": "object"
@@ -57,7 +55,6 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "questions": {
           "items": {
             "$ref": "#/definitions/IRefCore"
@@ -71,7 +68,6 @@ export const survey = {
       },
       "required": [
         "id",
-        "instanceOfCheck",
         "questions"
       ],
       "type": "object"
@@ -91,7 +87,6 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "link": {
           "description": "Link to tie to button click",
           "title": "Link",
@@ -113,8 +108,7 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "instanceOfCheck"
+        "id"
       ],
       "type": "object"
     },
@@ -126,7 +120,6 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "link": {
           "description": "Link to tie to button click",
           "title": "Link",
@@ -148,8 +141,7 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "instanceOfCheck"
+        "id"
       ],
       "type": "object"
     },
@@ -163,6 +155,9 @@ export const survey = {
           "not": {}
         },
         "onAnyEvent": {
+          "not": {}
+        },
+        "onBranch": {
           "not": {}
         },
         "onError": {
@@ -239,7 +234,6 @@ export const survey = {
           "title": "Finished",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "responses": {
           "description": "All currently provided responses",
           "items": {
@@ -256,7 +250,6 @@ export const survey = {
         }
       },
       "required": [
-        "instanceOfCheck",
         "responses",
         "started"
       ],
@@ -339,7 +332,6 @@ export const survey = {
           "title": "Info",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "internalNotes": {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
@@ -349,7 +341,6 @@ export const survey = {
           "description": "Section to which this step belongs",
           "properties": {
             "id": {},
-            "instanceOfCheck": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -380,7 +371,6 @@ export const survey = {
       },
       "required": [
         "id",
-        "instanceOfCheck",
         "section",
         "type"
       ],
@@ -498,7 +488,6 @@ export const survey = {
           "title": "Info",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "internalNotes": {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
@@ -508,7 +497,6 @@ export const survey = {
           "description": "Section to which this step belongs",
           "properties": {
             "id": {},
-            "instanceOfCheck": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -540,7 +528,6 @@ export const survey = {
       "required": [
         "answers",
         "id",
-        "instanceOfCheck",
         "section",
         "type"
       ],
@@ -703,14 +690,12 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "title": {
           "title": "Title",
           "type": "string"
         }
       },
       "required": [
-        "instanceOfCheck",
         "id"
       ],
       "type": "object"
@@ -728,7 +713,6 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "maxAge": {
           "description": "Optional maximum age allowed for this requirement",
           "properties": {
@@ -820,7 +804,6 @@ export const survey = {
       },
       "required": [
         "id",
-        "instanceOfCheck",
         "responses"
       ],
       "type": "object"
@@ -835,9 +818,6 @@ export const survey = {
                 "description": "Unique identifier",
                 "title": "Id",
                 "type": "string"
-              },
-              "instanceOfCheck": {
-                "not": {}
               },
               "title": {
                 "title": "Title",
@@ -863,7 +843,6 @@ export const survey = {
             "footer": {},
             "id": {},
             "info": {},
-            "instanceOfCheck": {},
             "internalNotes": {},
             "section": {},
             "subTitle": {},
@@ -895,7 +874,6 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "label": {
           "description": "Identify the result (e.g. 'Benefit name')",
           "title": "Label",
@@ -921,7 +899,6 @@ export const survey = {
       },
       "required": [
         "id",
-        "instanceOfCheck",
         "label",
         "requirements"
       ],
@@ -935,7 +912,6 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "requirements": {
           "description": "Collection of requirements to enable display of this status",
           "items": {
@@ -951,7 +927,6 @@ export const survey = {
       },
       "required": [
         "id",
-        "instanceOfCheck",
         "requirements"
       ],
       "type": "object"
@@ -1003,7 +978,6 @@ export const survey = {
           "title": "Info",
           "type": "string"
         },
-        "instanceOfCheck": {},
         "internalNotes": {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
@@ -1013,7 +987,6 @@ export const survey = {
           "description": "Section to which this step belongs",
           "properties": {
             "id": {},
-            "instanceOfCheck": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -1044,7 +1017,6 @@ export const survey = {
       },
       "required": [
         "id",
-        "instanceOfCheck",
         "section",
         "type"
       ],

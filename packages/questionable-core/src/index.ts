@@ -1,4 +1,5 @@
 export * from './composable';
+export * from './constructable';
 export * from './lib';
 export * from './schema';
 export * from './state';

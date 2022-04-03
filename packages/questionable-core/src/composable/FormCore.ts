@@ -140,5 +140,3 @@ export class FormCore extends BaseCore implements IFormCore {
     return FormCore.stepReducer(this, action);
   }
 }
-
-export const { stepReducer } = FormCore;
