@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { noop }                from 'lodash';
-import { catchError }          from '../util/error';
-import { error as log }        from '../util/logger';
+import { noop }         from 'lodash';
+import { catchError }   from '../util/error';
+import { error as log } from '../util/logger';
 import {
   IEventCore,
   TAnswerDataCore,
@@ -11,24 +11,22 @@ import {
   TOnEventCore,
   TPageDataCore,
   TResultDataCore,
-  EventCoreClassName as className,
-  EEventCoreProperties as p,
 } from '../survey/IEventCore';
-import { BaseCore } from './BaseCore';
 import {
   checkInstanceOf,
   TInstanceOf,
+  ClassList,
 } from '../util/instanceOf';
-import { FormCore } from './FormCore';
+import { FormCore }                  from './FormCore';
+import { EEventCoreProperties as p } from '../metadata/MEvent';
 
+const className = ClassList['event-emitter'];
 export class EventEmitterCore implements IEventCore {
-  public static readonly [p._name] = className;
-
   public readonly [p.instanceOfCheck]: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className, BaseCore._name], obj);
+    return checkInstanceOf([className], obj);
   }
 
   readonly [p.onActionClick]: TOnEventCore;

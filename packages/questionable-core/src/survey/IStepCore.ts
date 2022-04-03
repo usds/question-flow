@@ -5,16 +5,27 @@ import {
   QUESTION_TYPE,
   TStepType,
 } from '../util/enums';
-import { TAgeCore, TAgeCalcCore } from '../util/types';
-import { IBranchCore }            from './IBranchCore';
-import { IRefCore }               from './IRefCore';
+import {
+  TAgeCore,
+  TAgeCalcCore,
+} from '../util/types';
+import { IBranchCore } from './IBranchCore';
+import {
+  IRefCore,
+} from './IRefCore';
+import { EResponseCoreProperties as rp }     from '../metadata/MResponse';
+import { EStepCoreProperties as sp }         from '../metadata/MStep';
+import { EQuestionCoreProperties as qp }     from '../metadata/MQuestion';
+import { EPageCoreProperties as pp }         from '../metadata/MPage';
+import { ERequirementCoreProperties as rqp } from '../metadata/MRequirement';
+import { ESectionCoreProperties as scp } from '../metadata/MSection';
 
 /**
  * Acceptable responses
  */
 export interface IResponseCore {
-  answers: Partial<IRefCore>[];
-  question: Partial<IQuestionCore>;
+  [rp.answers]: Partial<IRefCore>[];
+  [rp.question]: Partial<IQuestionCore>;
 }
 
 /**
@@ -26,56 +37,56 @@ export interface IStepCore extends IRefCore {
    *
    * @title Requirements
    */
-  entryRequirements?: IRequirementCore[];
+  [sp.entryRequirements]?: IRequirementCore[];
   /**
    * Collection of requirements to leave this step
    *
    * @title Exit Requirements
    */
-  exitRequirements?: IRequirementCore[];
+  [sp.exitRequirements]?: IRequirementCore[];
   /**
    * Optional footer text to display at the bottom of the step
    *
    * @title Footer
    */
-  footer?: string;
+  [sp.footer]?: string;
   /**
    * Contextual content to display below the step contents and above the footer
    *
    * @title Info
    */
-  info?: string;
+  [sp.info]?: string;
   /**
    * Private/internal use only notes for documenting this step
    *
    * @title Internal Notes
    */
-  internalNotes?: string;
+  [sp.internalNotes]?: string;
   /**
    * Display order of the Step. Determined at runtime.
    *
    * @title Order
    * @hidden
    */
-  order?: number;
+  [sp.order]?: number;
   /**
    * Section to which this step belongs
    *
    * @title Section
    */
-  section: Partial<ISectionCore>;
+  [sp.section]: Partial<ISectionCore>;
   /**
    * Text to display below the title
    *
    * @title Subtitle
    */
-  subTitle?: string;
+  [sp.subTitle]?: string;
   /**
    * Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}
    *
    * @title Step Type
    */
-  type: TStepType;
+  [sp.type]: TStepType;
 }
 
 /**
@@ -89,26 +100,26 @@ export interface IQuestionCore extends IStepCore {
    * @title Answer
    * @hidden Not viewable/editable in Design Mode
    */
-  answer?: string;
+  [qp.answer]?: string;
   /**
    * Collection of allowed answers
    *
    * @title Answers
    */
-  answers: IRefCore[];
+  [qp.answers]: IRefCore[];
   /**
    * Collection of branches that use this question
    *
    * @title Branch
    * @hidden
    */
-  branch?: Partial<IBranchCore>;
+  [qp.branch]?: Partial<IBranchCore>;
   /**
    * Type of question
    *
    * @title Question Type
    */
-  type: QUESTION_TYPE;
+  [qp.type]: QUESTION_TYPE;
 }
 
 /**
@@ -121,60 +132,60 @@ export interface IPageCore extends IStepCore {
    *
    * @title Body
    */
-  body?: string;
+  [pp.body]?: string;
   /**
    * Optional header to display above body
    *
    * @title Body Heading
    */
-  bodyHeader?: string;
+  [pp.bodyHeader]?: string;
   /**
    * Optional sub header to display below Body Heading
    *
    * @title Body Subheading
    */
-  bodySubHeader?: string;
+  [pp.bodySubHeader]?: string;
   /**
    * Type of page
    *
    * @title Page Type
    */
-  type: PAGE_TYPE;
+  [pp.type]: PAGE_TYPE;
 }
 
 /**
  * Defines an individual requirement for accessing a step
  */
-export interface IRequirementCore {
+export interface IRequirementCore extends IRefCore {
   /**
    * Optional, custom calculator for performing age-specific validation
    * @hidden JSON schema does not support functions
    */
-  ageCalc?: TAgeCalcCore;
+  [rqp.ageCalc]?: TAgeCalcCore;
   /**
    * User facing description of this requirement
    *
    * @title Exlanation
    */
-  explanation?: string;
+  [rqp.explanation]?: string;
   /**
    * Optional maximum age allowed for this requirement
    *
    * @title Maximum Age
    */
-  maxAge?: TAgeCore;
+  [rqp.maxAge]?: TAgeCore;
   /**
    * Optional minimum age allowed for this requirement
    *
    * @title Minimum Age
    */
-  minAge?: TAgeCore;
+  [rqp.minAge]?: TAgeCore;
   /**
    * Map of step id to required answer values
    *
    * @title Answers
    */
-  responses: IResponseCore[];
+  [rqp.responses]: IResponseCore[];
 }
 
 /**
@@ -187,18 +198,18 @@ export interface ISectionCore extends IRefCore {
    * @title Last Step
    * @hidden Not viewable/editable in Design Mode
    */
-  lastStep?: number;
+  [scp.lastStep]?: number;
   /**
    * Collection of requirements to enable display of this status
    *
    * @title Requirements
    */
-  requirements: IRequirementCore[];
+  [scp.requirements]: IRequirementCore[];
   /**
    * Current display status of this section
    *
    * @title Status
    * @hidden Not viewable/editable in Design Mode
    */
-  status?: PROGRESS_BAR_STATUS;
+  [scp.status]?: PROGRESS_BAR_STATUS;
 }

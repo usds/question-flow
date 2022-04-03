@@ -1,6 +1,41 @@
 import { isEmpty }         from 'lodash';
 import { ClassProperties } from './types';
 
+/**
+ type TPrefix = {
+  ACTION,
+  ANSWER,
+  BASE,
+  BRANCH,
+  BUTTON,
+  BUTTONS,
+  COMPOSABLE,
+  CONFIG,
+  DESIGN,
+  DESIGN_DATA,
+  EVENT,
+  EVENT_EMITTER,
+  FORM,
+  PAGE,
+  PAGES,
+  PAGE_DATA,
+  QUESTION,
+  QUESTIONNAIRE,
+  QUESTIONS,
+  QUESTION_DATA,
+  REF,
+  REQUIREMENT,
+  RESPONSE,
+  RESULT,
+  RESULTS,
+  SECTION,
+  STEP,
+  STEPS,
+  STEP_DATA,
+  SURVEY,
+  SURVEY_BUILDER,
+
+ */
 type TPrefix = {
   ACTION: 'action',
   ANSWER: 'answer',
@@ -34,9 +69,8 @@ type TPrefix = {
   SURVEY: 'survey',
   SURVEY_BUILDER: 'survey-builder',
 };
-type test = ClassProperties<TPrefix>;
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const PREFIX: TPrefix = {
+
+const CLASS_NAME: TPrefix = {
   ACTION:         'action' as const,
   ANSWER:         'answer' as const,
   BASE:           'base' as const,
@@ -70,9 +104,46 @@ export const PREFIX: TPrefix = {
   SURVEY_BUILDER: 'survey-builder' as const,
 };
 
-type TEPrefix = ClassProperties<typeof PREFIX>;
+interface IInstance {
+  [key: string]: TInstanceOf;
+}
+interface IClassMap extends IInstance {
+  [CLASS_NAME.ACTION]: TInstanceOf;
+  [CLASS_NAME.ANSWER]: TInstanceOf;
+  [CLASS_NAME.BASE]: TInstanceOf;
+  [CLASS_NAME.BRANCH]: TInstanceOf;
+  [CLASS_NAME.BUTTON]: TInstanceOf;
+  [CLASS_NAME.BUTTONS]: TInstanceOf;
+  [CLASS_NAME.COMPOSABLE]: TInstanceOf;
+  [CLASS_NAME.CONFIG]: TInstanceOf;
+  [CLASS_NAME.DESIGN]: TInstanceOf;
+  [CLASS_NAME.DESIGN_DATA]: TInstanceOf;
+  [CLASS_NAME.EVENT]: TInstanceOf;
+  [CLASS_NAME.EVENT_EMITTER]: TInstanceOf;
+  [CLASS_NAME.FORM]: TInstanceOf;
+  [CLASS_NAME.PAGE]: TInstanceOf;
+  [CLASS_NAME.PAGES]: TInstanceOf;
+  [CLASS_NAME.PAGE_DATA]: TInstanceOf;
+  [CLASS_NAME.QUESTION]: TInstanceOf;
+  [CLASS_NAME.QUESTIONNAIRE]: TInstanceOf;
+  [CLASS_NAME.QUESTIONS]: TInstanceOf;
+  [CLASS_NAME.QUESTION_DATA]: TInstanceOf;
+  [CLASS_NAME.REF]: TInstanceOf;
+  [CLASS_NAME.REQUIREMENT]: TInstanceOf;
+  [CLASS_NAME.RESPONSE]: TInstanceOf;
+  [CLASS_NAME.RESULT]: TInstanceOf;
+  [CLASS_NAME.RESULTS]: TInstanceOf;
+  [CLASS_NAME.SECTION]: TInstanceOf;
+  [CLASS_NAME.STEP]: TInstanceOf;
+  [CLASS_NAME.STEPS]: TInstanceOf;
+  [CLASS_NAME.STEP_DATA]: TInstanceOf;
+  [CLASS_NAME.SURVEY]: TInstanceOf;
+  [CLASS_NAME.SURVEY_BUILDER]: TInstanceOf;
+}
 
-export const SUFFIX: {
+type TEPrefix = ClassProperties<typeof CLASS_NAME>;
+
+const SUFFIX: {
   CORE: 'core',
   DEFAULT: 'default',
 } = {
@@ -82,7 +153,7 @@ export const SUFFIX: {
 
 type TESuffix = ClassProperties<typeof SUFFIX>;
 
-export const COI: {
+const COI: {
   CLASS: '',
   INTERFACE: 'I',
 } = {
@@ -92,14 +163,14 @@ export const COI: {
 
 type TECoi = ClassProperties<typeof COI>;
 
-export type TInstanceOf =
+ type TInstanceOf =
   `${TECoi}${TEPrefix}-${TESuffix}`
   | `${TECoi}${TEPrefix}s-${TESuffix}`
   | `${TECoi}${TEPrefix}s`
   | `${TECoi}${TEPrefix}`;
 
-export function makeName(name: TEPrefix, suffix: TESuffix | '', coi: TECoi): TInstanceOf;
-export function makeName(
+ function makeName(name: TEPrefix, suffix: TESuffix | '', coi: TECoi): TInstanceOf;
+function makeName(
   name: TEPrefix,
   suffix: TESuffix | '' = SUFFIX.CORE,
   coi: boolean | TECoi = false,
@@ -112,15 +183,15 @@ export function makeName(
   return ret;
 }
 
-export function getClassName(name: TEPrefix, suffix: TESuffix = SUFFIX.CORE): TInstanceOf {
+function getClassName(name: TEPrefix, suffix: TESuffix = SUFFIX.CORE): TInstanceOf {
   return makeName(name, suffix, COI.CLASS);
 }
 
-export function getInterfaceName(name: TEPrefix, suffix: TESuffix = SUFFIX.CORE): TInstanceOf {
+function getInterfaceName(name: TEPrefix, suffix: TESuffix = SUFFIX.CORE): TInstanceOf {
   return makeName(name, suffix, COI.INTERFACE);
 }
 
-export function extractNames(name: TInstanceOf): TInstanceOf[] {
+function extractNames(name: TInstanceOf): TInstanceOf[] {
   const names: TInstanceOf[] = [name];
   let parts: string[];
   let coi: TECoi             = COI.CLASS;
@@ -148,29 +219,60 @@ export function extractNames(name: TInstanceOf): TInstanceOf[] {
   return names;
 }
 
-export function getClassesAndInterfaces(names: TInstanceOf[]): TInstanceOf[] {
+function getClassesAndInterfaces(names: TInstanceOf[]): TInstanceOf[] {
   const ret = names.concat(names.reduce((_p, currentValue, _i, out) =>
     out.concat(extractNames(currentValue)), names));
   return [...new Set([...ret])];
 }
 
-export function checkInstanceOf(names: TInstanceOf[], obj: any) {
+function checkInstanceOf(names: TInstanceOf[], obj: any) {
   const checking = getClassesAndInterfaces(names);
   return checking.some((i) => `${i}` === `${obj?.instanceOfCheck}`);
 }
 
 type instanceMap = Map<TEPrefix, TInstanceOf>;
 
-export const assembleClassNames = () => {
+const assembleClassNames = () => {
   const ret: instanceMap = new Map<TEPrefix, TInstanceOf>();
 
-  for (const name of Object.values(PREFIX)) {
+  for (const name of Object.values(CLASS_NAME)) {
     ret.set(name, getClassName(name));
   }
   return ret;
 };
 
-export const ClassMap = assembleClassNames();
+const ClassMap = assembleClassNames();
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-export const getInstanceName = <T extends TEPrefix>(name: T): TInstanceOf => ClassMap.get(name)!;
+const getInstanceName = <T extends TEPrefix>(name: T): TInstanceOf => ClassMap.get(name)!;
+
+const classes: IInstance = {};
+Object.values(CLASS_NAME).forEach((key) => {
+  classes[key] = getInstanceName(key);
+});
+
+const ClassList = { ...classes } as IClassMap;
+
+export {
+  assembleClassNames,
+  checkInstanceOf,
+  ClassMap,
+  ClassList,
+  COI,
+  extractNames,
+  getClassesAndInterfaces,
+  getClassName,
+  getInstanceName,
+  getInterfaceName,
+  makeName,
+  CLASS_NAME as PREFIX,
+  CLASS_NAME,
+  SUFFIX,
+  type ClassProperties,
+  type instanceMap,
+  type TECoi,
+  type TEPrefix,
+  type TESuffix,
+  type TInstanceOf,
+  type TPrefix,
+};

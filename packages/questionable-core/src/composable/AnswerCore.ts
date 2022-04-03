@@ -1,37 +1,31 @@
 /* eslint-disable import/no-cycle */
 import {
   IRefCore,
-  EComposableCoreProperties as p,
-  AnswerCoreClassName as className,
-} from '../survey';
+} from '../survey/IRefCore';
+import { EAnswerCoreProperties as p } from '../metadata/MAnswer';
 import {
   checkInstanceOf,
   TInstanceOf,
+  ClassList,
 } from '../util/instanceOf';
-import { ComposableCore }    from './ComposableCore';
-import { QuestionnaireCore } from './QuestionnaireCore';
+import { ComposableCore } from './ComposableCore';
 
 export class AnswerCore extends ComposableCore implements IRefCore {
-  public static override readonly [p._name] = className;
-
-  public override readonly [p.instanceOfCheck]: TInstanceOf = className;
+  public override readonly [p.instanceOfCheck]: TInstanceOf = ClassList.answer;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className, ComposableCore[p._name]], obj);
+    return checkInstanceOf([ClassList.answer, ClassList.composable], obj);
   }
 
-  public static override create(
-    data: Partial<AnswerCore>,
-    questionnaire: Partial<QuestionnaireCore> = {},
-  ): AnswerCore {
+  public static override create(data: Partial<IRefCore>): AnswerCore {
     if (data instanceof AnswerCore) {
       return data;
     }
-    return new AnswerCore(data, questionnaire);
+    return new AnswerCore(data);
   }
 
-  constructor(data: Partial<AnswerCore>, questionnaire: Partial<QuestionnaireCore> = {}) {
-    super(data, questionnaire);
+  constructor(data: Partial<IRefCore> = {}) {
+    super(data);
   }
 }

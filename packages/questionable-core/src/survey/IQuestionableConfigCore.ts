@@ -2,7 +2,7 @@ import { MODE }                                      from '../util/enums';
 import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
 import { IButtonCore }                               from './IButtonCore';
 import { IEventCore }                                from './IEventCore';
-
+import { EConfigCoreProperties as p }                from '../metadata/MConfig';
 /**
  * Configuration for customized behavior of Questionable
  */
@@ -14,65 +14,65 @@ export interface IQuestionableConfigCore {
    * @default false
    * @hidden
    */
-  readonly dev: boolean;
+  readonly [p.dev]: boolean;
   /**
    * Event hooks for common form operations
    *
    * @title Events
    * @hidden
    */
-  events?: Partial<IEventCore>;
+  [p.events]?: Partial<IEventCore>;
   /**
    * Optional method to fetch environment variables or query string parameters
    *
    * @title Get Runtime Config
    * @hidden
    */
-  getRuntimeConfig?: TGetDictionaryCore;
+  [p.getRuntimeConfig]?: TGetDictionaryCore;
   /**
    * View or edit mode
    *
    * @title Mode
    * @default MODE.VIEW
    */
-  mode: MODE;
+  [p.mode]: MODE;
   /**
   * Navigation configuration
   *
   * @title Navigation
   */
-  nav: Partial<INavigationConfigCore>;
+  [p.nav]: Partial<INavigationConfigCore>;
   /**
    * Page configuration
    *
    * @title Pages
    */
-  pages: Partial<IPagesConfigCore>;
+  [p.pages]: Partial<IPagesConfigCore>;
   /**
    * Properties produced from `getRuntimeConfig()`
    * @title Params
    * @default {}
    */
-  get params(): TStringDictionaryCore;
+  get [p.params](): TStringDictionaryCore;
   /**
    * Progress Bar configuration
    *
    * @title Progress Bar
    */
-  progressBar?: Partial<IProgressBarConfigCore>;
+  [p.progressBar]?: Partial<IProgressBarConfigCore>;
   /**
    * Question configuration
    *
    * @title Question Configuration
    */
-  questions?: Partial<IQuestionConfigCore>;
+  [p.questions]?: Partial<IQuestionConfigCore>;
 
   /**
    * Step configuration
    *
    * @title Step Configuration
    */
-  steps?: Partial<IStepConfigCore>;
+  [p.steps]?: Partial<IStepConfigCore>;
 }
 
 /**

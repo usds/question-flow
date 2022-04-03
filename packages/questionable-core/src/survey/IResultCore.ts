@@ -1,7 +1,7 @@
-import { IActionCore }      from './IActionCore';
-import { IRefCore }         from './IRefCore';
-import { IRequirementCore } from './IStepCore';
-
+import { IActionCore }                from './IActionCore';
+import { IRefCore }                   from './IRefCore';
+import { IRequirementCore }           from './IStepCore';
+import { EResultCoreProperties as p } from '../metadata/MResult';
 /**
  * Represents a potential result based on a customer's answers
  */
@@ -12,17 +12,17 @@ export interface IResultCore extends IRefCore {
    * @title Call to Action
    * @hidden
    */
-  action: Partial<IActionCore>;
+  [p.action]: Partial<IActionCore>;
   /**
    * Optional tag/category to group results
    */
-  category?: string;
+  [p.category]?: string;
   /**
    * Identify the result (e.g. 'Benefit name')
    *
    * @title Label
    */
-  label: string;
+  [p.label]: string;
   /**
    * Requirement used for applying this result
    * Could have more than one, we only store the first
@@ -30,24 +30,24 @@ export interface IResultCore extends IRefCore {
    * @title Match
    * @hidden Not viewable/editable in Design Mode
    */
-  match?: IRequirementCore;
+  [p.match]?: IRequirementCore;
   /**
    * Human readable explanation of result determination
    *
    * @title Reason
    */
-  reason?: string;
+  [p.reason]?: string;
   /**
    * Collection of requirements required to achieve this result
    *
    * @title Requirements
    */
-  requirements: IRequirementCore[];
+  [p.requirements]: IRequirementCore[];
   /**
    * Additional action which may follow after the primary
    *
    * @title Secondary Action
    * @hidden
    */
-  secondaryAction?: Partial<IActionCore>;
+  [p.secondaryAction]?: Partial<IActionCore>;
 }

@@ -1,28 +1,15 @@
 /* eslint-disable import/no-cycle */
-import { merge }           from 'lodash';
-import { IResultCore }     from '../survey/IResultCore';
-import { getInstanceName } from '../util/factories';
+import { IResultCore } from '../survey/IResultCore';
 import {
   checkInstanceOf,
-  getClassName,
-  PREFIX,
   TInstanceOf,
+  ClassList,
 } from '../util/instanceOf';
 import { ActionCore }        from './ActionCore';
 import { ComposableCore }    from './ComposableCore';
-import { QuestionnaireCore } from './QuestionnaireCore';
 import { RequirementCore }   from './StepCore';
 
-const resultDefaults = {
-  action:       {},
-  category:     '',
-  label:        '',
-  order:        0,
-  reason:       '',
-  requirements: [],
-};
-
-const refCoreClassName = getInstanceName(PREFIX.RESULT);
+const refCoreClassName = ClassList.result;
 
 export class ResultCore extends ComposableCore implements IResultCore {
   public static override readonly _name = refCoreClassName;
@@ -34,25 +21,25 @@ export class ResultCore extends ComposableCore implements IResultCore {
     return checkInstanceOf([refCoreClassName, ComposableCore._name], obj);
   }
 
-  constructor(data: Partial<ResultCore>, questionnaire: QuestionnaireCore) {
-    super(data, questionnaire);
-    merge(this, resultDefaults);
-    merge(this, data);
+  constructor(data: Partial<ResultCore> = {}) {
+    super(data);
     if (data.action) {
-      this.action = new ActionCore(this.action, questionnaire);
+      this.action = new ActionCore(this.action);
     }
     if (data.match) {
-      this.match = new RequirementCore(data.match, questionnaire);
+      this.match = new RequirementCore(data.match);
     }
     if (data.requirements) {
-      this.requirements = data.requirements.map((r) => new RequirementCore(r, questionnaire));
+      this.requirements = data.requirements.map((r) => new RequirementCore(r));
     }
     if (data.secondaryAction) {
-      this.secondaryAction = new ActionCore(data.secondaryAction, questionnaire);
+      this.secondaryAction = new ActionCore(data.secondaryAction);
     }
   }
 
-  action!: ActionCore;
+  public get [p.action](): ActionCore {
+    return this.touch()
+  }
 
   category!: string;
 

@@ -3,17 +3,14 @@
 import { merge }             from 'lodash';
 import { IPagesCore }        from '../survey/IPagesCore';
 import { PAGE_TYPE }         from '../util/enums';
-import { getInstanceName }   from '../util/factories';
 import {
-  checkInstanceOf, PREFIX,
+  checkInstanceOf, ClassList, PREFIX,
 } from '../util/instanceOf';
 import { PageCore }          from './PageCore';
-import { QuestionnaireCore } from './QuestionnaireCore';
-
-const refCoreClassName = getInstanceName(PREFIX.PAGES);
+import { EPagesCoreProperties as p } from '../metadata/MPages';
 
 const defaults = {
-  instanceof:    refCoreClassName,
+  instanceof:    PREFIX.PAGES,
   landingPage:   undefined,
   noResultsPage: undefined,
   resultsPage:   undefined,
@@ -21,54 +18,54 @@ const defaults = {
 };
 
 export class PagesCore implements IPagesCore {
-  protected static _name = refCoreClassName;
+  protected static _name = PREFIX.PAGES;
 
   // public readonly instanceOfCheck: TInstanceOf = refCoreClassName;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([refCoreClassName], obj);
+    return checkInstanceOf([ClassList.pages], obj);
   }
 
   [key: string]: PageCore | undefined;
 
-  constructor(data: Partial<PagesCore>, questionnaire: QuestionnaireCore) {
+  constructor(data: Partial<IPagesCore>) {
     merge(this, defaults);
     Object.defineProperty(this, 'instanceOfCheck', {
-      get:      () => refCoreClassName,
+      get:      () => ClassList.pages,
       writable: false,
     });
 
     if (data.landingPage) {
-      this.landingPage = new PageCore(data.landingPage, questionnaire);
+      this.landingPage = new PageCore(data.landingPage);
     } else {
       this.landingPage      = new PageCore({
         id: PAGE_TYPE.LANDING, type: PAGE_TYPE.LANDING,
-      }, questionnaire);
+      });
       this.landingPage.type = PAGE_TYPE.LANDING;
     }
     if (data.noResultsPage) {
-      this.noResultsPage = new PageCore(data.noResultsPage, questionnaire);
+      this.noResultsPage = new PageCore(data.noResultsPage);
     } else {
       this.noResultsPage      = new PageCore({
         id: PAGE_TYPE.NO_RESULTS, type: PAGE_TYPE.NO_RESULTS,
-      }, questionnaire);
+      });
       this.noResultsPage.type = PAGE_TYPE.NO_RESULTS;
     }
     if (data.resultsPage) {
-      this.resultsPage = new PageCore(data.resultsPage, questionnaire);
+      this.resultsPage = new PageCore(data.resultsPage);
     } else {
       this.resultsPage      = new PageCore({
         id: PAGE_TYPE.RESULTS, type: PAGE_TYPE.RESULTS,
-      }, questionnaire);
+      });
       this.resultsPage.type = PAGE_TYPE.RESULTS;
     }
     if (data.summaryPage) {
-      this.summaryPage = new PageCore(data.summaryPage, questionnaire);
+      this.summaryPage = new PageCore(data.summaryPage);
     } else {
       this.summaryPage      = new PageCore({
         id: PAGE_TYPE.SUMMARY, type: PAGE_TYPE.SUMMARY,
-      }, questionnaire);
+      });
       this.summaryPage.type = PAGE_TYPE.SUMMARY;
     }
     const pages = Object.keys(data);
@@ -79,11 +76,17 @@ export class PagesCore implements IPagesCore {
     }
   }
 
-  landingPage: PageCore;
+  private [p._landingPage]: PageCore;
+
+  public get landingPage(): PageCore {
+    return this[p._landingPage];
+  }
 
   noResultsPage: PageCore;
 
   resultsPage: PageCore;
 
   summaryPage: PageCore;
+
+  public override type: PAGE_TYPE;
 }

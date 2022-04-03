@@ -88,3 +88,4 @@ export type FlatStrings<T> = T extends object ? T[keyof T] : T
 export type CoreProperties<X> = X[keyof X];
 /** Construct a type using property names */
 export type ClassProperties<T> = FlatStrings<CoreProperties<T>>;
+// export type PrivateProperties<T> = T[keyof ClassProperties<T>]

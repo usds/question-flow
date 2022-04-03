@@ -1,50 +1,70 @@
 /* eslint-disable import/no-cycle */
-import { merge }           from 'lodash';
-import { IPageCore }       from '../survey/IStepCore';
-import { PAGE_TYPE }       from '../util/enums';
+import { merge }     from 'lodash';
+import { IPageCore } from '../survey/IStepCore';
+import { PAGE_TYPE } from '../util/enums';
 import {
   checkInstanceOf,
-  PREFIX,
   TInstanceOf,
+  ClassList,
 } from '../util/instanceOf';
-import { QuestionnaireCore }   from './QuestionnaireCore';
-import { StepCore, TStepCtor } from './StepCore';
+import { StepCore }                from './StepCore';
+import {
+  EPageCoreProperties as p,
+  type TPageCoreProperties as t,
+} from '../metadata/MPage';
 
-type ctor = TStepCtor & Partial<PageCore>;
-
-const defaults         = {
-  body:          '',
-  bodyHeader:    '',
-  bodySubheader: '',
-  type:          PAGE_TYPE.DEFAULT,
-};
-const className = getInstanceName(PREFIX.PAGE);
+const className = ClassList.page;
 export class PageCore extends StepCore implements IPageCore {
-  public static override readonly _name = className;
+  public static override readonly [p._name] = className;
 
-  public override readonly instanceOfCheck: TInstanceOf = className;
+  public override readonly [p.instanceOfCheck]: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className, StepCore._name], obj);
+    return checkInstanceOf([className, ClassList.page], obj);
   }
 
-  constructor(data: ctor, questionnaire: QuestionnaireCore) {
-    super(data, questionnaire);
-    merge(this, defaults);
-    merge(this, data);
-    if (!data.type || `${data.type}` === `${PAGE_TYPE.DEFAULT}`) {
-      this.type = PAGE_TYPE.DEFAULT;
-    } else {
-      this.type = data.type;
+  public static override create(data: Partial<IPageCore> = {}) {
+    if (data instanceof PageCore) {
+      return data;
     }
+    return new PageCore(data);
   }
 
-  body!: string;
+  constructor(data: Partial<IPageCore> = {}) {
+    super(data);
 
-  bodyHeader!: string;
+    if (!data.type || `${data.type}` === `${PAGE_TYPE.DEFAULT}`) {
+      this[p._type] = PAGE_TYPE.DEFAULT;
+    } else {
+      this[p._type] = data.type;
+    }
+    this[p._body]          = data.body || '';
+    this[p._bodyHeader]    = data.bodyHeader || '';
+    this[p._bodySubHeader] = data.bodySubHeader || '';
+  }
 
-  bodySubHeader!: string;
+  private [p._body]: string;
 
-  type: PAGE_TYPE;
+  public get [p.body]() {
+    return this[p._body];
+  }
+
+  private [p._bodyHeader]: string;
+
+  public get [p.bodyHeader]() {
+    return this[p._bodyHeader];
+  }
+
+  private [p._bodySubHeader]: string;
+
+  public get [p.bodySubHeader]() {
+    return this[p._bodySubHeader];
+  }
+
+  private [p._type]: PAGE_TYPE;
+
+  public override get [p.type]() {
+    return this[p._type];
+  }
 }

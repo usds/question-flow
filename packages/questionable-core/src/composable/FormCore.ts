@@ -1,10 +1,8 @@
 /* eslint-disable import/no-cycle */
-import { merge }                    from 'lodash';
-import { eventedCore }              from '../state/pubsub';
+import { merge }       from 'lodash';
+import { eventedCore } from '../state/pubsub';
 import {
   IFormCore,
-  EFormCoreProperties as p,
-  FormCoreClassName as className,
 } from '../survey/IFormCore';
 import { TAgeCore }     from '../util/types';
 import { ACTION_TYPE }  from '../util/enums';
@@ -12,32 +10,38 @@ import { QuestionCore } from './StepCore';
 import {
   checkInstanceOf,
   TInstanceOf,
+  ClassList,
 } from '../util/instanceOf';
-import { fromSet, toSet } from '../util/set';
+import { fromSet, toSet }           from '../util/set';
+import { EFormCoreProperties as p } from '../metadata/MForm';
 
 export class FormCore implements IFormCore {
-  public static readonly [p._name] = className;
-
-  public readonly [p.instanceOfCheck]: TInstanceOf = className;
+  public readonly [p.instanceOfCheck]: TInstanceOf = ClassList.form;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className], obj);
+    return checkInstanceOf([ClassList.form], obj);
   }
 
-  public static create(data: Partial<FormCore> = {}) {
+  public static create(data: Partial<IFormCore> = {}) {
     if (data instanceof FormCore) {
       return data;
     }
     return new FormCore(data);
   }
 
-  constructor(data: Partial<FormCore> = {}) {
+  constructor(data: Partial<IFormCore> = {}) {
     this[p._started]   = new Date();
     this[p._age]       = data.age;
     this[p._birthdate] = data.birthdate || '';
     this[p._finished]  = data.finished;
-    this[p._responses] = toSet(data.responses || []);
+    const responses    = data.responses?.map((r) => {
+      if (r instanceof QuestionCore) {
+        return r;
+      }
+      return new QuestionCore(r);
+    }) || [];
+    this[p._responses] = toSet(responses);
     eventedCore.publish({ event: this, type: 'start' });
   }
 
@@ -47,15 +51,12 @@ export class FormCore implements IFormCore {
     return this[p._started];
   }
 
-  private [p._birthdate]: string;
+  //private [p.birthdate]: string;
 
   public get [p.birthdate]() {
     return this[p._birthdate];
   }
 
-  public set [p.birthdate](data: string) {
-    this[p._birthdate] = data;
-  }
 
   private [p._age]: TAgeCore | undefined;
 
@@ -89,6 +90,8 @@ export class FormCore implements IFormCore {
   public add(response: QuestionCore) {
     this[p._responses].add(response);
   }
+
+
 
   /**
    * Merges the form's answer state as the user progresses through the survey

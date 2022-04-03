@@ -1,43 +1,42 @@
 /* eslint-disable import/no-cycle */
-import { IRefCore }             from '../survey';
+import { IRefCore } from '../survey/IRefCore';
 import {
   IActionCore,
-  ActionCoreClassName as className,
-  EActionCoreProperties as p,
 } from '../survey/IActionCore';
-import { IButtonCore }    from '../survey/IButtonCore';
-import { fromSet, toSet } from '../util';
-import { ACTION }         from '../util/enums';
+import { EActionCoreProperties as p, TActionPrivateProps } from '../metadata/MAction';
+import { IButtonCore }                                     from '../survey/IButtonCore';
+import { fromSet, toSet }                                  from '../util/set';
+import { ACTION }                                          from '../util/enums';
 import {
   checkInstanceOf,
   TInstanceOf,
+  ClassList,
 } from '../util/instanceOf';
-import { ComposableCore }    from './ComposableCore';
-import { QuestionnaireCore } from './QuestionnaireCore';
+import { ComposableCore } from './ComposableCore';
+import { Dictionary }     from './Dictionary';
 
 export class ActionCore extends ComposableCore implements IActionCore, IRefCore {
-  public static override readonly [p._name] = className;
-
-  public override readonly [p.instanceOfCheck]: TInstanceOf = className;
+  public override readonly [p.instanceOfCheck]: TInstanceOf = ClassList.action;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className, ComposableCore._name], obj);
+    return checkInstanceOf([ClassList.action, ClassList.composable], obj);
   }
 
-  public static override create(data: Partial<ActionCore> = {}, questionnaire: Partial<QuestionnaireCore> = {}) {
+  public static override create(data: Partial<IActionCore> = {}) {
     if (data instanceof ActionCore) {
       return data;
     }
-    return new ActionCore(data, questionnaire);
+    return new ActionCore(data);
   }
 
-  constructor(data: Partial<ActionCore> = {}, questionnaire: Partial<QuestionnaireCore> = {}) {
-    super(data, questionnaire);
-    this[p._buttons]  = toSet(data.buttons || []);
-    this[p._label]    = data.label || '';
-    this[p._subTitle] = data.subTitle || '';
-    this[p._type]     = data.type || ACTION.DEFAULT;
+  constructor(data: Partial<IActionCore> = {}) {
+    super(data);
+    this.#hash       = new Dictionary<TActionPrivateProps, string | typeof ACTION | Set<IButtonCore>>();
+    this[p.buttons]  = data.buttons || [];
+    this[p.label]    = data.label || '';
+    this[p.subTitle] = data.subTitle || '';
+    this[p.type]     = data.type || ACTION.DEFAULT;
   }
 
   /**
@@ -46,39 +45,42 @@ export class ActionCore extends ComposableCore implements IActionCore, IRefCore 
    * @hidden
    */
   public get [p.buttons](): IButtonCore[] {
-    return fromSet(this[p._buttons]);
+    const val = this.#hash.touch<Set<IButtonCore>>(p._buttons, new Set<IButtonCore>());
+    return fromSet(val);
   }
 
-  protected [p._buttons]: Set<IButtonCore>;
+  public set [p.buttons](val: IButtonCore[]) {
+    this.#hash.set<Set<IButtonCore>>(p._buttons, toSet(val), true);
+  }
 
   public add(data: IButtonCore) {
-    return this[p._buttons].add(data);
+    const set = this.#hash.get<Set<IButtonCore>>(p._buttons);
+    set.add(data);
+    return data;
   }
 
   /**
    * @title Description
    */
   public get [p.subTitle](): string {
-    return this[p._subTitle];
+    return this.#hash.touch<string>(p._subTitle, '');
   }
 
-  protected [p._subTitle]: string;
+  public set [p.subTitle](val: string) {
+    this.#hash.set<string>(p._subTitle, val, true);
+  }
 
   /**
    * @title Type
    * @hidden
    */
   public override get [p.type](): ACTION {
-    return this[p._type];
+    return this.#hash.touch(p._type, ACTION.DEFAULT);
   }
 
-  protected override [p._type]: ACTION;
+  public override set [p.type](val: ACTION) {
+    this.#hash.set(p._type, val, true);
+  }
 
-  // public add(): ActionCore {
-  //   super.add();
-  //   if (!this.questionnaire.actions.some((a) => a === this || a.id === this.id)) {
-  //     this.questionnaire.actions.push(this);
-  //   }
-  //   return this;
-  // }
+  #hash: Dictionary<TActionPrivateProps, string | typeof ACTION | Set<IButtonCore>>;
 }

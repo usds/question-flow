@@ -1,11 +1,9 @@
 import { DIRECTION }                               from '../util/enums';
-import { getInstanceName, PREFIX }                 from '../util/instanceOf';
-import { ClassProperties, TStringDictionaryCore }  from '../util/types';
+import { TStringDictionaryCore }                   from '../util/types';
 import { IFormCore }                               from './IFormCore';
-import { ECommonCoreProperties }                   from './IRefCore';
 import { IResultCore }                             from './IResultCore';
 import { IQuestionCore, IResponseCore, IStepCore } from './IStepCore';
-
+import { EEventCoreProperties as p }               from '../metadata/MEvent';
 /**
  * Event data structure to be sent with event callbacks
  * @title Event Data Type
@@ -84,35 +82,6 @@ export type TOnErrorCore = (e: Error, data?: TEventCore) => void;
  */
 export type TOnGateSwitchCore = (gate: TGateCore, data: TStringDictionaryCore) => void;
 
-export const EventCoreClassName = getInstanceName(PREFIX.EVENT_EMITTER);
-export type TEEventCoreProperties = {
-  onActionClick: 'onActionClick',
-  onAnswer: 'onAnswer',
-  onAnyEvent: 'onAnyEvent',
-  onBranch: 'onBranch',
-  onError: 'onError',
-  onGateSwitch: 'onGateSwitch',
-  onInit: 'onInit',
-  onNoResults: 'onNoResults',
-  onPage: 'onPage',
-  onResults: 'onResults'
-};
-const EventProps: TEEventCoreProperties = {
-  onActionClick: 'onActionClick' as const,
-  onAnswer:      'onAnswer' as const,
-  onAnyEvent:    'onAnyEvent' as const,
-  onBranch:      'onBranch' as const,
-  onError:       'onError' as const,
-  onGateSwitch:  'onGateSwitch' as const,
-  onInit:        'onInit' as const,
-  onNoResults:   'onNoResults' as const,
-  onPage:        'onPage' as const,
-  onResults:     'onResults',
-};
-export const EEventCoreProperties = { ...ECommonCoreProperties, ...EventProps };
-export type EventCoreProperties = ClassProperties<typeof EEventCoreProperties>;
-// For (a little) brevity in interface members
-const p = EEventCoreProperties;
 /**
  * Event Model
  * @title Event
