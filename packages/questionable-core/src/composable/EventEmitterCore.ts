@@ -19,9 +19,10 @@ import {
 } from '../util/instanceOf';
 import { FormCore }                  from './FormCore';
 import { EEventCoreProperties as p } from '../metadata/MEvent';
+import { BaseCore }                  from './BaseCore';
 
 const className = ClassList['event-emitter'];
-export class EventEmitterCore implements IEventCore {
+export class EventEmitterCore extends BaseCore implements IEventCore {
   public readonly [p.instanceOfCheck]: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,6 +58,7 @@ export class EventEmitterCore implements IEventCore {
   }
 
   constructor(data: Partial<IEventCore> = {}) {
+    super();
     this[p.onActionClick] = data.onActionClick || noop;
     this[p.onAnswer]      = data.onAnswer || noop;
     this[p.onAnyEvent]    = data.onAnyEvent || noop;

@@ -1,5 +1,4 @@
 /* eslint-disable import/no-cycle */
-import { merge }     from 'lodash';
 import { IPageCore } from '../survey/IStepCore';
 import { PAGE_TYPE } from '../util/enums';
 import {
@@ -7,16 +6,13 @@ import {
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { StepCore }                from './StepCore';
+import { StepCore }           from './StepCore';
 import {
   EPageCoreProperties as p,
-  type TPageCoreProperties as t,
 } from '../metadata/MPage';
 
 const className = ClassList.page;
 export class PageCore extends StepCore implements IPageCore {
-  public static override readonly [p._name] = className;
-
   public override readonly [p.instanceOfCheck]: TInstanceOf = className;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,36 +31,36 @@ export class PageCore extends StepCore implements IPageCore {
     super(data);
 
     if (!data.type || `${data.type}` === `${PAGE_TYPE.DEFAULT}`) {
-      this[p._type] = PAGE_TYPE.DEFAULT;
+      this.#type = PAGE_TYPE.DEFAULT;
     } else {
-      this[p._type] = data.type;
+      this.#type = data.type;
     }
-    this[p._body]          = data.body || '';
-    this[p._bodyHeader]    = data.bodyHeader || '';
-    this[p._bodySubHeader] = data.bodySubHeader || '';
+    this.#body          = data.body || '';
+    this.#bodyHeader    = data.bodyHeader || '';
+    this.#bodySubHeader = data.bodySubHeader || '';
   }
 
-  private [p._body]: string;
+  #body: string;
 
   public get [p.body]() {
-    return this[p._body];
+    return this.#body;
   }
 
-  private [p._bodyHeader]: string;
+  #bodyHeader: string;
 
   public get [p.bodyHeader]() {
-    return this[p._bodyHeader];
+    return this.#bodyHeader;
   }
 
-  private [p._bodySubHeader]: string;
+  #bodySubHeader: string;
 
   public get [p.bodySubHeader]() {
-    return this[p._bodySubHeader];
+    return this.#bodySubHeader;
   }
 
-  private [p._type]: PAGE_TYPE;
+  #type: PAGE_TYPE;
 
   public override get [p.type]() {
-    return this[p._type];
+    return this.#type;
   }
 }

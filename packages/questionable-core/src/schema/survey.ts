@@ -29,6 +29,7 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "label": {
           "title": "Label",
           "type": "string"
@@ -44,6 +45,7 @@ export const survey = {
       },
       "required": [
         "id",
+        "instanceOfCheck",
         "label"
       ],
       "type": "object"
@@ -55,6 +57,7 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "questions": {
           "items": {
             "$ref": "#/definitions/IRefCore"
@@ -68,6 +71,7 @@ export const survey = {
       },
       "required": [
         "id",
+        "instanceOfCheck",
         "questions"
       ],
       "type": "object"
@@ -87,6 +91,7 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "link": {
           "description": "Link to tie to button click",
           "title": "Link",
@@ -97,9 +102,9 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TButtonModeCore",
           "description": "Render mode (link or button)",
-          "title": "Mode"
+          "title": "Mode",
+          "type": "string"
         },
         "visible": {
           "description": "Visibility status of the button (show/hide)",
@@ -108,7 +113,8 @@ export const survey = {
         }
       },
       "required": [
-        "id"
+        "id",
+        "instanceOfCheck"
       ],
       "type": "object"
     },
@@ -120,6 +126,7 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "link": {
           "description": "Link to tie to button click",
           "title": "Link",
@@ -130,9 +137,9 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TButtonModeCore",
           "description": "Render mode (link or button)",
-          "title": "Mode"
+          "title": "Mode",
+          "type": "string"
         },
         "visible": {
           "description": "Visibility status of the button (show/hide)",
@@ -141,7 +148,8 @@ export const survey = {
         }
       },
       "required": [
-        "id"
+        "id",
+        "instanceOfCheck"
       ],
       "type": "object"
     },
@@ -183,9 +191,42 @@ export const survey = {
       "description": "Represents the survey as completed by the user",
       "properties": {
         "age": {
-          "$ref": "#/definitions/TAgeCore",
           "description": "Customer's age in years/months/days",
-          "title": "Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Age",
+          "type": "object"
         },
         "birthdate": {
           "description": "Customer's entered birthdate",
@@ -198,6 +239,7 @@ export const survey = {
           "title": "Finished",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "responses": {
           "description": "All currently provided responses",
           "items": {
@@ -214,6 +256,7 @@ export const survey = {
         }
       },
       "required": [
+        "instanceOfCheck",
         "responses",
         "started"
       ],
@@ -296,6 +339,7 @@ export const survey = {
           "title": "Info",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "internalNotes": {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
@@ -305,6 +349,7 @@ export const survey = {
           "description": "Section to which this step belongs",
           "properties": {
             "id": {},
+            "instanceOfCheck": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -335,6 +380,7 @@ export const survey = {
       },
       "required": [
         "id",
+        "instanceOfCheck",
         "section",
         "type"
       ],
@@ -353,16 +399,6 @@ export const survey = {
       "type": "object"
     },
     "IPagesCore": {
-      "additionalProperties": {
-        "anyOf": [
-          {
-            "$ref": "#/definitions/IPageCore"
-          },
-          {
-            "not": {}
-          }
-        ]
-      },
       "description": "Defines required pages for the survey flow",
       "properties": {
         "landingPage": {
@@ -375,6 +411,9 @@ export const survey = {
           "description": "Last step of the survey if there are 0 results",
           "title": "No Results Page"
         },
+        "pages": {
+          "$ref": "#/definitions/TPages"
+        },
         "resultsPage": {
           "$ref": "#/definitions/IPageCore",
           "description": "Last step of the survey if there are 1 or more results",
@@ -386,6 +425,9 @@ export const survey = {
           "title": "Summary Page"
         }
       },
+      "required": [
+        "pages"
+      ],
       "type": "object"
     },
     "IProgressBarConfigCore": {
@@ -456,6 +498,7 @@ export const survey = {
           "title": "Info",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "internalNotes": {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
@@ -465,6 +508,7 @@ export const survey = {
           "description": "Section to which this step belongs",
           "properties": {
             "id": {},
+            "instanceOfCheck": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -496,6 +540,7 @@ export const survey = {
       "required": [
         "answers",
         "id",
+        "instanceOfCheck",
         "section",
         "type"
       ],
@@ -606,8 +651,11 @@ export const survey = {
         "config": {
           "$ref": "#/definitions/IQuestionableConfigCore"
         },
-        "form": {
-          "$ref": "#/definitions/IFormCore"
+        "flow": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "header": {
           "type": "string"
@@ -638,7 +686,7 @@ export const survey = {
         "actions",
         "branches",
         "config",
-        "form",
+        "flow",
         "header",
         "pages",
         "questions",
@@ -655,12 +703,14 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "title": {
           "title": "Title",
           "type": "string"
         }
       },
       "required": [
+        "instanceOfCheck",
         "id"
       ],
       "type": "object"
@@ -673,15 +723,87 @@ export const survey = {
           "title": "Exlanation",
           "type": "string"
         },
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
+        "instanceOfCheck": {},
         "maxAge": {
-          "$ref": "#/definitions/TAgeCore",
           "description": "Optional maximum age allowed for this requirement",
-          "title": "Maximum Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Maximum Age",
+          "type": "object"
         },
         "minAge": {
-          "$ref": "#/definitions/TAgeCore",
           "description": "Optional minimum age allowed for this requirement",
-          "title": "Minimum Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Minimum Age",
+          "type": "object"
         },
         "responses": {
           "description": "Map of step id to required answer values",
@@ -690,9 +812,15 @@ export const survey = {
           },
           "title": "Answers",
           "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
         }
       },
       "required": [
+        "id",
+        "instanceOfCheck",
         "responses"
       ],
       "type": "object"
@@ -707,6 +835,9 @@ export const survey = {
                 "description": "Unique identifier",
                 "title": "Id",
                 "type": "string"
+              },
+              "instanceOfCheck": {
+                "not": {}
               },
               "title": {
                 "title": "Title",
@@ -732,6 +863,7 @@ export const survey = {
             "footer": {},
             "id": {},
             "info": {},
+            "instanceOfCheck": {},
             "internalNotes": {},
             "section": {},
             "subTitle": {},
@@ -763,6 +895,7 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "label": {
           "description": "Identify the result (e.g. 'Benefit name')",
           "title": "Label",
@@ -788,6 +921,7 @@ export const survey = {
       },
       "required": [
         "id",
+        "instanceOfCheck",
         "label",
         "requirements"
       ],
@@ -801,6 +935,7 @@ export const survey = {
           "title": "Id",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "requirements": {
           "description": "Collection of requirements to enable display of this status",
           "items": {
@@ -816,6 +951,7 @@ export const survey = {
       },
       "required": [
         "id",
+        "instanceOfCheck",
         "requirements"
       ],
       "type": "object"
@@ -867,6 +1003,7 @@ export const survey = {
           "title": "Info",
           "type": "string"
         },
+        "instanceOfCheck": {},
         "internalNotes": {
           "description": "Private/internal use only notes for documenting this step",
           "title": "Internal Notes",
@@ -876,6 +1013,7 @@ export const survey = {
           "description": "Section to which this step belongs",
           "properties": {
             "id": {},
+            "instanceOfCheck": {},
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
@@ -906,6 +1044,7 @@ export const survey = {
       },
       "required": [
         "id",
+        "instanceOfCheck",
         "section",
         "type"
       ],
@@ -943,42 +1082,6 @@ export const survey = {
       ],
       "type": "string"
     },
-    "TAgeCore": {
-      "properties": {
-        "days": {
-          "maximum": 31,
-          "minimum": 0,
-          "title": "Days",
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "months": {
-          "maximum": 31,
-          "minimum": 0,
-          "title": "Months",
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "years": {
-          "maximum": 100,
-          "minimum": 0,
-          "title": "Years",
-          "type": [
-            "number",
-            "null"
-          ]
-        }
-      },
-      "required": [
-        "months",
-        "years"
-      ],
-      "type": "object"
-    },
     "TAnswerDataCore": {
       "description": "Event data structure to be sent with event callbacks",
       "properties": {
@@ -1008,9 +1111,6 @@ export const survey = {
       ],
       "title": "Event Data Type",
       "type": "object"
-    },
-    "TButtonModeCore": {
-      "type": "string"
     },
     "TEventCore": {
       "anyOf": [
@@ -1065,6 +1165,12 @@ export const survey = {
         "dir"
       ],
       "title": "Event Data Type",
+      "type": "object"
+    },
+    "TPages": {
+      "additionalProperties": {
+        "$ref": "#/definitions/IPageCore"
+      },
       "type": "object"
     },
     "TResultDataCore": {

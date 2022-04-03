@@ -1,13 +1,14 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
-import { merge }             from 'lodash';
-import { IPagesCore }        from '../survey/IPagesCore';
-import { PAGE_TYPE }         from '../util/enums';
+import { merge }                        from 'lodash';
+import { IPagesCore }                   from '../survey/IPagesCore';
+import { PAGE_TYPE }                    from '../util/enums';
 import {
   checkInstanceOf, ClassList, PREFIX,
 } from '../util/instanceOf';
-import { PageCore }          from './PageCore';
+import { PageCore }                  from './PageCore';
 import { EPagesCoreProperties as p } from '../metadata/MPages';
+import { BaseCore }                  from './BaseCore';
 
 const defaults = {
   instanceof:    PREFIX.PAGES,
@@ -17,76 +18,74 @@ const defaults = {
   summaryPage:   undefined,
 };
 
-export class PagesCore implements IPagesCore {
-  protected static _name = PREFIX.PAGES;
+type TPages = {
+  [key: string]: PageCore;
+}
 
-  // public readonly instanceOfCheck: TInstanceOf = refCoreClassName;
+export class PagesCore extends BaseCore implements IPagesCore {
+  // public override readonly instanceOfCheck: TInstanceOf = ClassList.pages;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static [Symbol.hasInstance](obj: any) {
+  static override [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.pages], obj);
   }
 
-  [key: string]: PageCore | undefined;
+  pages: TPages;
 
-  constructor(data: Partial<IPagesCore>) {
+  public static override create(data: Partial<IPagesCore> = {}) {
+    if (data instanceof PagesCore) {
+      return data;
+    }
+    return new PagesCore(data);
+  }
+
+  constructor(data: Partial<IPagesCore> = {}) {
+    super();
     merge(this, defaults);
-    Object.defineProperty(this, 'instanceOfCheck', {
-      get:      () => ClassList.pages,
-      writable: false,
+    this.pages          = {};
+    this.#landingPage   = PageCore.create(data.landingPage || {
+      id: PAGE_TYPE.LANDING, type: PAGE_TYPE.LANDING,
     });
-
-    if (data.landingPage) {
-      this.landingPage = new PageCore(data.landingPage);
-    } else {
-      this.landingPage      = new PageCore({
-        id: PAGE_TYPE.LANDING, type: PAGE_TYPE.LANDING,
-      });
-      this.landingPage.type = PAGE_TYPE.LANDING;
-    }
-    if (data.noResultsPage) {
-      this.noResultsPage = new PageCore(data.noResultsPage);
-    } else {
-      this.noResultsPage      = new PageCore({
-        id: PAGE_TYPE.NO_RESULTS, type: PAGE_TYPE.NO_RESULTS,
-      });
-      this.noResultsPage.type = PAGE_TYPE.NO_RESULTS;
-    }
-    if (data.resultsPage) {
-      this.resultsPage = new PageCore(data.resultsPage);
-    } else {
-      this.resultsPage      = new PageCore({
-        id: PAGE_TYPE.RESULTS, type: PAGE_TYPE.RESULTS,
-      });
-      this.resultsPage.type = PAGE_TYPE.RESULTS;
-    }
-    if (data.summaryPage) {
-      this.summaryPage = new PageCore(data.summaryPage);
-    } else {
-      this.summaryPage      = new PageCore({
-        id: PAGE_TYPE.SUMMARY, type: PAGE_TYPE.SUMMARY,
-      });
-      this.summaryPage.type = PAGE_TYPE.SUMMARY;
-    }
-    const pages = Object.keys(data);
-    for (const page of pages) {
-      if (data[page] instanceof PageCore) {
-        this[page] = data[page] as PageCore;
+    this.#resultsPage   = PageCore.create(data.resultsPage || {
+      id: PAGE_TYPE.RESULTS, type: PAGE_TYPE.RESULTS,
+    });
+    this.#noResultsPage = PageCore.create(data.noResultsPage || {
+      id: PAGE_TYPE.NO_RESULTS, type: PAGE_TYPE.NO_RESULTS,
+    });
+    this.#summaryPage   = PageCore.create(data.summaryPage || {
+      id: PAGE_TYPE.SUMMARY, type: PAGE_TYPE.SUMMARY,
+    });
+    if (data.pages) {
+      const pages = Object.keys(data.pages);
+      for (const name of pages) {
+        if (data.pages[name] instanceof PageCore) {
+          this.pages[name] = data.pages[name] as PageCore;
+        }
       }
     }
   }
 
-  private [p._landingPage]: PageCore;
+  #landingPage: PageCore;
 
   public get landingPage(): PageCore {
-    return this[p._landingPage];
+    return this.#landingPage;
   }
 
-  noResultsPage: PageCore;
+  #noResultsPage: PageCore;
 
-  resultsPage: PageCore;
+  public get [p.noResultsPage](): PageCore {
+    return this.#noResultsPage;
+  }
 
-  summaryPage: PageCore;
+  #resultsPage: PageCore;
 
-  public override type: PAGE_TYPE;
+  public get resultsPage(): PageCore {
+    return this.#resultsPage;
+  }
+
+  #summaryPage: PageCore;
+
+  public get [p.summaryPage]() {
+    return this.#summaryPage;
+  }
 }

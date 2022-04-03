@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable new-cap */
-import {
-  ActionCore, ComposableCore,
-}                       from '../composable';
+// import {
+//   ActionCore, ComposableCore,
+// }                       from '../composable';
 import { QuestionnaireCore } from '../composable/QuestionnaireCore';
 
 export class SurveyBuilder<T extends QuestionnaireCore> {
@@ -47,19 +47,18 @@ export class SurveyBuilder<T extends QuestionnaireCore> {
   //   }
   //   return new C(this.#questionnaire, data);
   // }
-  add<TClass extends ComposableCore>(
-    type: { new(...args: [TClass, QuestionnaireCore]): TClass },
-    ...args: [TClass, QuestionnaireCore]
-  ) {
-    const item: TClass = new type(...args);
-    switch (item.instanceOfCheck) {
-      case ActionCore._name:
-        if (item instanceof ActionCore) {
-          this.actions.push(item);
-        }
-        break;
-      
-    }
-    return item;
-  }
+  // add<TClass extends ComposableCore>(
+  //   type: { new(...args: [TClass, QuestionnaireCore]): TClass },
+  //   ...args: [TClass, QuestionnaireCore]
+  // ) {
+  //   const item: TClass = new type(...args);
+  //   switch (item.instanceOfCheck) {
+  //     case ActionCore._name:
+  //       if (item instanceof ActionCore) {
+  //         this.actions.push(item);
+  //       }
+  //       break;
+  //   }
+  //   return item;
+  // }
 }

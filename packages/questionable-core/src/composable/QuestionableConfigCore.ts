@@ -22,15 +22,12 @@ import {
   IQuestionConfigCore,
   IStepConfigCore,
 } from '../survey/IQuestionableConfigCore';
-import { BaseCore } from './BaseCore';
-import { FormCore } from './FormCore';
 import {
   checkInstanceOf,
-  getClassName,
-  PREFIX,
+  ClassList,
   TInstanceOf,
 } from '../util/instanceOf';
-import { getInstanceName } from '../util/factories';
+import { BaseCore } from './BaseCore';
 
 const defaults = {
   events: {
@@ -53,21 +50,17 @@ const defaults = {
   questions:   {},
 };
 
-const refCoreClassName = getInstanceName(PREFIX.CONFIG);
-
 /**
  * Configuration class for customizing the Questionable components
  *
  * The config has opinionated defaults, but is easily modified using Partial updates
  */
 export class QuestionableConfigCore extends BaseCore implements IQuestionableConfigCore {
-  public static override readonly _name = refCoreClassName;
-
-  public override readonly instanceOfCheck: TInstanceOf = refCoreClassName;
+  public readonly instanceOfCheck: TInstanceOf = ClassList.config;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([refCoreClassName, BaseCore._name], obj);
+  static [Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([ClassList.config], obj);
   }
 
   protected _mode!: MODE;
@@ -88,15 +81,15 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
 
   readonly getRuntimeConfig?: TGetDictionaryCore;
 
-  constructor(data: Partial<QuestionableConfigCore>, form: FormCore) {
-    super(data, form);
+  constructor(data: Partial<IQuestionableConfigCore>) {
+    super();
     merge(defaults, data);
     merge(this, data);
     this._params = (data.getRuntimeConfig) ? data.getRuntimeConfig(this) : {};
     if (data.params?.dev) {
       this._mode = MODE.DEV;
     }
-    this.events = new EventEmitterCore(data.events || {}, form);
+    this.events = new EventEmitterCore(data.events);
   }
 
   get dev(): boolean {

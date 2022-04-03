@@ -10,7 +10,6 @@
     "redux": "^4.1.2",
     "serialize-error": "9.1.0",
     "short-unique-id": "^4.4.4",
-    "tst-reflect": "^0.7.4",
     "uuid": "^8.3.2"
   },
   "engines": {
@@ -62,8 +61,6 @@
     "ts-json-schema-generator": "^1.0.0",
     "ts-loader": "^9.2.8",
     "ts-node": "^10.7.0",
-    "tst-reflect-transformer": "^0.9.5",
-    "ttypescript": "^1.5.13",
     "typescript": "^4.6.3"
   },
   "description": "Core logic and state machine. Compatible with node, the browser and the console.",
@@ -82,9 +79,10 @@
   "scripts": {
     "build": "yarn clean && yarn lint && yarn build:tsc && yarn build:rollup && yarn build:schema",
     "build:rollup": "rollup --config --environment NODE_ENV:production",
-    "build:schema": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true && node ./parseSchema.js",
+    "build:schemaJson": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true",
+    "build:schema": "yarn build:schemaJson && node ./parseSchema.js",
     "build:watch": "yarn build -w",
-    "build:tsc": "ttsc -p tsconfig.json",
+    "build:tsc": "tsc -p tsconfig.json",
     "clean": "rimraf ./dist",
     "deploy": "npm publish",
     "lint": "yarn lint:ts && yarn type-check",
@@ -92,7 +90,7 @@
     "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
     "prebuild": "yarn clean",
     "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\"",
-    "type-check": "ttsc --noEmit -p tsconfig.json"
+    "type-check": "tsc --noEmit -p tsconfig.json"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.2"

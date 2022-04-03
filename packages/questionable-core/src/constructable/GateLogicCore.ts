@@ -1,5 +1,5 @@
 import {
-  groupBy, isEmpty, noop, values,
+  groupBy, isEmpty, noop,
 } from 'lodash';
 import { QuestionableConfigCore } from '../composable/QuestionableConfigCore';
 import { ResultCore }             from '../composable/ResultCore';
@@ -30,6 +30,7 @@ import { TAgeCalcCore, TAgeCore } from '../util/types';
 import { IPageConfigCore }        from '../survey/IQuestionableConfigCore';
 import { ActionCore }             from '../composable/ActionCore';
 import { PagesCore }              from '../composable/PagesCore';
+import { Questioner }             from './Questioner';
 
 type TPageSet = {
   config?: Partial<IPageConfigCore>;
@@ -49,13 +50,13 @@ export class GateLogicCore {
 
   #form: FormCore;
 
-  constructor(questionnaire: QuestionnaireCore) {
+  constructor(questionnaire: QuestionnaireCore, form: FormCore) {
     this.#questionnaire = questionnaire;
+    this.#form          = form;
     this.#flow          = questionnaire.flow;
     this.#config        = questionnaire.config;
     this.#steps         = questionnaire.steps;
-    this.#pages = questionnaire.pages;
-    this.#form = questionnaire.form;
+    this.#pages         = questionnaire.pages;
   }
 
   public enableLog() {
@@ -69,7 +70,6 @@ export class GateLogicCore {
   public static enableLogging() {
     toggleOut('on');
   }
-
 
   public goToStep(step: StepCore, cb = noop): void {
     if (cb) {
@@ -116,40 +116,7 @@ export class GateLogicCore {
     if (!this.#form) {
       return false;
     }
-    return this.isValid(s);
-  }
-
-  public isValid(s: StepCore): boolean {
-    const q = this.#form.responses.find((a) => a?.id === s.id);
-    let ret = true;
-    if (!q) {
-      ret = false;
-    }
-    const answers = values(q?.answers);
-    let years     = 0;
-    switch (q?.type) {
-      case STEP_TYPE.DOB:
-        years = this.#form?.age?.years || 0;
-        if (years <= 0) {
-          ret = false;
-        }
-        if (!q?.exitRequirements || q.exitRequirements.length === 0) {
-          // ret === true
-        }
-        ret = ret
-          && (q.exitRequirements?.every((r) => r.minAge && years >= r.minAge.years) || true);
-        break;
-      case STEP_TYPE.MULTIPLE_CHOICE:
-        ret = ret && (
-          q.answer !== undefined
-          && answers?.find((x) => x.title === q.answer) !== undefined
-        );
-        break;
-      default:
-        // ret === true
-        break;
-    }
-    return ret;
+    return Questioner.isValid(s, this.#form);
   }
 
   /**
@@ -237,7 +204,7 @@ export class GateLogicCore {
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  getStep(data: StepCore, form: FormCore, direction: DIRECTION, skip = 0): StepCore {
+  getStep(data: StepCore, direction: DIRECTION, skip = 0): StepCore {
     const thisQuestion = data;
     const nextStepId   = this.#flow.indexOf(thisQuestion.id) !== -1
       ? this.#flow[this.#flow.indexOf(thisQuestion.id) + direction]
@@ -252,7 +219,7 @@ export class GateLogicCore {
       && thisQuestion.exitRequirements
       && thisQuestion.exitRequirements.length > 0) {
       const allowExit = thisQuestion.exitRequirements.every((r) =>
-        this.meetsAllRequirements(r, form));
+        this.meetsAllRequirements(r));
       if (!allowExit) {
         return thisQuestion;
       }
@@ -262,7 +229,7 @@ export class GateLogicCore {
       return this.getStepById(nextStepId);
     }
     // Special handling for results
-    const hasResults = this.getResults(form).length > 0;
+    const hasResults = this.getResults().length > 0;
     if (nextStepId === STEP_TYPE.RESULTS && !hasResults) {
       return this.#pages.noResultsPage;
     }
@@ -281,7 +248,7 @@ export class GateLogicCore {
     // Each requirement is joined by `OR`
     nextQuestion.entryRequirements?.forEach((r) => {
       // This safely handles cases where requirement parameters are undefined
-      const next = this.meetsAllRequirements(r, form);
+      const next = this.meetsAllRequirements(r);
 
       if (match === undefined) {
         match = next;
@@ -295,7 +262,7 @@ export class GateLogicCore {
       return nextQuestion;
     }
     // Get the next step whose requirements are met
-    const n = this.getStep(nextQuestion, form, direction, skip + 1);
+    const n = this.getStep(nextQuestion, direction, skip + 1);
     if (n !== nextQuestion) {
       return n;
     }
@@ -309,7 +276,7 @@ export class GateLogicCore {
    */
   getNextStep(props: StepCore): StepCore {
     const dir = DIRECTION.FORWARD;
-    return this.getStep(props, props.form, dir);
+    return this.getStep(props, dir);
   }
 
   /**
@@ -319,7 +286,7 @@ export class GateLogicCore {
    */
   getPreviousStep(props: StepCore): StepCore {
     const dir = DIRECTION.BACKWARD;
-    return this.getStep(props, props.form, dir);
+    return this.getStep(props, dir);
   }
 
   /**
@@ -424,14 +391,14 @@ export class GateLogicCore {
    * @param props
    * @returns
    */
-  getAnswerableQuestions(step: StepCore): string[] {
+  getAnswerableQuestions(): string[] {
     return this.#questionnaire.questions
       .filter(
         (q) =>
           !q.entryRequirements
           || q.entryRequirements.length === 0
           || q.entryRequirements.some((r) =>
-            this.meetsAllRequirements(r, step.form, true)),
+            this.meetsAllRequirements(r, true)),
       )
       .map((q) => q.id);
   }
@@ -452,14 +419,14 @@ export class GateLogicCore {
     let sections = this.#questionnaire.sections.filter(
       (s) =>
         s.requirements.length === 0
-        || s.requirements.some((r) => this.meetsAllRequirements(r, thisQuestion.form)),
+        || s.requirements.some((r) => this.meetsAllRequirements(r)),
     );
     if (this.#config.mode === MODE.EDIT) {
       // In design mode, all sections are valid
       sections = [...this.#questionnaire.sections];
     }
     return sections.map((s) => {
-      const section    = new SectionCore({ ...s }, this.#questionnaire);
+      const section    = SectionCore.create(s);
       section.lastStep = this.#questionnaire.questions.reduce(
         (acc, q, index) => (q.section.id === s.id ? index : acc),
         -1,
@@ -485,10 +452,10 @@ export class GateLogicCore {
    * @param form
    * @returns
    */
-  getResults(form: FormCore): ResultCore[] {
+  getResults(): ResultCore[] {
     return this.#questionnaire.results.filter((r) =>
       r.requirements.some((match) => {
-        if (this.meetsAllRequirements(match, form)) {
+        if (this.meetsAllRequirements(match)) {
           Object.assign(r, { match });
           return true;
         }
@@ -665,7 +632,6 @@ export class GateLogicCore {
 
   public meetsAllRequirements(
     requirement: RequirementCore,
-    form: FormCore,
     allowUnanswered = false,
   ) {
     const {
@@ -674,9 +640,9 @@ export class GateLogicCore {
     // Internal to each requirement, all evaluations are `AND`
     // This safely handles cases where requirement parameters are undefined
     return (
-      GateLogicCore.meetsMinAgeRequirements(form, minAge)
-      && GateLogicCore.meetsMaxAgeRequirements(form, maxAge)
-      && GateLogicCore.meetsAgeCalcRequirements(form, ageCalc)
+      GateLogicCore.meetsMinAgeRequirements(this.#form, minAge)
+      && GateLogicCore.meetsMaxAgeRequirements(this.#form, maxAge)
+      && GateLogicCore.meetsAgeCalcRequirements(this.#form, ageCalc)
       && this.meetsAnswerRequirements(answers, allowUnanswered)
     );
   }

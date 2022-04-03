@@ -18,7 +18,7 @@ import { EStepCoreProperties as sp }         from '../metadata/MStep';
 import { EQuestionCoreProperties as qp }     from '../metadata/MQuestion';
 import { EPageCoreProperties as pp }         from '../metadata/MPage';
 import { ERequirementCoreProperties as rqp } from '../metadata/MRequirement';
-import { ESectionCoreProperties as scp } from '../metadata/MSection';
+import { ESectionCoreProperties as scp }     from '../metadata/MSection';
 
 /**
  * Acceptable responses

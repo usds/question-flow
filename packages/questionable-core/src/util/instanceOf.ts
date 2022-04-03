@@ -1,4 +1,5 @@
 import { isEmpty }         from 'lodash';
+import { BaseCore }        from '../composable';
 import { ClassProperties } from './types';
 
 /**
@@ -225,7 +226,7 @@ function getClassesAndInterfaces(names: TInstanceOf[]): TInstanceOf[] {
   return [...new Set([...ret])];
 }
 
-function checkInstanceOf(names: TInstanceOf[], obj: any) {
+function checkInstanceOf(names: TInstanceOf[], obj: Partial<BaseCore>) {
   const checking = getClassesAndInterfaces(names);
   return checking.some((i) => `${i}` === `${obj?.instanceOfCheck}`);
 }
@@ -268,7 +269,6 @@ export {
   CLASS_NAME as PREFIX,
   CLASS_NAME,
   SUFFIX,
-  type ClassProperties,
   type instanceMap,
   type TECoi,
   type TEPrefix,

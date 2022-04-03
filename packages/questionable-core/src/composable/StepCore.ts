@@ -4,10 +4,7 @@
 /* eslint-disable max-classes-per-file */
 import {
   kebabCase,
-  merge,
-  noop,
 } from 'lodash';
-import { DateTime } from 'luxon';
 import {
   IQuestionCore,
   IRequirementCore,
@@ -22,41 +19,27 @@ import {
   BASE,
   TStepType,
   PROGRESS_BAR_STATUS,
-  ACTION_TYPE,
 } from '../util/enums';
-import { QuestionnaireCore } from './QuestionnaireCore';
-import { ComposableCore }    from './ComposableCore';
+import { ComposableCore } from './ComposableCore';
 import {
   checkInstanceOf,
   ClassList,
-  PREFIX,
   TInstanceOf,
 } from '../util/instanceOf';
-import { TAgeCalcCore, TAgeCore, TDateOfBirthCore } from '../util/types';
-import { AnswerCore }                               from './AnswerCore';
-import { stepReducer }                              from './FormCore';
-import { eventedCore }                              from '../state/pubsub';
-import { getDateTime }                              from '../util/date';
-import { IBranchCore }                              from '../survey/IBranchCore';
-import { IQuestionnaireCore } from '../survey/IQuestionnaireCore';
-
-const {
-  STEP,
-  QUESTION,
-  COMPOSABLE,
-} = PREFIX;
+import { TAgeCalcCore, TAgeCore } from '../util/types';
+import { AnswerCore }             from './AnswerCore';
+import { IBranchCore }            from '../survey/IBranchCore';
+import { BaseCore }               from './BaseCore';
 
 export class StepCore extends ComposableCore implements IStepCore {
-  public static override readonly _name = STEP;
-
   public override readonly instanceOfCheck: TInstanceOf = ClassList.step;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.step, COMPOSABLE], obj);
+    return checkInstanceOf([ClassList.step, ClassList.composable], obj);
   }
 
-  public static override create(data: Partial<StepCore> = {}) {
+  public static override create(data: Partial<IStepCore> = {}) {
     if (data instanceof StepCore) {
       return data;
     }
@@ -74,12 +57,10 @@ export class StepCore extends ComposableCore implements IStepCore {
       this.exitRequirements = data.exitRequirements.map((r) =>
         new RequirementCore(r));
     }
-    this.#initStep();
-  }
-
-  #initStep() {
-    if (!this.type || `${this.type}` === `${BASE.DEFAULT}`) {
-      this.type = BASE.DEFAULT;
+    if (!data.type || `${data.type}` === `${BASE.DEFAULT}`) {
+      this.#type = BASE.DEFAULT;
+    } else {
+      this.#type = data.type;
     }
   }
 
@@ -106,9 +87,11 @@ export class StepCore extends ComposableCore implements IStepCore {
 
   public subTitle!: string;
 
-  public type!: TStepType;
+  #type: TStepType;
 
-  public title!: string;
+  public get type(): TStepType {
+    return this.#type;
+  }
 
   public getFieldSetName(): string {
     return kebabCase(this.title);
@@ -131,14 +114,19 @@ export class StepCore extends ComposableCore implements IStepCore {
 }
 
 export class SectionCore extends ComposableCore implements ISectionCore {
-  public static override readonly _name = PREFIX.SECTION;
-
   public override readonly instanceOfCheck: TInstanceOf = ClassList.section;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.section, ClassList.composable,
     ], obj);
+  }
+
+  public static create(data: Partial<ISectionCore> = {}) {
+    if (data instanceof SectionCore) {
+      return data;
+    }
+    return new SectionCore(data);
   }
 
   constructor(data: Partial<ISectionCore> = {}) {
@@ -157,18 +145,7 @@ export class SectionCore extends ComposableCore implements ISectionCore {
   order?: number | undefined;
 }
 
-const questionDefaults = {
-  answers: [],
-  branch:  {},
-  section: {},
-  type:    QUESTION_TYPE.DEFAULT,
-};
-
-const questionCoreClassName = PREFIX.QUESTION;
-
 export class QuestionCore extends StepCore implements IQuestionCore {
-  public static override readonly _name = questionCoreClassName;
-
   public override readonly instanceOfCheck: TInstanceOf = ClassList.question;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -176,7 +153,11 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     return checkInstanceOf([ClassList.question, ClassList.step], obj);
   }
 
-  type!: QUESTION_TYPE;
+  #type: QUESTION_TYPE;
+
+  public get type(): QUESTION_TYPE {
+    return this.#type;
+  }
 
   answers!: AnswerCore[];
 
@@ -184,12 +165,19 @@ export class QuestionCore extends StepCore implements IQuestionCore {
 
   section!: SectionCore;
 
+  public static override create(data: Partial<IQuestionCore> = {}) {
+    if (data instanceof QuestionCore) {
+      return data;
+    }
+    return new QuestionCore(data);
+  }
+
   constructor(data: Partial<IQuestionCore> = {}) {
     super(data);
-    merge(this, questionDefaults);
-    merge(this, data);
     if (data.answers) {
       this.answers = data.answers.map((a) => new AnswerCore(a));
+    } else {
+      this.answers = [];
     }
     if (data.branch) {
       this.branch = new BranchCore(data.branch);
@@ -197,12 +185,10 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     if (data.section) {
       this.section = new SectionCore(data.section);
     }
-    this.#init();
-  }
-
-  #init() {
-    if (!this.type || `${this.type}` === `${QUESTION_TYPE.DEFAULT}`) {
-      this.type = QUESTION_TYPE.DEFAULT;
+    if (!data.type || `${data.type}` === `${QUESTION_TYPE.DEFAULT}`) {
+      this.#type = QUESTION_TYPE.DEFAULT;
+    } else {
+      this.#type = data.type;
     }
   }
 
@@ -222,125 +208,25 @@ export class QuestionCore extends StepCore implements IQuestionCore {
   public getAnswerHistory() {
     return [...this.#answers];
   }
-
-  /**
-   * Updates the form with the current selected answer(s)
-   * @param answer
-   * @param props
-   * @returns
-   */
-  updateForm(
-    answer: string,
-  ): void {
-    if (answer?.length > 0) {
-      merge(this, { answer });
-    }
-    // TODO: circle back and fix this logic. The problem is that our reducer is merging by KEY,
-    // which in the case of arrays is the index, and the index will always be 0 if we're passing in new arrays
-    // There are cleaner ways to do this.
-    // eslint-disable-next-line no-param-reassign
-    this.form.responses = this.form.responses || [];
-    const value         = this.form.responses.find((r) => r.id === this.id);
-    if (!value) {
-      this.form.responses.push(this);
-    } else {
-      merge(value, this);
-    }
-    eventedCore.publish({ event: { answer, props: this, step: this.id }, type: 'answer' });
-    stepReducer(this.form, {
-      type:  ACTION_TYPE.UPDATE,
-      value: { ...this.form },
-    });
-  }
-
-  /**
-   * Determines if the answer is valid and selected
-   * @param answer
-   * @param props
-   * @returns
-   */
-  protected isSelected(
-    answer: string,
-  ): boolean | undefined {
-    if (!this?.form) {
-      return undefined;
-    }
-    const q: IQuestionCore | undefined = this.form.responses.find(
-      (a: IQuestionCore) => a.id === this.id,
-    );
-    if (!q) {
-      return undefined;
-    }
-    return this.isValid() && q.answer === answer;
-  }
-
-  toString(): string {
-    if (!this.title || this.title === undefined || this.title?.length <= 0) {
-      throw new Error(`Value is required; ${this.id} does not have a title`);
-    }
-    return this.title;
-  }
-
-  /**
-   * Gets a birthdate's DateTime from a form
-   * @param props
-   * @returns
-   */
-  getBirthdate(): DateTime | undefined {
-    if (this.answer) {
-      return getDateTime(this.answer);
-    }
-    if (this.form?.birthdate) {
-      return getDateTime(this.form.birthdate);
-    }
-    return undefined;
-  }
-
-  /**
-   * Converts a Date of Birth type into a string
-   * @param dob
-   * @returns
-   */
-  toBirthdate(dob: TDateOfBirthCore): string | undefined {
-    if (this.type !== QUESTION_TYPE.DOB) {
-      return undefined;
-    }
-    if (dob.month && dob.day && dob.year) {
-      if (+dob.month < 1 || +dob.month > 12) {
-        return undefined;
-      }
-      if (+dob.day < 1 || +dob.day > 31) {
-        return undefined;
-      }
-      if (+dob.year < 1900 || +dob.year > new Date().getFullYear()) {
-        return undefined;
-      }
-      return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${dob.year}`;
-    }
-    return undefined;
-  }
 }
 
-const responseDefaults = {
-  answers:  [],
-  question: {},
-};
-
-const responseCoreClassName = getInstanceName(PREFIX.RESPONSE);
-
-export class ResponseCore extends ComposableCore implements IResponseCore {
-  public static override readonly _name = PREFIX.RESPONSE;
-
-  public override readonly instanceOfCheck: TInstanceOf = ClassList.response;
+export class ResponseCore extends BaseCore implements IResponseCore {
+  public readonly instanceOfCheck: TInstanceOf = ClassList.response;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.response, ClassList.composable], obj);
+  static [Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([ClassList.response], obj);
+  }
+
+  public static override create(data: Partial<IResponseCore> = {}) {
+    if (data instanceof ResponseCore) {
+      return data;
+    }
+    return new ResponseCore(data);
   }
 
   constructor(data: Partial<IResponseCore>) {
-    super(data);
-
+    super();
     if (data.answers) {
       this.answers = data.answers.map((a) => new AnswerCore(a));
     }
@@ -360,6 +246,13 @@ export class RequirementCore extends ComposableCore implements IRequirementCore 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.requirement, ClassList.composable], obj);
+  }
+
+  public static create(data: Partial<IRequirementCore> = {}) {
+    if (data instanceof RequirementCore) {
+      return data;
+    }
+    return new RequirementCore(data);
   }
 
   constructor(data: Partial<IRequirementCore>) {
@@ -387,6 +280,13 @@ export class BranchCore extends ComposableCore implements IBranchCore {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.branch, ClassList.composable], obj);
+  }
+
+  public static create(data: Partial<IBranchCore> = {}) {
+    if (data instanceof BranchCore) {
+      return data;
+    }
+    return new BranchCore(data);
   }
 
   constructor(data: Partial<IBranchCore> = {}) {

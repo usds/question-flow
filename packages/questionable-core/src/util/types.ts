@@ -3,7 +3,7 @@
  * Defines an age relative to a date
  * @title Age Type
  */
-export interface TAgeCore {
+interface TAgeCore {
   /**
    * @minimum 0
    * @maximum 31
@@ -29,42 +29,46 @@ export interface TAgeCore {
 
 /**
  * Lambda that can be called to compute an age requirement
- * @hidden
+ * @hidden Functions must be hidden from schema
  */
-export type TAgeCalcCore = (birthdate: string) => boolean;
-
-export type TReducerCore = (...params: any[]) => void;
+type TAgeCalcCore = (birthdate: string) => boolean;
+/**
+ * @hidden Functions must be hidden from schema
+ */
+type TReducerCore = (...params: any[]) => void;
 
 /**
  * Key/value pairs which are both strings
  */
-export type TStringDictionaryCore = {
+type TStringDictionaryCore = {
   [key: string]: string;
 };
 
 /**
  * Generic fetch dictionary
+ *
+ * @hidden Functions must be hidden from schema
  */
-export type TGetDictionaryCore = (...params: any[]) => TStringDictionaryCore;
+type TGetDictionaryCore = (...params: any[]) => TStringDictionaryCore;
 
-export interface TDateOfBirthCore {
+interface TDateOfBirthCore {
   day?: string | undefined;
   month?: string | undefined;
   year?: string | undefined;
 }
 
-export type TProgressBarTypeCore = string;
+type TProgressBarTypeCore = string;
 
-export type TVerticalPositionCore = string;
+type TVerticalPositionCore = string;
 
-export type THorizontalPositionCore = string;
+type THorizontalPositionCore = string;
 
-export type TButtonModeCore = string;
+type TButtonModeCore = string;
 
 /**
  * Content type for blocks of copy
  */
-export interface TContentCore {
+interface TContentCore {
   /**
    * Main body content
    * @title Content
@@ -82,10 +86,37 @@ export interface TContentCore {
   title?: string;
 }
 
-/** Flatten object */
-export type FlatStrings<T> = T extends object ? T[keyof T] : T
-/** Grab the properties */
-export type CoreProperties<X> = X[keyof X];
-/** Construct a type using property names */
-export type ClassProperties<T> = FlatStrings<CoreProperties<T>>;
-// export type PrivateProperties<T> = T[keyof ClassProperties<T>]
+/**
+ * Flatten object
+ * @hidden
+ */
+type FlatStrings<T> = T extends object ? T[keyof T] : T
+
+/**
+ * Grab the properties
+ * @hidden
+ */
+type CoreProperties<X> = X[keyof X];
+/**
+ * Construct a type using property names
+ * @hidden
+ */
+type ClassProperties<T> = FlatStrings<CoreProperties<T>>;
+// type PrivateProperties<T> = T[keyof ClassProperties<T>]
+
+export {
+  type ClassProperties,
+  // type CoreProperties,
+  // type FlatStrings,
+  type TAgeCalcCore,
+  type TAgeCore,
+  type TButtonModeCore,
+  type TContentCore,
+  type TDateOfBirthCore,
+  type TGetDictionaryCore,
+  type THorizontalPositionCore,
+  type TProgressBarTypeCore,
+  type TReducerCore,
+  type TStringDictionaryCore,
+  type TVerticalPositionCore,
+};

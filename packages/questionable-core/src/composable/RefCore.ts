@@ -9,9 +9,10 @@ import {
   ClassList,
 } from '../util/instanceOf';
 import { getGUID }    from '../util/uuid';
+import { BaseCore }   from './BaseCore';
 import { Dictionary } from './Dictionary';
 
-export class RefCore implements IRefCore {
+export class RefCore extends BaseCore implements IRefCore {
   public readonly [p.instanceOfCheck]: TInstanceOf = ClassList.ref;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +28,7 @@ export class RefCore implements IRefCore {
   }
 
   public constructor(data: Partial<IRefCore> = {}) {
+    super();
     this.#hash = new Dictionary<TRefCorePrivateProps, string>();
     if (data.id && data.id.length > 0) {
       this[p.id] = data.id;

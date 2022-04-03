@@ -4,25 +4,20 @@ import {
   checkInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import {
-  RefCore,
-}  from './RefCore';
 import { EBaseCoreProperties as p } from '../metadata/MBase';
-import { IRefCore }                 from '../survey/IRefCore';
 
-export class BaseCore extends RefCore {
-  public override readonly [p.instanceOfCheck]: TInstanceOf = ClassList.base;
+export class BaseCore {
+  public readonly [p.instanceOfCheck]: TInstanceOf = ClassList.base;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static override [Symbol.hasInstance](obj: any) {
+  static [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.base, ClassList.ref], obj);
   }
 
-  public static override create(data: Partial<IRefCore> = {}): BaseCore {
-    return new BaseCore(data);
-  }
-
-  public constructor(data: Partial<IRefCore> = {}) {
-    super(data);
+  public static create(data: unknown = {}) {
+    if (data instanceof BaseCore) {
+      return data;
+    }
+    return new BaseCore();
   }
 }

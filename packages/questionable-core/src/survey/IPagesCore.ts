@@ -1,10 +1,14 @@
-import { IPageCore } from './IStepCore';
+import { IPageCore }                 from './IStepCore';
 import { EPagesCoreProperties as p } from '../metadata/MPages';
+
+export type TPages = {
+  [key: string]: IPageCore;
+}
 /**
  * Defines required pages for the survey flow
  */
 export interface IPagesCore {
-  [key: string]: IPageCore | undefined;
+  pages: TPages;
   /**
    * First step of the survey
    *
