@@ -6,3 +6,4 @@ env:
 rules:
   import/no-cycle: off
   no-restricted-syntax: off
+  class-methods-use-this: off

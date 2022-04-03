@@ -10,7 +10,9 @@ import { ComposableCore }  from './ComposableCore';
 import { RequirementCore } from './StepCore';
 
 export class ResultCore extends ComposableCore implements IResultCore {
-  public override readonly instanceOfCheck: TInstanceOf = ClassList.result;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.result;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
@@ -23,6 +25,22 @@ export class ResultCore extends ComposableCore implements IResultCore {
     }
     return new ResultCore(data);
   }
+
+  #action: ActionCore;
+
+  #category!: string;
+
+  #label!: string;
+
+  #match?: RequirementCore | undefined;
+
+  #order?: number;
+
+  #reason: string;
+
+  #requirements!: RequirementCore[];
+
+  #secondaryAction?: ActionCore | undefined;
 
   constructor(data: Partial<IResultCore> = {}) {
     super(data);
@@ -42,25 +60,17 @@ export class ResultCore extends ComposableCore implements IResultCore {
     this.#reason = data.reason || '';
   }
 
-  #action: ActionCore;
-
   public get action(): ActionCore {
     return this.#action;
   }
-
-  #category!: string;
 
   public get category() {
     return this.#category;
   }
 
-  #label!: string;
-
   public get label(): string {
     return this.#label;
   }
-
-  #match?: RequirementCore | undefined;
 
   public get match() {
     return this.#match;
@@ -70,8 +80,6 @@ export class ResultCore extends ComposableCore implements IResultCore {
     this.#match = val;
   }
 
-  #reason: string;
-
   public get reason(): string {
     return this.#reason;
   }
@@ -79,8 +87,6 @@ export class ResultCore extends ComposableCore implements IResultCore {
   public set reason(val: string) {
     this.#reason = val;
   }
-
-  #requirements!: RequirementCore[];
 
   public get requirements() {
     return this.#requirements;
@@ -90,13 +96,9 @@ export class ResultCore extends ComposableCore implements IResultCore {
     this.#requirements = val;
   }
 
-  #secondaryAction?: ActionCore | undefined;
-
   public get secondaryAction() {
     return this.#secondaryAction;
   }
-
-  #order?: number;
 
   public get order() {
     return this.#order;

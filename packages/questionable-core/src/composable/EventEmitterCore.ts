@@ -17,38 +17,39 @@ import {
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { FormCore }                  from './FormCore';
-import { EEventCoreProperties as p } from '../metadata/MEvent';
-import { BaseCore }                  from './BaseCore';
+import { FormCore } from './FormCore';
+import { BaseCore } from './BaseCore';
 
 const className = ClassList['event-emitter'];
 export class EventEmitterCore extends BaseCore implements IEventCore {
-  public readonly [p.instanceOfCheck]: TInstanceOf = className;
+  public get instanceOfCheck(): TInstanceOf {
+    return className;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([className], obj);
   }
 
-  readonly [p.onActionClick]: TOnEventCore;
+  readonly onActionClick: TOnEventCore;
 
-  readonly [p.onAnswer]: TOnEventCore;
+  readonly onAnswer: TOnEventCore;
 
-  readonly [p.onBranch]: TOnErrorCore;
+  readonly onBranch: TOnEventCore;
 
-  readonly [p.onAnyEvent]: TOnEventCore;
+  readonly onAnyEvent: TOnEventCore;
 
-  readonly [p.onGateSwitch]: TOnEventCore;
+  readonly onGateSwitch: TOnEventCore;
 
-  readonly [p.onError]: TOnErrorCore;
+  readonly onError: TOnErrorCore;
 
-  readonly [p.onPage]: TOnEventCore;
+  readonly onPage: TOnEventCore;
 
-  readonly [p.onInit]: TOnEventCore;
+  readonly onInit: TOnEventCore;
 
-  readonly [p.onResults]: TOnEventCore;
+  readonly onResults: TOnEventCore;
 
-  readonly [p.onNoResults]: TOnEventCore;
+  readonly onNoResults: TOnEventCore;
 
   public static create(data: Partial<IEventCore> = {}) {
     if (data instanceof EventEmitterCore) {
@@ -59,15 +60,16 @@ export class EventEmitterCore extends BaseCore implements IEventCore {
 
   constructor(data: Partial<IEventCore> = {}) {
     super();
-    this[p.onActionClick] = data.onActionClick || noop;
-    this[p.onAnswer]      = data.onAnswer || noop;
-    this[p.onAnyEvent]    = data.onAnyEvent || noop;
-    this[p.onError]       = data.onError || noop;
-    this[p.onGateSwitch]  = data.onGateSwitch || noop;
-    this[p.onInit]        = data.onInit || noop;
-    this[p.onNoResults]   = data.onNoResults || noop;
-    this[p.onPage]        = data.onPage || noop;
-    this[p.onResults]     = data.onResults || noop;
+    this.onActionClick = data.onActionClick || noop;
+    this.onAnswer      = data.onAnswer || noop;
+    this.onAnyEvent    = data.onAnyEvent || noop;
+    this.onBranch      = data.onBranch || noop;
+    this.onError       = data.onError || noop;
+    this.onGateSwitch  = data.onGateSwitch || noop;
+    this.onInit        = data.onInit || noop;
+    this.onNoResults   = data.onNoResults || noop;
+    this.onPage        = data.onPage || noop;
+    this.onResults     = data.onResults || noop;
   }
 
   action(data: FormCore): void {

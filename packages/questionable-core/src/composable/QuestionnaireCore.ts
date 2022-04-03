@@ -19,125 +19,20 @@ import {
   ClassList,
   TInstanceOf,
 } from '../util/instanceOf';
-import { ResultCore }                  from './ResultCore';
-import {
-  EQuestionnaireCoreProperties as p,
-} from '../metadata/MQuestionnaire';
+import { ResultCore } from './ResultCore';
 
 /**
  * Utility wrapper for survey state
  */
 export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
-  public override readonly [p.instanceOfCheck]: TInstanceOf = ClassList.questionnaire;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.questionnaire;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.questionnaire, ClassList.base], obj);
   }
-
-  // #sets: Map<TPrivateField, any> = new Map();
-
-  // #touch<T>(name: TPrivateField, val: T): T {
-  //   const doInit = !this.#sets.has(name) || isEmpty(this.#sets.get(name));
-  //   if (doInit) {
-  //     this.#sets.set(name, val);
-  //   }
-  //   return this.#sets.get(name);
-  // }
-
-  // public get [p.actions](): ActionCore[] {
-  //   const val = this.#touch(p._actions, new Set<ActionCore>());
-  //   return fromSet(val);
-  // }
-
-  // public get [p.branches](): BranchCore[] {
-  //   const val = this.#touch(p._branches, new Set<BranchCore>());
-  //   return fromSet(val);
-  // }
-
-  // public get [p.config](): QuestionableConfigCore {
-  //   return this.#touch(p._config, new QuestionableConfigCore({}));
-  // }
-
-  // private set [p.config](data: Partial<IQuestionableConfigCore>) {
-  //   let val: QuestionableConfigCore;
-  //   if (data instanceof QuestionableConfigCore) {
-  //     val = data as QuestionableConfigCore;
-  //   } else {
-  //     const current = this.#touch(p._config, new QuestionableConfigCore(data));
-  //     merge(current, data);
-  //     val = current;
-  //   }
-  //   this.#sets.set(p._config, val);
-  // }
-
-  // public get [p.flow](): string[] {
-  //   const val = this.#touch(p._flow, new Set<string>());
-  //   return fromSet(val);
-  // }
-
-  // public get [p.header]() {
-  //   return this.#touch(p._header, '');
-  // }
-
-  // public get [p.results](): ResultCore[] {
-  //   const val = this.#touch(p._results, new Set<ResultCore>());
-  //   return fromSet(val);
-  // }
-
-  // private set [p.results](data: Partial<IResultCore>[]) {
-  //   const val  = this.#touch(p._results, new Set<ResultCore>());
-  //   const list = fromSet(val).concat(data.map((l) => ResultCore.create(l)));
-  //   this.#sets.set(p._results, toSet<ResultCore>(list));
-  // }
-
-  // public get pages(): PagesCore {
-  //   return this.#touch(p._pages, new PagesCore());
-  // }
-
-  // private set pages(data: Partial<IPagesCore>) {
-  //   let val: PagesCore;
-  //   if (data instanceof PagesCore) {
-  //     val = data as PagesCore;
-  //   } else {
-  //     const current = this.#touch(p._pages, new PagesCore({}, this));
-  //     merge(current, data);
-  //     val = current;
-  //   }
-  //   this.#sets.set(p._pages, val);
-  // }
-
-  // public get questions(): QuestionCore[] {
-  //   const val = this.#touch(p._questions, new Set<QuestionCore>());
-  //   return fromSet(val);
-  // }
-
-  // private set questions(data: Partial<QuestionCore>[]) {
-  //   const val  = this.#touch(p._questions, new Set<QuestionCore>());
-  //   const list = fromSet(val).concat(data.map((l) => {
-  //     if (l instanceof QuestionCore) {
-  //       return l as QuestionCore;
-  //     }
-  //     return new QuestionCore(l);
-  //   }));
-  //   this.#sets.set(p._results, toSet<QuestionCore>(list));
-  // }
-
-  // public get sections(): SectionCore[] {
-  //   const val = this.#touch(p._sections, new Set<SectionCore>());
-  //   return fromSet(val);
-  // }
-
-  // private set sections(data: Partial<SectionCore>[]) {
-  //   const val  = this.#touch(p._sections, new Set<SectionCore>());
-  //   const list = fromSet(val).concat(data.map((l) => {
-  //     if (l instanceof SectionCore) {
-  //       return l as SectionCore;
-  //     }
-  //     return new SectionCore(l);
-  //   }));
-  //   this.#sets.set(p._results, toSet<SectionCore>(list));
-  // }
 
   public static override create(data: Partial<IQuestionnaireCore> = {}) {
     if (data instanceof QuestionnaireCore) {
@@ -146,39 +41,80 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return new QuestionnaireCore(data);
   }
 
+  #config: QuestionableConfigCore;
+
+  #pages: PagesCore;
+
+  #questions: QuestionCore[];
+
+  #actions: ActionCore[];
+
+  #steps: StepCore[];
+
+  #branches: BranchCore[];
+
+  #sections: SectionCore[];
+
+  #flow: string[];
+
+  #header: string;
+
+  #results: ResultCore[];
+
   constructor(data: Partial<IQuestionnaireCore> = {}) {
     super();
     const config = (data.config instanceof QuestionableConfigCore)
       ? data.config : new QuestionableConfigCore(data.config || {});
 
-    this.config    = config;
-    this.pages     = PagesCore.create(data.pages);
-    this.questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
-    this.actions   = data.actions?.map((q) => ActionCore.create(q)) || [];
-    this.steps     = this.questions.map((q) => q) || [];
-    this.branches  = data.branches?.map((b) => BranchCore.create(b)) || [];
-    this.sections  = data.sections?.map((s) => SectionCore.create(s)) || [];
-    // Wizard flow is defined as linear sequence of unique ids
-    this.flow = this.steps.map((q) => q.id);
+    this.#config    = config;
+    this.#pages     = PagesCore.create(data.pages);
+    this.#questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
+    this.#actions   = data.actions?.map((q) => ActionCore.create(q)) || [];
+    this.#steps     = this.#questions.map((q) => q) || [];
+    this.#branches  = data.branches?.map((b) => BranchCore.create(b)) || [];
+    this.#sections  = data.sections?.map((s) => SectionCore.create(s)) || [];
+    this.#flow      = this.#steps.map((q) => q.id);
+    this.#header    = data.header || '';
+    this.#results   = data.results?.map((r) => ResultCore.create(r)) || [];
   }
 
-  [p.actions]: ActionCore[];
+  public get actions(): ActionCore[] {
+    return this.#actions;
+  }
 
-  [p.branches]: BranchCore[];
+  public get branches(): BranchCore[] {
+    return this.#branches;
+  }
 
-  [p.config]: QuestionableConfigCore;
+  public get config(): QuestionableConfigCore {
+    return this.#config;
+  }
 
-  [p.flow]: string[];
+  public get flow(): string[] {
+    return this.#flow;
+  }
 
-  [p.header]: string;
+  public get header(): string {
+    return this.#header;
+  }
 
-  [p.questions]: QuestionCore[];
+  public get questions(): QuestionCore[] {
+    return this.#questions;
+  }
 
-  steps: StepCore[];
+  public get steps(): StepCore[] {
+    return this.#steps;
+  }
 
-  sections: SectionCore[];
+  public get sections(): SectionCore[] {
+    return this.#sections;
+  }
 
-  [p.results]: ResultCore[];
+  public get results(): ResultCore[] {
+    return this.#results;
+  }
 
-  [p.pages]: PagesCore;
+  public get pages(): PagesCore {
+    return this.#pages;
+  }
 }

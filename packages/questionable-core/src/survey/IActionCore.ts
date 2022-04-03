@@ -1,7 +1,6 @@
-import { ACTION }                     from '../util/enums';
-import { IButtonCore }                from './IButtonCore';
-import { IRefCore }                   from './IRefCore';
-import { EActionCoreProperties as p } from '../metadata/MAction';
+import { ACTION }      from '../util/enums';
+import { IButtonCore } from './IButtonCore';
+import { IRefCore }    from './IRefCore';
 
 /**
  * Represents something the customer can do in response to receiving a result
@@ -12,18 +11,18 @@ export interface IActionCore extends IRefCore {
    * @title Buttons
    * @hidden
    */
-  [p.buttons]: IButtonCore[];
+  buttons: IButtonCore[];
   /**
    * @title Label
    */
-  [p.label]: string;
+  label: string;
   /**
    * @title Description
    */
-  [p.subTitle]?: string;
+  subTitle?: string;
   /**
    * @title Type
    * @hidden
    */
-  [p.type]: ACTION;
+  type: ACTION;
 }

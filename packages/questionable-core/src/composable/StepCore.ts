@@ -30,9 +30,12 @@ import { TAgeCalcCore, TAgeCore } from '../util/types';
 import { AnswerCore }             from './AnswerCore';
 import { IBranchCore }            from '../survey/IBranchCore';
 import { BaseCore }               from './BaseCore';
+import { RefCore }                from './RefCore';
 
 export class StepCore extends ComposableCore implements IStepCore {
-  public override readonly instanceOfCheck: TInstanceOf = ClassList.step;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.step;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
@@ -46,22 +49,42 @@ export class StepCore extends ComposableCore implements IStepCore {
     return new StepCore(data);
   }
 
+  #entryRequirements: RequirementCore[];
+
+  #exitRequirements: RequirementCore[];
+
+  #footer: string;
+
+  #info: string;
+
+  #internalNotes: string;
+
+  #order: number;
+
+  #section: SectionCore;
+
+  #subTitle: string;
+
+  #type: TStepType;
+
   constructor(data: Partial<IStepCore> = {}) {
     super(data);
 
-    if (data.entryRequirements) {
-      this.entryRequirements = data.entryRequirements.map((r) =>
-        new RequirementCore(r));
-    }
-    if (data.exitRequirements) {
-      this.exitRequirements = data.exitRequirements.map((r) =>
-        new RequirementCore(r));
-    }
+    this.#entryRequirements = data.entryRequirements?.map((r) =>
+      RequirementCore.create(r)) || [];
+    this.#exitRequirements  = data.exitRequirements?.map((r) =>
+      RequirementCore.create(r)) || [];
     if (!data.type || `${data.type}` === `${BASE.DEFAULT}`) {
       this.#type = BASE.DEFAULT;
     } else {
       this.#type = data.type;
     }
+    this.#footer        = data.footer || '';
+    this.#info          = data.info || '';
+    this.#internalNotes = data.internalNotes || '';
+    this.#order         = data.order || 0;
+    this.#section       = SectionCore.create(data.section);
+    this.#subTitle      = data.subTitle || '';
   }
 
   public toString() {
@@ -71,23 +94,37 @@ export class StepCore extends ComposableCore implements IStepCore {
   //   return new StepCore({ ...props.step, ...props, questionnaire } as TStepCtor);
   // }
 
-  public entryRequirements!: RequirementCore[];
+  public get entryRequirements(): RequirementCore[] {
+    return this.#entryRequirements;
+  }
 
-  public exitRequirements!: RequirementCore[];
+  public get exitRequirements(): RequirementCore[] {
+    return this.#exitRequirements;
+  }
 
-  public footer! : string;
+  public get footer(): string {
+    return this.#footer;
+  }
 
-  public info!: string;
+  public get info(): string {
+    return this.#info;
+  }
 
-  public internalNotes!: string;
+  public get internalNotes(): string {
+    return this.#internalNotes;
+  }
 
-  public order!: number;
+  public get order(): number {
+    return this.#order;
+  }
 
-  public section!: SectionCore;
+  public get section(): SectionCore {
+    return this.#section;
+  }
 
-  public subTitle!: string;
-
-  #type: TStepType;
+  public get subTitle(): string {
+    return this.#subTitle;
+  }
 
   public get type(): TStepType {
     return this.#type;
@@ -114,7 +151,9 @@ export class StepCore extends ComposableCore implements IStepCore {
 }
 
 export class SectionCore extends ComposableCore implements ISectionCore {
-  public override readonly instanceOfCheck: TInstanceOf = ClassList.section;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.section;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
@@ -129,24 +168,55 @@ export class SectionCore extends ComposableCore implements ISectionCore {
     return new SectionCore(data);
   }
 
+  #lastStep: number | undefined;
+
+  #requirements: RequirementCore[];
+
+  #status: PROGRESS_BAR_STATUS;
+
+  #order: number;
+
   constructor(data: Partial<ISectionCore> = {}) {
     super(data);
-    if (data.requirements) {
-      this.requirements = data.requirements.map((r) => new RequirementCore(r));
-    }
+    this.#requirements = data.requirements?.map((r) => RequirementCore.create(r)) || [];
+    this.#lastStep     = data.lastStep;
+    this.#order        = data.order || 0;
+    this.#status       = data.status || PROGRESS_BAR_STATUS.INCOMPLETE;
   }
 
-  lastStep?: number | undefined;
+  public get requirements() {
+    return this.#requirements;
+  }
 
-  requirements!: RequirementCore[];
+  public get lastStep(): number | undefined {
+    return this.#lastStep;
+  }
 
-  status?: PROGRESS_BAR_STATUS | undefined;
+  public set lastStep(val: number | undefined) {
+    this.#lastStep = val;
+  }
 
-  order?: number | undefined;
+  public get order() {
+    return this.#order;
+  }
+
+  public set order(val: number) {
+    this.#order = val;
+  }
+
+  public get status(): PROGRESS_BAR_STATUS {
+    return this.#status;
+  }
+
+  public set status(val: PROGRESS_BAR_STATUS) {
+    this.#status = val;
+  }
 }
 
 export class QuestionCore extends StepCore implements IQuestionCore {
-  public override readonly instanceOfCheck: TInstanceOf = ClassList.question;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.question;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
@@ -159,11 +229,15 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     return this.#type;
   }
 
-  answers!: AnswerCore[];
+  #answers: AnswerCore[];
 
-  branch!: BranchCore;
+  #branch: BranchCore;
 
-  section!: SectionCore;
+  #section: SectionCore;
+
+  #answer = '';
+
+  #answered: string[] = [];
 
   public static override create(data: Partial<IQuestionCore> = {}) {
     if (data instanceof QuestionCore) {
@@ -174,17 +248,9 @@ export class QuestionCore extends StepCore implements IQuestionCore {
 
   constructor(data: Partial<IQuestionCore> = {}) {
     super(data);
-    if (data.answers) {
-      this.answers = data.answers.map((a) => new AnswerCore(a));
-    } else {
-      this.answers = [];
-    }
-    if (data.branch) {
-      this.branch = new BranchCore(data.branch);
-    }
-    if (data.section) {
-      this.section = new SectionCore(data.section);
-    }
+    this.#answers = data.answers?.map((a) =>  AnswerCore.create(a)) || [];
+    this.#branch  = BranchCore.create(data.branch);
+    this.#section =  SectionCore.create(data.section);
     if (!data.type || `${data.type}` === `${QUESTION_TYPE.DEFAULT}`) {
       this.#type = QUESTION_TYPE.DEFAULT;
     } else {
@@ -192,26 +258,40 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     }
   }
 
-  #answer = '';
-
-  #answers: string[] = [];
-
   public get answer() {
     return this.#answer;
   }
 
   public set answer(val: string) {
-    this.#answers.push(val);
+    this.#answered.push(val);
     this.#answer = val;
   }
 
   public getAnswerHistory() {
-    return [...this.#answers];
+    return [...this.#answered];
+  }
+
+  public get branch() {
+    return this.#branch;
+  }
+
+  public set branch(val: BranchCore) {
+    this.#branch = val;
+  }
+
+  public get answers() {
+    return this.#answers;
+  }
+
+  public get section() {
+    return this.#section;
   }
 }
 
 export class ResponseCore extends BaseCore implements IResponseCore {
-  public readonly instanceOfCheck: TInstanceOf = ClassList.response;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.response;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
@@ -241,7 +321,9 @@ export class ResponseCore extends BaseCore implements IResponseCore {
 }
 
 export class RequirementCore extends ComposableCore implements IRequirementCore {
-  public override readonly instanceOfCheck: TInstanceOf = ClassList.requirement;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.requirement;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
@@ -275,7 +357,9 @@ export class RequirementCore extends ComposableCore implements IRequirementCore 
 }
 
 export class BranchCore extends ComposableCore implements IBranchCore {
-  public override readonly instanceOfCheck: TInstanceOf = ClassList.branch;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.branch;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
@@ -291,7 +375,8 @@ export class BranchCore extends ComposableCore implements IBranchCore {
 
   constructor(data: Partial<IBranchCore> = {}) {
     super(data);
+    this.questions = data.questions?.map((q) => RefCore.create(q)) || [];
   }
 
-  public questions!: QuestionCore[];
+  public questions: RefCore[];
 }

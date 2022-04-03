@@ -4,10 +4,11 @@ import {
   checkInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { EBaseCoreProperties as p } from '../metadata/MBase';
 
 export class BaseCore {
-  public readonly [p.instanceOfCheck]: TInstanceOf = ClassList.base;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.base;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {

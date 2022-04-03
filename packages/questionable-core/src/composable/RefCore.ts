@@ -1,19 +1,17 @@
 /* eslint-disable import/no-cycle */
-import {
-  ERefCoreProperties as p, TRefCorePrivateProps,
-} from '../metadata/MRef';
 import { IRefCore } from '../survey/IRefCore';
 import {
   checkInstanceOf,
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { getGUID }    from '../util/uuid';
-import { BaseCore }   from './BaseCore';
-import { Dictionary } from './Dictionary';
+import { getGUID }  from '../util/uuid';
+import { BaseCore } from './BaseCore';
 
 export class RefCore extends BaseCore implements IRefCore {
-  public readonly [p.instanceOfCheck]: TInstanceOf = ClassList.ref;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.ref;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
@@ -27,50 +25,43 @@ export class RefCore extends BaseCore implements IRefCore {
     return new RefCore(data);
   }
 
+  #id: string;
+
+  #label: string;
+
+  #type: string;
+
+  #title: string;
+
   public constructor(data: Partial<IRefCore> = {}) {
     super();
-    this.#hash = new Dictionary<TRefCorePrivateProps, string>();
     if (data.id && data.id.length > 0) {
-      this[p.id] = data.id;
+      this.#id = data.id;
     } else {
-      this[p.id] = getGUID(true);
+      this.#id = getGUID(true);
     }
-    this[p.label] = data.label || '';
-    this[p.title] = data.title || '';
-    this[p.type]  = data.type || '';
+    this.#label = data.label || '';
+    this.#title = data.title || '';
+    this.#type  = data.type || '';
   }
 
-  public get [p.id](): string {
-    return this.#hash.touch(p._id, getGUID());
+  public get id(): string {
+    return this.#id;
   }
 
-  public set [p.id](val: string) {
-    this.#hash.set(p._id, val, true);
+  public get label() {
+    return this.#label;
   }
 
-  public get [p.label]() {
-    return this.#hash.touch(p._label, '');
+  public get title(): string {
+    return this.#title;
   }
 
-  public set [p.label](val: string) {
-    this.#hash.set(p._label, val);
+  public get type(): string {
+    return this.#type;
   }
 
-  public get [p.title](): string {
-    return this.#hash.touch(p._title, '');
+  public set type(val: string) {
+    this.#type = val;
   }
-
-  public set [p.title](val: string) {
-    this.#hash.set(p._title, val);
-  }
-
-  public get [p.type](): string {
-    return this.#hash.touch(p._type, '');
-  }
-
-  public set [p.type](val: string) {
-    this.#hash.set(p._type, val);
-  }
-
-  #hash: Dictionary<TRefCorePrivateProps, string>;
 }

@@ -3,7 +3,7 @@ import { TStringDictionaryCore }                   from '../util/types';
 import { IFormCore }                               from './IFormCore';
 import { IResultCore }                             from './IResultCore';
 import { IQuestionCore, IResponseCore, IStepCore } from './IStepCore';
-import { EEventCoreProperties as p }               from '../metadata/MEvent';
+
 /**
  * Event data structure to be sent with event callbacks
  * @title Event Data Type
@@ -87,13 +87,14 @@ export type TOnGateSwitchCore = (gate: TGateCore, data: TStringDictionaryCore) =
  * @title Event
  */
 export interface IEventCore {
-  readonly [p.onActionClick]: TOnEventCore | undefined,
-  readonly [p.onAnswer]: TOnEventCore | undefined,
-  readonly [p.onAnyEvent]: TOnEventCore | undefined,
-  readonly [p.onError]: TOnErrorCore | undefined,
-  readonly [p.onGateSwitch]: TOnEventCore | undefined,
-  readonly [p.onInit]: TOnEventCore | undefined,
-  readonly [p.onNoResults]: TOnEventCore | undefined,
-  readonly [p.onPage]: TOnEventCore | undefined,
-  readonly [p.onResults]: TOnEventCore | undefined
+  readonly onActionClick: TOnEventCore | undefined,
+  readonly onAnswer: TOnEventCore | undefined,
+  readonly onAnyEvent: TOnEventCore | undefined,
+  readonly onBranch: TOnEventCore | undefined,
+  readonly onError: TOnErrorCore | undefined,
+  readonly onGateSwitch: TOnEventCore | undefined,
+  readonly onInit: TOnEventCore | undefined,
+  readonly onNoResults: TOnEventCore | undefined,
+  readonly onPage: TOnEventCore | undefined,
+  readonly onResults: TOnEventCore | undefined
 }

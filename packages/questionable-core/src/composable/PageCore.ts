@@ -6,14 +6,13 @@ import {
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { StepCore }           from './StepCore';
-import {
-  EPageCoreProperties as p,
-} from '../metadata/MPage';
+import { StepCore } from './StepCore';
 
 const className = ClassList.page;
 export class PageCore extends StepCore implements IPageCore {
-  public override readonly [p.instanceOfCheck]: TInstanceOf = className;
+  public override get instanceOfCheck(): TInstanceOf {
+    return className;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
@@ -42,25 +41,25 @@ export class PageCore extends StepCore implements IPageCore {
 
   #body: string;
 
-  public get [p.body]() {
+  public get body() {
     return this.#body;
   }
 
   #bodyHeader: string;
 
-  public get [p.bodyHeader]() {
+  public get bodyHeader() {
     return this.#bodyHeader;
   }
 
   #bodySubHeader: string;
 
-  public get [p.bodySubHeader]() {
+  public get bodySubHeader() {
     return this.#bodySubHeader;
   }
 
   #type: PAGE_TYPE;
 
-  public override get [p.type]() {
+  public override get type() {
     return this.#type;
   }
 }

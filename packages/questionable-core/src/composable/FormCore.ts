@@ -12,18 +12,12 @@ import {
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { fromSet, toSet }     from '../util/set';
-import {
-  EFormCoreProperties as p,
-  type TFormCoreProperties,
-} from '../metadata/MForm';
-import { Dictionary } from './Dictionary';
-import { BaseCore }   from './BaseCore';
+import { BaseCore } from './BaseCore';
 
 export class FormCore extends BaseCore implements IFormCore {
-  #hash: Dictionary<TFormCoreProperties, unknown>;
-
-  public readonly [p.instanceOfCheck]: TInstanceOf = ClassList.form;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.form;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
@@ -37,72 +31,70 @@ export class FormCore extends BaseCore implements IFormCore {
     return new FormCore(data);
   }
 
+  #started;
+
+  #birthdate;
+
+  #age;
+
+  #finished;
+
+  #responses;
+
   constructor(data: Partial<IFormCore> = {}) {
     super();
-    const hash = new Dictionary<TFormCoreProperties, string | Date | TAgeCore | Set<QuestionCore>>();
-    this.#hash = hash;
-
-    hash.init(data);
-    hash.set(p.started, new Date());
-    if (data.age) {
-      hash.set(p.age, data.age);
-    }
-    hash.set(p.birthdate, data.birthdate || '');
-    if (data.finished) {
-      hash.set(p.finished, data.finished);
-    }
-    const responses = toSet(data.responses?.map((r) => {
-      if (r instanceof QuestionCore) {
-        return r;
-      }
-      return new QuestionCore(r);
-    }) || []);
-    hash.set(p.responses, responses);
+    this.#started  = new Date();
+    this.#age      = data.age;
+    this.#finished = data.finished;
+    // this.#responses = data.responses || [];
+    this.#birthdate = data.birthdate || '';
+    const responses = data.responses?.map((r) => QuestionCore.create(r)) || [];
+    this.#responses = responses;
 
     eventedCore.publish({ event: this, type: 'start' });
   }
 
-  public get [p.started](): Date {
-    return this.#hash.touch(p.started, new Date());
+  public get started(): Date {
+    return this.#started;
   }
 
-  public get [p.birthdate](): string {
-    return this.#hash.touch(p.birthdate, '');
+  public get birthdate(): string {
+    return this.#birthdate;
   }
 
-  public set [p.birthdate](val: string) {
-    this.#hash.set(p.birthdate, val);
+  public set birthdate(val: string) {
+    this.#birthdate = val;
   }
 
-  public get [p.age](): TAgeCore | undefined {
-    return this.#hash.get(p.age);
+  public get age(): TAgeCore | undefined {
+    return this.#age;
   }
 
-  public set [p.age](data: TAgeCore | undefined) {
-    this.#hash.set(p.age, data);
+  public set age(data: TAgeCore | undefined) {
+    this.#age = data;
   }
 
-  public get [p.finished](): Date | undefined {
-    return this.#hash.get(p.finished);
+  public get finished(): Date | undefined {
+    return this.#finished;
   }
 
-  public set [p.finished](date: Date | undefined) {
-    if (date) {
-      this.#hash.set(p.finished, date);
+  public set finished(date: Date | undefined) {
+    if (date && !this.#finished) {
+      this.#finished = date;
       eventedCore.publish({ event: this, type: 'finish' });
     }
   }
 
-  public get [p.responses](): QuestionCore[] {
-    return fromSet(this.#hash.touch(p.responses, new Set<QuestionCore>()));
+  public get responses(): QuestionCore[] {
+    return this.#responses;
   }
 
-  public set [p.responses](val: QuestionCore[]) {
-    this.#hash.set(p.finished, toSet(val));
+  public set responses(val: QuestionCore[]) {
+    this.#responses = val;
   }
 
   public add(response: QuestionCore) {
-    this.#hash.get<Set<QuestionCore>>(p.finished).add(response);
+    this.#responses.push(response);
   }
 
   /**

@@ -7,11 +7,12 @@ import {
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { EComposableCoreProperties as p } from '../metadata/MComposable';
-import { RefCore }                        from './RefCore';
+import { RefCore } from './RefCore';
 
 export class ComposableCore extends RefCore implements IRefCore {
-  public override readonly [p.instanceOfCheck]: TInstanceOf = ClassList.composable;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.composable;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {

@@ -1,5 +1,4 @@
-import { IPageCore }                 from './IStepCore';
-import { EPagesCoreProperties as p } from '../metadata/MPages';
+import { IPageCore } from './IStepCore';
 
 export type TPages = {
   [key: string]: IPageCore;
@@ -8,29 +7,29 @@ export type TPages = {
  * Defines required pages for the survey flow
  */
 export interface IPagesCore {
-  pages: TPages;
   /**
    * First step of the survey
    *
    * @title Landing Page
    */
-  [p.landingPage]?: IPageCore;
+  landingPage?: IPageCore;
   /**
    * Last step of the survey if there are 0 results
    *
    * @title No Results Page
    */
-  [p.noResultsPage]?: IPageCore;
+  noResultsPage?: IPageCore;
+  pages: TPages;
   /**
    * Last step of the survey if there are 1 or more results
    *
    * @title Results Page
    */
-  [p.resultsPage]?: IPageCore;
+  resultsPage?: IPageCore;
   /**
    * Preview of survery before submitting to receive results
    *
    * @title Summary Page
    */
-  [p.summaryPage]?: IPageCore;
+  summaryPage?: IPageCore;
 }

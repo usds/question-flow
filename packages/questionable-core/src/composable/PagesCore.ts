@@ -1,14 +1,13 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
-import { merge }                        from 'lodash';
-import { IPagesCore }                   from '../survey/IPagesCore';
-import { PAGE_TYPE }                    from '../util/enums';
+import { merge }                                     from 'lodash';
+import { IPagesCore }                                from '../survey/IPagesCore';
+import { PAGE_TYPE }                                 from '../util/enums';
 import {
-  checkInstanceOf, ClassList, PREFIX,
+  checkInstanceOf, ClassList, PREFIX, TInstanceOf,
 } from '../util/instanceOf';
-import { PageCore }                  from './PageCore';
-import { EPagesCoreProperties as p } from '../metadata/MPages';
-import { BaseCore }                  from './BaseCore';
+import { PageCore } from './PageCore';
+import { BaseCore } from './BaseCore';
 
 const defaults = {
   instanceof:    PREFIX.PAGES,
@@ -23,7 +22,9 @@ type TPages = {
 }
 
 export class PagesCore extends BaseCore implements IPagesCore {
-  // public override readonly instanceOfCheck: TInstanceOf = ClassList.pages;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.pages;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
@@ -73,7 +74,7 @@ export class PagesCore extends BaseCore implements IPagesCore {
 
   #noResultsPage: PageCore;
 
-  public get [p.noResultsPage](): PageCore {
+  public get noResultsPage(): PageCore {
     return this.#noResultsPage;
   }
 
@@ -85,7 +86,7 @@ export class PagesCore extends BaseCore implements IPagesCore {
 
   #summaryPage: PageCore;
 
-  public get [p.summaryPage]() {
+  public get summaryPage() {
     return this.#summaryPage;
   }
 }

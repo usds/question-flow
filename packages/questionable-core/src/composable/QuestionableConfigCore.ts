@@ -56,7 +56,9 @@ const defaults = {
  * The config has opinionated defaults, but is easily modified using Partial updates
  */
 export class QuestionableConfigCore extends BaseCore implements IQuestionableConfigCore {
-  public readonly instanceOfCheck: TInstanceOf = ClassList.config;
+  public get instanceOfCheck(): TInstanceOf {
+    return  ClassList.config;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {

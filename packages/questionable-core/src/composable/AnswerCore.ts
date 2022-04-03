@@ -2,7 +2,6 @@
 import {
   IRefCore,
 } from '../survey/IRefCore';
-import { EAnswerCoreProperties as p } from '../metadata/MAnswer';
 import {
   checkInstanceOf,
   TInstanceOf,
@@ -11,7 +10,9 @@ import {
 import { ComposableCore } from './ComposableCore';
 
 export class AnswerCore extends ComposableCore implements IRefCore {
-  public override readonly [p.instanceOfCheck]: TInstanceOf = ClassList.answer;
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.answer;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
