@@ -286,6 +286,19 @@ export class QuestionCore extends StepCore implements IQuestionCore {
   public get section() {
     return this.#section;
   }
+
+  public add(data: AnswerCore | SectionCore | BranchCore) {
+    if (data instanceof AnswerCore) {
+      data.add(this);
+      if (!this.existsIn(this.#answers, data)) {
+        this.#answers.push(data);
+      }
+    } else if (data instanceof SectionCore) {
+      this.#section = data;
+    } else if (data instanceof BranchCore) {
+      this.#branch = data;
+    }
+  }
 }
 
 export class ResponseCore extends BaseCore implements IResponseCore {

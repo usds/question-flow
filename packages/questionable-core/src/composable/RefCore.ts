@@ -1,5 +1,7 @@
 /* eslint-disable import/no-cycle */
+import { noop }     from 'lodash';
 import { IRefCore } from '../survey/IRefCore';
+import { matches }  from '../util/helpers';
 import {
   checkInstanceOf,
   TInstanceOf,
@@ -63,5 +65,24 @@ export class RefCore extends BaseCore implements IRefCore {
 
   public set type(val: string) {
     this.#type = val;
+  }
+
+  public existsIn(collection: RefCore[], val: RefCore = this) {
+    const exists = collection.find((q) => matches(q.title, val.title));
+    return (collection.indexOf(val) !== -1 || exists) === true;
+  }
+
+  /** KLUDGE:
+   * allow interface/abstract/base classes to implement a property
+   * that will compile when its primary purpose is to detup inheritance
+   */
+  protected noop = noop;
+
+  /**
+   * This does nothing but establish the pattern for all other classes to build from;
+   * @param data any questionable object
+   */
+  public add(data: RefCore) {
+    this.noop(data);
   }
 }
