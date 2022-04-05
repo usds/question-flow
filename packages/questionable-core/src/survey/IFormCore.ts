@@ -10,25 +10,25 @@ export interface IFormCore {
    *
    * @title Age
    */
-  age?: TAgeCore;
+  age?: TAgeCore | undefined;
   /**
    * Customer's entered birthdate
    *
    * @title Birthdate
    */
-  birthdate?: string;
+  birthdate?: string | undefined;
   /**
    * Time the survey was completed
    *
    * @title Finished
    */
-  finished?: Date;
+  finished?: Date | undefined;
   /**
    * All currently provided responses
    *
    * @title Responses
    */
-  responses: IQuestionCore[];
+  responses?: IQuestionCore[] | undefined;
   /**
    * Time the survey was started
    *

@@ -34,7 +34,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return checkInstanceOf([ClassList.questionnaire, ClassList.base], obj);
   }
 
-  public static override create(data: Partial<IQuestionnaireCore> = {}) {
+  public static override create(data: IQuestionnaireCore) {
     if (data instanceof QuestionnaireCore) {
       return data;
     }
@@ -61,10 +61,10 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
 
   #results: ResultCore[];
 
-  constructor(data: Partial<IQuestionnaireCore> = {}) {
+  constructor(data: IQuestionnaireCore) {
     super();
     const config = (data.config instanceof QuestionableConfigCore)
-      ? data.config : new QuestionableConfigCore(data.config || {});
+      ? data.config : new QuestionableConfigCore(data.config);
 
     this.#config    = config;
     this.#pages     = PagesCore.create(data.pages);

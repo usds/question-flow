@@ -21,33 +21,33 @@ export interface IQuestionableConfigCore {
    * @title Events
    * @hidden
    */
-  events?: Partial<IEventCore>;
+  events: IEventCore | undefined;
   /**
    * Optional method to fetch environment variables or query string parameters
    *
    * @title Get Runtime Config
    * @hidden
    */
-  getRuntimeConfig?: TGetDictionaryCore;
+  getRuntimeConfig?: TGetDictionaryCore | undefined;
   /**
    * View or edit mode
    *
    * @title Mode
    * @default MODE.VIEW
    */
-  mode: MODE;
+  mode: MODE  | undefined;
   /**
   * Navigation configuration
   *
   * @title Navigation
   */
-  nav: Partial<INavigationConfigCore>;
+  nav: Partial<INavigationConfigCore>  | undefined;
   /**
    * Page configuration
    *
    * @title Pages
    */
-  pages: Partial<IPagesConfigCore>;
+  pages: Partial<IPagesConfigCore> | undefined;
   /**
    * Properties produced from `getRuntimeConfig()`
    * @title Params
@@ -59,20 +59,20 @@ export interface IQuestionableConfigCore {
    *
    * @title Progress Bar
    */
-  progressBar?: Partial<IProgressBarConfigCore>;
+  progressBar?: Partial<IProgressBarConfigCore> | undefined;
   /**
    * Question configuration
    *
    * @title Question Configuration
    */
-  questions?: Partial<IQuestionConfigCore>;
+  questions?: Partial<IQuestionConfigCore> | undefined;
 
   /**
    * Step configuration
    *
    * @title Step Configuration
    */
-  steps?: Partial<IStepConfigCore>;
+  steps?: Partial<IStepConfigCore> | undefined;
 }
 
 /**

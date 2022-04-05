@@ -1,5 +1,7 @@
-import { IRefCore } from './IRefCore';
+import { IRefCore }                    from './IRefCore';
+import { IQuestionCore, ISectionCore } from './IStepCore';
 
 export interface IBranchCore extends IRefCore {
-  questions: IRefCore[];
+  questions: IQuestionCore[] | undefined;
+  sections: ISectionCore[] | undefined;
 }

@@ -18,7 +18,7 @@ export class AnswerCore extends RefCore implements IAnswerCore {
     return checkInstanceOf([ClassList.answer, ClassList.ref], obj);
   }
 
-  public static override create(data: Partial<IAnswerCore>, question?: QuestionCore): AnswerCore {
+  public static override create(data: IAnswerCore, question?: QuestionCore): AnswerCore {
     let ret: AnswerCore;
     if (data instanceof AnswerCore) {
       ret = data;
@@ -30,13 +30,23 @@ export class AnswerCore extends RefCore implements IAnswerCore {
     return ret;
   }
 
+  public static override createOptional(data?: IAnswerCore) {
+    if (!data) {
+      return undefined;
+    }
+    return AnswerCore.create(data);
+  }
+
   #key = '';
 
   #questions: QuestionCore[] = [];
 
-  constructor(data: Partial<IAnswerCore> = {}) {
+  #synonyms: string[] = [];
+
+  constructor(data: IAnswerCore) {
     super(data);
-    this.#key = data.key || '';
+    this.#key      = data.key || '';
+    this.#synonyms = data.synonyms || [];
   }
 
   public get key() {
@@ -45,6 +55,10 @@ export class AnswerCore extends RefCore implements IAnswerCore {
 
   public get questions() {
     return this.#questions;
+  }
+
+  public get synonyms() {
+    return this.#synonyms;
   }
 
   public add(question: QuestionCore) {

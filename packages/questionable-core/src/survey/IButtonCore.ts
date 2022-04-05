@@ -12,17 +12,17 @@ export interface IButtonCore extends IRefCore {
    *
    * @title Link
    */
-  link?: string;
+  link: string | undefined;
   /**
    * Render mode (link or button)
    *
    * @title Mode
    */
-  type?: TButtonModeCore;
+  type: TButtonModeCore | undefined;
   /**
    * Visibility status of the button (show/hide)
    *
    * @title Visible
    */
-  visible?: boolean;
+  visible: boolean | undefined;
 }

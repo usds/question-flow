@@ -41,7 +41,7 @@ export class StepCore extends RefCore implements IStepCore {
     return checkInstanceOf([ClassList.step, ClassList.ref], obj);
   }
 
-  public static override create(data: Partial<IStepCore> = {}) {
+  public static override create(data: IStepCore) {
     if (data instanceof StepCore) {
       return data;
     }
@@ -66,7 +66,7 @@ export class StepCore extends RefCore implements IStepCore {
 
   #type: TStepType;
 
-  constructor(data: Partial<IStepCore> = {}) {
+  constructor(data: IStepCore) {
     super(data);
 
     this.#entryRequirements = data.entryRequirements?.map((r) =>
@@ -160,11 +160,18 @@ export class SectionCore extends RefCore implements ISectionCore {
     ], obj);
   }
 
-  public static create(data: Partial<ISectionCore> = {}) {
+  public static create(data: ISectionCore) {
     if (data instanceof SectionCore) {
       return data;
     }
     return new SectionCore(data);
+  }
+
+  public static override createOptional(data?: ISectionCore) {
+    if (!super.createOptional(data) || !data) {
+      return undefined;
+    }
+    return SectionCore.create(data);
   }
 
   #lastStep: number | undefined;
@@ -175,7 +182,7 @@ export class SectionCore extends RefCore implements ISectionCore {
 
   #order: number;
 
-  constructor(data: Partial<ISectionCore> = {}) {
+  constructor(data: ISectionCore) {
     super(data);
     this.#requirements = data.requirements?.map((r) => RequirementCore.create(r)) || [];
     this.#lastStep     = data.lastStep;
@@ -183,7 +190,7 @@ export class SectionCore extends RefCore implements ISectionCore {
     this.#status       = data.status || PROGRESS_BAR_STATUS.INCOMPLETE;
   }
 
-  public get requirements() {
+  public get requirements(): RequirementCore[] {
     return this.#requirements;
   }
 
@@ -195,7 +202,7 @@ export class SectionCore extends RefCore implements ISectionCore {
     this.#lastStep = val;
   }
 
-  public get order() {
+  public get order(): number {
     return this.#order;
   }
 
@@ -222,34 +229,37 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     return checkInstanceOf([ClassList.question, ClassList.step], obj);
   }
 
-  #type: QUESTION_TYPE;
-
-  public get type(): QUESTION_TYPE {
-    return this.#type;
-  }
-
-  #answers: AnswerCore[];
-
-  #branch: BranchCore;
-
-  #section: SectionCore;
-
-  #answer = '';
-
-  #answered: string[] = [];
-
-  public static override create(data: Partial<IQuestionCore> = {}) {
+  public static override create(data: IQuestionCore) {
     if (data instanceof QuestionCore) {
       return data;
     }
     return new QuestionCore(data);
   }
 
-  constructor(data: Partial<IQuestionCore> = {}) {
+  public static override createOptional(data?: IQuestionCore) {
+    if (!super.createOptional(data) || !data) {
+      return undefined;
+    }
+    return QuestionCore.create(data);
+  }
+
+  #type: QUESTION_TYPE;
+
+  #answers: AnswerCore[];
+
+  #branch: BranchCore | undefined;
+
+  #section: SectionCore | undefined;
+
+  #answer = '';
+
+  #answered: string[] = [];
+
+  constructor(data: IQuestionCore) {
     super(data);
     this.#answers = data.answers?.map((a) =>  AnswerCore.create(a)) || [];
-    this.#branch  = BranchCore.create(data.branch);
-    this.#section =  SectionCore.create(data.section);
+    this.#branch  = BranchCore.createOptional(data.branch);
+    this.#section =  SectionCore.createOptional(data.section);
     if (!data.type || `${data.type}` === `${QUESTION_TYPE.DEFAULT}`) {
       this.#type = QUESTION_TYPE.DEFAULT;
     } else {
@@ -274,7 +284,7 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     return this.#branch;
   }
 
-  public set branch(val: BranchCore) {
+  public set branch(val: BranchCore | undefined) {
     this.#branch = val;
   }
 
@@ -284,6 +294,14 @@ export class QuestionCore extends StepCore implements IQuestionCore {
 
   public get section() {
     return this.#section;
+  }
+
+  public set section(val: SectionCore | undefined) {
+    this.#section = val;
+  }
+
+  public get type(): QUESTION_TYPE {
+    return this.#type;
   }
 
   public add(data: AnswerCore | SectionCore | BranchCore) {
@@ -310,26 +328,37 @@ export class ResponseCore extends BaseCore implements IResponseCore {
     return checkInstanceOf([ClassList.response], obj);
   }
 
-  public static override create(data: Partial<IResponseCore> = {}) {
+  public static override create(data: IResponseCore) {
     if (data instanceof ResponseCore) {
       return data;
     }
     return new ResponseCore(data);
   }
 
-  constructor(data: Partial<IResponseCore>) {
-    super();
-    if (data.answers) {
-      this.answers = data.answers.map((a) => new AnswerCore(a));
+  public static override createOptional(data?: IResponseCore) {
+    if (!super.createOptional(data) || !data) {
+      return undefined;
     }
-    if (data.question) {
-      this.question = new QuestionCore(data.question);
-    }
+    return ResponseCore.create(data);
   }
 
-  answers!: AnswerCore[];
+  #answers!: AnswerCore[];
 
-  question!: QuestionCore;
+  #question!: QuestionCore;
+
+  constructor(data: IResponseCore) {
+    super();
+    this.#answers  = data.answers?.map((a) => new AnswerCore(a)) || [];
+    this.#question = QuestionCore.create(data.question);
+  }
+
+  public get question(): QuestionCore {
+    return this.#question;
+  }
+
+  public get answers(): AnswerCore[] {
+    return this.#answers;
+  }
 }
 
 export class RequirementCore extends RefCore implements IRequirementCore {
@@ -342,30 +371,59 @@ export class RequirementCore extends RefCore implements IRequirementCore {
     return checkInstanceOf([ClassList.requirement, ClassList.ref], obj);
   }
 
-  public static create(data: Partial<IRequirementCore> = {}) {
+  public static create(data: IRequirementCore) {
     if (data instanceof RequirementCore) {
       return data;
     }
     return new RequirementCore(data);
   }
 
-  constructor(data: Partial<IRequirementCore>) {
-    super(data);
-
-    if (data.responses) {
-      this.responses = data.responses.map((q) => new ResponseCore(q));
+  public static override createOptional(data?: IRequirementCore) {
+    if (!super.createOptional(data) || !data) {
+      return undefined;
     }
+    return RequirementCore.create(data);
   }
 
-  ageCalc?: TAgeCalcCore | undefined;
+  #ageCalc;
 
-  explanation?: string | undefined;
+  #explanation;
 
-  maxAge?: TAgeCore | undefined;
+  #maxAge;
 
-  minAge?: TAgeCore | undefined;
+  #minAge;
 
-  responses!: ResponseCore[];
+  #responses;
+
+  constructor(data: IRequirementCore) {
+    super(data);
+
+    this.#ageCalc     = data.ageCalc || (() => true);
+    this.#explanation = data.explanation || '';
+    this.#maxAge      = data.maxAge;
+    this.#minAge      = data.minAge;
+    this.#responses   = data.responses?.map((q) => new ResponseCore(q)) || [];
+  }
+
+  get ageCalc(): TAgeCalcCore | undefined {
+    return this.#ageCalc;
+  }
+
+  get explanation(): string {
+    return this.#explanation;
+  }
+
+  get maxAge(): TAgeCore | undefined {
+    return this.#maxAge;
+  }
+
+  get minAge(): TAgeCore | undefined {
+    return this.#minAge;
+  }
+
+  get responses(): ResponseCore[] {
+    return this.#responses;
+  }
 }
 
 export class BranchCore extends RefCore implements IBranchCore {
@@ -378,17 +436,35 @@ export class BranchCore extends RefCore implements IBranchCore {
     return checkInstanceOf([ClassList.branch, ClassList.ref], obj);
   }
 
-  public static create(data: Partial<IBranchCore> = {}) {
+  public static create(data: IBranchCore) {
     if (data instanceof BranchCore) {
       return data;
     }
     return new BranchCore(data);
   }
 
-  constructor(data: Partial<IBranchCore> = {}) {
-    super(data);
-    this.questions = data.questions?.map((q) => RefCore.create(q)) || [];
+  public static override createOptional(data?: IBranchCore) {
+    if (!super.createOptional(data) || !data) {
+      return undefined;
+    }
+    return BranchCore.create(data);
   }
 
-  public questions: RefCore[];
+  #questions;
+
+  #sections;
+
+  constructor(data: IBranchCore) {
+    super(data);
+    this.#questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
+    this.#sections  = data.sections?.map((q) => SectionCore.create(q)) || [];
+  }
+
+  public get questions(): QuestionCore[] {
+    return this.#questions;
+  }
+
+  public get sections(): SectionCore[] {
+    return this.#sections;
+  }
 }

@@ -16,6 +16,6 @@ export interface IQuestionnaireCore {
    header: string;
    pages: IPagesCore;
    questions: IQuestionCore[];
-  results: IResultCore[];
-  sections: ISectionCore[];
+   results: IResultCore[];
+   sections: ISectionCore[];
 }

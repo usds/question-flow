@@ -12,24 +12,24 @@ export interface IPagesCore {
    *
    * @title Landing Page
    */
-  landingPage?: IPageCore;
+  landingPage?: IPageCore | undefined;
   /**
    * Last step of the survey if there are 0 results
    *
    * @title No Results Page
    */
-  noResultsPage?: IPageCore;
+  noResultsPage?: IPageCore | undefined;
   pages: TPages;
   /**
    * Last step of the survey if there are 1 or more results
    *
    * @title Results Page
    */
-  resultsPage?: IPageCore;
+  resultsPage?: IPageCore | undefined;
   /**
    * Preview of survery before submitting to receive results
    *
    * @title Summary Page
    */
-  summaryPage?: IPageCore;
+  summaryPage?: IPageCore | undefined;
 }

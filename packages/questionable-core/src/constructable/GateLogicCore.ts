@@ -168,7 +168,7 @@ export class GateLogicCore {
    * @param id unique identifier of the question
    * @returns
    */
-  getQuestion(q: Partial<QuestionCore>): QuestionCore {
+  getQuestion(q: { id: string }): QuestionCore {
     if (!q.id) {
       this.throw(`Question ${q} is not defined`);
     }

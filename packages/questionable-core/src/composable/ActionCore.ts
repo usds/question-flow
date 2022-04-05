@@ -22,11 +22,18 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
     return checkInstanceOf([ClassList.action, ClassList.ref], obj);
   }
 
-  public static override create(data: Partial<IActionCore> = {}) {
+  public static override create(data: IActionCore) {
     if (data instanceof ActionCore) {
       return data;
     }
     return new ActionCore(data);
+  }
+
+  public static override createOptional(data?: IActionCore) {
+    if (!data) {
+      return undefined;
+    }
+    return ActionCore.create(data);
   }
 
   #buttons;
@@ -37,7 +44,7 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   #type;
 
-  constructor(data: Partial<IActionCore> = {}) {
+  constructor(data: IActionCore) {
     super(data);
     this.#buttons  = data.buttons || [];
     this.#label    = data.label || '';
@@ -56,11 +63,6 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   public set buttons(val: IButtonCore[]) {
     this.#buttons = val;
-  }
-
-  public add(data: IButtonCore) {
-    this.#buttons.push(data);
-    return data;
   }
 
   /**

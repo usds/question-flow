@@ -10,6 +10,8 @@ import {
  * Generic class from which all others are derived
  */
 export class BaseCore {
+  [key: string]: unknown;
+
   /**
    * Stash a copy of the original object for future inspection,
    * primarily to aid debugging when classes are instantiated with
@@ -48,11 +50,21 @@ export class BaseCore {
    * @param data any object (or lack thereof) to be evaled as a ref
    * @returns
    */
-  public static create(data: unknown = {}) {
+  public static create(data: unknown): BaseCore {
     if (data instanceof BaseCore) {
       return data;
     }
     return new BaseCore();
+  }
+
+  /**
+   * For use when the property is not required
+   */
+  public static createOptional(data?: unknown): BaseCore | undefined {
+    if (!data) {
+      return undefined;
+    }
+    return BaseCore.create(data);
   }
 
   /**

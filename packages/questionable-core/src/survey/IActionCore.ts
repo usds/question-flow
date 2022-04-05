@@ -11,7 +11,7 @@ export interface IActionCore extends IRefCore {
    * @title Buttons
    * @hidden
    */
-  buttons: IButtonCore[];
+  buttons: IButtonCore[] | undefined;
   /**
    * @title Label
    */
@@ -19,7 +19,7 @@ export interface IActionCore extends IRefCore {
   /**
    * @title Description
    */
-  subTitle?: string;
+  subTitle: string | undefined;
   /**
    * @title Type
    * @hidden

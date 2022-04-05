@@ -218,7 +218,7 @@ function getClassesAndInterfaces(names: TInstanceOf[]): TInstanceOf[] {
   return [...new Set([...ret])];
 }
 
-function checkInstanceOf(names: TInstanceOf[], obj: Partial<BaseCore>) {
+function checkInstanceOf(names: TInstanceOf[], obj: BaseCore) {
   const checking = getClassesAndInterfaces(names);
   return checking.some((i) => `${i}` === `${obj?.instanceOfCheck}`);
 }

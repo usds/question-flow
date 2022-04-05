@@ -12,11 +12,11 @@ export interface IResultCore extends IRefCore {
    * @title Call to Action
    * @hidden
    */
-  action: Partial<IActionCore>;
+  action: IActionCore | undefined;
   /**
    * Optional tag/category to group results
    */
-  category?: string;
+  category?: string | undefined;
   /**
    * Identify the result (e.g. 'Benefit name')
    *
@@ -30,13 +30,13 @@ export interface IResultCore extends IRefCore {
    * @title Match
    * @hidden Not viewable/editable in Design Mode
    */
-  match?: IRequirementCore;
+  match?: IRequirementCore | undefined;
   /**
    * Human readable explanation of result determination
    *
    * @title Reason
    */
-  reason?: string;
+  reason?: string | undefined;
   /**
    * Collection of requirements required to achieve this result
    *
@@ -49,5 +49,5 @@ export interface IResultCore extends IRefCore {
    * @title Secondary Action
    * @hidden
    */
-  secondaryAction?: Partial<IActionCore>;
+  secondaryAction?: IActionCore | undefined;
 }

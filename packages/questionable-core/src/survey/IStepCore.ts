@@ -9,6 +9,7 @@ import {
   TAgeCore,
   TAgeCalcCore,
 } from '../util/types';
+import { IAnswerCore } from './IAnswerCore';
 import { IBranchCore } from './IBranchCore';
 import {
   IRefCore,
@@ -18,8 +19,8 @@ import {
  * Acceptable responses
  */
 export interface IResponseCore {
-  answers: Partial<IRefCore>[];
-  question: Partial<IQuestionCore>;
+  answers: IAnswerCore[];
+  question: IQuestionCore;
 }
 
 /**
@@ -31,50 +32,50 @@ export interface IStepCore extends IRefCore {
    *
    * @title Requirements
    */
-  entryRequirements?: IRequirementCore[];
+  entryRequirements?: IRequirementCore[] | undefined;
   /**
    * Collection of requirements to leave this step
    *
    * @title Exit Requirements
    */
-  exitRequirements?: IRequirementCore[];
+  exitRequirements?: IRequirementCore[] | undefined;
   /**
    * Optional footer text to display at the bottom of the step
    *
    * @title Footer
    */
-  footer?: string;
+  footer?: string | undefined;
   /**
    * Contextual content to display below the step contents and above the footer
    *
    * @title Info
    */
-  info?: string;
+  info?: string | undefined;
   /**
    * Private/internal use only notes for documenting this step
    *
    * @title Internal Notes
    */
-  internalNotes?: string;
+  internalNotes?: string | undefined;
   /**
    * Display order of the Step. Determined at runtime.
    *
    * @title Order
    * @hidden
    */
-  order?: number;
+  order?: number | undefined;
   /**
    * Section to which this step belongs
    *
    * @title Section
    */
-  section: Partial<ISectionCore>;
+  section?: ISectionCore  | undefined;
   /**
    * Text to display below the title
    *
    * @title Subtitle
    */
-  subTitle?: string;
+  subTitle?: string | undefined;
   /**
    * Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}
    *
@@ -94,20 +95,20 @@ export interface IQuestionCore extends IStepCore {
    * @title Answer
    * @hidden Not viewable/editable in Design Mode
    */
-  answer?: string;
+  answer?: string | undefined;
   /**
    * Collection of allowed answers
    *
    * @title Answers
    */
-  answers: IRefCore[];
+  answers: IAnswerCore[];
   /**
    * Collection of branches that use this question
    *
    * @title Branch
    * @hidden
    */
-  branch?: Partial<IBranchCore>;
+  branch?: IBranchCore | undefined;
   /**
    * Type of question
    *
@@ -139,6 +140,7 @@ export interface IPageCore extends IStepCore {
    * @title Body Subheading
    */
   bodySubHeader?: string;
+  display: boolean;
   /**
    * Type of page
    *
@@ -155,25 +157,25 @@ export interface IRequirementCore extends IRefCore {
    * Optional, custom calculator for performing age-specific validation
    * @hidden JSON schema does not support functions
    */
-  ageCalc?: TAgeCalcCore;
+  ageCalc?: TAgeCalcCore | undefined;
   /**
    * User facing description of this requirement
    *
    * @title Exlanation
    */
-  explanation?: string;
+  explanation: string;
   /**
    * Optional maximum age allowed for this requirement
    *
    * @title Maximum Age
    */
-  maxAge?: TAgeCore;
+  maxAge?: TAgeCore | undefined;
   /**
    * Optional minimum age allowed for this requirement
    *
    * @title Minimum Age
    */
-  minAge?: TAgeCore;
+  minAge?: TAgeCore | undefined;
   /**
    * Map of step id to required answer values
    *
@@ -192,7 +194,7 @@ export interface ISectionCore extends IRefCore {
    * @title Last Step
    * @hidden Not viewable/editable in Design Mode
    */
-  lastStep?: number;
+  lastStep?: number | undefined;
   /**
    * Collection of requirements to enable display of this status
    *
@@ -205,5 +207,5 @@ export interface ISectionCore extends IRefCore {
    * @title Status
    * @hidden Not viewable/editable in Design Mode
    */
-  status?: PROGRESS_BAR_STATUS;
+  status?: PROGRESS_BAR_STATUS | undefined;
 }

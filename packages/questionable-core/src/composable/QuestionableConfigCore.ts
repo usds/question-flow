@@ -83,7 +83,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
 
   readonly getRuntimeConfig?: TGetDictionaryCore;
 
-  constructor(data: Partial<IQuestionableConfigCore>) {
+  constructor(data: IQuestionableConfigCore) {
     super();
     merge(defaults, data);
     merge(this, data);
@@ -136,7 +136,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
     return { ...this._nav };
   }
 
-  set nav(val: Partial<INavigationConfigCore>) {
+  set nav(val: INavigationConfigCore) {
     merge(this._nav, val);
   }
 
@@ -147,7 +147,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
     return this._pages;
   }
 
-  set pages(val: Partial<IPagesConfigCore>) {
+  set pages(val: IPagesConfigCore) {
     merge(this._pages, val);
   }
 
@@ -158,7 +158,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
     return { ...this._progressBar };
   }
 
-  set progressBar(val: Partial<IProgressBarConfigCore>) {
+  set progressBar(val: IProgressBarConfigCore) {
     merge(this._progressBar, val);
   }
 
@@ -169,7 +169,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
     return { ...this._questions };
   }
 
-  set questions(val: Partial<IQuestionConfigCore>) {
+  set questions(val: IQuestionConfigCore) {
     merge(this._questions, val);
   }
 
@@ -180,7 +180,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
     return { ...this._steps };
   }
 
-  set steps(val: Partial<IStepConfigCore>) {
+  set steps(val: IStepConfigCore) {
     merge(this._steps, val);
   }
 }

@@ -19,14 +19,22 @@ export class ResultCore extends RefCore implements IResultCore {
     return checkInstanceOf([ClassList.result, ClassList.ref], obj);
   }
 
-  public static create(data: Partial<IResultCore> = {}) {
+  // public static isResult(data: any): data is ResultCore {
+  //   return 'title' in data;
+  // }
+
+  // public isRef(data: any): data is RefCore {
+  //   return ResultCore.isRef(this);
+  // }
+
+  public static create(data: IResultCore) {
     if (data instanceof ResultCore) {
       return data;
     }
     return new ResultCore(data);
   }
 
-  #action: ActionCore;
+  #action: ActionCore | undefined;
 
   #category!: string;
 
@@ -42,20 +50,14 @@ export class ResultCore extends RefCore implements IResultCore {
 
   #secondaryAction?: ActionCore | undefined;
 
-  constructor(data: Partial<IResultCore> = {}) {
+  constructor(data: IResultCore) {
     super(data);
-    this.#action = (data.action instanceof ActionCore) ? data.action : new ActionCore(data.action);
-    if (data.match) {
-      this.#match = (data.match instanceof RequirementCore) ? data.match : new RequirementCore(data.match);
-    }
-    this.#requirements = data.requirements?.map((r) => {
-      if (r instanceof RequirementCore) return r;
-      return new RequirementCore(r);
-    }) || [];
+    this.#action       = ActionCore.createOptional(data.action);
+    this.#match        = RequirementCore.createOptional(data.match);
+    this.#requirements = data.requirements?.map((r) => RequirementCore.create(r)) || [];
 
     if (data.secondaryAction) {
-      this.#secondaryAction = (data.secondaryAction instanceof ActionCore)
-        ? data.secondaryAction : new ActionCore(data.secondaryAction);
+      this.#secondaryAction = ActionCore.create(data.secondaryAction);
     }
     this.#reason = data.reason || '';
   }

@@ -19,14 +19,16 @@ export class PageCore extends StepCore implements IPageCore {
     return checkInstanceOf([className, ClassList.page], obj);
   }
 
-  public static override create(data: Partial<IPageCore> = {}) {
+  public static override create(data: IPageCore) {
     if (data instanceof PageCore) {
       return data;
     }
     return new PageCore(data);
   }
 
-  constructor(data: Partial<IPageCore> = {}) {
+  #display = true;
+
+  constructor(data: IPageCore) {
     super(data);
 
     if (!data.type || `${data.type}` === `${PAGE_TYPE.DEFAULT}`) {
@@ -37,6 +39,7 @@ export class PageCore extends StepCore implements IPageCore {
     this.#body          = data.body || '';
     this.#bodyHeader    = data.bodyHeader || '';
     this.#bodySubHeader = data.bodySubHeader || '';
+    this.#display       = !(data.display === false);
   }
 
   #body: string;
@@ -55,6 +58,10 @@ export class PageCore extends StepCore implements IPageCore {
 
   public get bodySubHeader() {
     return this.#bodySubHeader;
+  }
+
+  public get display() {
+    return this.#display;
   }
 
   #type: PAGE_TYPE;

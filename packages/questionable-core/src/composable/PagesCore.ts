@@ -41,22 +41,28 @@ export class PagesCore extends BaseCore implements IPagesCore {
     return new PagesCore(data);
   }
 
+  #makeDefault(type: PAGE_TYPE): IPageCore {
+    return {
+      display: false,
+      id:      type,
+      section: {
+        requirements: [],
+        title:        type,
+        type:         'pages',
+      },
+      title: type,
+      type,
+    };
+  }
+
   constructor(data: Partial<IPagesCore> = {}) {
     super();
     merge(this, defaults);
     this.pages          = {};
-    this.#landingPage   = PageCore.create(data.landingPage || {
-      id: PAGE_TYPE.LANDING, type: PAGE_TYPE.LANDING,
-    });
-    this.#resultsPage   = PageCore.create(data.resultsPage || {
-      id: PAGE_TYPE.RESULTS, type: PAGE_TYPE.RESULTS,
-    });
-    this.#noResultsPage = PageCore.create(data.noResultsPage || {
-      id: PAGE_TYPE.NO_RESULTS, type: PAGE_TYPE.NO_RESULTS,
-    });
-    this.#summaryPage   = PageCore.create(data.summaryPage || {
-      id: PAGE_TYPE.SUMMARY, type: PAGE_TYPE.SUMMARY,
-    });
+    this.#landingPage   = PageCore.create(data.landingPage || this.#makeDefault(PAGE_TYPE.LANDING));
+    this.#resultsPage   = PageCore.create(data.resultsPage || this.#makeDefault(PAGE_TYPE.RESULTS));
+    this.#noResultsPage = PageCore.create(data.noResultsPage || this.#makeDefault(PAGE_TYPE.NO_RESULTS));
+    this.#summaryPage   = PageCore.create(data.summaryPage || this.#makeDefault(PAGE_TYPE.SUMMARY));
     if (data.pages) {
       const pages = Object.keys(data.pages);
       for (const name of pages) {
@@ -91,7 +97,7 @@ export class PagesCore extends BaseCore implements IPagesCore {
     return this.#summaryPage;
   }
 
-  public set(data: Partial<IPageCore>) {
+  public set(data: IPageCore) {
     const page = PageCore.create(data);
     switch (page.type) {
       case PAGE_TYPE.LANDING:

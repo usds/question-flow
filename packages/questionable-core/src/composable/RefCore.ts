@@ -20,16 +20,37 @@ export class RefCore extends BaseCore implements IRefCore {
     return ClassList.ref;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.ref], obj);
   }
 
-  public static create(data: Partial<IRefCore> = {}) {
+  // public static isRef(data: any): data is RefCore {
+  //   return 'title' in data;
+  // }
+
+  // public static is<T>(data: any): data is T {
+  //   if (T === RefCore) {
+
+  //   }
+  //   return 'title' in data;
+  // }
+
+  // public isRef(data: any): data is RefCore {
+  //   return RefCore.isRef(this);
+  // }
+
+  public static create(data: IRefCore) {
     if (data instanceof RefCore) {
       return data;
     }
     return new RefCore(data);
+  }
+
+  public static override createOptional(data?: IRefCore) {
+    if (!super.createOptional(data) || !data) {
+      return undefined;
+    }
+    return RefCore.create(data);
   }
 
   #id: string;
@@ -44,7 +65,7 @@ export class RefCore extends BaseCore implements IRefCore {
    * Instantiation will generate a uuid for this object
    * @param data optional data
    */
-  public constructor(data: Partial<IRefCore> = {}) {
+  public constructor(data: IRefCore) {
     super(data);
     if (data.id && data.id.length > 0) {
       this.#id = data.id;
