@@ -1,25 +1,21 @@
 /* eslint-disable import/no-cycle */
 import { IAnswerCore } from '../survey/IAnswerCore';
 import {
-  IRefCore,
-} from '../survey/IRefCore';
-import { matches } from '../util';
-import {
   checkInstanceOf,
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { ComposableCore } from './ComposableCore';
-import { QuestionCore }   from './StepCore';
+import { RefCore }      from './RefCore';
+import { QuestionCore } from './StepCore';
 
-export class AnswerCore extends ComposableCore implements IAnswerCore {
+export class AnswerCore extends RefCore implements IAnswerCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.answer;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.answer, ClassList.composable], obj);
+    return checkInstanceOf([ClassList.answer, ClassList.ref], obj);
   }
 
   public static override create(data: Partial<IAnswerCore>, question?: QuestionCore): AnswerCore {

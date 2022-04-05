@@ -48,6 +48,26 @@ export const survey = {
       ],
       "type": "object"
     },
+    "IAnswerCore": {
+      "properties": {
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
     "IBranchCore": {
       "properties": {
         "id": {

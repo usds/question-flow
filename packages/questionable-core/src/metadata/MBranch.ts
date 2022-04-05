@@ -1,8 +1,8 @@
-import { ClassProperties }     from '../util';
+import { ClassProperties } from '../util';
 import {
-  EComposableCoreProperties,
-  TComposableCoreProperties,
-} from './MComposable';
+  ERefCoreProperties,
+  TRefCoreProperties,
+} from './MRef';
 
 const TheseProperties: {
   readonly questions: 'questions',
@@ -10,8 +10,8 @@ const TheseProperties: {
   questions: 'questions' as const,
 };
 
-const EBranchCoreProperties = { ...TheseProperties, ...EComposableCoreProperties };
-type TBranchCoreProperties = ClassProperties<typeof EBranchCoreProperties> | TComposableCoreProperties;
+const EBranchCoreProperties = { ...TheseProperties, ...ERefCoreProperties };
+type TBranchCoreProperties = ClassProperties<typeof EBranchCoreProperties> | TRefCoreProperties;
 
 export {
   EBranchCoreProperties,

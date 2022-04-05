@@ -1,5 +1,5 @@
-import {  ClassProperties }                                     from '../util';
-import { EComposableCoreProperties, TComposableCoreProperties } from './MComposable';
+import {  ClassProperties }                       from '../util';
+import { ERefCoreProperties, TRefCoreProperties } from './MRef';
 
 type TTheseProperties = {
   readonly answers: 'answers',
@@ -9,8 +9,8 @@ const TheseProperties: TTheseProperties = {
   answers:  'answers' as const,
   question: 'question' as const,
 };
-const EResponseCoreProperties           = { ...TheseProperties, ...EComposableCoreProperties };
-type TResponseCoreProperties = ClassProperties<typeof EResponseCoreProperties> | TComposableCoreProperties;
+const EResponseCoreProperties           = { ...TheseProperties, ...ERefCoreProperties };
+type TResponseCoreProperties = ClassProperties<typeof EResponseCoreProperties> | TRefCoreProperties;
 
 export {
   EResponseCoreProperties,

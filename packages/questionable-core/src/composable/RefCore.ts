@@ -10,6 +10,11 @@ import {
 import { getGUID }  from '../util/uuid';
 import { BaseCore } from './BaseCore';
 
+/**
+ * Base class for all objects that should be stored by reference,
+ * most commonly because they represent unique rows in a table or
+ * distinct, complex structures whose value can be inferred by unique identfiers
+ */
 export class RefCore extends BaseCore implements IRefCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.ref;
@@ -35,8 +40,12 @@ export class RefCore extends BaseCore implements IRefCore {
 
   #title: string;
 
+  /**
+   * Instantiation will generate a uuid for this object
+   * @param data optional data
+   */
   public constructor(data: Partial<IRefCore> = {}) {
-    super();
+    super(data);
     if (data.id && data.id.length > 0) {
       this.#id = data.id;
     } else {
@@ -73,8 +82,10 @@ export class RefCore extends BaseCore implements IRefCore {
   }
 
   /** KLUDGE:
-   * allow interface/abstract/base classes to implement a property
-   * that will compile when its primary purpose is to detup inheritance
+   * allow interface/abstract/base classes to implement a property so that
+   * the code will compile (fixes "class member does not use `this`" and
+   * "unused parameter" errors), for use when the primary purpose
+   * of the property is to setup inheritance
    */
   protected noop = noop;
 

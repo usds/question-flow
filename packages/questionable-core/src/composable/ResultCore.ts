@@ -6,17 +6,17 @@ import {
   ClassList,
 } from '../util/instanceOf';
 import { ActionCore }      from './ActionCore';
-import { ComposableCore }  from './ComposableCore';
+import { RefCore }         from './RefCore';
 import { RequirementCore } from './StepCore';
 
-export class ResultCore extends ComposableCore implements IResultCore {
+export class ResultCore extends RefCore implements IResultCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.result;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.result, ClassList.composable], obj);
+    return checkInstanceOf([ClassList.result, ClassList.ref], obj);
   }
 
   public static create(data: Partial<IResultCore> = {}) {

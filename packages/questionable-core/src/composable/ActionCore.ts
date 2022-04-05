@@ -10,16 +10,16 @@ import {
   TInstanceOf,
   ClassList,
 } from '../util/instanceOf';
-import { ComposableCore } from './ComposableCore';
+import { RefCore } from './RefCore';
 
-export class ActionCore extends ComposableCore implements IActionCore, IRefCore {
+export class ActionCore extends RefCore implements IActionCore, IRefCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.action;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.action, ClassList.composable], obj);
+    return checkInstanceOf([ClassList.action, ClassList.ref], obj);
   }
 
   public static override create(data: Partial<IActionCore> = {}) {

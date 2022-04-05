@@ -3,7 +3,6 @@ export * from './MAnswer';
 export * from './MBase';
 export * from './MBranch';
 export * from './MCommon';
-export * from './MComposable';
 export * from './MConfig';
 export * from './MEvent';
 export * from './MForm';

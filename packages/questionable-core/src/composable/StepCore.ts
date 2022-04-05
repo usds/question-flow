@@ -20,7 +20,6 @@ import {
   TStepType,
   PROGRESS_BAR_STATUS,
 } from '../util/enums';
-import { ComposableCore } from './ComposableCore';
 import {
   checkInstanceOf,
   ClassList,
@@ -32,14 +31,14 @@ import { IBranchCore }            from '../survey/IBranchCore';
 import { BaseCore }               from './BaseCore';
 import { RefCore }                from './RefCore';
 
-export class StepCore extends ComposableCore implements IStepCore {
+export class StepCore extends RefCore implements IStepCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.step;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.step, ClassList.composable], obj);
+    return checkInstanceOf([ClassList.step, ClassList.ref], obj);
   }
 
   public static override create(data: Partial<IStepCore> = {}) {
@@ -150,14 +149,14 @@ export class StepCore extends ComposableCore implements IStepCore {
   }
 }
 
-export class SectionCore extends ComposableCore implements ISectionCore {
+export class SectionCore extends RefCore implements ISectionCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.section;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.section, ClassList.composable,
+    return checkInstanceOf([ClassList.section, ClassList.ref,
     ], obj);
   }
 
@@ -333,14 +332,14 @@ export class ResponseCore extends BaseCore implements IResponseCore {
   question!: QuestionCore;
 }
 
-export class RequirementCore extends ComposableCore implements IRequirementCore {
+export class RequirementCore extends RefCore implements IRequirementCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.requirement;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.requirement, ClassList.composable], obj);
+    return checkInstanceOf([ClassList.requirement, ClassList.ref], obj);
   }
 
   public static create(data: Partial<IRequirementCore> = {}) {
@@ -369,14 +368,14 @@ export class RequirementCore extends ComposableCore implements IRequirementCore 
   responses!: ResponseCore[];
 }
 
-export class BranchCore extends ComposableCore implements IBranchCore {
+export class BranchCore extends RefCore implements IBranchCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.branch;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.branch, ClassList.composable], obj);
+    return checkInstanceOf([ClassList.branch, ClassList.ref], obj);
   }
 
   public static create(data: Partial<IBranchCore> = {}) {

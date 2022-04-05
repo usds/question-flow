@@ -1,14 +1,14 @@
-import { ClassProperties }     from '../util/types';
+import { ClassProperties } from '../util/types';
 import {
-  EComposableCoreProperties,
-  TComposableCoreProperties,
-} from './MComposable';
+  ERefCoreProperties,
+  TRefCoreProperties,
+} from './MRef';
 
-type TTheseProperties = typeof EComposableCoreProperties;
+type TTheseProperties = typeof ERefCoreProperties;
 const TheseProperties: TTheseProperties = {
-  ...EComposableCoreProperties,
+  ...ERefCoreProperties,
 };
-type TAnswerCoreProperties = ClassProperties<typeof TheseProperties> | TComposableCoreProperties;
+type TAnswerCoreProperties = ClassProperties<typeof TheseProperties> | TRefCoreProperties;
 
 export {
   TheseProperties as EAnswerCoreProperties,

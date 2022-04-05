@@ -5,7 +5,6 @@ import {
   AnswerCore,
   BaseCore,
   BranchCore,
-  ComposableCore,
   FormCore,
   PageCore,
   PagesCore,
@@ -33,8 +32,6 @@ export class SurveyBuilder {
   #braches: BranchCore[] = [];
 
   #bases: BaseCore[] = [];
-
-  #composables: ComposableCore[] = [];
 
   #config?: QuestionableConfigCore;
 
@@ -95,8 +92,6 @@ export class SurveyBuilder {
       this.#pages = (nu);
     } else if (nu instanceof AnswerCore) {
       this.#answers.push(nu);
-    } else if (nu instanceof ComposableCore) {
-      this.#composables.push(nu);
     } else if (nu instanceof RefCore) {
       this.#parts.push(nu);
     } else {

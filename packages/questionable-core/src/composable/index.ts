@@ -1,7 +1,6 @@
 export * from './ActionCore';
 export * from './AnswerCore';
 export * from './BaseCore';
-export * from './ComposableCore';
 export * from './Dictionary';
 export * from './EventEmitterCore';
 export * from './FormCore';

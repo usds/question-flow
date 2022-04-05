@@ -10,7 +10,6 @@ import { ClassProperties } from './types';
   BRANCH,
   BUTTON,
   BUTTONS,
-  COMPOSABLE,
   CONFIG,
   DESIGN,
   DESIGN_DATA,
@@ -44,7 +43,6 @@ type TPrefix = {
   BRANCH: 'branch',
   BUTTON: 'button',
   BUTTONS: 'buttons',
-  COMPOSABLE: 'composable',
   CONFIG: 'config',
   DESIGN: 'design',
   DESIGN_DATA: 'design-data',
@@ -78,7 +76,6 @@ const CLASS_NAME: TPrefix = {
   BRANCH:         'branch' as const,
   BUTTON:         'button' as const,
   BUTTONS:        'buttons' as const,
-  COMPOSABLE:     'composable' as const,
   CONFIG:         'config' as const,
   DESIGN:         'design' as const,
   DESIGN_DATA:    'design-data' as const,
@@ -115,7 +112,6 @@ interface IClassMap extends IInstance {
   [CLASS_NAME.BRANCH]: TInstanceOf;
   [CLASS_NAME.BUTTON]: TInstanceOf;
   [CLASS_NAME.BUTTONS]: TInstanceOf;
-  [CLASS_NAME.COMPOSABLE]: TInstanceOf;
   [CLASS_NAME.CONFIG]: TInstanceOf;
   [CLASS_NAME.DESIGN]: TInstanceOf;
   [CLASS_NAME.DESIGN_DATA]: TInstanceOf;
@@ -210,12 +206,8 @@ function extractNames(name: TInstanceOf): TInstanceOf[] {
   } else {
     names.push(makeName(prefix, SUFFIX.CORE, coi));
   }
-  if (names.some((n) => n === 'composable-core')) {
+  if (names.some((n) => n.startsWith(CLASS_NAME.REF))) {
     names.push('base-core');
-  }
-  if (names.some((n) => n === 'base-core')) {
-    names.push('ref-core');
-    names.push('Iref-core');
   }
   return names;
 }
