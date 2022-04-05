@@ -18,7 +18,7 @@ import {
 /**
  * Acceptable responses
  */
-export interface IResponseCore {
+export interface IResponseCore extends IRefCore {
   answers: IAnswerCore[];
   question: IQuestionCore;
 }

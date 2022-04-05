@@ -65,122 +65,121 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
     return checkInstanceOf([ClassList.config], obj);
   }
 
-  protected _mode!: MODE;
+  #mode!: MODE;
 
-  protected _nav!: INavigationConfigCore;
+  #nav!: INavigationConfigCore;
 
-  protected _pages!: IPagesConfigCore;
+  #pages!: IPagesConfigCore;
 
-  protected _progressBar!: IProgressBarConfigCore;
+  #progressBar!: IProgressBarConfigCore;
 
-  protected _questions!: IQuestionConfigCore;
+  #questions!: IQuestionConfigCore;
 
-  protected _steps!: IStepConfigCore;
+  #steps!: IStepConfigCore;
 
-  protected _events!: EventEmitterCore;
+  #events!: EventEmitterCore;
 
-  protected _params!: TStringDictionaryCore;
+  #params!: TStringDictionaryCore;
 
   readonly getRuntimeConfig?: TGetDictionaryCore;
 
   constructor(data: IQuestionableConfigCore) {
-    super();
-    merge(defaults, data);
-    merge(this, data);
-    this._params = (data.getRuntimeConfig) ? data.getRuntimeConfig(this) : {};
+    super(data);
+    merge(this, defaults, data);
+    this.#params = (data.getRuntimeConfig) ? data.getRuntimeConfig(this) : {};
     if (data.params?.dev) {
-      this._mode = MODE.DEV;
+      this.#mode = MODE.DEV;
     }
     this.events = new EventEmitterCore(data.events);
   }
 
   get dev(): boolean {
-    return this._mode === MODE.DEV;
+    return this.#mode === MODE.DEV;
   }
 
   get events(): EventEmitterCore {
-    return this._events;
+    return this.#events;
   }
 
   private set events(val: EventEmitterCore) {
-    this._events = val;
+    this.#events = val;
   }
 
   get mode(): MODE {
-    return this._mode;
+    return this.#mode;
   }
 
   set mode(val: MODE | string) {
     if (isString(val)) {
       if (isEnum(MODE, val)) {
-        this._mode = val as MODE;
+        this.#mode = val as MODE;
       } else {
-        this._mode = MODE.VIEW;
+        this.#mode = MODE.VIEW;
       }
     } else {
-      this._mode = val;
+      this.#mode = val;
     }
   }
 
   get params(): TStringDictionaryCore {
-    if (isEmpty(this._params)) {
-      this._params = {};
+    if (isEmpty(this.#params)) {
+      this.#params = {};
     }
-    return this._params;
+    return this.#params;
   }
 
   get nav(): INavigationConfigCore {
-    if (isEmpty(this._nav)) {
-      this._nav = {};
+    if (isEmpty(this.#nav)) {
+      this.#nav = {};
     }
-    return { ...this._nav };
+    return { ...this.#nav };
   }
 
   set nav(val: INavigationConfigCore) {
-    merge(this._nav, val);
+    merge(this.#nav, val);
   }
 
   get pages(): IPagesConfigCore {
-    if (isEmpty(this._pages)) {
-      this._pages = {};
+    if (isEmpty(this.#pages)) {
+      this.#pages = {};
     }
-    return this._pages;
+    return this.#pages;
   }
 
   set pages(val: IPagesConfigCore) {
-    merge(this._pages, val);
+    merge(this.#pages, val);
   }
 
   get progressBar(): IProgressBarConfigCore {
-    if (isEmpty(this._progressBar)) {
-      this._progressBar = {};
+    if (isEmpty(this.#progressBar)) {
+      this.#progressBar = {};
     }
-    return { ...this._progressBar };
+    return { ...this.#progressBar };
   }
 
   set progressBar(val: IProgressBarConfigCore) {
-    merge(this._progressBar, val);
+    merge(this.#progressBar, val);
   }
 
   get questions(): IQuestionConfigCore {
-    if (isEmpty(this._questions)) {
-      this._questions = {};
+    if (isEmpty(this.#questions)) {
+      this.#questions = {};
     }
-    return { ...this._questions };
+    return { ...this.#questions };
   }
 
   set questions(val: IQuestionConfigCore) {
-    merge(this._questions, val);
+    merge(this.#questions, val);
   }
 
   get steps(): IStepConfigCore {
-    if (isEmpty(this._steps)) {
-      this._steps = {};
+    if (isEmpty(this.#steps)) {
+      this.#steps = {};
     }
-    return { ...this._steps };
+    return { ...this.#steps };
   }
 
   set steps(val: IStepConfigCore) {
-    merge(this._steps, val);
+    merge(this.#steps, val);
   }
 }

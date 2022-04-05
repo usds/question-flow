@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { IResultCore } from '../survey/IResultCore';
+import { matches }     from '../util/helpers';
 import {
   checkInstanceOf,
   TInstanceOf,
@@ -27,42 +28,49 @@ export class ResultCore extends RefCore implements IResultCore {
   //   return ResultCore.isRef(this);
   // }
 
-  public static create(data: IResultCore) {
+  public static override create(data: IResultCore) {
     if (data instanceof ResultCore) {
       return data;
     }
     return new ResultCore(data);
   }
 
+  public static override createOptional(data?: IResultCore) {
+    if (!data || !super.createOptional(data)) {
+      return undefined;
+    }
+    return ResultCore.create(data);
+  }
+
   #action: ActionCore | undefined;
 
-  #category!: string;
+  #category: string;
 
-  #label!: string;
+  #label: string;
 
-  #match?: RequirementCore | undefined;
+  #match: RequirementCore | undefined;
 
-  #order?: number;
+  #order: number;
 
   #reason: string;
 
-  #requirements!: RequirementCore[];
+  #requirements: RequirementCore[];
 
-  #secondaryAction?: ActionCore | undefined;
+  #secondaryAction: ActionCore | undefined;
 
   constructor(data: IResultCore) {
     super(data);
-    this.#action       = ActionCore.createOptional(data.action);
-    this.#match        = RequirementCore.createOptional(data.match);
-    this.#requirements = data.requirements?.map((r) => RequirementCore.create(r)) || [];
-
-    if (data.secondaryAction) {
-      this.#secondaryAction = ActionCore.create(data.secondaryAction);
-    }
-    this.#reason = data.reason || '';
+    this.#action          = ActionCore.createOptional(data.action);
+    this.#match           = RequirementCore.createOptional(data.match);
+    this.#requirements    = data.requirements?.map((r) => RequirementCore.create(r)) || [];
+    this.#secondaryAction = ActionCore.createOptional(data.secondaryAction);
+    this.#reason          = data.reason || '';
+    this.#label           = data.label || '';
+    this.#category        = data.category || '';
+    this.#order           = data.order || 0;
   }
 
-  public get action(): ActionCore {
+  public get action(): ActionCore | undefined {
     return this.#action;
   }
 
@@ -104,5 +112,23 @@ export class ResultCore extends RefCore implements IResultCore {
 
   public get order() {
     return this.#order;
+  }
+
+  public existsIn(data: RequirementCore): boolean {
+    if (data instanceof RequirementCore) {
+      return this.#requirements.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: RequirementCore): ResultCore {
+    const exists = this.existsIn(data);
+    if (exists) {
+      return this;
+    }
+    if (data instanceof RequirementCore) {
+      this.#requirements.push(data);
+    }
+    return this;
   }
 }

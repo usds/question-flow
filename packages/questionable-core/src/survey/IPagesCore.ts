@@ -19,7 +19,7 @@ export interface IPagesCore {
    * @title No Results Page
    */
   noResultsPage?: IPageCore | undefined;
-  pages: TPages;
+  pages?: IPageCore[];
   /**
    * Last step of the survey if there are 1 or more results
    *

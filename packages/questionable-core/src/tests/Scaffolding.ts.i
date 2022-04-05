@@ -9,14 +9,15 @@ import {
   PageCore,
   ResultCore,
   SectionCore,
+  QuestionCore,
 } from '../composable';
 import { SurveyBuilder }                    from '../constructable';
 import { ACTION, QUESTION_TYPE, PAGE_TYPE } from '../util';
 
 export class Scaffolding {
-  questionnaire: QuestionnaireCore;
+  // questionnaire: QuestionnaireCore;
 
-  form: FormCore;
+  // form: FormCore;
 
   // iterable: Iterable;
 
@@ -29,34 +30,35 @@ export class Scaffolding {
   }
 
   build() {
-    const name = 'Completed';
+    const onboarding = this.builder.add(SectionCore, {
+      title: 'VA.gov Onboarding',
+      type:  'onboarding',
+    });
+
     this.builder.add(ActionCore, {
       label: 'Restart survey',
+      order: 1,
       title: 'Restart',
       type:  ACTION.NONE,
     });
-    const landing = this.builder.add(SectionCore, { type: 'landing' });
-    const results = this.builder.add(SectionCore, { type: 'finish' });
 
-    const YES = this.builder.add(AnswerCore, { key: 'y', title: 'Yes' });
-    const NO  = { id: '1', key: 'n', title: 'No' };
-    // eslint-disable-next-line sonarjs/no-unused-collection
-    const ANSWERS = [YES, NO];
+    const YES    = this.builder.add(AnswerCore, { key: 'y', title: 'Yes' });
+    const NO     = this.builder.add(AnswerCore, { key: 'n', title: 'No' });
+    const YES_NO = [YES, NO];
 
-    const A = {
-      answers:   [YES, NO],
-      id:        'A',
+    const A = this.builder.add(QuestionCore, {
+      answers:   YES_NO,
       onAnswer:  async () => noop(),
       onDisplay: async () => {
         blue('This is the scaffolding project. You will be asked a series of questions which will guide you through the setup process.)');
       },
-      section: { id: 'introduction' },
+      section: onboarding,
       title:   'Is this your first time configuring this environment to run VA.gov?',
       type:    QUESTION_TYPE.MULTIPLE_CHOICE,
-    };
+    });
 
-    const B = {
-      answers:           [YES, NO],
+    const B = this.builder.add(QuestionCore, {
+      answers:           YES_NO,
       componentType:     'path',
       default:           '', // os.homedir,
       entryRequirements: [
@@ -69,7 +71,6 @@ export class Scaffolding {
           ],
         },
       ],
-      id:       'B',
       onAnswer: async (a) => {
         const path = a.value || a.answer || a.short;
         white(`Working directory has been set to ${path}`);
@@ -88,7 +89,7 @@ export class Scaffolding {
         }
         return exists;
       },
-    };
+    });
 
     const ALL_REPOSITORIES = {
       id:    '3',
@@ -96,7 +97,7 @@ export class Scaffolding {
       short: 'all',
       title: 'All',
     };
-    ANSWERS.push(ALL_REPOSITORIES);
+    YES_NO.push(ALL_REPOSITORIES);
 
     const FRONTEND_REPOSITORIES = {
       id:    '4',
@@ -104,7 +105,7 @@ export class Scaffolding {
       short: 'front',
       title: 'Front end',
     };
-    ANSWERS.push(FRONTEND_REPOSITORIES);
+    YES_NO.push(FRONTEND_REPOSITORIES);
 
     const BACKEND_REPOSITORIES = {
       id:    '5',
@@ -112,7 +113,7 @@ export class Scaffolding {
       short: 'backend',
       title: 'Back end',
     };
-    ANSWERS.push(BACKEND_REPOSITORIES);
+    YES_NO.push(BACKEND_REPOSITORIES);
 
     const CHOOSE_REPOSITORIES = {
       id:    '6',
@@ -120,7 +121,7 @@ export class Scaffolding {
       short: 'choose',
       title: 'Let me choose',
     };
-    ANSWERS.push(CHOOSE_REPOSITORIES);
+    YES_NO.push(CHOOSE_REPOSITORIES);
 
     const NO_REPOSITORIES = {
       id:    '7',
@@ -128,7 +129,7 @@ export class Scaffolding {
       short: 'none',
       title: 'None; I will choose later',
     };
-    ANSWERS.push(NO_REPOSITORIES);
+    YES_NO.push(NO_REPOSITORIES);
 
     const C = {
       answers: [
@@ -203,7 +204,7 @@ export class Scaffolding {
     };
 
     return [
-      landing,
+      onboarding,
       results,
       this.builder.add(SectionCore, {
         requirements: [],
@@ -225,7 +226,7 @@ export class Scaffolding {
       this.builder.add(PageCore, {
         body:    'Please answer the following questions to setup your environment.',
         id:      PAGE_TYPE.LANDING,
-        section: landing,
+        section: onboarding,
         title:   'Welcome to the scaffolding project. Press any key to continue...',
         type:    PAGE_TYPE.LANDING,
       }),

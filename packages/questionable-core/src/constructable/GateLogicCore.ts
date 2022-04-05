@@ -46,6 +46,8 @@ export class GateLogicCore {
 
   #steps: StepCore[];
 
+  #pageList: PageCore[] = [];
+
   #pages: PagesCore;
 
   #form: FormCore;
@@ -56,7 +58,9 @@ export class GateLogicCore {
     this.#flow          = questionnaire.flow;
     this.#config        = questionnaire.config;
     this.#steps         = questionnaire.steps;
-    this.#pages         = questionnaire.pages;
+    const pages         = questionnaire.pages || new PagesCore();
+    this.#pages         = pages;
+    this.#pageList      = pages.all();
   }
 
   public enableLog() {
@@ -428,7 +432,7 @@ export class GateLogicCore {
     return sections.map((s) => {
       const section    = SectionCore.create(s);
       section.lastStep = this.#questionnaire.questions.reduce(
-        (acc, q, index) => (q.section.id === s.id ? index : acc),
+        (acc, q, index) => (q.section?.id === s.id ? index : acc),
         -1,
       );
       if (matches(section.id, PAGE_TYPE.RESULTS)) {
@@ -438,7 +442,7 @@ export class GateLogicCore {
       }
       if (section.lastStep < 0) {
         section.status = PROGRESS_BAR_STATUS.INCOMPLETE;
-      } else if (matches(section.id, thisQuestion.section.id)) {
+      } else if (matches(section.id, thisQuestion.section?.id)) {
         section.status = PROGRESS_BAR_STATUS.CURRENT;
       } else if (section.lastStep < thisQuestionIdx) {
         section.status = PROGRESS_BAR_STATUS.COMPLETE;
@@ -544,14 +548,13 @@ export class GateLogicCore {
       if (!q.branch?.id) {
         return;
       }
-      const exists         = this.#questionnaire.branches.find((b) => b.id === q.branch?.id);
+      const exists         = this.#questionnaire.branches.find((b) => b.existsIn(q) || q.branch === b);
       const validateBranch = exists || (q.branch as BranchCore);
       if (!exists) {
-        this.#questionnaire.branches.push(validateBranch);
+        this.#questionnaire.add(validateBranch);
       }
-      validateBranch.questions = validateBranch.questions || [];
       if (!validateBranch.questions.find((bq) => bq.id === q.id)) {
-        validateBranch.questions.push(q);
+        validateBranch.add(q);
       }
     });
   }
@@ -565,7 +568,7 @@ export class GateLogicCore {
   protected getPageSet = (
     type: PAGE_TYPE,
   ): TPageSet => {
-    const data = Object.values(this.#pages).find((p: PageCore | undefined) => p?.type === type);
+    const data = this.#pageList.find((p: PageCore | undefined) => p?.type === type);
     if (data) {
       return {
         config: {},

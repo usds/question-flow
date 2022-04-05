@@ -26,6 +26,13 @@ export class PageCore extends StepCore implements IPageCore {
     return new PageCore(data);
   }
 
+  public static override createOptional(data?: IPageCore) {
+    if (!data || !super.createOptional(data)) {
+      return undefined;
+    }
+    return PageCore.create(data);
+  }
+
   #display = true;
 
   constructor(data: IPageCore) {

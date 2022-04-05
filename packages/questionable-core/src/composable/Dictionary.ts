@@ -1,13 +1,18 @@
-import { isEmpty }  from 'lodash';
-import { BaseCore } from './BaseCore';
+import { isEmpty }                from 'lodash';
+import { ClassList, TInstanceOf } from '../util';
+import { BaseCore }               from './BaseCore';
 
 export class Dictionary<K, V> extends BaseCore {
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.base;
+  }
+
   #hash: Map<K, V>;
 
   #init: unknown;
 
   constructor() {
-    super();
+    super({});
     this.#hash = new Map<K, V>();
   }
 

@@ -1,26 +1,15 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
-import { merge }                                     from 'lodash';
-import { IPagesCore }                                from '../survey/IPagesCore';
-import { PAGE_TYPE }                                 from '../util/enums';
+import { IPagesCore }                        from '../survey/IPagesCore';
+import { PAGE_TYPE }                         from '../util/enums';
 import {
-  checkInstanceOf, ClassList, PREFIX, TInstanceOf,
+  checkInstanceOf, ClassList, TInstanceOf,
 } from '../util/instanceOf';
 import { PageCore }  from './PageCore';
 import { BaseCore }  from './BaseCore';
 import { IPageCore } from '../survey/IStepCore';
-
-const defaults = {
-  instanceof:    PREFIX.PAGES,
-  landingPage:   undefined,
-  noResultsPage: undefined,
-  resultsPage:   undefined,
-  summaryPage:   undefined,
-};
-
-type TPages = {
-  [key: string]: PageCore;
-}
+import { merge }     from '../util/merge';
+import { matches }   from '../util/helpers';
 
 export class PagesCore extends BaseCore implements IPagesCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -32,45 +21,44 @@ export class PagesCore extends BaseCore implements IPagesCore {
     return checkInstanceOf([ClassList.pages], obj);
   }
 
-  pages: TPages;
+  #pages: PageCore[];
 
-  public static override create(data: Partial<IPagesCore> = {}) {
+  public static override create(data: IPagesCore) {
     if (data instanceof PagesCore) {
       return data;
     }
     return new PagesCore(data);
   }
 
-  #makeDefault(type: PAGE_TYPE): IPageCore {
-    return {
+  public static override createOptional(data?: IPagesCore) {
+    if (!data) {
+      return undefined;
+    }
+    return PagesCore.create(data);
+  }
+
+  /**
+   * Produces required object from inputs
+   * @param type Page Type
+   * @param data Optional data
+   * @returns
+   */
+  #touchPage(type: PAGE_TYPE, data?: IPageCore): IPageCore {
+    const defaults = merge({
       display: false,
-      id:      type,
-      section: {
-        requirements: [],
-        title:        type,
-        type:         'pages',
-      },
-      title: type,
-      type,
-    };
+      title:   type,
+    }, data, { id: type, type });
+    defaults.type  = type;
+    return defaults;
   }
 
   constructor(data: Partial<IPagesCore> = {}) {
-    super();
-    merge(this, defaults);
-    this.pages          = {};
-    this.#landingPage   = PageCore.create(data.landingPage || this.#makeDefault(PAGE_TYPE.LANDING));
-    this.#resultsPage   = PageCore.create(data.resultsPage || this.#makeDefault(PAGE_TYPE.RESULTS));
-    this.#noResultsPage = PageCore.create(data.noResultsPage || this.#makeDefault(PAGE_TYPE.NO_RESULTS));
-    this.#summaryPage   = PageCore.create(data.summaryPage || this.#makeDefault(PAGE_TYPE.SUMMARY));
-    if (data.pages) {
-      const pages = Object.keys(data.pages);
-      for (const name of pages) {
-        if (data.pages[name] instanceof PageCore) {
-          this.pages[name] = data.pages[name] as PageCore;
-        }
-      }
-    }
+    super(data);
+    this.#pages         = data.pages?.map((p) => PageCore.create(p)) || [];
+    this.#landingPage   = PageCore.create(this.#touchPage(PAGE_TYPE.LANDING, data.landingPage));
+    this.#resultsPage   = PageCore.create(this.#touchPage(PAGE_TYPE.RESULTS, data.resultsPage));
+    this.#noResultsPage = PageCore.create(this.#touchPage(PAGE_TYPE.NO_RESULTS, data.noResultsPage));
+    this.#summaryPage   = PageCore.create(this.#touchPage(PAGE_TYPE.SUMMARY, data.summaryPage));
   }
 
   #landingPage: PageCore;
@@ -97,6 +85,20 @@ export class PagesCore extends BaseCore implements IPagesCore {
     return this.#summaryPage;
   }
 
+  public get pages() {
+    return this.#pages;
+  }
+
+  public all() {
+    return [
+      ...this.#pages,
+      this.#landingPage,
+      this.#noResultsPage,
+      this.#resultsPage,
+      this.#summaryPage,
+    ];
+  }
+
   public set(data: IPageCore) {
     const page = PageCore.create(data);
     switch (page.type) {
@@ -113,9 +115,26 @@ export class PagesCore extends BaseCore implements IPagesCore {
         this.#summaryPage = page;
         break;
       default:
-        this.pages[page.title] = page;
+        this.add(page);
         break;
     }
     return page;
+  }
+
+  public existsIn(data: PageCore): boolean {
+    if (data instanceof PageCore) {
+      return Object.values(this.pages).some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: PageCore): PagesCore {
+    if (data instanceof PageCore) {
+      const exists = this.existsIn(data);
+      if (!exists) {
+        this.pages.push(data);
+      }
+    }
+    return this;
   }
 }

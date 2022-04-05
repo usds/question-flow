@@ -4,8 +4,8 @@ import { eventedCore } from '../state/pubsub';
 import {
   IFormCore,
 } from '../survey/IFormCore';
-import { TAgeCore }     from '../util/types';
-import { ACTION_TYPE }  from '../util/enums';
+import { TAgeCore }                   from '../util/types';
+import { ACTION_TYPE }                from '../util/enums';
 import { QuestionCore } from './StepCore';
 import {
   checkInstanceOf,
@@ -13,6 +13,7 @@ import {
   ClassList,
 } from '../util/instanceOf';
 import { BaseCore } from './BaseCore';
+import { matches }  from '../util/helpers';
 
 export class FormCore extends BaseCore implements IFormCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -24,11 +25,18 @@ export class FormCore extends BaseCore implements IFormCore {
     return checkInstanceOf([ClassList.form], obj);
   }
 
-  public static create(data: Partial<IFormCore> = {}) {
+  public static override create(data: Partial<IFormCore> = {}) {
     if (data instanceof FormCore) {
       return data;
     }
     return new FormCore(data);
+  }
+
+  public static override createOptional(data?: Partial<IFormCore>) {
+    if (!data || !super.createOptional(data)) {
+      return undefined;
+    }
+    return FormCore.create(data);
   }
 
   #started;
@@ -42,15 +50,13 @@ export class FormCore extends BaseCore implements IFormCore {
   #responses;
 
   constructor(data: Partial<IFormCore> = {}) {
-    super();
+    super(data);
     this.#started  = new Date();
     this.#age      = data.age;
     this.#finished = data.finished;
     // this.#responses = data.responses || [];
     this.#birthdate = data.birthdate || '';
-    const responses = data.responses?.map((r) => QuestionCore.create(r)) || [];
-    this.#responses = responses;
-
+    this.#responses = data.responses?.map((r) => QuestionCore.create(r)) || [];
     eventedCore.publish({ event: this, type: 'start' });
   }
 
@@ -93,8 +99,22 @@ export class FormCore extends BaseCore implements IFormCore {
     this.#responses = val;
   }
 
-  public add(response: QuestionCore) {
-    this.#responses.push(response);
+  public existsIn(data: QuestionCore): boolean {
+    if (data instanceof QuestionCore) {
+      return this.#responses.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: QuestionCore): FormCore {
+    const exists = this.existsIn(data);
+    if (exists) {
+      return this;
+    }
+    if (data instanceof QuestionCore) {
+      this.#responses.push(data);
+    }
+    return this;
   }
 
   /**

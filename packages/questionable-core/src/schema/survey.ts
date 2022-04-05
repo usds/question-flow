@@ -43,8 +43,8 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "label"
+        "label",
+        "title"
       ],
       "type": "object"
     },
@@ -58,13 +58,19 @@ export const survey = {
         "key": {
           "type": "string"
         },
+        "synonyms": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "title": {
           "title": "Title",
           "type": "string"
         }
       },
       "required": [
-        "id"
+        "title"
       ],
       "type": "object"
     },
@@ -77,7 +83,13 @@ export const survey = {
         },
         "questions": {
           "items": {
-            "$ref": "#/definitions/IRefCore"
+            "$ref": "#/definitions/IQuestionCore"
+          },
+          "type": "array"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/definitions/ISectionCore"
           },
           "type": "array"
         },
@@ -87,8 +99,7 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "questions"
+        "title"
       ],
       "type": "object"
     },
@@ -128,7 +139,7 @@ export const survey = {
         }
       },
       "required": [
-        "id"
+        "title"
       ],
       "type": "object"
     },
@@ -161,7 +172,7 @@ export const survey = {
         }
       },
       "required": [
-        "id"
+        "title"
       ],
       "type": "object"
     },
@@ -270,7 +281,6 @@ export const survey = {
         }
       },
       "required": [
-        "responses",
         "started"
       ],
       "type": "object"
@@ -321,6 +331,9 @@ export const survey = {
           "title": "Body Subheading",
           "type": "string"
         },
+        "display": {
+          "type": "boolean"
+        },
         "entryRequirements": {
           "description": "Collection of requirements to view/enter this step",
           "items": {
@@ -358,21 +371,9 @@ export const survey = {
           "type": "string"
         },
         "section": {
+          "$ref": "#/definitions/ISectionCore",
           "description": "Section to which this step belongs",
-          "properties": {
-            "id": {},
-            "requirements": {
-              "description": "Collection of requirements to enable display of this status",
-              "items": {
-                "$ref": "#/definitions/IRequirementCore"
-              },
-              "title": "Requirements",
-              "type": "array"
-            },
-            "title": {}
-          },
-          "title": "Section",
-          "type": "object"
+          "title": "Section"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -390,8 +391,8 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "section",
+        "display",
+        "title",
         "type"
       ],
       "type": "object"
@@ -422,7 +423,10 @@ export const survey = {
           "title": "No Results Page"
         },
         "pages": {
-          "$ref": "#/definitions/TPages"
+          "items": {
+            "$ref": "#/definitions/IPageCore"
+          },
+          "type": "array"
         },
         "resultsPage": {
           "$ref": "#/definitions/IPageCore",
@@ -435,9 +439,6 @@ export const survey = {
           "title": "Summary Page"
         }
       },
-      "required": [
-        "pages"
-      ],
       "type": "object"
     },
     "IProgressBarConfigCore": {
@@ -472,7 +473,7 @@ export const survey = {
         "answers": {
           "description": "Collection of allowed answers",
           "items": {
-            "$ref": "#/definitions/IRefCore"
+            "$ref": "#/definitions/IAnswerCore"
           },
           "title": "Answers",
           "type": "array"
@@ -514,21 +515,9 @@ export const survey = {
           "type": "string"
         },
         "section": {
+          "$ref": "#/definitions/ISectionCore",
           "description": "Section to which this step belongs",
-          "properties": {
-            "id": {},
-            "requirements": {
-              "description": "Collection of requirements to enable display of this status",
-              "items": {
-                "$ref": "#/definitions/IRequirementCore"
-              },
-              "title": "Requirements",
-              "type": "array"
-            },
-            "title": {}
-          },
-          "title": "Section",
-          "type": "object"
+          "title": "Section"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -547,8 +536,7 @@ export const survey = {
       },
       "required": [
         "answers",
-        "id",
-        "section",
+        "title",
         "type"
       ],
       "type": "object"
@@ -633,11 +621,6 @@ export const survey = {
           "type": "object"
         }
       },
-      "required": [
-        "mode",
-        "nav",
-        "pages"
-      ],
       "type": "object"
     },
     "IQuestionnaireCore": {
@@ -703,6 +686,7 @@ export const survey = {
       "type": "object"
     },
     "IRefCore": {
+      "additionalProperties": {},
       "description": "Generic reference object",
       "properties": {
         "id": {
@@ -716,7 +700,7 @@ export const survey = {
         }
       },
       "required": [
-        "id"
+        "title"
       ],
       "type": "object"
     },
@@ -823,8 +807,9 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "responses"
+        "explanation",
+        "responses",
+        "title"
       ],
       "type": "object"
     },
@@ -833,52 +818,27 @@ export const survey = {
       "properties": {
         "answers": {
           "items": {
-            "properties": {
-              "id": {
-                "description": "Unique identifier",
-                "title": "Id",
-                "type": "string"
-              },
-              "title": {
-                "title": "Title",
-                "type": "string"
-              }
-            },
-            "type": "object"
+            "$ref": "#/definitions/IAnswerCore"
           },
           "type": "array"
         },
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
         "question": {
-          "properties": {
-            "answers": {
-              "description": "Collection of allowed answers",
-              "items": {
-                "$ref": "#/definitions/IRefCore"
-              },
-              "title": "Answers",
-              "type": "array"
-            },
-            "entryRequirements": {},
-            "exitRequirements": {},
-            "footer": {},
-            "id": {},
-            "info": {},
-            "internalNotes": {},
-            "section": {},
-            "subTitle": {},
-            "title": {},
-            "type": {
-              "$ref": "#/definitions/QUESTION_TYPE",
-              "description": "Type of question",
-              "title": "Question Type"
-            }
-          },
-          "type": "object"
+          "$ref": "#/definitions/IQuestionCore"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
         }
       },
       "required": [
         "answers",
-        "question"
+        "question",
+        "title"
       ],
       "type": "object"
     },
@@ -918,9 +878,9 @@ export const survey = {
         }
       },
       "required": [
-        "id",
         "label",
-        "requirements"
+        "requirements",
+        "title"
       ],
       "type": "object"
     },
@@ -946,8 +906,8 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "requirements"
+        "requirements",
+        "title"
       ],
       "type": "object"
     },
@@ -1004,21 +964,9 @@ export const survey = {
           "type": "string"
         },
         "section": {
+          "$ref": "#/definitions/ISectionCore",
           "description": "Section to which this step belongs",
-          "properties": {
-            "id": {},
-            "requirements": {
-              "description": "Collection of requirements to enable display of this status",
-              "items": {
-                "$ref": "#/definitions/IRequirementCore"
-              },
-              "title": "Requirements",
-              "type": "array"
-            },
-            "title": {}
-          },
-          "title": "Section",
-          "type": "object"
+          "title": "Section"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -1036,8 +984,7 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "section",
+        "title",
         "type"
       ],
       "type": "object"

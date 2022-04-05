@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-useless-constructor */
 /* eslint-disable import/no-cycle */
@@ -26,10 +27,14 @@ import {
   TInstanceOf,
 } from '../util/instanceOf';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { AnswerCore }             from './AnswerCore';
 import { IBranchCore }            from '../survey/IBranchCore';
-import { BaseCore }               from './BaseCore';
 import { RefCore }                from './RefCore';
+import { matches }                from '../util/helpers';
+import { ResultCore }             from './ResultCore';
+import { IAnswerCore }            from '../survey/IAnswerCore';
+
+type TCollected = RequirementCore | AnswerCore | StepCore | QuestionCore | ResultCore;
+type TDirection = 'in' | 'out';
 
 export class StepCore extends RefCore implements IStepCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -60,11 +65,9 @@ export class StepCore extends RefCore implements IStepCore {
 
   #order: number;
 
-  #section: SectionCore;
+  #section: SectionCore | undefined;
 
   #subTitle: string;
-
-  #type: TStepType;
 
   constructor(data: IStepCore) {
     super(data);
@@ -74,15 +77,15 @@ export class StepCore extends RefCore implements IStepCore {
     this.#exitRequirements  = data.exitRequirements?.map((r) =>
       RequirementCore.create(r)) || [];
     if (!data.type || `${data.type}` === `${BASE.DEFAULT}`) {
-      this.#type = BASE.DEFAULT;
+      this.set('type', BASE.DEFAULT);
     } else {
-      this.#type = data.type;
+      this.set('type', data.type);
     }
     this.#footer        = data.footer || '';
     this.#info          = data.info || '';
     this.#internalNotes = data.internalNotes || '';
     this.#order         = data.order || 0;
-    this.#section       = SectionCore.create(data.section);
+    this.#section       = SectionCore.createOptional(data.section);
     this.#subTitle      = data.subTitle || '';
   }
 
@@ -117,7 +120,7 @@ export class StepCore extends RefCore implements IStepCore {
     return this.#order;
   }
 
-  public get section(): SectionCore {
+  public get section(): SectionCore | undefined {
     return this.#section;
   }
 
@@ -126,7 +129,7 @@ export class StepCore extends RefCore implements IStepCore {
   }
 
   public get type(): TStepType {
-    return this.#type;
+    return super.type as TStepType; // this.#type;
   }
 
   public getFieldSetName(): string {
@@ -147,6 +150,31 @@ export class StepCore extends RefCore implements IStepCore {
     }
     return 'unknown';
   }
+
+  public existsIn(data: TCollected, direction?: TDirection): boolean {
+    if (data instanceof RequirementCore) {
+      if (direction === 'out') {
+        return this.#exitRequirements.some((q) => q === data || matches(q.title, data.title));
+      }
+      return this.#entryRequirements.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: TCollected, direction?:TDirection): StepCore {
+    const exists = this.existsIn(data, direction);
+    if (exists) {
+      return this;
+    }
+    if (data instanceof RequirementCore) {
+      if (direction === 'out') {
+        this.#exitRequirements.push(data);
+      } else {
+        this.#entryRequirements.push(data);
+      }
+    }
+    return this;
+  }
 }
 
 export class SectionCore extends RefCore implements ISectionCore {
@@ -160,7 +188,7 @@ export class SectionCore extends RefCore implements ISectionCore {
     ], obj);
   }
 
-  public static create(data: ISectionCore) {
+  public static override create(data: ISectionCore) {
     if (data instanceof SectionCore) {
       return data;
     }
@@ -168,7 +196,7 @@ export class SectionCore extends RefCore implements ISectionCore {
   }
 
   public static override createOptional(data?: ISectionCore) {
-    if (!super.createOptional(data) || !data) {
+    if (!data || !super.createOptional(data)) {
       return undefined;
     }
     return SectionCore.create(data);
@@ -217,6 +245,24 @@ export class SectionCore extends RefCore implements ISectionCore {
   public set status(val: PROGRESS_BAR_STATUS) {
     this.#status = val;
   }
+
+  public existsIn(data: RequirementCore): boolean {
+    if (data instanceof RequirementCore) {
+      return this.#requirements.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: RequirementCore): SectionCore {
+    const exists = this.existsIn(data);
+    if (exists) {
+      return this;
+    }
+    if (data instanceof RequirementCore) {
+      this.#requirements.push(data);
+    }
+    return this;
+  }
 }
 
 export class QuestionCore extends StepCore implements IQuestionCore {
@@ -237,13 +283,13 @@ export class QuestionCore extends StepCore implements IQuestionCore {
   }
 
   public static override createOptional(data?: IQuestionCore) {
-    if (!super.createOptional(data) || !data) {
+    if (!data || !super.createOptional(data)) {
       return undefined;
     }
     return QuestionCore.create(data);
   }
 
-  #type: QUESTION_TYPE;
+  // #type: QUESTION_TYPE;
 
   #answers: AnswerCore[];
 
@@ -261,9 +307,9 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     this.#branch  = BranchCore.createOptional(data.branch);
     this.#section =  SectionCore.createOptional(data.section);
     if (!data.type || `${data.type}` === `${QUESTION_TYPE.DEFAULT}`) {
-      this.#type = QUESTION_TYPE.DEFAULT;
+      this.set('type', QUESTION_TYPE.DEFAULT);
     } else {
-      this.#type = data.type;
+      this.set('type', data.type);
     }
   }
 
@@ -301,24 +347,32 @@ export class QuestionCore extends StepCore implements IQuestionCore {
   }
 
   public get type(): QUESTION_TYPE {
-    return this.#type;
+    return super.type as QUESTION_TYPE;
   }
 
-  public add(data: AnswerCore | SectionCore | BranchCore) {
+  public override existsIn(data: TCollected, direction?: TDirection): boolean {
+    if (super.existsIn(data, direction)) {
+      return true;
+    }
+    if (data instanceof AnswerCore) {
+      return this.#answers.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public override add(data: TCollected, direction?: TDirection): QuestionCore {
+    if (this.existsIn(data, direction)) {
+      return this;
+    }
     if (data instanceof AnswerCore) {
       data.add(this);
-      if (!this.existsIn(this.#answers, data)) {
-        this.#answers.push(data);
-      }
-    } else if (data instanceof SectionCore) {
-      this.#section = data;
-    } else if (data instanceof BranchCore) {
-      this.#branch = data;
+      this.#answers.push(data);
     }
+    return this;
   }
 }
 
-export class ResponseCore extends BaseCore implements IResponseCore {
+export class ResponseCore extends RefCore implements IResponseCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.response;
   }
@@ -336,18 +390,18 @@ export class ResponseCore extends BaseCore implements IResponseCore {
   }
 
   public static override createOptional(data?: IResponseCore) {
-    if (!super.createOptional(data) || !data) {
+    if (!data || !super.createOptional(data)) {
       return undefined;
     }
     return ResponseCore.create(data);
   }
 
-  #answers!: AnswerCore[];
+  #answers: AnswerCore[];
 
-  #question!: QuestionCore;
+  #question: QuestionCore;
 
   constructor(data: IResponseCore) {
-    super();
+    super(data);
     this.#answers  = data.answers?.map((a) => new AnswerCore(a)) || [];
     this.#question = QuestionCore.create(data.question);
   }
@@ -358,6 +412,23 @@ export class ResponseCore extends BaseCore implements IResponseCore {
 
   public get answers(): AnswerCore[] {
     return this.#answers;
+  }
+
+  public existsIn(data: TCollected): boolean {
+    if (data instanceof AnswerCore) {
+      return this.#answers.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: TCollected): ResponseCore {
+    if (this.existsIn(data)) {
+      return this;
+    }
+    if (data instanceof AnswerCore) {
+      this.#answers.push(data);
+    }
+    return this;
   }
 }
 
@@ -371,7 +442,7 @@ export class RequirementCore extends RefCore implements IRequirementCore {
     return checkInstanceOf([ClassList.requirement, ClassList.ref], obj);
   }
 
-  public static create(data: IRequirementCore) {
+  public static override create(data: IRequirementCore) {
     if (data instanceof RequirementCore) {
       return data;
     }
@@ -379,7 +450,7 @@ export class RequirementCore extends RefCore implements IRequirementCore {
   }
 
   public static override createOptional(data?: IRequirementCore) {
-    if (!super.createOptional(data) || !data) {
+    if (!data || !super.createOptional(data)) {
       return undefined;
     }
     return RequirementCore.create(data);
@@ -424,6 +495,24 @@ export class RequirementCore extends RefCore implements IRequirementCore {
   get responses(): ResponseCore[] {
     return this.#responses;
   }
+
+  public existsIn(data: TCollected): boolean {
+    if (data instanceof ResponseCore) {
+      return this.#responses.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: TCollected): RequirementCore {
+    if (this.existsIn(data)) {
+      return this;
+    }
+    if (data instanceof ResponseCore) {
+      data.add(this);
+      this.#responses.push(data);
+    }
+    return this;
+  }
 }
 
 export class BranchCore extends RefCore implements IBranchCore {
@@ -436,7 +525,7 @@ export class BranchCore extends RefCore implements IBranchCore {
     return checkInstanceOf([ClassList.branch, ClassList.ref], obj);
   }
 
-  public static create(data: IBranchCore) {
+  public static override create(data: IBranchCore) {
     if (data instanceof BranchCore) {
       return data;
     }
@@ -444,7 +533,7 @@ export class BranchCore extends RefCore implements IBranchCore {
   }
 
   public static override createOptional(data?: IBranchCore) {
-    if (!super.createOptional(data) || !data) {
+    if (!data || !super.createOptional(data)) {
       return undefined;
     }
     return BranchCore.create(data);
@@ -466,5 +555,101 @@ export class BranchCore extends RefCore implements IBranchCore {
 
   public get sections(): SectionCore[] {
     return this.#sections;
+  }
+
+  public existsIn(data: TCollected): boolean {
+    if (data instanceof SectionCore) {
+      return this.#sections.some((q) => q === data || matches(q.title, data.title));
+    }
+    if (data instanceof QuestionCore) {
+      return this.#questions.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: TCollected): BranchCore {
+    if (this.existsIn(data)) {
+      return this;
+    }
+    if (data instanceof SectionCore) {
+      data.branch = this;
+      this.#sections.push(data);
+    }
+    if (data instanceof QuestionCore) {
+      data.branch = this;
+      this.#questions.push(data);
+    }
+    return this;
+  }
+}
+
+export class AnswerCore extends RefCore implements IAnswerCore {
+  public get instanceOfCheck(): TInstanceOf {
+    return ClassList.answer;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static override[Symbol.hasInstance](obj: any) {
+    return checkInstanceOf([ClassList.answer, ClassList.ref], obj);
+  }
+
+  public static override create(data: IAnswerCore, question?: QuestionCore): AnswerCore {
+    let ret: AnswerCore;
+    if (data instanceof AnswerCore) {
+      ret = data;
+    }
+    ret = new AnswerCore(data);
+    if (question) {
+      ret.#questions.push(question);
+    }
+    return ret;
+  }
+
+  public static override createOptional(data?: IAnswerCore) {
+    if (!data || !super.createOptional(data)) {
+      return undefined;
+    }
+    return AnswerCore.create(data);
+  }
+
+  #key = '';
+
+  #questions: QuestionCore[] = [];
+
+  #synonyms: string[] = [];
+
+  constructor(data: IAnswerCore) {
+    super(data);
+    this.#key      = data.key || '';
+    this.#synonyms = data.synonyms || [];
+  }
+
+  public get key() {
+    return this.#key;
+  }
+
+  public get questions() {
+    return this.#questions;
+  }
+
+  public get synonyms() {
+    return this.#synonyms;
+  }
+
+  public existsIn(data: QuestionCore): boolean {
+    if (data instanceof QuestionCore) {
+      return this.#questions.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: QuestionCore): AnswerCore {
+    if (data instanceof QuestionCore) {
+      const exists = this.existsIn(data);
+      if (!exists) {
+        this.#questions.push(data);
+      }
+    }
+    return this;
   }
 }

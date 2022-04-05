@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { noop }     from 'lodash';
-import { IRefCore } from '../survey/IRefCore';
-import { matches }  from '../util/helpers';
+import { TRefCoreProperties } from '../metadata/MRef';
+import { IRefCore }           from '../survey/IRefCore';
 import {
   checkInstanceOf,
   TInstanceOf,
@@ -39,7 +38,7 @@ export class RefCore extends BaseCore implements IRefCore {
   //   return RefCore.isRef(this);
   // }
 
-  public static create(data: IRefCore) {
+  public static override create(data: IRefCore) {
     if (data instanceof RefCore) {
       return data;
     }
@@ -47,19 +46,19 @@ export class RefCore extends BaseCore implements IRefCore {
   }
 
   public static override createOptional(data?: IRefCore) {
-    if (!super.createOptional(data) || !data) {
+    if (!data || !super.createOptional(data)) {
       return undefined;
     }
     return RefCore.create(data);
   }
 
-  #id: string;
+  #_id: string;
 
-  #label: string;
+  #_label: string;
 
-  #type: string;
+  #_type: string;
 
-  #title: string;
+  #_title: string;
 
   /**
    * Instantiation will generate a uuid for this object
@@ -68,53 +67,51 @@ export class RefCore extends BaseCore implements IRefCore {
   public constructor(data: IRefCore) {
     super(data);
     if (data.id && data.id.length > 0) {
-      this.#id = data.id;
+      this.#_id = data.id;
     } else {
-      this.#id = getGUID(true);
+      this.#_id = getGUID(true);
     }
-    this.#label = data.label || '';
-    this.#title = data.title || '';
-    this.#type  = data.type || '';
+    this.#_label = data.label || '';
+    this.#_title = data.title || '';
+    this.#_type  = data.type || '';
   }
 
   public get id(): string {
-    return this.#id;
+    return this.#_id;
   }
 
   public get label() {
-    return this.#label;
+    return this.#_label;
   }
 
   public get title(): string {
-    return this.#title;
+    return this.#_title;
   }
 
   public get type(): string {
-    return this.#type;
+    return this.#_type;
   }
 
-  public set type(val: string) {
-    this.#type = val;
+  public set<T>(prop: TRefCoreProperties, val: T) {
+    this[`#_${prop}`] = val;
   }
 
-  public existsIn(collection: RefCore[], val: RefCore = this) {
-    const exists = collection.find((q) => matches(q.title, val.title));
-    return (collection.indexOf(val) !== -1 || exists) === true;
-  }
+  // /**
+  //  *  Root class has no collections, will always be false
+  //  * @param val
+  //  * @returns
+  //  */
+  // public existsIn(val: RefCore): boolean {
+  //   this.noop(val);
+  //   return false;
+  // }
 
-  /** KLUDGE:
-   * allow interface/abstract/base classes to implement a property so that
-   * the code will compile (fixes "class member does not use `this`" and
-   * "unused parameter" errors), for use when the primary purpose
-   * of the property is to setup inheritance
-   */
-  protected noop = noop;
-
-  /**
-   * This does nothing but establish the pattern for all other classes to build from;
-   * @param data any questionable object
-   */
-  public add(data: RefCore) {
-    this.noop(data);
-  }
+  // /**
+  //  * This does nothing but establish the pattern for all other classes to build from;
+  //  * @param data any questionable object
+  //  */
+  // public add(data: RefCore): RefCore {
+  //   this.noop(data);
+  //   return this;
+  // }
 }

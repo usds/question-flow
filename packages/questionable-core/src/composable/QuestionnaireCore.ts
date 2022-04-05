@@ -20,6 +20,9 @@ import {
   TInstanceOf,
 } from '../util/instanceOf';
 import { ResultCore } from './ResultCore';
+import { matches }    from '../util/helpers';
+
+type TCollected = QuestionCore | BranchCore | SectionCore | ActionCore | ResultCore;
 
 /**
  * Utility wrapper for survey state
@@ -39,6 +42,13 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
       return data;
     }
     return new QuestionnaireCore(data);
+  }
+
+  public static override createOptional(data?: IQuestionnaireCore) {
+    if (!data || !super.createOptional(data)) {
+      return undefined;
+    }
+    return QuestionnaireCore.create(data);
   }
 
   #config: QuestionableConfigCore;
@@ -62,7 +72,7 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
   #results: ResultCore[];
 
   constructor(data: IQuestionnaireCore) {
-    super();
+    super(data);
     const config = (data.config instanceof QuestionableConfigCore)
       ? data.config : new QuestionableConfigCore(data.config);
 
@@ -126,5 +136,42 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
 
   public get pages(): PagesCore {
     return this.#pages;
+  }
+
+  public existsIn(data: TCollected): boolean {
+    if (data instanceof QuestionCore) {
+      return this.#questions.some((q) => q === data || matches(q.title, data.title));
+    }
+    if (data instanceof BranchCore) {
+      return this.#branches.some((q) => q === data || matches(q.title, data.title));
+    }
+    if (data instanceof SectionCore) {
+      return this.#sections.some((q) => q === data || matches(q.title, data.title));
+    }
+    if (data instanceof ResultCore) {
+      return this.#results.some((q) => q === data || matches(q.title, data.title));
+    }
+    if (data instanceof ActionCore) {
+      return this.#actions.some((q) => q === data || matches(q.title, data.title));
+    }
+    return false;
+  }
+
+  public add(data: TCollected): QuestionnaireCore {
+    const exists = this.existsIn(data);
+    if (!exists) {
+      if (data instanceof QuestionCore) {
+        this.#questions.push(data);
+      } else if (data instanceof SectionCore) {
+        this.#sections.push(data);
+      } else if (data instanceof BranchCore) {
+        this.#branches.push(data);
+      } else if (data instanceof ResultCore) {
+        this.#results.push(data);
+      } else if (data instanceof ActionCore) {
+        this.#actions.push(data);
+      }
+    }
+    return this;
   }
 }

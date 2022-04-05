@@ -63,7 +63,6 @@ export class SurveyBuilder {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   add<T extends IRefCore, C extends T & RefCore>(TCtor: new (...args: any[]) => C, data: Partial<T>) {
     const nu = new TCtor(data);
-    nu.
     if (nu instanceof ActionCore) {
       // this.#questionnaire.actions.push(nu);
       this.#actions.push(nu);

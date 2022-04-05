@@ -1,15 +1,18 @@
 /* eslint-disable import/no-cycle */
-import { cloneDeep, merge } from 'lodash';
+import { cloneDeep, merge, noop } from 'lodash';
 import {
   TInstanceOf,
   checkInstanceOf,
   ClassList,
 } from '../util/instanceOf';
 
+export interface TBaseSource {
+  [key: string]: unknown;
+}
 /**
  * Generic class from which all others are derived
  */
-export class BaseCore {
+export abstract class BaseCore implements TBaseSource {
   [key: string]: unknown;
 
   /**
@@ -17,23 +20,21 @@ export class BaseCore {
    * primarily to aid debugging when classes are instantiated with
    * undeclared properties
    */
-  #source: { [key: string]: unknown } = {};
+  #source: TBaseSource = {};
 
   /**
    * NOTE: we don't want this accidentally serializing; hence,
    * `getSource()` and not `get source()`
    * @returns Deep clone of the object used to instantiate this instance
    */
-  getSource() {
+  getSource(): TBaseSource {
     return cloneDeep(this.#source);
   }
 
   /**
    * Instance comparator
    */
-  public get instanceOfCheck(): TInstanceOf {
-    return ClassList.base;
-  }
+  public abstract get instanceOfCheck(): TInstanceOf;
 
   /**
    * Implement our own compator for eval using `instanceof`
@@ -54,7 +55,7 @@ export class BaseCore {
     if (data instanceof BaseCore) {
       return data;
     }
-    return new BaseCore();
+    return data as BaseCore;
   }
 
   /**
@@ -73,7 +74,23 @@ export class BaseCore {
    * these will be stashed by value internally
    * @param data original object
    */
-  constructor(data: unknown = {}) {
+  constructor(data: unknown) {
     merge(this.#source, cloneDeep(data));
   }
+
+  // public abstract existsIn(val: TBaseSource): boolean;
+
+  /** KLUDGE:
+   * allow interface/abstract/base classes to implement a property so that
+   * the code will compile (fixes "class member does not use `this`" and
+   * "unused parameter" errors), for use when the primary purpose
+   * of the property is to setup inheritance
+   */
+  protected noop = noop;
+
+  /**
+   * This does nothing but establish the pattern for all other classes to build from;
+   * @param data any questionable object
+   */
+  // public abstract add(data: TBaseSource): TBaseSource;
 }

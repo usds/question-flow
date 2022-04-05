@@ -30,19 +30,19 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
   }
 
   public static override createOptional(data?: IActionCore) {
-    if (!data) {
+    if (!data || !super.createOptional(data)) {
       return undefined;
     }
     return ActionCore.create(data);
   }
 
-  #buttons;
+  #buttons: IButtonCore[];
 
-  #label;
+  #label: string;
 
-  #subTitle;
+  #subTitle: string;
 
-  #type;
+  #type: ACTION;
 
   constructor(data: IActionCore) {
     super(data);

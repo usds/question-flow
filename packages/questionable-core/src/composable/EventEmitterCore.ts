@@ -51,7 +51,7 @@ export class EventEmitterCore extends BaseCore implements IEventCore {
 
   readonly onNoResults: TOnEventCore;
 
-  public static create(data: Partial<IEventCore> = {}) {
+  public static override create(data: Partial<IEventCore> = {}) {
     if (data instanceof EventEmitterCore) {
       return data;
     }
@@ -59,7 +59,7 @@ export class EventEmitterCore extends BaseCore implements IEventCore {
   }
 
   constructor(data: Partial<IEventCore> = {}) {
-    super();
+    super(data);
     this.onActionClick = data.onActionClick || noop;
     this.onAnswer      = data.onAnswer || noop;
     this.onAnyEvent    = data.onAnyEvent || noop;
