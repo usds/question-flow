@@ -43,7 +43,6 @@ export const survey = {
         }
       },
       "required": [
-        "label",
         "title"
       ],
       "type": "object"
@@ -578,6 +577,15 @@ export const survey = {
           "title": "Pages",
           "type": "object"
         },
+        "params": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "description": "Properties produced from `getRuntimeConfig()`",
+          "title": "Params",
+          "type": "object"
+        },
         "progressBar": {
           "description": "Progress Bar configuration",
           "properties": {
@@ -641,12 +649,6 @@ export const survey = {
         "config": {
           "$ref": "#/definitions/IQuestionableConfigCore"
         },
-        "flow": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "header": {
           "type": "string"
         },
@@ -673,20 +675,12 @@ export const survey = {
         }
       },
       "required": [
-        "actions",
-        "branches",
-        "config",
-        "flow",
-        "header",
         "pages",
-        "questions",
-        "results",
-        "sections"
+        "questions"
       ],
       "type": "object"
     },
     "IRefCore": {
-      "additionalProperties": {},
       "description": "Generic reference object",
       "properties": {
         "id": {
@@ -837,7 +831,6 @@ export const survey = {
       },
       "required": [
         "answers",
-        "question",
         "title"
       ],
       "type": "object"
@@ -878,8 +871,6 @@ export const survey = {
         }
       },
       "required": [
-        "label",
-        "requirements",
         "title"
       ],
       "type": "object"
@@ -906,7 +897,6 @@ export const survey = {
         }
       },
       "required": [
-        "requirements",
         "title"
       ],
       "type": "object"
