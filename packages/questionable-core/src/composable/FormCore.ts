@@ -1,19 +1,13 @@
 /* eslint-disable import/no-cycle */
-import { merge }       from 'lodash';
+import { merge } from 'lodash';
 import { eventedCore } from '../state/pubsub';
-import {
-  IFormCore,
-} from '../survey/IFormCore';
-import { TAgeCore }                   from '../util/types';
-import { ACTION_TYPE }                from '../util/enums';
-import { QuestionCore } from './StepCore';
-import {
-  checkInstanceOf,
-  TInstanceOf,
-  ClassList,
-} from '../util/instanceOf';
+import { IFormCore } from '../survey/IFormCore';
+import { ACTION_TYPE } from '../util/enums';
+import { matches } from '../util/helpers';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { TAgeCore } from '../util/types';
 import { BaseCore } from './BaseCore';
-import { matches }  from '../util/helpers';
+import { QuestionCore } from './StepCore';
 
 export class FormCore extends BaseCore implements IFormCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -25,14 +19,14 @@ export class FormCore extends BaseCore implements IFormCore {
     return checkInstanceOf([ClassList.form], obj);
   }
 
-  public static override create(data: Partial<IFormCore> = {}) {
+  public static override create(data: Partial<FormCore> = {}) {
     if (data instanceof FormCore) {
       return data;
     }
     return new FormCore(data);
   }
 
-  public static override createOptional(data?: Partial<IFormCore>) {
+  public static override createOptional(data?: Partial<FormCore>) {
     if (!data || !super.createOptional(data)) {
       return undefined;
     }
@@ -49,10 +43,10 @@ export class FormCore extends BaseCore implements IFormCore {
 
   #responses;
 
-  constructor(data: Partial<IFormCore> = {}) {
+  constructor(data: Partial<FormCore> = {}) {
     super(data);
-    this.#started  = new Date();
-    this.#age      = data.age;
+    this.#started = new Date();
+    this.#age = data.age;
     this.#finished = data.finished;
     // this.#responses = data.responses || [];
     this.#birthdate = data.birthdate || '';
@@ -101,7 +95,9 @@ export class FormCore extends BaseCore implements IFormCore {
 
   public existsIn(data: QuestionCore): boolean {
     if (data instanceof QuestionCore) {
-      return this.#responses.some((q) => q === data || matches(q.title, data.title));
+      return this.#responses.some(
+        (q) => q === data || matches(q.title, data.title),
+      );
     }
     return false;
   }
@@ -128,23 +124,25 @@ export class FormCore extends BaseCore implements IFormCore {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     action: { type: ACTION_TYPE; value: any },
   ) {
-  // Action should never be null,
-  // except when we attempt to storybook/test individual components in isolation
+    // Action should never be null,
+    // except when we attempt to storybook/test individual components in isolation
     switch (action?.type) {
       case ACTION_TYPE.RESET:
         return new FormCore();
 
       case ACTION_TYPE.UPDATE:
-        return new FormCore(merge(
-          {
-            ...previousState,
-          },
-          {
-            ...action.value,
-          },
-        ));
+        return new FormCore(
+          merge(
+            {
+              ...previousState,
+            },
+            {
+              ...action.value,
+            },
+          ),
+        );
 
-        // Effectively a noop that triggers a re-render of the page
+      // Effectively a noop that triggers a re-render of the page
       case ACTION_TYPE.RERENDER:
         return new FormCore({
           ...previousState,

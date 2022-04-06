@@ -1,15 +1,12 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
-import { IPagesCore }                        from '../survey/IPagesCore';
-import { PAGE_TYPE }                         from '../util/enums';
-import {
-  checkInstanceOf, ClassList, TInstanceOf,
-} from '../util/instanceOf';
-import { PageCore }  from './PageCore';
-import { BaseCore }  from './BaseCore';
-import { IPageCore } from '../survey/IStepCore';
-import { merge }     from '../util/merge';
-import { matches }   from '../util/helpers';
+import { IPagesCore } from '../survey/IPagesCore';
+import { PAGE_TYPE } from '../util/enums';
+import { matches } from '../util/helpers';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { merge } from '../util/merge';
+import { BaseCore } from './BaseCore';
+import { PageCore } from './PageCore';
 
 export class PagesCore extends BaseCore implements IPagesCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -23,14 +20,14 @@ export class PagesCore extends BaseCore implements IPagesCore {
 
   #pages: PageCore[];
 
-  public static override create(data: IPagesCore) {
+  public static override create(data: Partial<PagesCore>) {
     if (data instanceof PagesCore) {
       return data;
     }
     return new PagesCore(data);
   }
 
-  public static override createOptional(data?: IPagesCore) {
+  public static override createOptional(data?: Partial<PagesCore>) {
     if (!data) {
       return undefined;
     }
@@ -43,22 +40,34 @@ export class PagesCore extends BaseCore implements IPagesCore {
    * @param data Optional data
    * @returns
    */
-  #touchPage(type: PAGE_TYPE, data?: IPageCore): IPageCore {
-    const defaults = merge({
-      display: false,
-      title:   type,
-    }, data, { id: type, type });
-    defaults.type  = type;
+  #touchPage(type: PAGE_TYPE, data?: Partial<PageCore>): Partial<PageCore> {
+    const defaults = merge(
+      {
+        display: false,
+        title: type,
+      },
+      data,
+      { id: type, type },
+    );
+    defaults.type = type;
     return defaults;
   }
 
-  constructor(data: Partial<IPagesCore> = {}) {
+  constructor(data: Partial<PagesCore> = {}) {
     super(data);
-    this.#pages         = data.pages?.map((p) => PageCore.create(p)) || [];
-    this.#landingPage   = PageCore.create(this.#touchPage(PAGE_TYPE.LANDING, data.landingPage));
-    this.#resultsPage   = PageCore.create(this.#touchPage(PAGE_TYPE.RESULTS, data.resultsPage));
-    this.#noResultsPage = PageCore.create(this.#touchPage(PAGE_TYPE.NO_RESULTS, data.noResultsPage));
-    this.#summaryPage   = PageCore.create(this.#touchPage(PAGE_TYPE.SUMMARY, data.summaryPage));
+    this.#pages = data.pages?.map((p) => PageCore.create(p)) || [];
+    this.#landingPage = PageCore.create(
+      this.#touchPage(PAGE_TYPE.LANDING, data.landingPage),
+    );
+    this.#resultsPage = PageCore.create(
+      this.#touchPage(PAGE_TYPE.RESULTS, data.resultsPage),
+    );
+    this.#noResultsPage = PageCore.create(
+      this.#touchPage(PAGE_TYPE.NO_RESULTS, data.noResultsPage),
+    );
+    this.#summaryPage = PageCore.create(
+      this.#touchPage(PAGE_TYPE.SUMMARY, data.summaryPage),
+    );
   }
 
   #landingPage: PageCore;
@@ -99,7 +108,7 @@ export class PagesCore extends BaseCore implements IPagesCore {
     ];
   }
 
-  public set(data: IPageCore) {
+  public set(data: Partial<PageCore>) {
     const page = PageCore.create(data);
     switch (page.type) {
       case PAGE_TYPE.LANDING:
@@ -123,7 +132,9 @@ export class PagesCore extends BaseCore implements IPagesCore {
 
   public existsIn(data: PageCore): boolean {
     if (data instanceof PageCore) {
-      return Object.values(this.pages).some((q) => q === data || matches(q.title, data.title));
+      return Object.values(this.pages).some(
+        (q) => q === data || matches(q.title, data.title),
+      );
     }
     return false;
   }

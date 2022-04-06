@@ -1,21 +1,20 @@
-import { IActionCore }                 from './IActionCore';
-import { IBranchCore }                 from './IBranchCore';
-import { IPagesCore }                  from './IPagesCore';
+import { IActionCore } from './IActionCore';
+import { IBranchCore } from './IBranchCore';
+import { IPagesCore } from './IPagesCore';
+import { IQuestionableConfigCore } from './IQuestionableConfigCore';
+import { IResultCore } from './IResultCore';
 import { IQuestionCore, ISectionCore } from './IStepCore';
-import { IQuestionableConfigCore }     from './IQuestionableConfigCore';
-import { IResultCore }                 from './IResultCore';
 
 /**
  * Definition for survey data input
  */
 export interface IQuestionnaireCore {
-   actions: IActionCore[];
-   branches: IBranchCore[];
-   config: IQuestionableConfigCore;
-   flow: string[];
-   header: string;
-   pages: IPagesCore;
-   questions: IQuestionCore[];
-   results: IResultCore[];
-   sections: ISectionCore[];
+  actions?: IActionCore[] | undefined;
+  branches?: IBranchCore[] | undefined;
+  config?: IQuestionableConfigCore | undefined;
+  header?: string | undefined;
+  pages: IPagesCore;
+  questions: IQuestionCore[];
+  results?: IResultCore[] | undefined;
+  sections?: ISectionCore[] | undefined;
 }

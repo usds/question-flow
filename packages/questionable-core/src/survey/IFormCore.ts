@@ -1,4 +1,4 @@
-import { TAgeCore }      from '../util/types';
+import { TAgeCore } from '../util/types';
 import { IQuestionCore } from './IStepCore';
 
 /**
@@ -34,5 +34,5 @@ export interface IFormCore {
    *
    * @title Started
    */
-  readonly started: Date;
+  started: Date;
 }

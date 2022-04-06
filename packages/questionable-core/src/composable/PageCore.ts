@@ -1,11 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { IPageCore } from '../survey/IStepCore';
 import { PAGE_TYPE } from '../util/enums';
-import {
-  checkInstanceOf,
-  TInstanceOf,
-  ClassList,
-} from '../util/instanceOf';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { StepCore } from './StepCore';
 
 const className = ClassList.page;
@@ -15,18 +11,18 @@ export class PageCore extends StepCore implements IPageCore {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static override[Symbol.hasInstance](obj: any) {
+  static override [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([className, ClassList.page], obj);
   }
 
-  public static override create(data: IPageCore) {
+  public static override create(data: Partial<PageCore>) {
     if (data instanceof PageCore) {
       return data;
     }
     return new PageCore(data);
   }
 
-  public static override createOptional(data?: IPageCore) {
+  public static override createOptional(data?: Partial<PageCore>) {
     if (!data || !super.createOptional(data)) {
       return undefined;
     }
@@ -35,7 +31,7 @@ export class PageCore extends StepCore implements IPageCore {
 
   #display = true;
 
-  constructor(data: IPageCore) {
+  constructor(data: Partial<PageCore>) {
     super(data);
 
     if (!data.type || `${data.type}` === `${PAGE_TYPE.DEFAULT}`) {
@@ -43,10 +39,10 @@ export class PageCore extends StepCore implements IPageCore {
     } else {
       this.#type = data.type;
     }
-    this.#body          = data.body || '';
-    this.#bodyHeader    = data.bodyHeader || '';
+    this.#body = data.body || '';
+    this.#bodyHeader = data.bodyHeader || '';
     this.#bodySubHeader = data.bodySubHeader || '';
-    this.#display       = !(data.display === false);
+    this.#display = !(data.display === false);
   }
 
   #body: string;

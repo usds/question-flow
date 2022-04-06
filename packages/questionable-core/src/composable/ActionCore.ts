@@ -1,15 +1,9 @@
 /* eslint-disable import/no-cycle */
-import { IRefCore } from '../survey/IRefCore';
-import {
-  IActionCore,
-} from '../survey/IActionCore';
+import { IActionCore } from '../survey/IActionCore';
 import { IButtonCore } from '../survey/IButtonCore';
-import { ACTION }      from '../util/enums';
-import {
-  checkInstanceOf,
-  TInstanceOf,
-  ClassList,
-} from '../util/instanceOf';
+import { IRefCore } from '../survey/IRefCore';
+import { ACTION } from '../util/enums';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { RefCore } from './RefCore';
 
 export class ActionCore extends RefCore implements IActionCore, IRefCore {
@@ -18,18 +12,18 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static override[Symbol.hasInstance](obj: any) {
+  static override [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.action, ClassList.ref], obj);
   }
 
-  public static override create(data: IActionCore) {
+  public static override create(data: Partial<ActionCore>) {
     if (data instanceof ActionCore) {
       return data;
     }
     return new ActionCore(data);
   }
 
-  public static override createOptional(data?: IActionCore) {
+  public static override createOptional(data?: Partial<ActionCore>) {
     if (!data || !super.createOptional(data)) {
       return undefined;
     }
@@ -44,12 +38,12 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   #type: ACTION;
 
-  constructor(data: IActionCore) {
+  constructor(data: Partial<ActionCore>) {
     super(data);
-    this.#buttons  = data.buttons || [];
-    this.#label    = data.label || '';
+    this.#buttons = data.buttons || [];
+    this.#label = data.label || '';
     this.#subTitle = data.subTitle || '';
-    this.#type     = data.type || ACTION.DEFAULT;
+    this.#type = data.type || ACTION.DEFAULT;
   }
 
   /**

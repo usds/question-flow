@@ -1,13 +1,9 @@
 /* eslint-disable import/no-cycle */
 import { IResultCore } from '../survey/IResultCore';
-import { matches }     from '../util/helpers';
-import {
-  checkInstanceOf,
-  TInstanceOf,
-  ClassList,
-} from '../util/instanceOf';
-import { ActionCore }      from './ActionCore';
-import { RefCore }         from './RefCore';
+import { matches } from '../util/helpers';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { ActionCore } from './ActionCore';
+import { RefCore } from './RefCore';
 import { RequirementCore } from './StepCore';
 
 export class ResultCore extends RefCore implements IResultCore {
@@ -16,7 +12,7 @@ export class ResultCore extends RefCore implements IResultCore {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static override[Symbol.hasInstance](obj: any) {
+  static override [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.result, ClassList.ref], obj);
   }
 
@@ -28,14 +24,14 @@ export class ResultCore extends RefCore implements IResultCore {
   //   return ResultCore.isRef(this);
   // }
 
-  public static override create(data: IResultCore) {
+  public static override create(data: Partial<ResultCore>) {
     if (data instanceof ResultCore) {
       return data;
     }
     return new ResultCore(data);
   }
 
-  public static override createOptional(data?: IResultCore) {
+  public static override createOptional(data?: Partial<ResultCore>) {
     if (!data || !super.createOptional(data)) {
       return undefined;
     }
@@ -58,16 +54,17 @@ export class ResultCore extends RefCore implements IResultCore {
 
   #secondaryAction: ActionCore | undefined;
 
-  constructor(data: IResultCore) {
+  constructor(data: Partial<ResultCore>) {
     super(data);
-    this.#action          = ActionCore.createOptional(data.action);
-    this.#match           = RequirementCore.createOptional(data.match);
-    this.#requirements    = data.requirements?.map((r) => RequirementCore.create(r)) || [];
+    this.#action = ActionCore.createOptional(data.action);
+    this.#match = RequirementCore.createOptional(data.match);
+    this.#requirements =
+      data.requirements?.map((r) => RequirementCore.create(r)) || [];
     this.#secondaryAction = ActionCore.createOptional(data.secondaryAction);
-    this.#reason          = data.reason || '';
-    this.#label           = data.label || '';
-    this.#category        = data.category || '';
-    this.#order           = data.order || 0;
+    this.#reason = data.reason || '';
+    this.#label = data.label || '';
+    this.#category = data.category || '';
+    this.#order = data.order || 0;
   }
 
   public get action(): ActionCore | undefined {
@@ -116,7 +113,9 @@ export class ResultCore extends RefCore implements IResultCore {
 
   public existsIn(data: RequirementCore): boolean {
     if (data instanceof RequirementCore) {
-      return this.#requirements.some((q) => q === data || matches(q.title, data.title));
+      return this.#requirements.some(
+        (q) => q === data || matches(q.title, data.title),
+      );
     }
     return false;
   }

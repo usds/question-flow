@@ -1,5 +1,5 @@
-import { IActionCore }      from './IActionCore';
-import { IRefCore }         from './IRefCore';
+import { IActionCore } from './IActionCore';
+import { IRefCore } from './IRefCore';
 import { IRequirementCore } from './IStepCore';
 
 /**
@@ -12,7 +12,7 @@ export interface IResultCore extends IRefCore {
    * @title Call to Action
    * @hidden
    */
-  action: IActionCore | undefined;
+  action?: IActionCore | undefined;
   /**
    * Optional tag/category to group results
    */
@@ -22,7 +22,7 @@ export interface IResultCore extends IRefCore {
    *
    * @title Label
    */
-  label: string;
+  label?: string;
   /**
    * Requirement used for applying this result
    * Could have more than one, we only store the first
@@ -42,7 +42,7 @@ export interface IResultCore extends IRefCore {
    *
    * @title Requirements
    */
-  requirements: IRequirementCore[];
+  requirements?: IRequirementCore[];
   /**
    * Additional action which may follow after the primary
    *

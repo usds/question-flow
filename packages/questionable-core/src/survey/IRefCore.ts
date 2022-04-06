@@ -1,6 +1,5 @@
 /** Generic reference object */
 export interface IRefCore {
-  [key: string]: unknown;
   /**
    * Unique identifier
    *
@@ -27,5 +26,5 @@ export interface IRefCore {
    * @title Type
    * @hidden
    */
-  type: string  | undefined;
+  type?: string | undefined;
 }

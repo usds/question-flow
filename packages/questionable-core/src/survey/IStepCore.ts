@@ -5,22 +5,17 @@ import {
   QUESTION_TYPE,
   TStepType,
 } from '../util/enums';
-import {
-  TAgeCore,
-  TAgeCalcCore,
-} from '../util/types';
+import { TAgeCalcCore, TAgeCore } from '../util/types';
 import { IAnswerCore } from './IAnswerCore';
 import { IBranchCore } from './IBranchCore';
-import {
-  IRefCore,
-} from './IRefCore';
+import { IRefCore } from './IRefCore';
 
 /**
  * Acceptable responses
  */
 export interface IResponseCore extends IRefCore {
   answers: IAnswerCore[];
-  question: IQuestionCore;
+  question?: IQuestionCore;
 }
 
 /**
@@ -69,7 +64,7 @@ export interface IStepCore extends IRefCore {
    *
    * @title Section
    */
-  section?: ISectionCore  | undefined;
+  section?: ISectionCore | undefined;
   /**
    * Text to display below the title
    *
@@ -200,7 +195,7 @@ export interface ISectionCore extends IRefCore {
    *
    * @title Requirements
    */
-  requirements: IRequirementCore[];
+  requirements?: IRequirementCore[] | undefined;
   /**
    * Current display status of this section
    *

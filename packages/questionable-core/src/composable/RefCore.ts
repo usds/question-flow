@@ -1,12 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { TRefCoreProperties } from '../metadata/MRef';
-import { IRefCore }           from '../survey/IRefCore';
-import {
-  checkInstanceOf,
-  TInstanceOf,
-  ClassList,
-} from '../util/instanceOf';
-import { getGUID }  from '../util/uuid';
+import { IRefCore } from '../survey/IRefCore';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { getGUID } from '../util/uuid';
 import { BaseCore } from './BaseCore';
 
 /**
@@ -38,14 +34,14 @@ export class RefCore extends BaseCore implements IRefCore {
   //   return RefCore.isRef(this);
   // }
 
-  public static override create(data: IRefCore) {
+  public static override create(data: Partial<RefCore>) {
     if (data instanceof RefCore) {
       return data;
     }
     return new RefCore(data);
   }
 
-  public static override createOptional(data?: IRefCore) {
+  public static override createOptional(data?: Partial<RefCore>) {
     if (!data || !super.createOptional(data)) {
       return undefined;
     }
@@ -64,7 +60,7 @@ export class RefCore extends BaseCore implements IRefCore {
    * Instantiation will generate a uuid for this object
    * @param data optional data
    */
-  public constructor(data: IRefCore) {
+  public constructor(data: Partial<RefCore>) {
     super(data);
     if (data.id && data.id.length > 0) {
       this.#_id = data.id;
@@ -73,7 +69,7 @@ export class RefCore extends BaseCore implements IRefCore {
     }
     this.#_label = data.label || '';
     this.#_title = data.title || '';
-    this.#_type  = data.type || '';
+    this.#_type = data.type || '';
   }
 
   public get id(): string {

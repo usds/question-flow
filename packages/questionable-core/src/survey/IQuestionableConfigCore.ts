@@ -1,7 +1,7 @@
-import { MODE }                                      from '../util/enums';
+import { MODE } from '../util/enums';
 import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
-import { IButtonCore }                               from './IButtonCore';
-import { IEventCore }                                from './IEventCore';
+import { IButtonCore } from './IButtonCore';
+import { IEventCore } from './IEventCore';
 
 /**
  * Configuration for customized behavior of Questionable
@@ -14,14 +14,14 @@ export interface IQuestionableConfigCore {
    * @default false
    * @hidden
    */
-  readonly dev: boolean;
+  readonly dev?: boolean;
   /**
    * Event hooks for common form operations
    *
    * @title Events
    * @hidden
    */
-  events: IEventCore | undefined;
+  events?: IEventCore | undefined;
   /**
    * Optional method to fetch environment variables or query string parameters
    *
@@ -35,25 +35,25 @@ export interface IQuestionableConfigCore {
    * @title Mode
    * @default MODE.VIEW
    */
-  mode: MODE  | undefined;
+  mode: MODE | undefined;
   /**
-  * Navigation configuration
-  *
-  * @title Navigation
-  */
-  nav: Partial<INavigationConfigCore>  | undefined;
+   * Navigation configuration
+   *
+   * @title Navigation
+   */
+  nav?: Partial<INavigationConfigCore> | undefined;
   /**
    * Page configuration
    *
    * @title Pages
    */
-  pages: Partial<IPagesConfigCore> | undefined;
+  pages?: Partial<IPagesConfigCore> | undefined;
   /**
    * Properties produced from `getRuntimeConfig()`
    * @title Params
    * @default {}
    */
-  get params(): TStringDictionaryCore;
+  params?: TStringDictionaryCore | undefined;
   /**
    * Progress Bar configuration
    *

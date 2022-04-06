@@ -1,6 +1,6 @@
-import { ACTION }      from '../util/enums';
+import { ACTION } from '../util/enums';
 import { IButtonCore } from './IButtonCore';
-import { IRefCore }    from './IRefCore';
+import { IRefCore } from './IRefCore';
 
 /**
  * Represents something the customer can do in response to receiving a result
@@ -11,15 +11,15 @@ export interface IActionCore extends IRefCore {
    * @title Buttons
    * @hidden
    */
-  buttons: IButtonCore[] | undefined;
+  buttons?: IButtonCore[] | undefined;
   /**
    * @title Label
    */
-  label: string;
+  label?: string;
   /**
    * @title Description
    */
-  subTitle: string | undefined;
+  subTitle?: string | undefined;
   /**
    * @title Type
    * @hidden
