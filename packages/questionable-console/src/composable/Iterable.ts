@@ -175,6 +175,7 @@ export class Iterable<Q extends Questionnaire, F extends FormCore> {
   }
 
   async start() {
+    log(this)
     if (this.started) return;
 
     this.process.subscribe({

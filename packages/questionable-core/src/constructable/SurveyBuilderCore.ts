@@ -29,7 +29,7 @@ function create<T extends Base>(c: TCtor<T>, data: Partial<T>): T {
   return new c(data);
 }
 
-export class SurveyBuilder<Q extends Questionnaire> {
+export class SurveyBuilder{
   #actions: Action[] = [];
   #answers: Answer[] = [];
   #branches: Branch[] = [];
@@ -37,7 +37,6 @@ export class SurveyBuilder<Q extends Questionnaire> {
   #defaults: TBuilderDefaults;
   #page: Page[] = [];
   #pages: Pages = new Pages();
-  #questionnaire: Q;
   #questions: Question[] = [];
   #refs: Ref[] = [];
   #requirements: Requirement[] = [];
@@ -45,13 +44,12 @@ export class SurveyBuilder<Q extends Questionnaire> {
   #results: Result[] = [];
   #sections: Section[] = [];
 
-  constructor(Q: TCtor<Q>, data: Partial<Q> = {}) {
+  constructor(data: Partial<Questionnaire> = {}) {
     this.#actions = data.actions || [];
     this.#branches = data.branches || []
     this.#config = data.config || new Config({ mode: MODE.VIEW });
     this.#defaults = {};
     this.#pages = data.pages || new Pages();
-    this.#questionnaire = new Q(data);
     this.#questions = data.questions || [];
     this.#refs = [];
     this.#sections = data.sections || [];
@@ -195,8 +193,8 @@ export class SurveyBuilder<Q extends Questionnaire> {
     return nu;
   }
 
-  init(): Q {
-    return this.#questionnaire.init({
+  init<Q extends Questionnaire>(c: TCtor<Q>, ): Q {
+    const q = {
       actions: this.#actions,
       branches: this.#branches,
       config: this.#config,
@@ -205,7 +203,9 @@ export class SurveyBuilder<Q extends Questionnaire> {
       questions: this.#questions,
       results: this.#results,
       sections: this.#sections,
-    });
+    } as Partial<Q>;
+    const questionnaire = new c(q);
+    return questionnaire;
   }
 }
 

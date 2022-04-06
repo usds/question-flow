@@ -25,7 +25,7 @@ export class Scaffolding {
 
   iterable: Iterable<Questionnaire, Form>;
 
-  builder: SurveyBuilder<Questionnaire>;
+  builder: SurveyBuilder;
 
   constructor() {
     this.builder       = new SurveyBuilder(Questionnaire);
@@ -36,7 +36,7 @@ export class Scaffolding {
 
   init(): Questionnaire {
     this.build();
-    return this.builder.init();
+    return this.builder.init(Questionnaire);
   }
 
   build() {

@@ -1,11 +1,10 @@
 import {
   groupBy, isEmpty, noop,
 } from 'lodash';
-import { QuestionableConfigCore } from '../composable/QuestionableConfigCore';
-import { ResultCore }             from '../composable/ResultCore';
-import { FormCore }               from '../composable/FormCore';
-import { PageCore }               from '../composable/PageCore';
-import { QuestionnaireCore }      from '../composable/QuestionnaireCore';
+import { ResultCore }        from '../composable/ResultCore';
+import { FormCore }          from '../composable/FormCore';
+import { PageCore }          from '../composable/PageCore';
+import { QuestionnaireCore } from '../composable/QuestionnaireCore';
 import {
   BranchCore,
   QuestionCore,
@@ -29,7 +28,6 @@ import { matches }                from '../util/helpers';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
 import { IPageConfigCore }        from '../survey/IQuestionableConfigCore';
 import { ActionCore }             from '../composable/ActionCore';
-import { PagesCore }              from '../composable/PagesCore';
 import { Questioner }             from './Questioner';
 
 type TPageSet = {
@@ -38,33 +36,53 @@ type TPageSet = {
 } | undefined;
 
 export class GateLogicCore {
-  #questionnaire: QuestionnaireCore;
+  #form!: FormCore;
 
-  #flow: string[];
-
-  #config: QuestionableConfigCore;
-
-  #steps: StepCore[];
-
-  #pageList: PageCore[] = [];
-
-  #pages: PagesCore;
-
-  #form: FormCore;
+  #questionnaire!: QuestionnaireCore;
 
   constructor(questionnaire: QuestionnaireCore, form: FormCore) {
+    this.init(questionnaire, form);
+  }
+
+  init(questionnaire: QuestionnaireCore, form: FormCore) {
     this.#questionnaire = questionnaire;
     this.#form          = form;
-    this.#flow          = questionnaire.flow;
-    this.#config        = questionnaire.config;
-    this.#steps         = questionnaire.steps;
-    const pages         = questionnaire.pages || new PagesCore();
-    this.#pages         = pages;
-    this.#pageList      = pages.all();
+    // Performs constructor validation on the survery inputs.
+    this.validateInput();
+    this.syncBranches();
+    this.setPageDefaults();
+  }
+
+  protected get questionnaire() {
+    return this.#questionnaire;
+  }
+
+  protected get form() {
+    return this.#form;
+  }
+
+  protected get flow() {
+    return this.questionnaire.flow;
+  }
+
+  protected get config() {
+    return this.questionnaire.config;
+  }
+
+  protected get steps() {
+    return this.questionnaire.steps;
+  }
+
+  protected get pages() {
+    return this.questionnaire.pages;
+  }
+
+  protected get pageList() {
+    return this.pages.all();
   }
 
   public enableLog() {
-    if (this.#config.dev) {
+    if (this.config.dev) {
       // Fork for future enhancements to dev logging
       GateLogicCore.enableLogging();
     }
@@ -84,7 +102,7 @@ export class GateLogicCore {
   public goToNextStep(s: StepCore): void {
     const step = this.getNextStep(s);
     const dir  = DIRECTION.FORWARD;
-    this.#config.events?.page({
+    this.config.events?.page({
       dir, step,
     });
     this.goToStep(step);
@@ -93,7 +111,7 @@ export class GateLogicCore {
   public goToPrevStep(s: StepCore): void {
     const step = this.getPreviousStep(s);
     const dir  = DIRECTION.BACKWARD;
-    this.#config.events?.page({ dir, step });
+    this.config.events?.page({ dir, step });
     this.goToStep(step);
   }
 
@@ -114,13 +132,13 @@ export class GateLogicCore {
     }
     // KLUDGE Alert: this is not an elegant way to solve this
     if (s.type === QUESTION_TYPE.DOB) {
-      const yearsOld = this.#form.age?.years || 0;
+      const yearsOld = this.form.age?.years || 0;
       return yearsOld > 0;
     }
-    if (!this.#form) {
+    if (!this.form) {
       return false;
     }
-    return Questioner.isValid(s, this.#form);
+    return Questioner.isValid(s, this.form);
   }
 
   /**
@@ -128,7 +146,7 @@ export class GateLogicCore {
    * @returns
    */
   getFirstStep<T extends StepCore>(): T {
-    const ret = this.#steps[0] as T;
+    const ret = this.steps[0] as T;
     if (!ret) {
       this.throw('There is no step');
     }
@@ -147,7 +165,7 @@ export class GateLogicCore {
    * @returns
    */
   getStepById(id: string): StepCore {
-    const ret = this.#steps.find((q) => q.id === id);
+    const ret = this.steps.find((q) => q.id === id);
     if (!ret) {
       this.throw(`Step id: ${id} not found in survery`);
     }
@@ -210,8 +228,8 @@ export class GateLogicCore {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   getStep(data: StepCore, direction: DIRECTION, skip = 0): StepCore {
     const thisQuestion = data;
-    const nextStepId   = this.#flow.indexOf(thisQuestion.id) !== -1
-      ? this.#flow[this.#flow.indexOf(thisQuestion.id) + direction]
+    const nextStepId   = this.flow.indexOf(thisQuestion.id) !== -1
+      ? this.flow[this.flow.indexOf(thisQuestion.id) + direction]
       : undefined;
     // If there are no more steps, stay on current
     if (!nextStepId) {
@@ -229,16 +247,16 @@ export class GateLogicCore {
       }
     }
 
-    if (this.#config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       return this.getStepById(nextStepId);
     }
     // Special handling for results
     const hasResults = this.getResults().length > 0;
     if (nextStepId === STEP_TYPE.RESULTS && !hasResults) {
-      return this.#pages.noResultsPage;
+      return this.pages.noResultsPage;
     }
     if (nextStepId === STEP_TYPE.NO_RESULTS && hasResults) {
-      return this.#pages.resultsPage;
+      return this.pages.resultsPage;
     }
 
     const nextQuestion = this.getStepById(nextStepId);
@@ -328,9 +346,9 @@ export class GateLogicCore {
     const thisStepIdx = answerable.indexOf(step.id) + 1;
     // add 2 to account for the summary and result steps
     let lastStepIdx = lastStep + 2;
-    if (this.#config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       // if in design mode, every step will be iterated
-      lastStepIdx = this.#flow.length - 1;
+      lastStepIdx = this.flow.length - 1;
     }
     // To calculate the percent, divide the index of this step
     //   by the index of the last step multiplied by 100.
@@ -348,7 +366,7 @@ export class GateLogicCore {
       return [];
     }
 
-    if (this.#questionnaire.branches.length) {
+    if (this.questionnaire.branches.length) {
       const question = step as QuestionCore;
       return this.getBranchQuestions(question);
     }
@@ -364,15 +382,15 @@ export class GateLogicCore {
     const question = step as QuestionCore;
 
     if (question.branch) {
-      this.#config.events.gate({
+      this.config.events.gate({
         data: {
-          [this.#questionnaire.header]: `${question.branch.title}`,
+          [this.questionnaire.header]: `${question.branch.title}`,
         },
         gate: 'branch',
       });
 
       return (
-        this.#questionnaire.branches
+        this.questionnaire.branches
           .find((b) => b.id === question.branch?.id)
           ?.questions.map((q) => q.id) || []
       );
@@ -385,7 +403,7 @@ export class GateLogicCore {
    * @returns string[]
    */
   protected getQuestionsWithoutBranches(): string[] {
-    return this.#steps
+    return this.steps
       .filter((q) => isEnum(QUESTION_TYPE, q.type))
       .map((q) => q.id);
   }
@@ -396,7 +414,7 @@ export class GateLogicCore {
    * @returns
    */
   getAnswerableQuestions(): string[] {
-    return this.#questionnaire.questions
+    return this.questionnaire.questions
       .filter(
         (q) =>
           !q.entryRequirements
@@ -413,30 +431,30 @@ export class GateLogicCore {
    * @returns
    */
   getSections(thisQuestion: StepCore): SectionCore[] {
-    if (!thisQuestion || !this.#questionnaire.sections || this.#questionnaire.sections.length === 0) {
+    if (!thisQuestion || !this.questionnaire.sections || this.questionnaire.sections.length === 0) {
       return [];
     }
 
-    const thisQuestionIdx = this.#steps.indexOf(thisQuestion);
+    const thisQuestionIdx = this.steps.indexOf(thisQuestion);
 
     // Get all sections that meet the requirements based on current answers
-    let sections = this.#questionnaire.sections.filter(
+    let sections = this.questionnaire.sections.filter(
       (s) =>
         s.requirements.length === 0
         || s.requirements.some((r) => this.meetsAllRequirements(r)),
     );
-    if (this.#config.mode === MODE.EDIT) {
+    if (this.config.mode === MODE.EDIT) {
       // In design mode, all sections are valid
-      sections = [...this.#questionnaire.sections];
+      sections = [...this.questionnaire.sections];
     }
     return sections.map((s) => {
       const section    = SectionCore.create(s);
-      section.lastStep = this.#questionnaire.questions.reduce(
+      section.lastStep = this.questionnaire.questions.reduce(
         (acc, q, index) => (q.section?.id === s.id ? index : acc),
         -1,
       );
       if (matches(section.id, PAGE_TYPE.RESULTS)) {
-        section.lastStep = this.#questionnaire.questions.length - 2;
+        section.lastStep = this.questionnaire.questions.length - 2;
       } else if (matches(section.id, PAGE_TYPE.LANDING)) {
         section.lastStep = 0;
       }
@@ -457,7 +475,7 @@ export class GateLogicCore {
    * @returns
    */
   getResults(): ResultCore[] {
-    return this.#questionnaire.results.filter((r) =>
+    return this.questionnaire.results.filter((r) =>
       r.requirements.some((match) => {
         if (this.meetsAllRequirements(match)) {
           Object.assign(r, { match });
@@ -472,7 +490,7 @@ export class GateLogicCore {
    * @returns
    */
   getActionByType(type: ACTION): ActionCore {
-    const action = this.#questionnaire.actions.find((a) => a.type === type);
+    const action = this.questionnaire.actions.find((a) => a.type === type);
     if (!action) {
       this.throw(`No matching action found for ${type}`);
     }
@@ -485,12 +503,12 @@ export class GateLogicCore {
    */
   getAction(results: ResultCore[]): ActionCore {
     const groupedByAction = groupBy(results, 'action.id');
-    const hybrid          = this.#questionnaire.actions.find((a) => a.type === ACTION.HYBRID);
+    const hybrid          = this.questionnaire.actions.find((a) => a.type === ACTION.HYBRID);
     // If group above has more than one type of action, the resolved action will be a hybrid
     let match     = hybrid;
     const actions = Object.keys(groupedByAction);
     if (actions.length === 1) {
-      match = this.#questionnaire.actions.find((a) => a.id === actions[0]);
+      match = this.questionnaire.actions.find((a) => a.id === actions[0]);
       if (!match) {
         this.throw(`Action id ${actions[0]} could not be found.`);
       }
@@ -507,7 +525,7 @@ export class GateLogicCore {
    */
   protected throw(e: string): never {
     const error = new Error(e);
-    this.#config.events.error(error);
+    this.config.events.error(error);
     throw error;
   }
 
@@ -515,13 +533,13 @@ export class GateLogicCore {
    * Ensure the survey is constructed with (minimally) valid data
    */
   protected validateInput() {
-    if (this.#questionnaire.questions?.length <= 0) {
+    if (this.questionnaire.questions?.length <= 0) {
       this.throw('No questions have been defined.');
     }
-    // if (this.#questionnaire.header?.length <= 0) {
+    // if (this.questionnaire.header?.length <= 0) {
     //   this.throw('No header has been defined.');
     // }
-    if (this.#questionnaire.results?.length <= 0) {
+    if (this.questionnaire.results?.length <= 0) {
       this.throw('No results have been defined.');
     }
   }
@@ -534,24 +552,24 @@ export class GateLogicCore {
    */
   protected syncBranches(): void {
     // Branches defined take priority; sync these first
-    this.#questionnaire.branches.forEach((b) => {
+    this.questionnaire.branches.forEach((b) => {
       b.questions.forEach((bq) => {
-        const question = this.#questionnaire.questions.find((q) => q.id === bq.id);
+        const question = this.questionnaire.questions.find((q) => q.id === bq.id);
         if (question && question?.branch?.id !== b.id) {
           question.branch = b;
         }
       });
     });
 
-    this.#questionnaire.questions.forEach((q) => {
+    this.questionnaire.questions.forEach((q) => {
       // Branches are optional on questions
       if (!q.branch?.id) {
         return;
       }
-      const exists         = this.#questionnaire.branches.find((b) => b.existsIn(q) || q.branch === b);
+      const exists         = this.questionnaire.branches.find((b) => b.existsIn(q) || q.branch === b);
       const validateBranch = exists || (q.branch as BranchCore);
       if (!exists) {
-        this.#questionnaire.add(validateBranch);
+        this.questionnaire.add(validateBranch);
       }
       if (!validateBranch.questions.find((bq) => bq.id === q.id)) {
         validateBranch.add(q);
@@ -568,7 +586,7 @@ export class GateLogicCore {
   protected getPageSet = (
     type: PAGE_TYPE,
   ): TPageSet => {
-    const data = this.#pageList.find((p: PageCore | undefined) => p?.type === type);
+    const data = this.pageList.find((p: PageCore | undefined) => p?.type === type);
     if (data) {
       return {
         config: {},
@@ -580,7 +598,7 @@ export class GateLogicCore {
 
   /**
    * If configured, sets a default page if required for the page type
-   * @param idx index of the page in `this.#steps`
+   * @param idx index of the page in `this.steps`
    * @param type LANDING, RESULTS, etc
    */
   protected setPage(idx: number, type: PAGE_TYPE): void {
@@ -590,26 +608,26 @@ export class GateLogicCore {
     if (!page) return;
     // visible is truthy unless explicitly set to false
     if (!page.data || page?.config?.visible === false) {
-      if (this.#steps.filter((q) => q.type === type).length > 0) {
+      if (this.steps.filter((q) => q.type === type).length > 0) {
         // if the page has been assigned to steps, remove it
-        const doomed = this.#steps.find((q) => q.type === type);
+        const doomed = this.steps.find((q) => q.type === type);
         if (doomed) {
-          const doomIdx = this.#steps.indexOf(doomed);
-          this.#steps.splice(doomIdx, 1);
+          const doomIdx = this.steps.indexOf(doomed);
+          this.steps.splice(doomIdx, 1);
         }
       }
       return;
     }
     // Ensure the wizard has this page at the specified location
-    if (this.#steps[idx].type !== type) {
+    if (this.steps[idx].type !== type) {
       if (idx === 0) {
         // In the case of the landing page, it will always go first
-        this.#steps.unshift(page.data);
+        this.steps.unshift(page.data);
       } else {
-        this.#steps.splice(idx + 1, 0, page.data);
+        this.steps.splice(idx + 1, 0, page.data);
       }
     }
-    if (this.#steps.filter((q) => q.type === type).length !== 1) {
+    if (this.steps.filter((q) => q.type === type).length !== 1) {
       this.throw(`${type} ${error}.`);
     }
   }
@@ -619,18 +637,9 @@ export class GateLogicCore {
    */
   protected setPageDefaults(): void {
     this.setPage(0, PAGE_TYPE.LANDING);
-    this.setPage(this.#steps.length - 1, PAGE_TYPE.SUMMARY);
-    this.setPage(this.#steps.length - 1, PAGE_TYPE.RESULTS);
-    this.setPage(this.#steps.length - 1, PAGE_TYPE.NO_RESULTS);
-  }
-
-  /**
-   * Performs constructor validation on the survery inputs.
-   */
-  protected init(): void {
-    this.validateInput();
-    this.syncBranches();
-    this.setPageDefaults();
+    this.setPage(this.steps.length - 1, PAGE_TYPE.SUMMARY);
+    this.setPage(this.steps.length - 1, PAGE_TYPE.RESULTS);
+    this.setPage(this.steps.length - 1, PAGE_TYPE.NO_RESULTS);
   }
 
   public meetsAllRequirements(
@@ -643,9 +652,9 @@ export class GateLogicCore {
     // Internal to each requirement, all evaluations are `AND`
     // This safely handles cases where requirement parameters are undefined
     return (
-      GateLogicCore.meetsMinAgeRequirements(this.#form, minAge)
-      && GateLogicCore.meetsMaxAgeRequirements(this.#form, maxAge)
-      && GateLogicCore.meetsAgeCalcRequirements(this.#form, ageCalc)
+      GateLogicCore.meetsMinAgeRequirements(this.form, minAge)
+      && GateLogicCore.meetsMaxAgeRequirements(this.form, maxAge)
+      && GateLogicCore.meetsAgeCalcRequirements(this.form, ageCalc)
       && this.meetsAnswerRequirements(answers, allowUnanswered)
     );
   }
@@ -734,7 +743,7 @@ export class GateLogicCore {
       ret = false;
     }
     ret = matches(questionAnswer, matchAnswer);
-    if (this.#config.dev) {
+    if (this.config.dev) {
       log('Answer matching', {
         id,
         matchAnswer,
@@ -772,7 +781,7 @@ export class GateLogicCore {
             i.id,
           );
         });
-        if (this.#config.dev) {
+        if (this.config.dev) {
           log('Answer matching', { hasAnyMatch, question });
         }
         return hasAnyMatch;

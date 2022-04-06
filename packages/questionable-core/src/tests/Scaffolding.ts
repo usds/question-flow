@@ -8,7 +8,6 @@ import {
   AnswerCore,
   PagesCore,
   QuestionCore,
-  QuestionnaireCore,
   RequirementCore,
   ResponseCore,
   ResultCore,
@@ -24,11 +23,11 @@ export class Scaffolding {
 
   // iterable: Iterable;
 
-  builder: SurveyBuilder<QuestionnaireCore>;
+  builder: SurveyBuilder;
 
   constructor() {
     // eslint-disable-next-line no-multi-assign
-    this.builder = new SurveyBuilder(QuestionnaireCore);
+    this.builder = new SurveyBuilder();
     // this.iterable      = new Iterable(this.questionnaire);
   }
 
