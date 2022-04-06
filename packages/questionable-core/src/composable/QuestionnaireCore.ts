@@ -37,14 +37,14 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return checkInstanceOf([ClassList.questionnaire, ClassList.base], obj);
   }
 
-  public static override create(data: IQuestionnaireCore) {
+  public static override create(data: Partial<QuestionnaireCore>) {
     if (data instanceof QuestionnaireCore) {
       return data;
     }
     return new QuestionnaireCore(data);
   }
 
-  public static override createOptional(data?: IQuestionnaireCore) {
+  public static override createOptional(data?: Partial<QuestionnaireCore>) {
     if (!data || !super.createOptional(data)) {
       return undefined;
     }
@@ -71,13 +71,13 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
 
   #results: ResultCore[];
 
-  constructor(data: IQuestionnaireCore) {
+  constructor(data: Partial<QuestionnaireCore>) {
     super(data);
     const config = (data.config instanceof QuestionableConfigCore)
       ? data.config : new QuestionableConfigCore(data.config);
 
     this.#config    = config;
-    this.#pages     = PagesCore.create(data.pages);
+    this.#pages     = PagesCore.create(data.pages || {});
     this.#questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
     this.#actions   = data.actions?.map((q) => ActionCore.create(q)) || [];
     this.#branches  = data.branches?.map((b) => BranchCore.create(b)) || [];

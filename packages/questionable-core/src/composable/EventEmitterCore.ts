@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { noop } from 'lodash';
+import { noop }      from 'lodash';
 import {
   IEventCore,
   TAnswerDataCore,
@@ -10,11 +10,11 @@ import {
   TPageDataCore,
   TResultDataCore,
 } from '../survey/IEventCore';
-import { catchError } from '../util/error';
+import { catchError }                              from '../util/error';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { error as log } from '../util/logger';
-import { BaseCore } from './BaseCore';
-import { FormCore } from './FormCore';
+import { error as log }                            from '../util/logger';
+import { BaseCore }                                from './BaseCore';
+import { FormCore }                                from './FormCore';
 
 const className = ClassList['event-emitter'];
 export class EventEmitterCore extends BaseCore implements IEventCore {
@@ -57,15 +57,15 @@ export class EventEmitterCore extends BaseCore implements IEventCore {
   constructor(data: Partial<EventEmitterCore> = {}) {
     super(data);
     this.onActionClick = data.onActionClick || noop;
-    this.onAnswer = data.onAnswer || noop;
-    this.onAnyEvent = data.onAnyEvent || noop;
-    this.onBranch = data.onBranch || noop;
-    this.onError = data.onError || noop;
-    this.onGateSwitch = data.onGateSwitch || noop;
-    this.onInit = data.onInit || noop;
-    this.onNoResults = data.onNoResults || noop;
-    this.onPage = data.onPage || noop;
-    this.onResults = data.onResults || noop;
+    this.onAnswer      = data.onAnswer || noop;
+    this.onAnyEvent    = data.onAnyEvent || noop;
+    this.onBranch      = data.onBranch || noop;
+    this.onError       = data.onError || noop;
+    this.onGateSwitch  = data.onGateSwitch || noop;
+    this.onInit        = data.onInit || noop;
+    this.onNoResults   = data.onNoResults || noop;
+    this.onPage        = data.onPage || noop;
+    this.onResults     = data.onResults || noop;
   }
 
   action(data: FormCore): void {

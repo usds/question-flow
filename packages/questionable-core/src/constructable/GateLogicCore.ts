@@ -758,6 +758,7 @@ export class GateLogicCore {
     if (!answers || answers.length <= 0) return true;
 
     return answers.every((a) => {
+      if (!a.question) return true;
       const question = this.getQuestion(a.question);
       if (question.answers?.length > 0) {
         // Allowed answers are an array. Any matched answer makes the response valid.

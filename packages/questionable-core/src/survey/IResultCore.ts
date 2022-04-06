@@ -1,5 +1,5 @@
-import { IActionCore } from './IActionCore';
-import { IRefCore } from './IRefCore';
+import { IActionCore }      from './IActionCore';
+import { IRefCore }         from './IRefCore';
 import { IRequirementCore } from './IStepCore';
 
 /**

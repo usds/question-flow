@@ -2,7 +2,7 @@
   @typescript-eslint/no-use-before-define,
   no-useless-constructor, import/no-cycle, max-classes-per-file */
 
-import { kebabCase } from 'lodash';
+import { kebabCase }   from 'lodash';
 import { IAnswerCore } from '../survey/IAnswerCore';
 import { IBranchCore } from '../survey/IBranchCore';
 import {
@@ -20,11 +20,11 @@ import {
   QUESTION_TYPE,
   TStepType,
 } from '../util/enums';
-import { matches } from '../util/helpers';
+import { matches }                                 from '../util/helpers';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { RefCore } from './RefCore';
-import { ResultCore } from './ResultCore';
+import { TAgeCalcCore, TAgeCore }                  from '../util/types';
+import { RefCore }                                 from './RefCore';
+import { ResultCore }                              from './ResultCore';
 
 type TCollected =
   | RequirementCore

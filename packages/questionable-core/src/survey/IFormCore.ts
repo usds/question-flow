@@ -1,4 +1,4 @@
-import { TAgeCore } from '../util/types';
+import { TAgeCore }      from '../util/types';
 import { IQuestionCore } from './IStepCore';
 
 /**

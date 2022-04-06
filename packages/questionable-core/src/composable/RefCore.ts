@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
-import { TRefCoreProperties } from '../metadata/MRef';
-import { IRefCore } from '../survey/IRefCore';
+import { TRefCoreProperties }                      from '../metadata/MRef';
+import { IRefCore }                                from '../survey/IRefCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { getGUID } from '../util/uuid';
-import { BaseCore } from './BaseCore';
+import { getGUID }                                 from '../util/uuid';
+import { BaseCore }                                from './BaseCore';
 
 /**
  * Base class for all objects that should be stored by reference,
@@ -69,7 +69,7 @@ export class RefCore extends BaseCore implements IRefCore {
     }
     this.#_label = data.label || '';
     this.#_title = data.title || '';
-    this.#_type = data.type || '';
+    this.#_type  = data.type || '';
   }
 
   public get id(): string {

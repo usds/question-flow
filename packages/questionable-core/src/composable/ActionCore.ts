@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
-import { IActionCore } from '../survey/IActionCore';
-import { IButtonCore } from '../survey/IButtonCore';
-import { IRefCore } from '../survey/IRefCore';
-import { ACTION } from '../util/enums';
+import { IActionCore }                             from '../survey/IActionCore';
+import { IButtonCore }                             from '../survey/IButtonCore';
+import { IRefCore }                                from '../survey/IRefCore';
+import { ACTION }                                  from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { RefCore } from './RefCore';
+import { RefCore }                                 from './RefCore';
 
 export class ActionCore extends RefCore implements IActionCore, IRefCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -40,10 +40,10 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   constructor(data: Partial<ActionCore>) {
     super(data);
-    this.#buttons = data.buttons || [];
-    this.#label = data.label || '';
+    this.#buttons  = data.buttons || [];
+    this.#label    = data.label || '';
     this.#subTitle = data.subTitle || '';
-    this.#type = data.type || ACTION.DEFAULT;
+    this.#type     = data.type || ACTION.DEFAULT;
   }
 
   /**

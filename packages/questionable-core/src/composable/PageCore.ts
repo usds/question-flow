@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
-import { IPageCore } from '../survey/IStepCore';
-import { PAGE_TYPE } from '../util/enums';
+import { IPageCore }                               from '../survey/IStepCore';
+import { PAGE_TYPE }                               from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { StepCore } from './StepCore';
+import { StepCore }                                from './StepCore';
 
 const className = ClassList.page;
 export class PageCore extends StepCore implements IPageCore {
@@ -39,10 +39,10 @@ export class PageCore extends StepCore implements IPageCore {
     } else {
       this.#type = data.type;
     }
-    this.#body = data.body || '';
-    this.#bodyHeader = data.bodyHeader || '';
+    this.#body          = data.body || '';
+    this.#bodyHeader    = data.bodyHeader || '';
     this.#bodySubHeader = data.bodySubHeader || '';
-    this.#display = !(data.display === false);
+    this.#display       = !(data.display === false);
   }
 
   #body: string;

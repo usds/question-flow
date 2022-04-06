@@ -1,7 +1,7 @@
-import { MODE } from '../util/enums';
+import { MODE }                                      from '../util/enums';
 import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
-import { IButtonCore } from './IButtonCore';
-import { IEventCore } from './IEventCore';
+import { IButtonCore }                               from './IButtonCore';
+import { IEventCore }                                from './IEventCore';
 
 /**
  * Configuration for customized behavior of Questionable

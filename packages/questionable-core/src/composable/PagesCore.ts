@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
-import { IPagesCore } from '../survey/IPagesCore';
-import { PAGE_TYPE } from '../util/enums';
-import { matches } from '../util/helpers';
+import { IPagesCore }                              from '../survey/IPagesCore';
+import { PAGE_TYPE }                               from '../util/enums';
+import { matches }                                 from '../util/helpers';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { merge } from '../util/merge';
-import { BaseCore } from './BaseCore';
-import { PageCore } from './PageCore';
+import { merge }                                   from '../util/merge';
+import { BaseCore }                                from './BaseCore';
+import { PageCore }                                from './PageCore';
 
 export class PagesCore extends BaseCore implements IPagesCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -44,28 +44,28 @@ export class PagesCore extends BaseCore implements IPagesCore {
     const defaults = merge(
       {
         display: false,
-        title: type,
+        title:   type,
       },
       data,
       { id: type, type },
     );
-    defaults.type = type;
+    defaults.type  = type;
     return defaults;
   }
 
   constructor(data: Partial<PagesCore> = {}) {
     super(data);
-    this.#pages = data.pages?.map((p) => PageCore.create(p)) || [];
-    this.#landingPage = PageCore.create(
+    this.#pages         = data.pages?.map((p) => PageCore.create(p)) || [];
+    this.#landingPage   = PageCore.create(
       this.#touchPage(PAGE_TYPE.LANDING, data.landingPage),
     );
-    this.#resultsPage = PageCore.create(
+    this.#resultsPage   = PageCore.create(
       this.#touchPage(PAGE_TYPE.RESULTS, data.resultsPage),
     );
     this.#noResultsPage = PageCore.create(
       this.#touchPage(PAGE_TYPE.NO_RESULTS, data.noResultsPage),
     );
-    this.#summaryPage = PageCore.create(
+    this.#summaryPage   = PageCore.create(
       this.#touchPage(PAGE_TYPE.SUMMARY, data.summaryPage),
     );
   }

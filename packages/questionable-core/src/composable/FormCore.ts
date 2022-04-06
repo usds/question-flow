@@ -1,13 +1,13 @@
 /* eslint-disable import/no-cycle */
-import { merge } from 'lodash';
-import { eventedCore } from '../state/pubsub';
-import { IFormCore } from '../survey/IFormCore';
-import { ACTION_TYPE } from '../util/enums';
-import { matches } from '../util/helpers';
+import { merge }                                   from 'lodash';
+import { eventedCore }                             from '../state/pubsub';
+import { IFormCore }                               from '../survey/IFormCore';
+import { ACTION_TYPE }                             from '../util/enums';
+import { matches }                                 from '../util/helpers';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { TAgeCore } from '../util/types';
-import { BaseCore } from './BaseCore';
-import { QuestionCore } from './StepCore';
+import { TAgeCore }                                from '../util/types';
+import { BaseCore }                                from './BaseCore';
+import { QuestionCore }                            from './StepCore';
 
 export class FormCore extends BaseCore implements IFormCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -45,8 +45,8 @@ export class FormCore extends BaseCore implements IFormCore {
 
   constructor(data: Partial<FormCore> = {}) {
     super(data);
-    this.#started = new Date();
-    this.#age = data.age;
+    this.#started  = new Date();
+    this.#age      = data.age;
     this.#finished = data.finished;
     // this.#responses = data.responses || [];
     this.#birthdate = data.birthdate || '';

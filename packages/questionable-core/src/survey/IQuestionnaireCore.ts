@@ -1,8 +1,8 @@
-import { IActionCore } from './IActionCore';
-import { IBranchCore } from './IBranchCore';
-import { IPagesCore } from './IPagesCore';
-import { IQuestionableConfigCore } from './IQuestionableConfigCore';
-import { IResultCore } from './IResultCore';
+import { IActionCore }                 from './IActionCore';
+import { IBranchCore }                 from './IBranchCore';
+import { IPagesCore }                  from './IPagesCore';
+import { IQuestionableConfigCore }     from './IQuestionableConfigCore';
+import { IResultCore }                 from './IResultCore';
 import { IQuestionCore, ISectionCore } from './IStepCore';
 
 /**

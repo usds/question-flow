@@ -6,9 +6,9 @@ import {
   TStepType,
 } from '../util/enums';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { IAnswerCore } from './IAnswerCore';
-import { IBranchCore } from './IBranchCore';
-import { IRefCore } from './IRefCore';
+import { IAnswerCore }            from './IAnswerCore';
+import { IBranchCore }            from './IBranchCore';
+import { IRefCore }               from './IRefCore';
 
 /**
  * Acceptable responses

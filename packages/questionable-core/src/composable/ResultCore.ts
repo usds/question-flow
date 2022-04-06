@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
-import { IResultCore } from '../survey/IResultCore';
-import { matches } from '../util/helpers';
+import { IResultCore }                             from '../survey/IResultCore';
+import { matches }                                 from '../util/helpers';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { ActionCore } from './ActionCore';
-import { RefCore } from './RefCore';
-import { RequirementCore } from './StepCore';
+import { ActionCore }                              from './ActionCore';
+import { RefCore }                                 from './RefCore';
+import { RequirementCore }                         from './StepCore';
 
 export class ResultCore extends RefCore implements IResultCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -56,15 +56,14 @@ export class ResultCore extends RefCore implements IResultCore {
 
   constructor(data: Partial<ResultCore>) {
     super(data);
-    this.#action = ActionCore.createOptional(data.action);
-    this.#match = RequirementCore.createOptional(data.match);
-    this.#requirements =
-      data.requirements?.map((r) => RequirementCore.create(r)) || [];
+    this.#action          = ActionCore.createOptional(data.action);
+    this.#match           = RequirementCore.createOptional(data.match);
+    this.#requirements    = data.requirements?.map((r) => RequirementCore.create(r)) || [];
     this.#secondaryAction = ActionCore.createOptional(data.secondaryAction);
-    this.#reason = data.reason || '';
-    this.#label = data.label || '';
-    this.#category = data.category || '';
-    this.#order = data.order || 0;
+    this.#reason          = data.reason || '';
+    this.#label           = data.label || '';
+    this.#category        = data.category || '';
+    this.#order           = data.order || 0;
   }
 
   public get action(): ActionCore | undefined {

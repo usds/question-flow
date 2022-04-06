@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
 import { blue, red, white } from 'chalk';
-import { noop } from 'lodash';
+import { noop }             from 'lodash';
 import {
   ActionCore,
   AnswerCore,
@@ -11,7 +13,7 @@ import {
   ResultCore,
   SectionCore,
 } from '../composable';
-import { SurveyBuilder } from '../constructable';
+import { SurveyBuilder }                    from '../constructable';
 import { ACTION, PAGE_TYPE, QUESTION_TYPE } from '../util';
 
 export class Scaffolding {
@@ -33,8 +35,8 @@ export class Scaffolding {
     const [onboarding] = this.builder.add(SectionCore, [
       {
         requirements: [],
-        title: 'VA.gov Onboarding',
-        type: 'onboarding',
+        title:        'VA.gov Onboarding',
+        type:         'onboarding',
       },
     ]);
     this.builder.setDefaults(onboarding);
@@ -44,48 +46,48 @@ export class Scaffolding {
         label: 'Restart onboarding',
         order: 1,
         title: 'Restart',
-        type: ACTION.NONE,
+        type:  ACTION.NONE,
       },
     ]);
     const [finished] = this.builder.add(ActionCore, [
       {
         title: 'Finished',
-        type: ACTION.NONE,
+        type:  ACTION.NONE,
       },
     ]);
-    const [results] = this.builder.add(ResultCore, [
+    const [results]  = this.builder.add(ResultCore, [
       {
-        action: finished,
-        label: 'Complete',
+        action:       finished,
+        label:        'Complete',
         requirements: [],
-        title: 'Results',
-        type: 'result',
+        title:        'Results',
+        type:         'result',
       },
     ]);
     this.builder.add(PagesCore, [
       {
         landing: {
-          body: 'Please answer the following questions to setup your environment.',
-          id: PAGE_TYPE.LANDING,
+          body:    'Please answer the following questions to setup your environment.',
+          id:      PAGE_TYPE.LANDING,
           section: onboarding,
           title:
             'Welcome to the scaffolding project. Press any key to continue...',
           type: PAGE_TYPE.LANDING,
         },
         noResults: {
-          id: PAGE_TYPE.NO_RESULTS,
+          id:      PAGE_TYPE.NO_RESULTS,
           section: onboarding,
-          title: 'No actions have been performed',
-          type: PAGE_TYPE.NO_RESULTS,
+          title:   'No actions have been performed',
+          type:    PAGE_TYPE.NO_RESULTS,
         },
         results: {
-          id: PAGE_TYPE.RESULTS,
+          id:      PAGE_TYPE.RESULTS,
           section: onboarding,
-          title: 'Success. Your project has been bootstrapped.',
-          type: PAGE_TYPE.RESULTS,
+          title:   'Success. Your project has been bootstrapped.',
+          type:    PAGE_TYPE.RESULTS,
         },
         summary: {
-          id: PAGE_TYPE.SUMMARY,
+          id:      PAGE_TYPE.SUMMARY,
           section: onboarding,
           title:
             'Review the output and confirm that everything was successful.',
@@ -97,12 +99,12 @@ export class Scaffolding {
       { key: 'y', title: 'Yes' },
       { key: 'n', title: 'No' },
     ]);
-    const YES_NO = [YES, NO];
+    const YES_NO    = [YES, NO];
 
     const [A] = this.builder.add(QuestionCore, [
       {
-        answers: YES_NO,
-        onAnswer: async () => noop(),
+        answers:   YES_NO,
+        onAnswer:  async () => noop(),
         onDisplay: async () => {
           blue(
             'This is the scaffolding project. You will be asked a series of questions which will guide you through the setup process.)',
@@ -114,36 +116,36 @@ export class Scaffolding {
       },
     ]);
 
-    const [respondYes] = this.builder.add(ResponseCore, [
+    const [respondYes]     = this.builder.add(ResponseCore, [
       {
-        answers: [YES],
+        answers:  [YES],
         question: A,
       },
     ]);
     const [respondYesOrNo] = this.builder.add(ResponseCore, [
       {
-        answers: [YES, NO],
+        answers:  [YES, NO],
         question: A,
       },
     ]);
-    const [isFirstTime] = this.builder.add(RequirementCore, [
+    const [isFirstTime]    = this.builder.add(RequirementCore, [
       {
         responses: [respondYes],
       },
     ]);
-    const [hasAnsweredA] = this.builder.add(RequirementCore, [
+    const [hasAnsweredA]   = this.builder.add(RequirementCore, [
       {
         responses: [respondYesOrNo],
       },
     ]);
 
-    const [B] = this.builder.add(QuestionCore, [
+    this.builder.add(QuestionCore, [
       {
-        answers: YES_NO,
-        componentType: 'path',
-        default: '', // os.homedir,
+        answers:           YES_NO,
+        componentType:     'path',
+        default:           '', // os.homedir,
         entryRequirements: [isFirstTime],
-        onAnswer: async (a) => {
+        onAnswer:          async (a: any) => {
           const path = a.value || a.answer || a.short;
           white(`Working directory has been set to ${path}`);
         },
@@ -152,11 +154,11 @@ export class Scaffolding {
             "Welcome aboard. We'll have you up and running in no time. The first step is to choose where your working directory is located. You can select either the current directory or you can specify your own path (note: this can be changed later, but it may be very time consuming)",
           );
         },
-        section: onboarding,
-        title: 'What directory do you want to use for this project?',
-        type: QUESTION_TYPE.TEXT,
-        validate: async (a) => {
-          const path = a.value || a.answer || a.short;
+        section:  onboarding,
+        title:    'What directory do you want to use for this project?',
+        type:     QUESTION_TYPE.TEXT,
+        validate: async (a: any) => {
+          const path   = a.value || a.answer || a.short;
           const exists = true; // fs.existsSync(`${path}`);
           if (!exists) {
             red(`"${path}" isn't a valid path. Please enter another path.`);
@@ -166,40 +168,40 @@ export class Scaffolding {
       },
     ]);
 
-    const repoChoices = this.builder.add(AnswerCore, [
+    const repoChoices                          = this.builder.add(AnswerCore, [
       {
-        key: 'a',
+        key:   'a',
         short: 'all',
         title: 'All',
       },
       {
-        key: 'f',
+        key:   'f',
         short: 'front',
         title: 'Front end',
       },
       {
-        key: 'b',
+        key:   'b',
         short: 'backend',
         title: 'Back end',
       },
       {
-        key: 'c',
+        key:   'c',
         short: 'choose',
         title: 'Let me choose',
       },
       {
-        key: 'n',
+        key:   'n',
         short: 'none',
         title: 'None; I will choose later',
       },
     ]);
-    const [_a, _b, _c, CHOOSE_REPOSITORIES, _e] = repoChoices;
-    const [C] = this.builder.add(QuestionCore, [
+    const [_, _b, _c, CHOOSE_REPOSITORIES, _e] = repoChoices;
+    const [C]                                  = this.builder.add(QuestionCore, [
       {
-        answers: repoChoices,
+        answers:           repoChoices,
         entryRequirements: [hasAnsweredA],
-        id: 'C',
-        onAnswer: async (selected: any) => {
+        id:                'C',
+        onAnswer:          async (selected: any) => {
           white(`You selected ${selected.answer}`);
         },
         onDisplay: async () => {
@@ -207,8 +209,8 @@ export class Scaffolding {
             'The next step is to pull down the source code for the projects you will need to work on. You can have everything, just the frontend, just the backed or decide for each repo.',
           );
         },
-        title: 'Which repositories do you need?',
-        type: QUESTION_TYPE.MULTIPLE_CHOICE,
+        title:    'Which repositories do you need?',
+        type:     QUESTION_TYPE.MULTIPLE_CHOICE,
         validate: async () => true, // fs.existsSync(`${path}`),
       },
     ]);
@@ -233,25 +235,25 @@ export class Scaffolding {
       {
         responses: this.builder.add(ResponseCore, [
           {
-            answers: [CHOOSE_REPOSITORIES],
+            answers:  [CHOOSE_REPOSITORIES],
             question: C,
           },
         ]),
       },
     ]);
 
-    const [D] = this.builder.add(QuestionCore, [
+    this.builder.add(QuestionCore, [
       {
-        answers: repositories,
+        answers:           repositories,
         entryRequirements: [selectedChooseRepos],
-        onAnswer: async (selected: any) => {
+        onAnswer:          async (selected: any) => {
           white(`You selected ${selected.answer}`);
         },
         onDisplay: async () => {
           blue('Please select which repos you would like to clone.');
         },
-        title: 'Which repositories do you need?',
-        type: QUESTION_TYPE.MULTIPLE_SELECT,
+        title:    'Which repositories do you need?',
+        type:     QUESTION_TYPE.MULTIPLE_SELECT,
         validate: async () => true, // fs.existsSync(`${path}`),
       },
     ]);
@@ -263,8 +265,8 @@ export class Scaffolding {
       this.builder.add(ResultCore, [
         {
           // action:       { id: '0' },
-          id: '1',
-          label: 'done',
+          id:           '1',
+          label:        'done',
           requirements: this.builder.add(RequirementCore, [
             {
               explanation: 'Scaffolding complete',

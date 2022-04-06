@@ -83,7 +83,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
 
   readonly getRuntimeConfig?: TGetDictionaryCore;
 
-  constructor(data: IQuestionableConfigCore) {
+  constructor(data: Partial<QuestionableConfigCore> = {}) {
     super(data);
     merge(this, defaults, data);
     this.#params = (data.getRuntimeConfig) ? data.getRuntimeConfig(this) : {};
