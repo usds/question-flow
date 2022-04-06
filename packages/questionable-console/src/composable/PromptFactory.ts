@@ -1,11 +1,11 @@
 import { QUESTION_TYPE }             from '@usds.gov/questionable-core';
 import { Answers, DistinctQuestion } from 'inquirer';
-import { IQuestion }                 from '../survey/IStep';
 import { TAnswerType }               from '../util/types';
+import { Question }                  from './Question';
 
 const ignorePaths = ['node_modules', '.'];
 
-export const PromptFactory = (q: IQuestion): DistinctQuestion<Answers> => {
+export const PromptFactory = (q: Question): DistinctQuestion<Answers> => {
   let ret: TAnswerType = { type: 'confirm' };
   if (q.componentType) {
     switch (q.componentType) {

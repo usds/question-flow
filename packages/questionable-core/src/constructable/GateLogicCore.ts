@@ -781,4 +781,18 @@ export class GateLogicCore {
       return true;
     });
   }
+
+  getStepType(step: StepCore) {
+    if (isEnum(QUESTION_TYPE, step.type)) {
+      return 'question';
+    }
+    if (isEnum(PAGE_TYPE, step.type)) {
+      return 'page';
+    }
+    return 'unknown';
+  }
+
+  isComplete(step: StepCore) {
+    return this.getProgressPercent(step) === 100;
+  }
 }

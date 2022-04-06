@@ -40,7 +40,7 @@
     "clean": "rimraf ./dist",
     "build": "yarn lint && yarn tsc",
     "lint": "yarn lint:ts && yarn type-check",
-    "lint:fix": "pretty-quick --staged && eslint --fix \"src/**/*.{ts,tsx,json,js}\"",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,tsx,json,js}\"",
     "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
     "type-check": "tsc --noEmit -p tsconfig.json"
   }

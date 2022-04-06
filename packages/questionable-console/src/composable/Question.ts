@@ -1,29 +1,39 @@
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-useless-constructor */
 import {
   QuestionCore,
-  QUESTION_TYPE,
-  TQuestionCoreCtor,
 } from '@usds.gov/questionable-core';
-import { IAnswer, IQuestion } from '../survey/IStep';
 import {
   TStringFn,
   TOnAnswer,
   TOnDisplay,
   TValidateFn,
 }              from '../util/types';
-import { Questionnaire } from './Questionnaire';
-import { Step }          from './Step';
+import { Answer } from './Answer';
 
-type ctor = TQuestionCoreCtor;
-
-export class Question extends QuestionCore implements Step, IQuestion {
-  constructor(data: ctor, questionnaire: Questionnaire) {
-    super(data, questionnaire);
-    this.type = data.type;
+export class Question extends QuestionCore {
+  public static override create(data: Partial<Question>, order = 0) {
+    if (data instanceof Question) {
+      return data;
+    }
+    return new Question(data, order);
   }
 
-  answers!: IAnswer[];
+  #answers: Answer[];
+
+  constructor(data: Partial<Question>, order = 0) {
+    super(data);
+    this.#answers = data.answers?.map((a) => Answer.create(a)) || [];
+    this.set('order', order);
+    this.componentType = data.componentType;
+    this.default       = data.default;
+    this.onAnswer      = data.onAnswer;
+    this.onDisplay     = data.onDisplay;
+    this.validate      = data.validate;
+  }
+
+  public get answers(): Answer[] {
+    return this.#answers;
+  }
 
   componentType?: 'date' | 'path' | undefined;
 
@@ -34,6 +44,4 @@ export class Question extends QuestionCore implements Step, IQuestion {
   onDisplay?: TOnDisplay | undefined;
 
   validate?: TValidateFn | undefined;
-
-  type: QUESTION_TYPE;
 }

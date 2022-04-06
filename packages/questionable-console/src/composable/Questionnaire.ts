@@ -1,28 +1,24 @@
 /* eslint-disable import/no-cycle */
 import {
-  FormCore,
   IQuestionnaireCore,
   QuestionnaireCore,
 } from '@usds.gov/questionable-core';
 import { Question } from './Question';
 
-type ctor = IQuestionnaireCore & {
-  form: FormCore
-};
-
 export class Questionnaire extends QuestionnaireCore implements IQuestionnaireCore {
-  questions: Question[];
+  #questions: Question[];
 
-  constructor(data: ctor) {
+  constructor(data: Partial<Questionnaire>) {
     super(data);
-    this.questions = data.questions.map((q, i) => new Question({
-      order: i,
-      ...q,
-    }, this));
+    this.#questions = data.questions?.map((q, i) => Question.create(q, i)) || [];
   }
 
-  isComplete(stepId: string) {
-    return this.getProgressPercent(stepId) === 100
-      || this.flow.indexOf(stepId) === this.flow.length - 1;
+  public get questions(): Question[] {
+    return this.#questions;
   }
+
+  // isComplete(stepId: string) {
+  //   return this.getProgressPercent(stepId) === 100
+  //     || this.flow.indexOf(stepId) === this.flow.length - 1;
+  // }
 }

@@ -1,4 +1,5 @@
 export * from './IActionCore';
+export * from './IAnswerCore';
 export * from './IBranchCore';
 export * from './IButtonCore';
 export * from './IEventCore';

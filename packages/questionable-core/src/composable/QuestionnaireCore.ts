@@ -51,31 +51,34 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return QuestionnaireCore.create(data);
   }
 
-  #config: QuestionableConfigCore;
+  #config!: QuestionableConfigCore;
 
-  #pages: PagesCore;
+  #pages!: PagesCore;
 
-  #questions: QuestionCore[];
+  #questions!: QuestionCore[];
 
-  #actions: ActionCore[];
+  #actions!: ActionCore[];
 
   #steps!: StepCore[];
 
-  #branches: BranchCore[];
+  #branches!: BranchCore[];
 
-  #sections: SectionCore[];
+  #sections!: SectionCore[];
 
   #flow!: string[];
 
-  #header: string;
+  #header!: string;
 
-  #results: ResultCore[];
+  #results!: ResultCore[];
 
   constructor(data: Partial<QuestionnaireCore>) {
     super(data);
-    const config = (data.config instanceof QuestionableConfigCore)
-      ? data.config : new QuestionableConfigCore(data.config);
+    this.init(data);
+  }
 
+  public init(data: Partial<QuestionnaireCore>) {
+    const config    = (data.config instanceof QuestionableConfigCore)
+      ? data.config : new QuestionableConfigCore(data.config);
     this.#config    = config;
     this.#pages     = PagesCore.create(data.pages || {});
     this.#questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
@@ -84,12 +87,9 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     this.#sections  = data.sections?.map((s) => SectionCore.create(s)) || [];
     this.#header    = data.header || '';
     this.#results   = data.results?.map((r) => ResultCore.create(r)) || [];
-    this.init();
-  }
-
-  public init() {
-    this.#steps = this.#questions.map((q) => q) || [];
-    this.#flow  = this.#steps.map((q) => q.id);
+    this.#steps     = this.#questions.map((q) => q) || [];
+    this.#flow      = this.#steps.map((q) => q.id);
+    return this;
   }
 
   public set<T extends QuestionableConfigCore | string>(obj: T) {

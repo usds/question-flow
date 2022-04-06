@@ -1,9 +1,8 @@
 import {
-  QuestionableConfigCore,
-  QuestionsCore,
+  GateLogicCore,
+  FormCore,
   stepReducer,
-  StepsCore,
-  IQuestionDataCore,
+  Questioner,
 } from '@usds.gov/questionable-core';
 import {
   Answers, DistinctQuestion, prompt, registerPrompt,
@@ -24,36 +23,87 @@ registerPrompt('date', require('inquirer-date-prompt'));
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
 
-export class Iterable {
-  protected current: Question;
+export class Iterable<Q extends Questionnaire, F extends FormCore> {
+  #current: Question;
 
-  protected started = false;
-
-  protected observable = new Subject<DistinctQuestion<Answers>>();
-
-  protected get form() {
-    return this.questionnaire.form;
+  public get current() {
+    return this.#current;
   }
 
-  protected process: Observable<TVal>;
+  private set current(val: Question) {
+    this.#current = val;
+  }
 
-  protected config = new QuestionableConfigCore();
+  #started = false;
 
-  protected prompt: Promise<Answers> & {
+  public get started() {
+    return this.#started;
+  }
+
+  private set started(val: boolean) {
+    this.#started = val;
+  }
+
+  #observable = new Subject<DistinctQuestion<Answers>>();
+
+  protected get observable() {
+    return this.#observable;
+  }
+
+  private set observable(val) {
+    this.#observable = val;
+  }
+
+  #form: F;
+
+  protected get form(): F {
+    return this.#form;
+  }
+
+  private set form(val) {
+    this.#form = val;
+  }
+
+  #process: Observable<TVal>;
+
+  protected get process() {
+    return this.#process;
+  }
+
+  #prompt: Promise<Answers> & {
     ui: PromptUI<Answers>;
   };
 
-  protected questionnaire: Questionnaire;
+  protected get prompt() {
+    return this.#prompt;
+  }
+
+  #questionnaire: Q;
+
+  protected get questionnaire() {
+    return this.#questionnaire;
+  }
+
+  protected get config() {
+    return this.#questionnaire.config;
+  }
+
+  #gateLogic: GateLogicCore;
+
+  protected get gateLogic() {
+    return this.#gateLogic;
+  }
 
   constructor(
-    questionnaire: Questionnaire,
-    config: QuestionableConfigCore = new QuestionableConfigCore(),
+    questionnaire: Q,
+    form: F,
   ) {
-    this.questionnaire = questionnaire;
-    this.config        = config;
-    this.prompt        = prompt(this.observable);
-    this.process       = this.prompt.ui.process;
-    [this.current]     = this.questionnaire.questions;
+    this.#questionnaire = questionnaire;
+    this.#form          = form;
+    this.#prompt        = prompt(this.observable);
+    this.#process       = this.#prompt.ui.process;
+    [this.#current]     = this.#questionnaire.questions;
+    this.#gateLogic     = new GateLogicCore(questionnaire, form);
   }
 
   async makePage(step: Step) {
@@ -83,7 +133,7 @@ export class Iterable {
     if (step.onDisplay) {
       await step.onDisplay(step);
     }
-    if (StepsCore.getStepType(step) === 'question') {
+    if (this.gateLogic.getStepType(step) === 'question') {
       const nextQuestion = step as Question;
       this.makeQuestion(nextQuestion);
       this.current = nextQuestion;
@@ -95,14 +145,14 @@ export class Iterable {
   async next(val: TVal): Promise<Question | undefined> {
     try {
       if (!this.current) {
-        this.current = this.questionnaire.getFirstStep();
+        this.current = this.gateLogic.getFirstStep();
         return this.next({ answer: val.answer, name: this.current.id });
       }
       if (val.name) {
-        this.current = this.questionnaire.getStepById(val.name) as Question;
+        this.current = this.gateLogic.getStepById(val.name) as Question;
       }
-      const progress = this.questionnaire.getProgressPercent(this.props(this.current));
-      if (progress === 100 || this.questionnaire.isComplete(this.current.id)) {
+      const progress = this.gateLogic.getProgressPercent(this.current);
+      if (progress === 100 || this.gateLogic.isComplete(this.current)) {
         this.observable.complete();
         return undefined;
       }
@@ -110,27 +160,18 @@ export class Iterable {
         if (this.current.onAnswer) {
           await this.current.onAnswer(val, this.current);
         }
-        const nextStepId = this.questionnaire.getNextStep(this.props(this.current));
-        const nextStep   = this.questionnaire.getStepById(nextStepId);
+        const nextStep = this.gateLogic.getNextStep(this.current);
+        // const nextStep   = this.gateLogic.getStepById(nextStepId);
         await this.makeStep(nextStep);
       } else {
         await this.makeStep(this.current);
       }
-      log(`${this.questionnaire.getProgressPercent(this.current)}%`);
+      log(`${this.gateLogic.getProgressPercent(this.current)}%`);
       return this.current;
     } catch (e) {
       error(e);
     }
     return undefined;
-  }
-
-  props(question: Question = this.current): IQuestionDataCore {
-    return ({
-      dispatchForm: stepReducer,
-      form:         this.form,
-      step:         question,
-      stepId:       question.id,
-    });
   }
 
   async start() {
@@ -159,8 +200,8 @@ export class Iterable {
     if (question.validate) {
       isValid = await question.validate(a, question);
     }
-    QuestionsCore.updateForm(answer, this.props(question), this.config);
-    isValid = isValid && StepsCore.isNextEnabled(this.props(question));
+    Questioner.updateForm(answer, question, this.form);
+    isValid = isValid && this.gateLogic.isNextEnabled(question);
     return isValid;
   }
 }
