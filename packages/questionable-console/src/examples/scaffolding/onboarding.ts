@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 import { blue, red, white } from 'chalk';
 import { noop }             from 'lodash';
@@ -5,14 +6,15 @@ import os                   from 'os';
 import {
   AnswerCore,
   PagesCore,
-  QuestionCore,
   ResultCore,
   SectionCore,
   SurveyBuilder,
   PAGE_TYPE,
   QUESTION_TYPE,
+  yellow,
 } from '@usds.gov/questionable-core';
-import { TVal } from '../../util/types';
+import { TVal }     from '../../util/types';
+import { Question } from '../../composable/Question';
 
 export const build = (builder: SurveyBuilder) => {
   const [onboarding] = builder.add(SectionCore, [
@@ -140,7 +142,7 @@ export const build = (builder: SurveyBuilder) => {
     workingDirectory,
     repoTypes,
     manualRepoSelection,
-  ] = builder.add(QuestionCore, [{
+  ] = builder.add(Question, [{
     answers:   YES_NO,
     onAnswer:  async () => noop(),
     onDisplay: async () => {
@@ -201,6 +203,95 @@ export const build = (builder: SurveyBuilder) => {
       blue('Please select which repos you would like to clone.');
     },
     title:    'Which repositories do you need?',
+    type:     QUESTION_TYPE.MULTIPLE_SELECT,
+    validate: async () => true, // fs.existsSync(`${path}`),
+  }, {
+    answers:  [YES, NO],
+    // entryRequirements: [selectedChooseRepos],
+    onAnswer: async (selected: TVal) => {
+      white(`You selected ${selected.answer}`);
+    },
+    onDisplay: async (selected: TVal) => {
+      yellow(selected);
+      if (Array.isArray(selected.answer)) {
+        for (const repo of selected.answer) {
+          yellow(`Cloning ${repo} from Github...`);
+        }
+      }
+    },
+    title:    'Would you like to compile these projects now?',
+    type:     QUESTION_TYPE.MULTIPLE_SELECT,
+    validate: async () => true, // fs.existsSync(`${path}`),
+  }, {
+    answers:  [YES, NO],
+    // entryRequirements: [selectedChooseRepos],
+    onAnswer: async (selected: TVal) => {
+      white(`You selected ${selected.answer}`);
+    },
+    onDisplay: async (selected: TVal) => {
+      yellow(selected);
+    },
+    title:    'Your .git configuration does not have an email. Enter your email address:',
+    type:     QUESTION_TYPE.TEXT,
+    validate: async () => true, // fs.existsSync(`${path}`),
+  }, {
+    answers:  [YES, NO],
+    // entryRequirements: [selectedChooseRepos],
+    onAnswer: async (selected: TVal) => {
+      white(`You selected ${selected.answer}`);
+    },
+    onDisplay: async (selected: TVal) => {
+      yellow(selected);
+    },
+    title:    'Your .git configuration does not have a name. Enter your name:',
+    type:     QUESTION_TYPE.TEXT,
+    validate: async () => true, // fs.existsSync(`${path}`),
+  }, {
+    answers:  [YES, NO],
+    // entryRequirements: [selectedChooseRepos],
+    onAnswer: async (selected: TVal) => {
+      white(`You selected ${selected.answer}`);
+    },
+    onDisplay: async (selected: TVal) => {
+      yellow(selected);
+    },
+    title:    'You have selected to compile a backend project, but you do not have Ruby installed. Would you like to install Ruby?',
+    type:     QUESTION_TYPE.TEXT,
+    validate: async () => true, // fs.existsSync(`${path}`),
+  }, {
+    answers:  [YES, NO],
+    // entryRequirements: [selectedChooseRepos],
+    onAnswer: async (selected: TVal) => {
+      white(`You selected ${selected.answer}`);
+    },
+    onDisplay: async (selected: TVal) => {
+      yellow(selected);
+    },
+    title:    'You have selected to compile a backend project, but you do not have Ruby installed. Would you like to install Ruby?',
+    type:     QUESTION_TYPE.MULTIPLE_CHOICE,
+    validate: async () => true, // fs.existsSync(`${path}`),
+  }, {
+    answers:  [YES, NO],
+    // entryRequirements: [selectedChooseRepos],
+    onAnswer: async (selected: TVal) => {
+      white(`You selected ${selected.answer}`);
+    },
+    onDisplay: async (selected: TVal) => {
+      yellow(selected);
+    },
+    title:    'You have selected to compile a frontend project, but your node version is incorrect. Would you like to install `nvm` and the correct version of NodeJs?',
+    type:     QUESTION_TYPE.MULTIPLE_SELECT,
+    validate: async () => true, // fs.existsSync(`${path}`),
+  }, {
+    answers:  [YES, NO],
+    // entryRequirements: [selectedChooseRepos],
+    onAnswer: async (selected: TVal) => {
+      white(`You selected ${selected.answer}`);
+    },
+    onDisplay: async (selected: TVal) => {
+      yellow(selected);
+    },
+    title:    'Would you like to generate bookmarks for the README content?',
     type:     QUESTION_TYPE.MULTIPLE_SELECT,
     validate: async () => true, // fs.existsSync(`${path}`),
   },

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import {
   IQuestionnaireCore,
+  matches,
   QuestionnaireCore,
 } from '@usds.gov/questionable-core';
 import { Question } from './Question';
@@ -17,8 +18,22 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaireCo
     return this.#questions;
   }
 
-  // isComplete(stepId: string) {
-  //   return this.getProgressPercent(stepId) === 100
-  //     || this.flow.indexOf(stepId) === this.flow.length - 1;
-  // }
+  public existsIn(data: Question): boolean {
+    if (data instanceof Question) {
+      return this.#questions.some((q) => q === data || matches(q.title, data.title));
+    }
+    return super.existsIn(data);
+  }
+
+  public add(data: Question): QuestionnaireCore {
+    const exists = this.existsIn(data);
+    if (!exists) {
+      if (data instanceof Question) {
+        this.#questions.push(data);
+      } else {
+        super.add(data);
+      }
+    }
+    return this;
+  }
 }

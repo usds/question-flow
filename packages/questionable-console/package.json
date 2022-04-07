@@ -6,6 +6,7 @@
     "@usds.gov/questionable-core": "workspace:*",
     "@usds.gov/questionable-mocks": "workspace:*",
     "chalk": "4.1.2",
+    "commander": "^9.1.0",
     "cross-env": "^7.0.3",
     "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",
@@ -17,15 +18,17 @@
     "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.5",
+    "shelljs": "^0.8.5",
     "short-unique-id": "^4.4.4",
-    "uuid": "^8.3.2",
-    "zx": "^6.0.7"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@swc/core": "^1.2.161",
     "@swc/helpers": "^0.3.8",
+    "@types/commander": "^2.12.2",
     "@types/inquirer": "^8.2.0",
     "@types/node": "^17.0.23",
+    "@types/shelljs": "^0.8.11",
     "@types/uuid": "^8.3.4",
     "eslint": "^8.12.0",
     "ts-loader": "^9.2.8",
@@ -37,6 +40,7 @@
   },
   "scripts": {
     "start": "ts-node src/index.ts",
+    "s": "node --loader ts-node/esm src/s.ts",
     "clean": "rimraf ./dist",
     "build": "yarn lint && yarn tsc",
     "lint": "yarn lint:ts && yarn type-check",

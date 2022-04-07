@@ -1,4 +1,5 @@
 import { IStepCore } from '@usds.gov/questionable-core';
+import { Step } from '../composable/Step';
 
 export type TVal = {
   answer: string | number | boolean | string[],
@@ -30,9 +31,9 @@ export type TAnswerType = {
   validate?: TBoolFn,
   values?: string[] | TChoice[]
 };
-export type TOnAnswer = (answer: TVal, step: IStepCore, ...params: unknown[]) => Promise<void>;
-export type TOnDisplay = (step: IStepCore, ...params: unknown[]) => Promise<void>;
-export type TValidateFn = (answer: TVal, step: IStepCore, ...params: unknown[]) => Promise<boolean>;
+export type TOnAnswer = (answer: TVal, step: Step, ...params: unknown[]) => Promise<void>;
+export type TOnDisplay = (answer:TVal, step: Step, ...params: unknown[]) => Promise<void>;
+export type TValidateFn = (answer: TVal, step: Step, ...params: unknown[]) => Promise<boolean>;
 export type TStringFn = (...params: unknown[]) => string;
 export type TBoolFn = (...params: unknown[]) => boolean;
 export type TNumberFn = (...params: unknown[]) => number;

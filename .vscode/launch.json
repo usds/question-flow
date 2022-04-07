@@ -44,7 +44,8 @@
       "request": "launch",
       "args": [
         //"${relativeFile}"
-        "packages/questionable-console/src/s.ts"
+        "packages/questionable-console/src/s.ts",
+        "init"
       ],
       "runtimeArgs": [
         "--nolazy",

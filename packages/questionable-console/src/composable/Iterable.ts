@@ -10,12 +10,14 @@ import PromptUI                from 'inquirer/lib/ui/prompt';
 import { merge }               from 'lodash';
 import { Observable, Subject } from 'rxjs';
 import { getAnswer }           from '../util/helper';
-import { error, log, white }   from '../util/logger';
-import { TVal }                from '../util/types';
-import { PromptFactory }       from './PromptFactory';
-import { Question }            from './Question';
-import { Questionnaire }       from './Questionnaire';
-import { Step }                from './Step';
+import {
+  error, log, white, yellow,
+} from '../util/logger';
+import { TVal }          from '../util/types';
+import { PromptFactory } from './PromptFactory';
+import { Question }      from './Question';
+import { Questionnaire } from './Questionnaire';
+import { Step }          from './Step';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 registerPrompt('date', require('inquirer-date-prompt'));
@@ -130,7 +132,11 @@ export class Iterable<Q extends Questionnaire, F extends FormCore> {
 
   async makeStep(step: Step) {
     if (step.onDisplay) {
-      await step.onDisplay(step);
+      yellow(this.current);
+      await step.onDisplay({
+        answer: this.current.answer,
+        name:   this.current.title,
+      }, step);
     }
     if (this.gateLogic.getStepType(step) === 'question') {
       const nextQuestion = step as Question;
@@ -165,7 +171,7 @@ export class Iterable<Q extends Questionnaire, F extends FormCore> {
       } else {
         await this.makeStep(this.current);
       }
-      log(`${this.gateLogic.getProgressPercent(this.current)}%`);
+      // log(`${this.gateLogic.getProgressPercent(this.current)}%`);
       return this.current;
     } catch (e) {
       error(e);

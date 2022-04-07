@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import {
+  noopAsync,
   QuestionCore,
 } from '@usds.gov/questionable-core';
 import {
@@ -20,28 +21,48 @@ export class Question extends QuestionCore {
 
   #answers: Answer[];
 
+  #componentType?: 'date' | 'path' | undefined;
+
+  #default?: string | TStringFn;
+
+  #onAnswer?: TOnAnswer;
+
+  #onDisplay?: TOnDisplay;
+
+  #validate?: TValidateFn;
+
   constructor(data: Partial<Question>, order = 0) {
     super(data);
     this.#answers = data.answers?.map((a) => Answer.create(a)) || [];
     this.set('order', order);
-    this.componentType = data.componentType;
-    this.default       = data.default;
-    this.onAnswer      = data.onAnswer;
-    this.onDisplay     = data.onDisplay;
-    this.validate      = data.validate;
+    this.#componentType = data.componentType || undefined;
+    this.#default       = data.default || '';
+    this.#onAnswer      = data.onAnswer || noopAsync;
+    this.#onDisplay     = data.onDisplay || noopAsync;
+    this.#validate      = data.validate || (async () => true);
   }
 
   public get answers(): Answer[] {
     return this.#answers;
   }
 
-  componentType?: 'date' | 'path' | undefined;
+  public get componentType() {
+    return this.#componentType;
+  }
 
-  default?: string | TStringFn | undefined;
+  public get default() {
+    return this.#default;
+  }
 
-  onAnswer?: TOnAnswer | undefined;
+  public get onAnswer() {
+    return this.#onAnswer;
+  }
 
-  onDisplay?: TOnDisplay | undefined;
+  public get onDisplay() {
+    return this.#onDisplay;
+  }
 
-  validate?: TValidateFn | undefined;
+  public get validate() {
+    return this.#validate;
+  }
 }
