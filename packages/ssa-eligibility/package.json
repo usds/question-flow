@@ -12,9 +12,10 @@
     ]
   },
   "dependencies": {
-    "@usds.gov/questionable": "workspace:*",
-    "@usds.gov/questionable-core": "workspace:*",
+    "@usds.gov/questionable": "1.5.8",
+    "@usds.gov/questionable-core": "1.0.1",
     "axios": "^0.26.1",
+    "bluebird": "^3.7.2",
     "cross-env": "^7.0.3",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
@@ -37,6 +38,8 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "@types/axios": "^0.14.0",
+    "@types/bluebird": "^3.5.36",
     "@types/gtag.js": "^0.0.10",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.180",
@@ -126,5 +129,5 @@
     "type-check": "tsc --noEmit"
   },
   "types": "dist/main.d.ts",
-  "version": "1.1.12"
+  "version": "1.1.14"
 }

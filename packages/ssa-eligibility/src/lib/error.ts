@@ -1,4 +1,4 @@
-import { error } from '@usds.gov/questionable';
+import { error, log } from '@usds.gov/questionable';
 
 export const catchError = (e: unknown): Error => {
   if (e instanceof Error) {
@@ -20,7 +20,10 @@ export const catchError = (e: unknown): Error => {
 };
 
 export const handleErrors = (message = '', e: unknown = undefined) => {
-  if (!message || !e) return;
+  if (!message || !e) {
+    log('Unknown error', { e, message });
+    return;
+  }
   const err = catchError(e);
   error(message, err);
 };

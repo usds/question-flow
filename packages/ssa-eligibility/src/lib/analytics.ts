@@ -7,6 +7,7 @@ import {
   TOnError,
   TEventCore,
 } from '@usds.gov/questionable';
+import { snakeCase }      from 'lodash';
 import { isDebug }        from '../flow/lib/debug';
 import { DrupalSettings } from './drupal';
 
@@ -67,6 +68,7 @@ export const onInit = (data?: TEventCore) => {
 export const onResults = (data?: TEventCore) => {
   const results = (data as any).results as IResult[];
   for (const r of results) {
+    r.title = snakeCase(r.title);
     if (!r.category) {
       r.category = r.title;
     }

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IQuestionnaire, QuestionableConfig } from '@usds.gov/questionable';
+import { isEmpty }                            from 'lodash';
 import {
   onActionClick,
   onError,
@@ -20,14 +22,31 @@ import {
 
 const header = 'SSA Eligibility';
 
+type TKeys = 'questions' | 'actions' | 'pages' | 'results';
+
+const fetchRootJson = (data: any = {}, key: TKeys = 'questions', iterations = 0): any => {
+  if (isEmpty(data)) {
+    return {};
+  }
+  if (Object.keys(data).some((k) => key === k)) {
+    return data;
+  }
+  if (iterations > 5) {
+    return data || {};
+  }
+  if (!isEmpty(data.json)) {
+    return fetchRootJson(data.json, key, iterations + 1);
+  }
+  return data || {};
+};
+
 /**
  * Constructs the object required to instantiate Questionable
  * @param json
  * @returns a new instance of the questionnaire
  */
-// eslint-disable-next-line max-len
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-export const buildEligibility = (json: any = {}): IQuestionnaire => {
+export const buildEligibility = (clob: any = {}): IQuestionnaire => {
+  const json = fetchRootJson(clob, 'questions');
   // TODO: migrate the copy to the CMS
   const actionsJson = json.actions || actionContentMap;
   const actions     = buildActions(actionsJson);
