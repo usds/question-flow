@@ -5,6 +5,7 @@
   ],
   "dependencies": {
     "@trussworks/react-uswds": "^2.8.0",
+    "bluebird": "^3.7.2",
     "cross-env": "7.0.3",
     "lodash": "^4.17.21",
     "luxon": "^2.3.1",

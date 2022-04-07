@@ -238,8 +238,7 @@ export class GateLogicCore {
 
     if (skip === 0
       && direction === DIRECTION.FORWARD
-      && thisQuestion.exitRequirements
-      && thisQuestion.exitRequirements.length > 0) {
+      && !isEmpty(thisQuestion.exitRequirements)) {
       const allowExit = thisQuestion.exitRequirements.every((r) =>
         this.meetsAllRequirements(r));
       if (!allowExit) {
@@ -260,7 +259,7 @@ export class GateLogicCore {
     }
 
     const nextQuestion = this.getStepById(nextStepId);
-    if (!nextQuestion?.entryRequirements) {
+    if (isEmpty(nextQuestion?.entryRequirements)) {
       return nextQuestion;
     }
 

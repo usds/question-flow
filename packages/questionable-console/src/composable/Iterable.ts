@@ -1,7 +1,6 @@
 import {
   GateLogicCore,
   FormCore,
-  stepReducer,
   Questioner,
 } from '@usds.gov/questionable-core';
 import {
@@ -175,7 +174,7 @@ export class Iterable<Q extends Questionnaire, F extends FormCore> {
   }
 
   async start() {
-    log(this)
+    log(this);
     if (this.started) return;
 
     this.process.subscribe({
