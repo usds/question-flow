@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "lib": [
-      "esnext"
+      "esnext",
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -25,16 +25,34 @@
     "target": "ES2019",
     "paths": {
       "@usds.gov/*": [
-        "packages/*/src/index.ts"
+        "packages/*/src/index.ts",
       ],
-    }
+    },
   },
   "references": [
     {
-      "path": "packages/questionable-core"
+      "path": "packages/questionable-core",
     },
     {
-      "path": "packages/questionable-mocks"
+      "path": "packages/questionable-console",
+    },
+    {
+      "path": "packages/questionable-mocks",
+    },
+    {
+      "path": "packages/questionable-build",
+    },
+    {
+      "path": "packages/questionable-storybook",
+    },
+    {
+      "path": "packages/questionable-tests",
+    },
+    {
+      "path": "packages/ssa-eligibility"
+    },
+    {
+      "path": "packages/questionable-react-component"
     }
   ],
   "exclude": [

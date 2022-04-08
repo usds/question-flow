@@ -1,19 +1,10 @@
 /* eslint-disable import/no-cycle */
 import {
-  isEmpty,
-  isString,
-  merge,
-  noop,
-} from 'lodash';
-import { EventEmitterCore } from './EventEmitterCore';
-import {
-  isEnum,
-  MODE,
-} from '../util/enums';
-import {
-  TGetDictionaryCore,
-  TStringDictionaryCore,
-} from '../util/types';
+  isEmpty, isString, merge, noop,
+}            from 'lodash';
+import { EventEmitterCore }                          from './EventEmitterCore';
+import { isEnum, MODE }                              from '../util/enums';
+import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
 import {
   INavigationConfigCore,
   IPagesConfigCore,
@@ -22,12 +13,8 @@ import {
   IQuestionConfigCore,
   IStepConfigCore,
 } from '../survey/IQuestionableConfigCore';
-import {
-  checkInstanceOf,
-  ClassList,
-  TInstanceOf,
-} from '../util/instanceOf';
-import { BaseCore } from './BaseCore';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { BaseCore }                                from './BaseCore';
 
 const defaults = {
   events: {
@@ -55,9 +42,11 @@ const defaults = {
  *
  * The config has opinionated defaults, but is easily modified using Partial updates
  */
-export class QuestionableConfigCore extends BaseCore implements IQuestionableConfigCore {
+export class QuestionableConfigCore
+  extends BaseCore
+  implements IQuestionableConfigCore {
   public get instanceOfCheck(): TInstanceOf {
-    return  ClassList.config;
+    return ClassList.config;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -86,7 +75,7 @@ export class QuestionableConfigCore extends BaseCore implements IQuestionableCon
   constructor(data: Partial<QuestionableConfigCore> = {}) {
     super(data);
     merge(this, defaults, data);
-    this.#params = (data.getRuntimeConfig) ? data.getRuntimeConfig(this) : {};
+    this.#params = data.getRuntimeConfig ? data.getRuntimeConfig(this) : {};
     if (data.params?.dev) {
       this.#mode = MODE.DEV;
     }

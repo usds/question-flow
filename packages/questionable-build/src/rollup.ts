@@ -1,15 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import commonjs   from '@rollup/plugin-commonjs';
 import resolve    from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-ts';
-import rootPkg    from './package.json';
 
-export const getRollupConfig = (pkg = rootPkg) => {
-  const input      = 'src/index.ts';
-  const tsconfig   = 'tsconfig.json';
-  const production = process.env.NODE_ENV === 'production';
+export const getRollupConfig = (pkg: any) => {
+  const input        = 'src/index.ts';
+  const tsconfig     = 'tsconfig.json';
+  const production   = process.env.NODE_ENV === 'production';
+  const browserslist = (pkg.browserslist) ? pkg.browserslist[process.env.NODE_ENV] : {};
 
-  const keys = (deps) =>
+  const keys = (deps: any) =>
     (deps == null ? [] : Object.keys(deps).map((dep) => new RegExp(`^${dep}`)));
 
   return [
@@ -23,12 +24,17 @@ export const getRollupConfig = (pkg = rootPkg) => {
           format:    'cjs',
           sourcemap: production,
         },
+        {
+          file:      pkg.module,
+          format:    'esm',
+          sourcemap: production,
+        },
       ],
       plugins: [
         resolve(),
         commonjs(),
-
         typescript({
+          browserslist,
           transpiler: 'babel',
           tsconfig,
         }),
@@ -45,4 +51,3 @@ export const getRollupConfig = (pkg = rootPkg) => {
     },
   ];
 };
-export default getRollupConfig();

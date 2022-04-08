@@ -136,12 +136,15 @@
   "packageManager": "yarn@3.2.0",
   "private": true,
   "scripts": {
+    "b": "tsc -b",
     "build": "yarn workspaces foreach -vpiR run build",
+    "bundle": "yarn workspaces foreach -vpiR run bundle",
     "lint": "yarn workspaces foreach -vpiR run lint:fix",
     "contributors:add": "all-contributors add",
     "start": "yarn workspace @usds.gov/questionable-storybook start",
     "prepare": "husky install",
-    "nuke": "yarn workspaces foreach run clean && rimraf node_modules/.cache && rimraf .yarn/cache && yarn cache clean"
+    "clean": "yarn workspaces foreach run clean",
+    "semantic-release": "semantic-release"
   },
   "workspaces": [
     "packages/*"

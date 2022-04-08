@@ -23,13 +23,13 @@ type TBuilderDefaults = {
   section?: Section;
 };
 
-type TCtor<T extends Base> = { new (data: Partial<T>): T }
+type TCtor<T extends Base> = { new (data: Partial<T>): T };
 
 function create<T extends Base>(c: TCtor<T>, data: Partial<T>): T {
   return new c(data);
 }
 
-export class SurveyBuilder{
+export class SurveyBuilder {
   #actions: Action[] = [];
   #answers: Answer[] = [];
   #branches: Branch[] = [];
@@ -46,7 +46,7 @@ export class SurveyBuilder{
 
   constructor(data: Partial<Questionnaire> = {}) {
     this.#actions = data.actions || [];
-    this.#branches = data.branches || []
+    this.#branches = data.branches || [];
     this.#config = data.config || new Config({ mode: MODE.VIEW });
     this.#defaults = {};
     this.#pages = data.pages || new Pages();
@@ -60,7 +60,6 @@ export class SurveyBuilder{
       return merge(this.#defaults.section, data);
     }
   }
-
 
   addActions(data: Partial<Action>[]) {
     return data.map((d) => this.#addAction(d));
@@ -167,25 +166,46 @@ export class SurveyBuilder{
     const nu = new c(inp);
     if (nu instanceof Action || nu.instanceOfCheck === ClassList.action) {
       this.#addAction(nu);
-    } else if (nu instanceof Section || nu.instanceOfCheck === ClassList.section) {
+    } else if (
+      nu instanceof Section ||
+      nu.instanceOfCheck === ClassList.section
+    ) {
       this.#addSection(nu);
-    } else if (nu instanceof Question || nu.instanceOfCheck === ClassList.question) {
+    } else if (
+      nu instanceof Question ||
+      nu.instanceOfCheck === ClassList.question
+    ) {
       this.#addQuestion(nu);
     } else if (nu instanceof Page || nu.instanceOfCheck === ClassList.page) {
       this.#addPage(nu);
-    } else if (nu instanceof Branch || nu.instanceOfCheck === ClassList.branch) {
+    } else if (
+      nu instanceof Branch ||
+      nu.instanceOfCheck === ClassList.branch
+    ) {
       this.#addBranch(nu);
-    } else if (nu instanceof Result || nu.instanceOfCheck === ClassList.result) {
+    } else if (
+      nu instanceof Result ||
+      nu.instanceOfCheck === ClassList.result
+    ) {
       this.#addResult(nu);
     } else if (nu instanceof Config) {
       this.#config = nu;
-    } else if (nu instanceof Response || nu.instanceOfCheck === ClassList.response) {
+    } else if (
+      nu instanceof Response ||
+      nu.instanceOfCheck === ClassList.response
+    ) {
       this.#addResponse(nu);
-    } else if (nu instanceof Requirement || nu.instanceOfCheck === ClassList.requirement) {
+    } else if (
+      nu instanceof Requirement ||
+      nu.instanceOfCheck === ClassList.requirement
+    ) {
       this.#addRequirement(nu);
     } else if (nu instanceof Pages) {
       this.#pages = nu;
-    } else if (nu instanceof Answer || nu.instanceOfCheck === ClassList.answer) {
+    } else if (
+      nu instanceof Answer ||
+      nu.instanceOfCheck === ClassList.answer
+    ) {
       this.#addAnswer(nu);
     } else if (nu instanceof Ref || nu.instanceOfCheck === ClassList.ref) {
       this.#addRef(nu);
@@ -193,7 +213,7 @@ export class SurveyBuilder{
     return nu;
   }
 
-  init<Q extends Questionnaire>(c: TCtor<Q>, ): Q {
+  init<Q extends Questionnaire>(c: TCtor<Q>): Q {
     const q = {
       actions: this.#actions,
       branches: this.#branches,
@@ -208,4 +228,3 @@ export class SurveyBuilder{
     return questionnaire;
   }
 }
-

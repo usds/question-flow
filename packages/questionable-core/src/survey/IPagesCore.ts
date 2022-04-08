@@ -2,7 +2,7 @@ import { IPageCore } from './IStepCore';
 
 export type TPages = {
   [key: string]: IPageCore;
-}
+};
 /**
  * Defines required pages for the survey flow
  */

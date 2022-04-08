@@ -106,22 +106,20 @@
   "module": "dist/index.esm.js",
   "name": "@usds.gov/questionable-react-component",
   "scripts": {
-    "build": "yarn lint && yarn build:tsc && yarn build:rollup && yarn build:schema",
+    "build": "yarn lint && yarn build:tsc",
+    "bundle": "yarn clean && yarn build && yarn build:rollup && yarn build:schema",
     "build:rollup": "rollup --config --environment NODE_ENV:production",
-    "build:schema": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true && node ./scripts/parseSchema.js",
-    "build:tsc": "tsc -p tsconfig.json",
+    "build:schemaJson": "ts-json-schema-generator -p './src/survey/*.ts' -o './dist/survey.json' --no-type-check --additional-properties true",
+    "build:schema": "yarn build:schemaJson && node ./parseSchema.js",
     "build:watch": "yarn build -w",
+    "build:tsc": "tsc -p tsconfig.json",
     "clean": "rimraf ./dist",
+    "lint": "yarn lint:ts",
+    "type-check": "yarn build:tsc --noEmit",
     "deploy": "npm publish",
-    "lint": "yarn lint:ts && yarn type-check",
-    "lint:fix": "pretty-quick --staged && eslint --cache --fix \"src/**/*.{ts,tsx,json,js}\"",
+    "lint:fix": "pretty-quick --staged && yarn lint:ts --cache --fix",
     "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
-    "postbuild": "yarn run copy-files",
-    "prebuild": "yarn clean",
-    "predeploy": "npm run build",
-    "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\"",
-    "semantic-release": "semantic-release",
-    "type-check": "tsc --noEmit -p tsconfig.json"
+    "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\""
   },
   "version": "1.5.9"
 }

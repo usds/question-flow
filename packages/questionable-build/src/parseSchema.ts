@@ -1,7 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
 export const parseSchema = (input = './dist/survey.json', output = './src/schema/survey.ts') => {
-
   const rawdata = fs.readFileSync(input);
 
   const schema = `// This files is code generated. Do not edit.
@@ -9,5 +8,4 @@ export const parseSchema = (input = './dist/survey.json', output = './src/schema
 export const survey = ${rawdata};`;
 
   fs.writeFileSync(output, schema);
-
-}
+};

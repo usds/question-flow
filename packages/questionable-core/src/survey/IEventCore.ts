@@ -13,8 +13,8 @@ export type TPageDataCore = {
   /**
    * @hidden
    */
-  step: IStepCore
-}
+  step: IStepCore;
+};
 /**
  * Event data structure to be sent with event callbacks
  * @title Event Data Type
@@ -25,8 +25,8 @@ export type TAnswerDataCore = {
   /**
    * @hidden
    */
-  step: IQuestionCore
-}
+  step: IQuestionCore;
+};
 
 /**
  * Event data structure for results
@@ -35,7 +35,7 @@ export type TAnswerDataCore = {
 export type TResultDataCore = {
   results: IResultCore[];
   step: IStepCore;
-}
+};
 
 /**
  * Represents any type of mutation which has significant impact
@@ -46,15 +46,19 @@ export type TGateCore = 'branch' | 'age';
 
 export type TGateDataCore = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any,
-  gate: TGateCore
+  data: any;
+  gate: TGateCore;
 };
 
 /**
  * Generic data input for event context
  */
-export type TEventCore = TPageDataCore
-  | TAnswerDataCore | TResultDataCore | IFormCore | TGateDataCore;
+export type TEventCore =
+  | TPageDataCore
+  | TAnswerDataCore
+  | TResultDataCore
+  | IFormCore
+  | TGateDataCore;
 
 /**
  * Event function type to be used as a callback
@@ -80,21 +84,24 @@ export type TOnErrorCore = (e: Error, data?: TEventCore) => void;
  * @title Gate Switch Event
  * @hidden
  */
-export type TOnGateSwitchCore = (gate: TGateCore, data: TStringDictionaryCore) => void;
+export type TOnGateSwitchCore = (
+  gate: TGateCore,
+  data: TStringDictionaryCore,
+) => void;
 
 /**
  * Event Model
  * @title Event
  */
 export interface IEventCore {
-  readonly onActionClick: TOnEventCore | undefined,
-  readonly onAnswer: TOnEventCore | undefined,
-  readonly onAnyEvent: TOnEventCore | undefined,
-  readonly onBranch: TOnEventCore | undefined,
-  readonly onError: TOnErrorCore | undefined,
-  readonly onGateSwitch: TOnEventCore | undefined,
-  readonly onInit: TOnEventCore | undefined,
-  readonly onNoResults: TOnEventCore | undefined,
-  readonly onPage: TOnEventCore | undefined,
-  readonly onResults: TOnEventCore | undefined
+  readonly onActionClick: TOnEventCore | undefined;
+  readonly onAnswer: TOnEventCore | undefined;
+  readonly onAnyEvent: TOnEventCore | undefined;
+  readonly onBranch: TOnEventCore | undefined;
+  readonly onError: TOnErrorCore | undefined;
+  readonly onGateSwitch: TOnEventCore | undefined;
+  readonly onInit: TOnEventCore | undefined;
+  readonly onNoResults: TOnEventCore | undefined;
+  readonly onPage: TOnEventCore | undefined;
+  readonly onResults: TOnEventCore | undefined;
 }

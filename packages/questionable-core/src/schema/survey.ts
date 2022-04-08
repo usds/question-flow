@@ -1,1142 +1,1021 @@
 // This files is code generated. Do not edit.
 /* eslint-disable */
 export const survey = {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "BASE": {
-      "const": "default",
-      "description": "Defines the known component types for pages",
-      "type": "string"
+  $schema: 'http://json-schema.org/draft-07/schema#',
+  definitions: {
+    BASE: {
+      const: 'default',
+      description: 'Defines the known component types for pages',
+      type: 'string',
     },
-    "DESIGN_TYPE": {
-      "const": "Edit",
-      "description": "Defines the known component types for design",
-      "type": "string"
+    DESIGN_TYPE: {
+      const: 'Edit',
+      description: 'Defines the known component types for design',
+      type: 'string',
     },
-    "DIRECTION": {
-      "description": "Navigation direction for steps by array index (+1 or -1)",
-      "enum": [
-        1,
-        -1
-      ],
-      "type": "number"
+    DIRECTION: {
+      description: 'Navigation direction for steps by array index (+1 or -1)',
+      enum: [1, -1],
+      type: 'number',
     },
-    "IActionCore": {
-      "description": "Represents something the customer can do in response to receiving a result",
-      "properties": {
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
+    IActionCore: {
+      description:
+        'Represents something the customer can do in response to receiving a result',
+      properties: {
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
         },
-        "label": {
-          "title": "Label",
-          "type": "string"
+        label: {
+          title: 'Label',
+          type: 'string',
         },
-        "subTitle": {
-          "title": "Description",
-          "type": "string"
+        subTitle: {
+          title: 'Description',
+          type: 'string',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
       },
-      "required": [
-        "title"
-      ],
-      "type": "object"
+      required: ['title'],
+      type: 'object',
     },
-    "IAnswerCore": {
-      "properties": {
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
+    IAnswerCore: {
+      properties: {
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
         },
-        "key": {
-          "type": "string"
+        key: {
+          type: 'string',
         },
-        "synonyms": {
-          "items": {
-            "type": "string"
+        synonyms: {
+          items: {
+            type: 'string',
           },
-          "type": "array"
+          type: 'array',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
       },
-      "required": [
-        "title"
-      ],
-      "type": "object"
+      required: ['title'],
+      type: 'object',
     },
-    "IBranchCore": {
-      "properties": {
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
+    IBranchCore: {
+      properties: {
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
         },
-        "questions": {
-          "items": {
-            "$ref": "#/definitions/IQuestionCore"
+        questions: {
+          items: {
+            $ref: '#/definitions/IQuestionCore',
           },
-          "type": "array"
+          type: 'array',
         },
-        "sections": {
-          "items": {
-            "$ref": "#/definitions/ISectionCore"
+        sections: {
+          items: {
+            $ref: '#/definitions/ISectionCore',
           },
-          "type": "array"
+          type: 'array',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
       },
-      "required": [
-        "title"
-      ],
-      "type": "object"
+      required: ['title'],
+      type: 'object',
     },
-    "IButtonConfigCore": {
-      "description": "Configuration for buttons",
-      "properties": {
-        "core": {
-          "enum": [
-            "IButtonConfig",
-            "I"
-          ],
-          "type": "string"
+    IButtonConfigCore: {
+      description: 'Configuration for buttons',
+      properties: {
+        core: {
+          enum: ['IButtonConfig', 'I'],
+          type: 'string',
         },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
         },
-        "link": {
-          "description": "Link to tie to button click",
-          "title": "Link",
-          "type": "string"
+        link: {
+          description: 'Link to tie to button click',
+          title: 'Link',
+          type: 'string',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
+        title: {
+          title: 'Title',
+          type: 'string',
         },
-        "type": {
-          "description": "Render mode (link or button)",
-          "title": "Mode",
-          "type": "string"
+        type: {
+          description: 'Render mode (link or button)',
+          title: 'Mode',
+          type: 'string',
         },
-        "visible": {
-          "description": "Visibility status of the button (show/hide)",
-          "title": "Visible",
-          "type": "boolean"
-        }
+        visible: {
+          description: 'Visibility status of the button (show/hide)',
+          title: 'Visible',
+          type: 'boolean',
+        },
       },
-      "required": [
-        "title"
-      ],
-      "type": "object"
+      required: ['title'],
+      type: 'object',
     },
-    "IButtonCore": {
-      "description": "Represents a navigation button",
-      "properties": {
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
+    IButtonCore: {
+      description: 'Represents a navigation button',
+      properties: {
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
         },
-        "link": {
-          "description": "Link to tie to button click",
-          "title": "Link",
-          "type": "string"
+        link: {
+          description: 'Link to tie to button click',
+          title: 'Link',
+          type: 'string',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
+        title: {
+          title: 'Title',
+          type: 'string',
         },
-        "type": {
-          "description": "Render mode (link or button)",
-          "title": "Mode",
-          "type": "string"
+        type: {
+          description: 'Render mode (link or button)',
+          title: 'Mode',
+          type: 'string',
         },
-        "visible": {
-          "description": "Visibility status of the button (show/hide)",
-          "title": "Visible",
-          "type": "boolean"
-        }
+        visible: {
+          description: 'Visibility status of the button (show/hide)',
+          title: 'Visible',
+          type: 'boolean',
+        },
       },
-      "required": [
-        "title"
-      ],
-      "type": "object"
+      required: ['title'],
+      type: 'object',
     },
-    "IEventCore": {
-      "description": "Event Model",
-      "properties": {
-        "onActionClick": {
-          "not": {}
+    IEventCore: {
+      description: 'Event Model',
+      properties: {
+        onActionClick: {
+          not: {},
         },
-        "onAnswer": {
-          "not": {}
+        onAnswer: {
+          not: {},
         },
-        "onAnyEvent": {
-          "not": {}
+        onAnyEvent: {
+          not: {},
         },
-        "onBranch": {
-          "not": {}
+        onBranch: {
+          not: {},
         },
-        "onError": {
-          "not": {}
+        onError: {
+          not: {},
         },
-        "onGateSwitch": {
-          "not": {}
+        onGateSwitch: {
+          not: {},
         },
-        "onInit": {
-          "not": {}
+        onInit: {
+          not: {},
         },
-        "onNoResults": {
-          "not": {}
+        onNoResults: {
+          not: {},
         },
-        "onPage": {
-          "not": {}
+        onPage: {
+          not: {},
         },
-        "onResults": {
-          "not": {}
-        }
+        onResults: {
+          not: {},
+        },
       },
-      "title": "Event",
-      "type": "object"
+      title: 'Event',
+      type: 'object',
     },
-    "IFormCore": {
-      "description": "Represents the survey as completed by the user",
-      "properties": {
-        "age": {
-          "description": "Customer's age in years/months/days",
-          "properties": {
-            "days": {
-              "maximum": 31,
-              "minimum": 0,
-              "title": "Days",
-              "type": [
-                "number",
-                "null"
-              ]
+    IFormCore: {
+      description: 'Represents the survey as completed by the user',
+      properties: {
+        age: {
+          description: "Customer's age in years/months/days",
+          properties: {
+            days: {
+              maximum: 31,
+              minimum: 0,
+              title: 'Days',
+              type: ['number', 'null'],
             },
-            "months": {
-              "maximum": 31,
-              "minimum": 0,
-              "title": "Months",
-              "type": [
-                "number",
-                "null"
-              ]
+            months: {
+              maximum: 31,
+              minimum: 0,
+              title: 'Months',
+              type: ['number', 'null'],
             },
-            "years": {
-              "maximum": 100,
-              "minimum": 0,
-              "title": "Years",
-              "type": [
-                "number",
-                "null"
-              ]
-            }
-          },
-          "required": [
-            "months",
-            "years"
-          ],
-          "title": "Age",
-          "type": "object"
-        },
-        "birthdate": {
-          "description": "Customer's entered birthdate",
-          "title": "Birthdate",
-          "type": "string"
-        },
-        "finished": {
-          "description": "Time the survey was completed",
-          "format": "date-time",
-          "title": "Finished",
-          "type": "string"
-        },
-        "responses": {
-          "description": "All currently provided responses",
-          "items": {
-            "$ref": "#/definitions/IQuestionCore"
-          },
-          "title": "Responses",
-          "type": "array"
-        },
-        "started": {
-          "description": "Time the survey was started",
-          "format": "date-time",
-          "title": "Started",
-          "type": "string"
-        }
-      },
-      "required": [
-        "started"
-      ],
-      "type": "object"
-    },
-    "INavigationConfigCore": {
-      "description": "Configuration for navigation",
-      "properties": {
-        "core": {
-          "enum": [
-            "INavigationConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IPageConfigCore": {
-      "properties": {
-        "core": {
-          "enum": [
-            "IPageConfig",
-            "I"
-          ],
-          "type": "string"
-        },
-        "visible": {
-          "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "IPageCore": {
-      "description": "Defines step content for Page types",
-      "properties": {
-        "body": {
-          "description": "Defines the body content of the page",
-          "title": "Body",
-          "type": "string"
-        },
-        "bodyHeader": {
-          "description": "Optional header to display above body",
-          "title": "Body Heading",
-          "type": "string"
-        },
-        "bodySubHeader": {
-          "description": "Optional sub header to display below Body Heading",
-          "title": "Body Subheading",
-          "type": "string"
-        },
-        "display": {
-          "type": "boolean"
-        },
-        "entryRequirements": {
-          "description": "Collection of requirements to view/enter this step",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
-          },
-          "title": "Requirements",
-          "type": "array"
-        },
-        "exitRequirements": {
-          "description": "Collection of requirements to leave this step",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
-          },
-          "title": "Exit Requirements",
-          "type": "array"
-        },
-        "footer": {
-          "description": "Optional footer text to display at the bottom of the step",
-          "title": "Footer",
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "info": {
-          "description": "Contextual content to display below the step contents and above the footer",
-          "title": "Info",
-          "type": "string"
-        },
-        "internalNotes": {
-          "description": "Private/internal use only notes for documenting this step",
-          "title": "Internal Notes",
-          "type": "string"
-        },
-        "section": {
-          "$ref": "#/definitions/ISectionCore",
-          "description": "Section to which this step belongs",
-          "title": "Section"
-        },
-        "subTitle": {
-          "description": "Text to display below the title",
-          "title": "Subtitle",
-          "type": "string"
-        },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        },
-        "type": {
-          "$ref": "#/definitions/PAGE_TYPE",
-          "description": "Type of page",
-          "title": "Page Type"
-        }
-      },
-      "required": [
-        "display",
-        "title",
-        "type"
-      ],
-      "type": "object"
-    },
-    "IPagesConfigCore": {
-      "properties": {
-        "core": {
-          "enum": [
-            "IPagesConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IPagesCore": {
-      "description": "Defines required pages for the survey flow",
-      "properties": {
-        "landingPage": {
-          "$ref": "#/definitions/IPageCore",
-          "description": "First step of the survey",
-          "title": "Landing Page"
-        },
-        "noResultsPage": {
-          "$ref": "#/definitions/IPageCore",
-          "description": "Last step of the survey if there are 0 results",
-          "title": "No Results Page"
-        },
-        "pages": {
-          "items": {
-            "$ref": "#/definitions/IPageCore"
-          },
-          "type": "array"
-        },
-        "resultsPage": {
-          "$ref": "#/definitions/IPageCore",
-          "description": "Last step of the survey if there are 1 or more results",
-          "title": "Results Page"
-        },
-        "summaryPage": {
-          "$ref": "#/definitions/IPageCore",
-          "description": "Preview of survery before submitting to receive results",
-          "title": "Summary Page"
-        }
-      },
-      "type": "object"
-    },
-    "IProgressBarConfigCore": {
-      "description": "Configuration options for the progress bar",
-      "properties": {
-        "core": {
-          "enum": [
-            "IProgressBarConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IQuestionConfigCore": {
-      "description": "Configuration for question display",
-      "properties": {
-        "core": {
-          "enum": [
-            "IQuestionConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IQuestionCore": {
-      "description": "Defines step content for Question type",
-      "properties": {
-        "answers": {
-          "description": "Collection of allowed answers",
-          "items": {
-            "$ref": "#/definitions/IAnswerCore"
-          },
-          "title": "Answers",
-          "type": "array"
-        },
-        "entryRequirements": {
-          "description": "Collection of requirements to view/enter this step",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
-          },
-          "title": "Requirements",
-          "type": "array"
-        },
-        "exitRequirements": {
-          "description": "Collection of requirements to leave this step",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
-          },
-          "title": "Exit Requirements",
-          "type": "array"
-        },
-        "footer": {
-          "description": "Optional footer text to display at the bottom of the step",
-          "title": "Footer",
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "info": {
-          "description": "Contextual content to display below the step contents and above the footer",
-          "title": "Info",
-          "type": "string"
-        },
-        "internalNotes": {
-          "description": "Private/internal use only notes for documenting this step",
-          "title": "Internal Notes",
-          "type": "string"
-        },
-        "section": {
-          "$ref": "#/definitions/ISectionCore",
-          "description": "Section to which this step belongs",
-          "title": "Section"
-        },
-        "subTitle": {
-          "description": "Text to display below the title",
-          "title": "Subtitle",
-          "type": "string"
-        },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        },
-        "type": {
-          "$ref": "#/definitions/QUESTION_TYPE",
-          "description": "Type of question",
-          "title": "Question Type"
-        }
-      },
-      "required": [
-        "answers",
-        "title",
-        "type"
-      ],
-      "type": "object"
-    },
-    "IQuestionableConfigCore": {
-      "description": "Configuration for customized behavior of Questionable",
-      "properties": {
-        "mode": {
-          "$ref": "#/definitions/MODE",
-          "default": "MODE.VIEW",
-          "description": "View or edit mode",
-          "title": "Mode"
-        },
-        "nav": {
-          "description": "Navigation configuration",
-          "properties": {
-            "core": {
-              "enum": [
-                "INavigationConfig",
-                "I"
-              ],
-              "type": "string"
-            }
-          },
-          "title": "Navigation",
-          "type": "object"
-        },
-        "pages": {
-          "description": "Page configuration",
-          "properties": {
-            "core": {
-              "enum": [
-                "IPagesConfig",
-                "I"
-              ],
-              "type": "string"
-            }
-          },
-          "title": "Pages",
-          "type": "object"
-        },
-        "params": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "default": {},
-          "description": "Properties produced from `getRuntimeConfig()`",
-          "title": "Params",
-          "type": "object"
-        },
-        "progressBar": {
-          "description": "Progress Bar configuration",
-          "properties": {
-            "core": {
-              "enum": [
-                "IProgressBarConfig",
-                "I"
-              ],
-              "type": "string"
-            }
-          },
-          "title": "Progress Bar",
-          "type": "object"
-        },
-        "questions": {
-          "description": "Question configuration",
-          "properties": {
-            "core": {
-              "enum": [
-                "IQuestionConfig",
-                "I"
-              ],
-              "type": "string"
-            }
-          },
-          "title": "Question Configuration",
-          "type": "object"
-        },
-        "steps": {
-          "description": "Step configuration",
-          "properties": {
-            "core": {
-              "enum": [
-                "IStepConfig",
-                "I"
-              ],
-              "type": "string"
-            }
-          },
-          "title": "Step Configuration",
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "IQuestionnaireCore": {
-      "description": "Definition for survey data input",
-      "properties": {
-        "actions": {
-          "items": {
-            "$ref": "#/definitions/IActionCore"
-          },
-          "type": "array"
-        },
-        "branches": {
-          "items": {
-            "$ref": "#/definitions/IBranchCore"
-          },
-          "type": "array"
-        },
-        "config": {
-          "$ref": "#/definitions/IQuestionableConfigCore"
-        },
-        "header": {
-          "type": "string"
-        },
-        "pages": {
-          "$ref": "#/definitions/IPagesCore"
-        },
-        "questions": {
-          "items": {
-            "$ref": "#/definitions/IQuestionCore"
-          },
-          "type": "array"
-        },
-        "results": {
-          "items": {
-            "$ref": "#/definitions/IResultCore"
-          },
-          "type": "array"
-        },
-        "sections": {
-          "items": {
-            "$ref": "#/definitions/ISectionCore"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "pages",
-        "questions"
-      ],
-      "type": "object"
-    },
-    "IRefCore": {
-      "description": "Generic reference object",
-      "properties": {
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
-      },
-      "required": [
-        "title"
-      ],
-      "type": "object"
-    },
-    "IRequirementCore": {
-      "description": "Defines an individual requirement for accessing a step",
-      "properties": {
-        "explanation": {
-          "description": "User facing description of this requirement",
-          "title": "Exlanation",
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "maxAge": {
-          "description": "Optional maximum age allowed for this requirement",
-          "properties": {
-            "days": {
-              "maximum": 31,
-              "minimum": 0,
-              "title": "Days",
-              "type": [
-                "number",
-                "null"
-              ]
+            years: {
+              maximum: 100,
+              minimum: 0,
+              title: 'Years',
+              type: ['number', 'null'],
             },
-            "months": {
-              "maximum": 31,
-              "minimum": 0,
-              "title": "Months",
-              "type": [
-                "number",
-                "null"
-              ]
+          },
+          required: ['months', 'years'],
+          title: 'Age',
+          type: 'object',
+        },
+        birthdate: {
+          description: "Customer's entered birthdate",
+          title: 'Birthdate',
+          type: 'string',
+        },
+        finished: {
+          description: 'Time the survey was completed',
+          format: 'date-time',
+          title: 'Finished',
+          type: 'string',
+        },
+        responses: {
+          description: 'All currently provided responses',
+          items: {
+            $ref: '#/definitions/IQuestionCore',
+          },
+          title: 'Responses',
+          type: 'array',
+        },
+        started: {
+          description: 'Time the survey was started',
+          format: 'date-time',
+          title: 'Started',
+          type: 'string',
+        },
+      },
+      required: ['started'],
+      type: 'object',
+    },
+    INavigationConfigCore: {
+      description: 'Configuration for navigation',
+      properties: {
+        core: {
+          enum: ['INavigationConfig', 'I'],
+          type: 'string',
+        },
+      },
+      type: 'object',
+    },
+    IPageConfigCore: {
+      properties: {
+        core: {
+          enum: ['IPageConfig', 'I'],
+          type: 'string',
+        },
+        visible: {
+          type: 'boolean',
+        },
+      },
+      type: 'object',
+    },
+    IPageCore: {
+      description: 'Defines step content for Page types',
+      properties: {
+        body: {
+          description: 'Defines the body content of the page',
+          title: 'Body',
+          type: 'string',
+        },
+        bodyHeader: {
+          description: 'Optional header to display above body',
+          title: 'Body Heading',
+          type: 'string',
+        },
+        bodySubHeader: {
+          description: 'Optional sub header to display below Body Heading',
+          title: 'Body Subheading',
+          type: 'string',
+        },
+        display: {
+          type: 'boolean',
+        },
+        entryRequirements: {
+          description: 'Collection of requirements to view/enter this step',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Requirements',
+          type: 'array',
+        },
+        exitRequirements: {
+          description: 'Collection of requirements to leave this step',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Exit Requirements',
+          type: 'array',
+        },
+        footer: {
+          description:
+            'Optional footer text to display at the bottom of the step',
+          title: 'Footer',
+          type: 'string',
+        },
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
+        },
+        info: {
+          description:
+            'Contextual content to display below the step contents and above the footer',
+          title: 'Info',
+          type: 'string',
+        },
+        internalNotes: {
+          description:
+            'Private/internal use only notes for documenting this step',
+          title: 'Internal Notes',
+          type: 'string',
+        },
+        section: {
+          $ref: '#/definitions/ISectionCore',
+          description: 'Section to which this step belongs',
+          title: 'Section',
+        },
+        subTitle: {
+          description: 'Text to display below the title',
+          title: 'Subtitle',
+          type: 'string',
+        },
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+        type: {
+          $ref: '#/definitions/PAGE_TYPE',
+          description: 'Type of page',
+          title: 'Page Type',
+        },
+      },
+      required: ['display', 'title', 'type'],
+      type: 'object',
+    },
+    IPagesConfigCore: {
+      properties: {
+        core: {
+          enum: ['IPagesConfig', 'I'],
+          type: 'string',
+        },
+      },
+      type: 'object',
+    },
+    IPagesCore: {
+      description: 'Defines required pages for the survey flow',
+      properties: {
+        landingPage: {
+          $ref: '#/definitions/IPageCore',
+          description: 'First step of the survey',
+          title: 'Landing Page',
+        },
+        noResultsPage: {
+          $ref: '#/definitions/IPageCore',
+          description: 'Last step of the survey if there are 0 results',
+          title: 'No Results Page',
+        },
+        pages: {
+          items: {
+            $ref: '#/definitions/IPageCore',
+          },
+          type: 'array',
+        },
+        resultsPage: {
+          $ref: '#/definitions/IPageCore',
+          description: 'Last step of the survey if there are 1 or more results',
+          title: 'Results Page',
+        },
+        summaryPage: {
+          $ref: '#/definitions/IPageCore',
+          description:
+            'Preview of survery before submitting to receive results',
+          title: 'Summary Page',
+        },
+      },
+      type: 'object',
+    },
+    IProgressBarConfigCore: {
+      description: 'Configuration options for the progress bar',
+      properties: {
+        core: {
+          enum: ['IProgressBarConfig', 'I'],
+          type: 'string',
+        },
+      },
+      type: 'object',
+    },
+    IQuestionConfigCore: {
+      description: 'Configuration for question display',
+      properties: {
+        core: {
+          enum: ['IQuestionConfig', 'I'],
+          type: 'string',
+        },
+      },
+      type: 'object',
+    },
+    IQuestionCore: {
+      description: 'Defines step content for Question type',
+      properties: {
+        answers: {
+          description: 'Collection of allowed answers',
+          items: {
+            $ref: '#/definitions/IAnswerCore',
+          },
+          title: 'Answers',
+          type: 'array',
+        },
+        entryRequirements: {
+          description: 'Collection of requirements to view/enter this step',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Requirements',
+          type: 'array',
+        },
+        exitRequirements: {
+          description: 'Collection of requirements to leave this step',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Exit Requirements',
+          type: 'array',
+        },
+        footer: {
+          description:
+            'Optional footer text to display at the bottom of the step',
+          title: 'Footer',
+          type: 'string',
+        },
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
+        },
+        info: {
+          description:
+            'Contextual content to display below the step contents and above the footer',
+          title: 'Info',
+          type: 'string',
+        },
+        internalNotes: {
+          description:
+            'Private/internal use only notes for documenting this step',
+          title: 'Internal Notes',
+          type: 'string',
+        },
+        section: {
+          $ref: '#/definitions/ISectionCore',
+          description: 'Section to which this step belongs',
+          title: 'Section',
+        },
+        subTitle: {
+          description: 'Text to display below the title',
+          title: 'Subtitle',
+          type: 'string',
+        },
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+        type: {
+          $ref: '#/definitions/QUESTION_TYPE',
+          description: 'Type of question',
+          title: 'Question Type',
+        },
+      },
+      required: ['answers', 'title', 'type'],
+      type: 'object',
+    },
+    IQuestionableConfigCore: {
+      description: 'Configuration for customized behavior of Questionable',
+      properties: {
+        mode: {
+          $ref: '#/definitions/MODE',
+          default: 'MODE.VIEW',
+          description: 'View or edit mode',
+          title: 'Mode',
+        },
+        nav: {
+          description: 'Navigation configuration',
+          properties: {
+            core: {
+              enum: ['INavigationConfig', 'I'],
+              type: 'string',
             },
-            "years": {
-              "maximum": 100,
-              "minimum": 0,
-              "title": "Years",
-              "type": [
-                "number",
-                "null"
-              ]
-            }
           },
-          "required": [
-            "months",
-            "years"
-          ],
-          "title": "Maximum Age",
-          "type": "object"
+          title: 'Navigation',
+          type: 'object',
         },
-        "minAge": {
-          "description": "Optional minimum age allowed for this requirement",
-          "properties": {
-            "days": {
-              "maximum": 31,
-              "minimum": 0,
-              "title": "Days",
-              "type": [
-                "number",
-                "null"
-              ]
+        pages: {
+          description: 'Page configuration',
+          properties: {
+            core: {
+              enum: ['IPagesConfig', 'I'],
+              type: 'string',
             },
-            "months": {
-              "maximum": 31,
-              "minimum": 0,
-              "title": "Months",
-              "type": [
-                "number",
-                "null"
-              ]
+          },
+          title: 'Pages',
+          type: 'object',
+        },
+        params: {
+          additionalProperties: {
+            type: 'string',
+          },
+          default: {},
+          description: 'Properties produced from `getRuntimeConfig()`',
+          title: 'Params',
+          type: 'object',
+        },
+        progressBar: {
+          description: 'Progress Bar configuration',
+          properties: {
+            core: {
+              enum: ['IProgressBarConfig', 'I'],
+              type: 'string',
             },
-            "years": {
-              "maximum": 100,
-              "minimum": 0,
-              "title": "Years",
-              "type": [
-                "number",
-                "null"
-              ]
-            }
           },
-          "required": [
-            "months",
-            "years"
-          ],
-          "title": "Minimum Age",
-          "type": "object"
+          title: 'Progress Bar',
+          type: 'object',
         },
-        "responses": {
-          "description": "Map of step id to required answer values",
-          "items": {
-            "$ref": "#/definitions/IResponseCore"
+        questions: {
+          description: 'Question configuration',
+          properties: {
+            core: {
+              enum: ['IQuestionConfig', 'I'],
+              type: 'string',
+            },
           },
-          "title": "Answers",
-          "type": "array"
+          title: 'Question Configuration',
+          type: 'object',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
+        steps: {
+          description: 'Step configuration',
+          properties: {
+            core: {
+              enum: ['IStepConfig', 'I'],
+              type: 'string',
+            },
+          },
+          title: 'Step Configuration',
+          type: 'object',
+        },
       },
-      "required": [
-        "explanation",
-        "responses",
-        "title"
-      ],
-      "type": "object"
+      type: 'object',
     },
-    "IResponseCore": {
-      "description": "Acceptable responses",
-      "properties": {
-        "answers": {
-          "items": {
-            "$ref": "#/definitions/IAnswerCore"
+    IQuestionnaireCore: {
+      description: 'Definition for survey data input',
+      properties: {
+        actions: {
+          items: {
+            $ref: '#/definitions/IActionCore',
           },
-          "type": "array"
+          type: 'array',
         },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "question": {
-          "$ref": "#/definitions/IQuestionCore"
-        },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
-      },
-      "required": [
-        "answers",
-        "title"
-      ],
-      "type": "object"
-    },
-    "IResultCore": {
-      "description": "Represents a potential result based on a customer's answers",
-      "properties": {
-        "category": {
-          "description": "Optional tag/category to group results",
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "label": {
-          "description": "Identify the result (e.g. 'Benefit name')",
-          "title": "Label",
-          "type": "string"
-        },
-        "reason": {
-          "description": "Human readable explanation of result determination",
-          "title": "Reason",
-          "type": "string"
-        },
-        "requirements": {
-          "description": "Collection of requirements required to achieve this result",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
+        branches: {
+          items: {
+            $ref: '#/definitions/IBranchCore',
           },
-          "title": "Requirements",
-          "type": "array"
+          type: 'array',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
-      },
-      "required": [
-        "title"
-      ],
-      "type": "object"
-    },
-    "ISectionCore": {
-      "description": "Defines a survey section, used in progress bar",
-      "properties": {
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
+        config: {
+          $ref: '#/definitions/IQuestionableConfigCore',
         },
-        "requirements": {
-          "description": "Collection of requirements to enable display of this status",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
+        header: {
+          type: 'string',
+        },
+        pages: {
+          $ref: '#/definitions/IPagesCore',
+        },
+        questions: {
+          items: {
+            $ref: '#/definitions/IQuestionCore',
           },
-          "title": "Requirements",
-          "type": "array"
+          type: 'array',
         },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        }
-      },
-      "required": [
-        "title"
-      ],
-      "type": "object"
-    },
-    "IStepConfigCore": {
-      "description": "Customizations for styling and formatting of the steps",
-      "properties": {
-        "core": {
-          "enum": [
-            "IStepConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IStepCore": {
-      "description": "Generic step data definition. Applies to all types of steps.",
-      "properties": {
-        "entryRequirements": {
-          "description": "Collection of requirements to view/enter this step",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
+        results: {
+          items: {
+            $ref: '#/definitions/IResultCore',
           },
-          "title": "Requirements",
-          "type": "array"
+          type: 'array',
         },
-        "exitRequirements": {
-          "description": "Collection of requirements to leave this step",
-          "items": {
-            "$ref": "#/definitions/IRequirementCore"
+        sections: {
+          items: {
+            $ref: '#/definitions/ISectionCore',
           },
-          "title": "Exit Requirements",
-          "type": "array"
+          type: 'array',
         },
-        "footer": {
-          "description": "Optional footer text to display at the bottom of the step",
-          "title": "Footer",
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "info": {
-          "description": "Contextual content to display below the step contents and above the footer",
-          "title": "Info",
-          "type": "string"
-        },
-        "internalNotes": {
-          "description": "Private/internal use only notes for documenting this step",
-          "title": "Internal Notes",
-          "type": "string"
-        },
-        "section": {
-          "$ref": "#/definitions/ISectionCore",
-          "description": "Section to which this step belongs",
-          "title": "Section"
-        },
-        "subTitle": {
-          "description": "Text to display below the title",
-          "title": "Subtitle",
-          "type": "string"
-        },
-        "title": {
-          "title": "Title",
-          "type": "string"
-        },
-        "type": {
-          "$ref": "#/definitions/TStepType",
-          "description": "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
-          "title": "Step Type"
-        }
       },
-      "required": [
-        "title",
-        "type"
-      ],
-      "type": "object"
+      required: ['pages', 'questions'],
+      type: 'object',
     },
-    "MODE": {
-      "enum": [
-        "dev",
-        "edit",
-        "view"
-      ],
-      "type": "string"
-    },
-    "PAGE_TYPE": {
-      "description": "Defines the known component types for pages",
-      "enum": [
-        "default",
-        "Landing",
-        "No Results",
-        "Results",
-        "Summary"
-      ],
-      "type": "string"
-    },
-    "QUESTION_TYPE": {
-      "description": "Defines the known component types for questions",
-      "enum": [
-        "date_time",
-        "default",
-        "dob",
-        "multiple_choice",
-        "multiple_select",
-        "path",
-        "text"
-      ],
-      "type": "string"
-    },
-    "TAnswerDataCore": {
-      "description": "Event data structure to be sent with event callbacks",
-      "properties": {
-        "answer": {
-          "type": "string"
+    IRefCore: {
+      description: 'Generic reference object',
+      properties: {
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
         },
-        "responses": {
-          "anyOf": [
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+      },
+      required: ['title'],
+      type: 'object',
+    },
+    IRequirementCore: {
+      description: 'Defines an individual requirement for accessing a step',
+      properties: {
+        explanation: {
+          description: 'User facing description of this requirement',
+          title: 'Exlanation',
+          type: 'string',
+        },
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
+        },
+        maxAge: {
+          description: 'Optional maximum age allowed for this requirement',
+          properties: {
+            days: {
+              maximum: 31,
+              minimum: 0,
+              title: 'Days',
+              type: ['number', 'null'],
+            },
+            months: {
+              maximum: 31,
+              minimum: 0,
+              title: 'Months',
+              type: ['number', 'null'],
+            },
+            years: {
+              maximum: 100,
+              minimum: 0,
+              title: 'Years',
+              type: ['number', 'null'],
+            },
+          },
+          required: ['months', 'years'],
+          title: 'Maximum Age',
+          type: 'object',
+        },
+        minAge: {
+          description: 'Optional minimum age allowed for this requirement',
+          properties: {
+            days: {
+              maximum: 31,
+              minimum: 0,
+              title: 'Days',
+              type: ['number', 'null'],
+            },
+            months: {
+              maximum: 31,
+              minimum: 0,
+              title: 'Months',
+              type: ['number', 'null'],
+            },
+            years: {
+              maximum: 100,
+              minimum: 0,
+              title: 'Years',
+              type: ['number', 'null'],
+            },
+          },
+          required: ['months', 'years'],
+          title: 'Minimum Age',
+          type: 'object',
+        },
+        responses: {
+          description: 'Map of step id to required answer values',
+          items: {
+            $ref: '#/definitions/IResponseCore',
+          },
+          title: 'Answers',
+          type: 'array',
+        },
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+      },
+      required: ['explanation', 'responses', 'title'],
+      type: 'object',
+    },
+    IResponseCore: {
+      description: 'Acceptable responses',
+      properties: {
+        answers: {
+          items: {
+            $ref: '#/definitions/IAnswerCore',
+          },
+          type: 'array',
+        },
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
+        },
+        question: {
+          $ref: '#/definitions/IQuestionCore',
+        },
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+      },
+      required: ['answers', 'title'],
+      type: 'object',
+    },
+    IResultCore: {
+      description:
+        "Represents a potential result based on a customer's answers",
+      properties: {
+        category: {
+          description: 'Optional tag/category to group results',
+          type: 'string',
+        },
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
+        },
+        label: {
+          description: "Identify the result (e.g. 'Benefit name')",
+          title: 'Label',
+          type: 'string',
+        },
+        reason: {
+          description: 'Human readable explanation of result determination',
+          title: 'Reason',
+          type: 'string',
+        },
+        requirements: {
+          description:
+            'Collection of requirements required to achieve this result',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Requirements',
+          type: 'array',
+        },
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+      },
+      required: ['title'],
+      type: 'object',
+    },
+    ISectionCore: {
+      description: 'Defines a survey section, used in progress bar',
+      properties: {
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
+        },
+        requirements: {
+          description:
+            'Collection of requirements to enable display of this status',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Requirements',
+          type: 'array',
+        },
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+      },
+      required: ['title'],
+      type: 'object',
+    },
+    IStepConfigCore: {
+      description: 'Customizations for styling and formatting of the steps',
+      properties: {
+        core: {
+          enum: ['IStepConfig', 'I'],
+          type: 'string',
+        },
+      },
+      type: 'object',
+    },
+    IStepCore: {
+      description:
+        'Generic step data definition. Applies to all types of steps.',
+      properties: {
+        entryRequirements: {
+          description: 'Collection of requirements to view/enter this step',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Requirements',
+          type: 'array',
+        },
+        exitRequirements: {
+          description: 'Collection of requirements to leave this step',
+          items: {
+            $ref: '#/definitions/IRequirementCore',
+          },
+          title: 'Exit Requirements',
+          type: 'array',
+        },
+        footer: {
+          description:
+            'Optional footer text to display at the bottom of the step',
+          title: 'Footer',
+          type: 'string',
+        },
+        id: {
+          description: 'Unique identifier',
+          title: 'Id',
+          type: 'string',
+        },
+        info: {
+          description:
+            'Contextual content to display below the step contents and above the footer',
+          title: 'Info',
+          type: 'string',
+        },
+        internalNotes: {
+          description:
+            'Private/internal use only notes for documenting this step',
+          title: 'Internal Notes',
+          type: 'string',
+        },
+        section: {
+          $ref: '#/definitions/ISectionCore',
+          description: 'Section to which this step belongs',
+          title: 'Section',
+        },
+        subTitle: {
+          description: 'Text to display below the title',
+          title: 'Subtitle',
+          type: 'string',
+        },
+        title: {
+          title: 'Title',
+          type: 'string',
+        },
+        type: {
+          $ref: '#/definitions/TStepType',
+          description:
+            "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
+          title: 'Step Type',
+        },
+      },
+      required: ['title', 'type'],
+      type: 'object',
+    },
+    MODE: {
+      enum: ['dev', 'edit', 'view'],
+      type: 'string',
+    },
+    PAGE_TYPE: {
+      description: 'Defines the known component types for pages',
+      enum: ['default', 'Landing', 'No Results', 'Results', 'Summary'],
+      type: 'string',
+    },
+    QUESTION_TYPE: {
+      description: 'Defines the known component types for questions',
+      enum: [
+        'date_time',
+        'default',
+        'dob',
+        'multiple_choice',
+        'multiple_select',
+        'path',
+        'text',
+      ],
+      type: 'string',
+    },
+    TAnswerDataCore: {
+      description: 'Event data structure to be sent with event callbacks',
+      properties: {
+        answer: {
+          type: 'string',
+        },
+        responses: {
+          anyOf: [
             {
-              "items": {
-                "$ref": "#/definitions/IResponseCore"
+              items: {
+                $ref: '#/definitions/IResponseCore',
               },
-              "type": "array"
+              type: 'array',
             },
             {
-              "items": {
-                "$ref": "#/definitions/IQuestionCore"
+              items: {
+                $ref: '#/definitions/IQuestionCore',
               },
-              "type": "array"
-            }
-          ]
-        }
+              type: 'array',
+            },
+          ],
+        },
       },
-      "required": [
-        "answer",
-        "responses"
-      ],
-      "title": "Event Data Type",
-      "type": "object"
+      required: ['answer', 'responses'],
+      title: 'Event Data Type',
+      type: 'object',
     },
-    "TEventCore": {
-      "anyOf": [
+    TEventCore: {
+      anyOf: [
         {
-          "$ref": "#/definitions/TPageDataCore"
+          $ref: '#/definitions/TPageDataCore',
         },
         {
-          "$ref": "#/definitions/TAnswerDataCore"
+          $ref: '#/definitions/TAnswerDataCore',
         },
         {
-          "$ref": "#/definitions/TResultDataCore"
+          $ref: '#/definitions/TResultDataCore',
         },
         {
-          "$ref": "#/definitions/IFormCore"
+          $ref: '#/definitions/IFormCore',
         },
         {
-          "$ref": "#/definitions/TGateDataCore"
-        }
+          $ref: '#/definitions/TGateDataCore',
+        },
       ],
-      "description": "Generic data input for event context"
+      description: 'Generic data input for event context',
     },
-    "TGateCore": {
-      "description": "Represents any type of mutation which has significant impact",
-      "enum": [
-        "branch",
-        "age"
-      ],
-      "title": "Gate Type",
-      "type": "string"
+    TGateCore: {
+      description:
+        'Represents any type of mutation which has significant impact',
+      enum: ['branch', 'age'],
+      title: 'Gate Type',
+      type: 'string',
     },
-    "TGateDataCore": {
-      "properties": {
-        "data": {},
-        "gate": {
-          "$ref": "#/definitions/TGateCore"
-        }
+    TGateDataCore: {
+      properties: {
+        data: {},
+        gate: {
+          $ref: '#/definitions/TGateCore',
+        },
       },
-      "required": [
-        "data",
-        "gate"
-      ],
-      "type": "object"
+      required: ['data', 'gate'],
+      type: 'object',
     },
-    "TPageDataCore": {
-      "description": "Event data structure to be sent with event callbacks",
-      "properties": {
-        "dir": {
-          "$ref": "#/definitions/DIRECTION"
-        }
+    TPageDataCore: {
+      description: 'Event data structure to be sent with event callbacks',
+      properties: {
+        dir: {
+          $ref: '#/definitions/DIRECTION',
+        },
       },
-      "required": [
-        "dir"
-      ],
-      "title": "Event Data Type",
-      "type": "object"
+      required: ['dir'],
+      title: 'Event Data Type',
+      type: 'object',
     },
-    "TPages": {
-      "additionalProperties": {
-        "$ref": "#/definitions/IPageCore"
+    TPages: {
+      additionalProperties: {
+        $ref: '#/definitions/IPageCore',
       },
-      "type": "object"
+      type: 'object',
     },
-    "TResultDataCore": {
-      "description": "Event data structure for results",
-      "properties": {
-        "results": {
-          "items": {
-            "$ref": "#/definitions/IResultCore"
+    TResultDataCore: {
+      description: 'Event data structure for results',
+      properties: {
+        results: {
+          items: {
+            $ref: '#/definitions/IResultCore',
           },
-          "type": "array"
+          type: 'array',
         },
-        "step": {
-          "$ref": "#/definitions/IStepCore"
-        }
+        step: {
+          $ref: '#/definitions/IStepCore',
+        },
       },
-      "required": [
-        "results",
-        "step"
-      ],
-      "title": "Event Result Type",
-      "type": "object"
+      required: ['results', 'step'],
+      title: 'Event Result Type',
+      type: 'object',
     },
-    "TStepType": {
-      "anyOf": [
+    TStepType: {
+      anyOf: [
         {
-          "$ref": "#/definitions/PAGE_TYPE"
+          $ref: '#/definitions/PAGE_TYPE',
         },
         {
-          "$ref": "#/definitions/QUESTION_TYPE"
+          $ref: '#/definitions/QUESTION_TYPE',
         },
         {
-          "$ref": "#/definitions/DESIGN_TYPE"
+          $ref: '#/definitions/DESIGN_TYPE',
         },
         {
-          "$ref": "#/definitions/BASE"
-        }
-      ]
-    }
-  }
+          $ref: '#/definitions/BASE',
+        },
+      ],
+    },
+  },
 };

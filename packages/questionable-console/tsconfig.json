@@ -1,6 +1,7 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-   "allowUmdGlobalAccess": true,
+    "allowUmdGlobalAccess": true,
     "composite": true,
     "outDir": "dist",
     "noEmit": false,
@@ -35,6 +36,9 @@
       "@usds.gov/questionable-mocks": [
         "../questionable-mocks/src/index.ts"
       ],
+      "@usds.gov/questionable-build": [
+        "../questionable-build/src/index.ts"
+      ],
     }
   },
   "include": [
@@ -45,6 +49,9 @@
     "dist"
   ],
   "references": [
+    {
+      "path": "../questionable-build"
+    },
     {
       "path": "../questionable-core"
     },

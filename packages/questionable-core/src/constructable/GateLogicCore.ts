@@ -1,10 +1,8 @@
-import {
-  groupBy, isEmpty, noop,
-} from 'lodash';
-import { ResultCore }        from '../composable/ResultCore';
-import { FormCore }          from '../composable/FormCore';
-import { PageCore }          from '../composable/PageCore';
-import { QuestionnaireCore } from '../composable/QuestionnaireCore';
+import { groupBy, isEmpty, noop } from 'lodash';
+import { ResultCore }             from '../composable/ResultCore';
+import { FormCore }               from '../composable/FormCore';
+import { PageCore }               from '../composable/PageCore';
+import { QuestionnaireCore }      from '../composable/QuestionnaireCore';
 import {
   BranchCore,
   QuestionCore,
@@ -30,10 +28,12 @@ import { IPageConfigCore }        from '../survey/IQuestionableConfigCore';
 import { ActionCore }             from '../composable/ActionCore';
 import { Questioner }             from './Questioner';
 
-type TPageSet = {
-  config?: Partial<IPageConfigCore>;
-  data?: PageCore;
-} | undefined;
+type TPageSet =
+  | {
+      config?: Partial<IPageConfigCore>;
+      data?: PageCore;
+    }
+  | undefined;
 
 export class GateLogicCore {
   #form!: FormCore;
@@ -103,7 +103,8 @@ export class GateLogicCore {
     const step = this.getNextStep(s);
     const dir  = DIRECTION.FORWARD;
     this.config.events?.page({
-      dir, step,
+      dir,
+      step,
     });
     this.goToStep(step);
   }
@@ -236,9 +237,11 @@ export class GateLogicCore {
       return thisQuestion;
     }
 
-    if (skip === 0
+    if (
+      skip === 0
       && direction === DIRECTION.FORWARD
-      && !isEmpty(thisQuestion.exitRequirements)) {
+      && !isEmpty(thisQuestion.exitRequirements)
+    ) {
       const allowExit = thisQuestion.exitRequirements.every((r) =>
         this.meetsAllRequirements(r));
       if (!allowExit) {
@@ -418,8 +421,7 @@ export class GateLogicCore {
         (q) =>
           !q.entryRequirements
           || q.entryRequirements.length === 0
-          || q.entryRequirements.some((r) =>
-            this.meetsAllRequirements(r, true)),
+          || q.entryRequirements.some((r) => this.meetsAllRequirements(r, true)),
       )
       .map((q) => q.id);
   }
@@ -430,7 +432,11 @@ export class GateLogicCore {
    * @returns
    */
   getSections(thisQuestion: StepCore): SectionCore[] {
-    if (!thisQuestion || !this.questionnaire.sections || this.questionnaire.sections.length === 0) {
+    if (
+      !thisQuestion
+      || !this.questionnaire.sections
+      || this.questionnaire.sections.length === 0
+    ) {
       return [];
     }
 
@@ -502,7 +508,9 @@ export class GateLogicCore {
    */
   getAction(results: ResultCore[]): ActionCore {
     const groupedByAction = groupBy(results, 'action.id');
-    const hybrid          = this.questionnaire.actions.find((a) => a.type === ACTION.HYBRID);
+    const hybrid          = this.questionnaire.actions.find(
+      (a) => a.type === ACTION.HYBRID,
+    );
     // If group above has more than one type of action, the resolved action will be a hybrid
     let match     = hybrid;
     const actions = Object.keys(groupedByAction);
@@ -553,7 +561,9 @@ export class GateLogicCore {
     // Branches defined take priority; sync these first
     this.questionnaire.branches.forEach((b) => {
       b.questions.forEach((bq) => {
-        const question = this.questionnaire.questions.find((q) => q.id === bq.id);
+        const question = this.questionnaire.questions.find(
+          (q) => q.id === bq.id,
+        );
         if (question && question?.branch?.id !== b.id) {
           question.branch = b;
         }
@@ -565,7 +575,9 @@ export class GateLogicCore {
       if (!q.branch?.id) {
         return;
       }
-      const exists         = this.questionnaire.branches.find((b) => b.existsIn(q) || q.branch === b);
+      const exists         = this.questionnaire.branches.find(
+        (b) => b.existsIn(q) || q.branch === b,
+      );
       const validateBranch = exists || (q.branch as BranchCore);
       if (!exists) {
         this.questionnaire.add(validateBranch);
@@ -582,10 +594,10 @@ export class GateLogicCore {
    * @returns
    */
   // eslint-disable-next-line class-methods-use-this
-  protected getPageSet = (
-    type: PAGE_TYPE,
-  ): TPageSet => {
-    const data = this.pageList.find((p: PageCore | undefined) => p?.type === type);
+  protected getPageSet = (type: PAGE_TYPE): TPageSet => {
+    const data = this.pageList.find(
+      (p: PageCore | undefined) => p?.type === type,
+    );
     if (data) {
       return {
         config: {},
@@ -664,7 +676,10 @@ export class GateLogicCore {
    * @param minAge a TAge object or undefined
    * @returns true if no min age, else true if age is >= min age
    */
-  public static meetsMinAgeRequirements(form: FormCore, minAge?: TAgeCore): boolean {
+  public static meetsMinAgeRequirements(
+    form: FormCore,
+    minAge?: TAgeCore,
+  ): boolean {
     if (!minAge) return true;
 
     if (form.age === undefined) {
@@ -686,7 +701,10 @@ export class GateLogicCore {
    * @param maxAge a TAge object or undefined
    * @returns true if no max age, else true if age is <= max age
    */
-  public static meetsMaxAgeRequirements(form: FormCore, maxAge?: TAgeCore): boolean {
+  public static meetsMaxAgeRequirements(
+    form: FormCore,
+    maxAge?: TAgeCore,
+  ): boolean {
     if (!maxAge) return true;
     if (form.age === undefined) {
       return false;

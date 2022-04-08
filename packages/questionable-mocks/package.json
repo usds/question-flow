@@ -4,15 +4,17 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "yarn clean && yarn lint && yarn build:tsc && yarn build:rollup",
+    "build": "yarn lint && yarn build:tsc",
+    "bundle": "yarn clean && yarn build && yarn build:rollup",
     "build:rollup": "rollup --config --environment NODE_ENV:production",
+    "build:watch": "yarn build -w",
     "build:tsc": "tsc -p tsconfig.json",
     "clean": "rimraf ./dist",
-    "lint": "yarn lint:ts && yarn type-check",
-    "lint:fix": "eslint --fix src/**/*.ts",
+    "lint": "yarn lint:ts",
+    "lint:fix": "yarn pretty && pretty-quick --staged && yarn lint:ts --fix",
     "lint:ts": "eslint src/**/*.ts",
     "pretty": "prettier --write src/**/*.ts",
-    "type-check": "tsc --noEmit -p tsconfig.json"
+    "type-check": "yarn build:tsc --noEmit"
   },
   "version": "0.0.2",
   "devDependencies": {

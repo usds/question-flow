@@ -1,11 +1,7 @@
-import { merge }                    from 'lodash';
-import { IPageCore, IQuestionCore } from '../survey/IStepCore';
-import {
-  isEnum,
-  PAGE_TYPE,
-  QUESTION_TYPE,
-} from '../util/enums';
-import { survey } from './survey';
+import { merge }                            from 'lodash';
+import { IPageCore, IQuestionCore }         from '../survey/IStepCore';
+import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '../util/enums';
+import { survey }                           from './survey';
 
 const schemaPart = {
   properties: {

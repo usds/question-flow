@@ -1,10 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { cloneDeep, merge, noop } from 'lodash';
-import {
-  TInstanceOf,
-  checkInstanceOf,
-  ClassList,
-} from '../util/instanceOf';
+import { cloneDeep, merge, noop }                  from 'lodash';
+import { TInstanceOf, checkInstanceOf, ClassList } from '../util/instanceOf';
 
 export interface TBaseSource {
   [key: string]: unknown;

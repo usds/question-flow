@@ -6,7 +6,8 @@ import { TAgeCore } from './types';
  * @param dt
  * @returns
  */
-export const isValidDate = (dt: string | undefined): boolean => !(!dt || dt.length < 8);
+export const isValidDate = (dt: string | undefined): boolean =>
+  !(!dt || dt.length < 8);
 
 /**
  * Gets a luxon DateTime object from a date string
@@ -74,7 +75,9 @@ export const getDateTimeAge = (dob: DateTime): TAgeCore => {
  * @param dateOfBirth - should always be in the format `MM/DD/YYYY`
  * @returns an age, if the date is valid
  */
-export const getAge = (dateOfBirth: string | undefined): TAgeCore | undefined => {
+export const getAge = (
+  dateOfBirth: string | undefined,
+): TAgeCore | undefined => {
   if (!dateOfBirth || !isValidDate(dateOfBirth)) return undefined;
 
   const dob = getDateTime(dateOfBirth);

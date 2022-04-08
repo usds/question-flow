@@ -5,7 +5,18 @@
       "dom"
     ],
     "target": "ESNext",
-    "module": "esnext"
+    "module": "esnext",
+    "paths": {
+      "@usds.gov/questionable-core": [
+        "../questionable-core/src/index.ts"
+      ],
+      "@usds.gov/questionable-mocks": [
+        "../questionable-mocks/src/index.ts"
+      ],
+      "@usds.gov/questionable-build": [
+        "../questionable-build/src/index.ts"
+      ],
+    }
   },
   "exclude": [
     "node_modules"
@@ -13,5 +24,16 @@
   "extends": "../../tsconfig.json",
   "include": [
     "src"
+  ],
+  "references": [
+    {
+      "path": "../questionable-build"
+    },
+    {
+      "path": "../questionable-core"
+    },
+    {
+      "path": "../questionable-mocks"
+    }
   ]
 }

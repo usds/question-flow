@@ -1,7 +1,5 @@
-import {
-  TButtonModeCore,
-} from '../util/types';
-import { IRefCore } from './IRefCore';
+import { TButtonModeCore } from '../util/types';
+import { IRefCore }        from './IRefCore';
 
 /**
  * Represents a navigation button

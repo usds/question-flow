@@ -8,7 +8,7 @@ export enum QUESTION_TYPE {
   MULTIPLE_CHOICE = 'multiple_choice',
   MULTIPLE_SELECT = 'multiple_select',
   PATH = 'path',
-  TEXT = 'text'
+  TEXT = 'text',
 }
 
 /**
@@ -19,7 +19,7 @@ export enum PAGE_TYPE {
   LANDING = 'Landing',
   NO_RESULTS = 'No Results',
   RESULTS = 'Results',
-  SUMMARY = 'Summary'
+  SUMMARY = 'Summary',
 }
 
 /**
@@ -40,7 +40,10 @@ export enum DESIGN_TYPE {
  * Defines the type of step for UI rendering
  */
 export const STEP_TYPE = {
-  ...PAGE_TYPE, ...QUESTION_TYPE, ...DESIGN_TYPE, ...BASE,
+  ...PAGE_TYPE,
+  ...QUESTION_TYPE,
+  ...DESIGN_TYPE,
+  ...BASE,
 };
 export type TStepType = PAGE_TYPE | QUESTION_TYPE | DESIGN_TYPE | BASE;
 
@@ -67,7 +70,7 @@ export enum ACTION {
   HYBRID = 'hybrid',
   NONE = 'none',
   ONLINE = 'online',
-  SHELL = 'shell'
+  SHELL = 'shell',
 }
 
 export enum ACTION_TYPE {
@@ -75,7 +78,7 @@ export enum ACTION_TYPE {
   RERENDER = 'RERENDER',
   RESET = 'RESET',
   UNDO = 'undo',
-  UPDATE = 'UPDATE'
+  UPDATE = 'UPDATE',
 }
 
 export enum DATE_UNIT {

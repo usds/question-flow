@@ -1,16 +1,12 @@
-import { merge, values } from 'lodash';
-import { DateTime }      from 'luxon';
-import { eventedCore }   from '../state/pubsub';
-import {
-  ACTION_TYPE,
-  QUESTION_TYPE,
-  STEP_TYPE,
-} from '../util/enums';
-import { getDateTime }            from '../util/date';
-import { FormCore }               from '../composable/FormCore';
-import { QuestionCore, StepCore } from '../composable/StepCore';
-import { IQuestionCore }          from '../survey/IStepCore';
-import { TDateOfBirthCore }       from '../util/types';
+import { merge, values }                         from 'lodash';
+import { DateTime }                              from 'luxon';
+import { eventedCore }                           from '../state/pubsub';
+import { ACTION_TYPE, QUESTION_TYPE, STEP_TYPE } from '../util/enums';
+import { getDateTime }                           from '../util/date';
+import { FormCore }                              from '../composable/FormCore';
+import { QuestionCore, StepCore }                from '../composable/StepCore';
+import { IQuestionCore }                         from '../survey/IStepCore';
+import { TDateOfBirthCore }                      from '../util/types';
 
 export class Questioner {
   /**
@@ -38,7 +34,10 @@ export class Questioner {
     } else {
       merge(value, step);
     }
-    eventedCore.publish({ event: { answer, props: step, step: step.id }, type: 'answer' });
+    eventedCore.publish({
+      event: { answer, props: step, step: step.id },
+      type:  'answer',
+    });
     Questioner.stepReducer(form, {
       type:  ACTION_TYPE.UPDATE,
       value: { ...form },
@@ -59,9 +58,7 @@ export class Questioner {
     if (!form) {
       return undefined;
     }
-    const q = form.responses.find(
-      (a: IQuestionCore) => a.id === step.id,
-    );
+    const q = form.responses.find((a: IQuestionCore) => a.id === step.id);
     if (!q) {
       return undefined;
     }
@@ -100,7 +97,10 @@ export class Questioner {
    * @param dob
    * @returns
    */
-  public static toBirthdate(step: QuestionCore, dob: TDateOfBirthCore): string | undefined {
+  public static toBirthdate(
+    step: QuestionCore,
+    dob: TDateOfBirthCore,
+  ): string | undefined {
     if (step.type !== QUESTION_TYPE.DOB) {
       return undefined;
     }
@@ -114,7 +114,9 @@ export class Questioner {
       if (+dob.year < 1900 || +dob.year > new Date().getFullYear()) {
         return undefined;
       }
-      return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${dob.year}`;
+      return `${dob.month.padStart(2, '0')}/${dob.day.padStart(2, '0')}/${
+        dob.year
+      }`;
     }
     return undefined;
   }
@@ -136,14 +138,16 @@ export class Questioner {
         if (!q?.exitRequirements || q.exitRequirements.length === 0) {
           // ret === true
         }
-        ret = ret
-          && (q.exitRequirements?.every((r) => r.minAge && years >= r.minAge.years) || true);
+        ret =          ret
+          && (q.exitRequirements?.every(
+            (r) => r.minAge && years >= r.minAge.years,
+          )
+            || true);
         break;
       case STEP_TYPE.MULTIPLE_CHOICE:
-        ret = ret && (
-          q.answer !== undefined
-          && answers?.find((x) => x.title === q.answer) !== undefined
-        );
+        ret =          ret
+          && q.answer !== undefined
+          && answers?.find((x) => x.title === q.answer) !== undefined;
         break;
       default:
         // ret === true
@@ -163,23 +167,25 @@ export class Questioner {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     action: { type: ACTION_TYPE; value: any },
   ) {
-  // Action should never be null,
-  // except when we attempt to storybook/test individual components in isolation
+    // Action should never be null,
+    // except when we attempt to storybook/test individual components in isolation
     switch (action?.type) {
       case ACTION_TYPE.RESET:
         return new FormCore();
 
       case ACTION_TYPE.UPDATE:
-        return new FormCore(merge(
-          {
-            ...previousState,
-          },
-          {
-            ...action.value,
-          },
-        ));
+        return new FormCore(
+          merge(
+            {
+              ...previousState,
+            },
+            {
+              ...action.value,
+            },
+          ),
+        );
 
-        // Effectively a noop that triggers a re-render of the page
+      // Effectively a noop that triggers a re-render of the page
       case ACTION_TYPE.RERENDER:
         return new FormCore({
           ...previousState,
@@ -191,7 +197,10 @@ export class Questioner {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public static stepReducer(form: FormCore, action: { type: ACTION_TYPE; value: any }) {
+  public static stepReducer(
+    form: FormCore,
+    action: { type: ACTION_TYPE; value: any },
+  ) {
     return Questioner.dispatch(form, action);
   }
 }

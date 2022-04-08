@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
     "composite": true,
@@ -29,6 +30,20 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES2019",
+    "paths": {
+      "@usds.gov/questionable-core": [
+        "../questionable-core/src/index.ts"
+      ],
+      "@usds.gov/questionable-mocks": [
+        "../questionable-mocks/src/index.ts"
+      ],
+      "@usds.gov/questionable-react-component": [
+        "../questionable-react-component/src/index.ts"
+      ],
+      "@usds.gov/ssa-eligibility": [
+        "../ssa-eligibility/src/index.ts"
+      ],
+    }
   },
   "include": [
     "src/**/*.ts",
