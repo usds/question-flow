@@ -28,6 +28,14 @@
     "strict": true,
     "target": "ES2021",
     "useDefineForClassFields": false,
+    "paths": {
+      "@usds.gov/questionable-core": [
+        "../questionable-core/src/index.ts"
+      ],
+      "@usds.gov/questionable-mocks": [
+        "../questionable-mocks/src/index.ts"
+      ],
+    }
   },
   "include": [
     "src/**/*.ts"

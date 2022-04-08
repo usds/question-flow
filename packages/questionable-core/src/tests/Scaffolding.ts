@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
-import { blue, red, white } from 'chalk';
 import { noop }             from 'lodash';
+import { blue, red, white } from '../util/logger';
 import {
   ActionCore,
   AnswerCore,

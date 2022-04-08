@@ -1,4 +1,4 @@
-import { IStepCore } from '@usds.gov/questionable-core';
+// eslint-disable-next-line import/no-cycle
 import { Step } from '../composable/Step';
 
 export type TVal = {

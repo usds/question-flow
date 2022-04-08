@@ -25,8 +25,7 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "rootDir": "src",
-    "resolveJsonModule": false,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
@@ -37,14 +36,10 @@
     "useDefineForClassFields": false,
   },
   "include": [
-    "typings.d.ts",
     "src/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "dist"
   ],
-  "ts-node": {
-    "swc": true
-  }
 }

@@ -30,6 +30,11 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES2019",
+    "paths": {
+      "@usds.gov/questionable-core": [
+        "../questionable-core/src/index.ts"
+      ]
+    }
   },
   "include": [
     "src"
