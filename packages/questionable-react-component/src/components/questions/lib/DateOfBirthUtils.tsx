@@ -13,12 +13,11 @@ import {
   TDateOfBirthCore,
 } from '@usds.gov/questionable-core';
 import { noel }               from '../../../lib/noel';
-import { QuestionableConfig } from '../../../composable';
 import { setAge }             from '../../../state/persists';
-import { IQuestionData }      from '../../../survey/IQuestionData';
-import { Questions }          from '../../lib/Questions';
+import { IQuestionData }      from '../../../survey/IStepData';
 import { Steps }              from '../../lib/Steps';
 import { CSS_CLASS }          from '../../../lib/enums';
+import { QuestionableConfig } from '../../../composable/QuestionableConfig';
 
 type TInfoBox = 'error' | 'warning' | 'info';
 
@@ -115,6 +114,7 @@ export const onDateOfBirthChange = (
   props: IQuestionData,
   config: QuestionableConfig,
   utilParams: TDoBUtilParams,
+  comp,
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ): void => {
   const {
@@ -137,7 +137,7 @@ export const onDateOfBirthChange = (
   setState({
     ...state,
   });
-  const bd                = Questions.toBirthdate(state);
+  const bd                = comp.toBirthdate(state);
   const age               = getAge(bd);
   const monthIsValid      = isValid(DATE_UNIT.MONTH, state[DATE_UNIT.MONTH] || '');
   const dayIsValid        = isValid(DATE_UNIT.DAY, state[DATE_UNIT.DAY] || '');
@@ -153,7 +153,7 @@ export const onDateOfBirthChange = (
         birthdate: bd,
       },
     });
-    Questions.updateForm(bd, props, config);
+    comp.updateForm(bd, props, config);
     if (props.step.exitRequirements && age.years > 0) {
       const invalid = props.step.exitRequirements.every(
         (r) => r.minAge && age.years < r.minAge.years,

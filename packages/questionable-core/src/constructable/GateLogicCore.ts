@@ -24,13 +24,12 @@ import {
 import { log, toggleOut }         from '../util/logger';
 import { matches }                from '../util/helpers';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { IPageConfigCore }        from '../survey/IConfigCore';
 import { ActionCore }             from '../composable/ActionCore';
 import { Questioner }             from './Questioner';
-
+import {PageConfigCore} from '../composable/config'
 type TPageSet =
   | {
-      config?: Partial<IPageConfigCore>;
+      config?: Partial<PageConfigCore>;
       data?: PageCore;
     }
   | undefined;

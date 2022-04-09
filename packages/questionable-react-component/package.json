@@ -120,7 +120,7 @@
     "deploy": "npm publish",
     "lint:fix": "pretty-quick --staged && yarn lint:ts --cache --fix",
     "lint:ts": "eslint \"src/**/*.{ts,tsx,json,js}\"",
-    "pretty": "prettier --write \"src/**/*.{js,ts,tsx,css,json}\""
+    "pretty": "prettier \"src/**/*.{js,ts,tsx,css,json}\""
   },
   "version": "1.5.9"
 }

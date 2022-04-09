@@ -1,10 +1,10 @@
-import { ReactNode }  from 'react';
-import { CSS_CLASS }  from '../../lib/enums';
-import { IPageData }  from '../../survey/IPageData';
-import { IQuestion }  from '../../survey';
-import { noel }       from '../../lib/noel';
-import { StepLayout } from '../wizard/StepLayout';
-import { Steps }      from '../lib';
+import { ReactNode }     from 'react';
+import { CSS_CLASS }     from '../../lib/enums';
+import { IPageData }     from '../../survey/IStepData';
+import { IQuestionCore } from '../../survey';
+import { noel }          from '../../lib/noel';
+import { StepLayout }    from '../wizard/StepLayout';
+import { TQstn }         from '../lib';
 /* eslint-disable no-script-url */
 
 /**
@@ -12,7 +12,7 @@ import { Steps }      from '../lib';
  * @param props
  * @returns
  */
-const getAnswers = (props: IPageData, onClick: (question: IQuestion) => void): ReactNode => {
+const getAnswers = (props: IPageData, onClick: (question: IQuestionCore) => void): ReactNode => {
   const answers = props.form.responses.map((question, i) => (
       <li key={question.id} className={CSS_CLASS.SUMMARY_QA_LIST}>
         <span className="text-light">
@@ -43,16 +43,16 @@ const getAnswers = (props: IPageData, onClick: (question: IQuestion) => void): R
  * @param props
  * @returns
  */
-export const SummaryPage = (props: IPageData): JSX.Element => {
+export const SummaryPage = ({ props, comp }: TQstn): JSX.Element => {
   const { step: page } = props;
 
   if (!page) {
     return noel();
   }
 
-  const onClick = (question: IQuestion) => {
-    Steps.goToStep(question.id, props);
+  const onClick = (question: IQuestionCore) => {
+    comp.goToStep({ props, step: question.id });
   };
 
-  return <StepLayout {...props}>{getAnswers(props, onClick)}</StepLayout>;
+  return <StepLayout {...props} comp={comp}>{getAnswers(props, onClick)}</StepLayout>;
 };

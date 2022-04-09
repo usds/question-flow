@@ -1,43 +1,50 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable max-classes-per-file */
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
-import { QuestionsCore }             from '@usds.gov/questionable-core';
+import { IRefCore }                  from '@usds.gov/questionable-core';
 import { QuestionableConfig }        from '../../composable/QuestionableConfig';
-import { IQuestionData }             from '../../survey/IQuestionData';
-import { IRef }                      from '../../survey/IRef';
-import { Steps }                     from './Steps';
+import { IQuestionData }             from '../../survey/IStepData';
 import { CSS_CLASS }                 from '../../lib/enums';
 
-/**
- * Static utility methods for question components
- */
-export abstract class Questions extends QuestionsCore {
+export class QuestionComposer {
+  props: IQuestionData;
+
+  config: QuestionableConfig;
+
+  questionnaire: Questionnaire;
+
+  gate: GateLogicCore;
+
+  constructor(data: { config, gate, props, questionnaire }) {
+    this = data;
+  }
+
   /**
    * Generates a radio button given a question definition
    * @param answer
    * @param props
    * @returns
    */
-  private static getRadio(
-    answer: IRef,
-    props: IQuestionData,
-    config: QuestionableConfig,
+  private getRadio(
+    answer: IRefCore,
   ): JSX.Element {
-    const title   = Questions.getString(answer);
-    const handler = () => Questions.updateForm(title, props, config);
-    const id      = Steps.getDomId(title, props);
+    const title   = this.gate.getString(answer);
+    const handler = () => this.gate.updateForm(title, this.props, this.config);
+    const id      = this.gate.getDomId(title, this.props);
 
     return (
       <Radio
         id={id}
         key={id}
-        name={Steps.getFieldSetName(props)}
+        name={this.gate.getFieldSetName(this.props)}
         label={title}
         value={title}
-        checked={Questions.isSelected(title, props) === true}
+        checked={this.gate.isSelected(title, this.props) === true}
         className={CSS_CLASS.MULTI_CHOICE}
         onChange={handler}
         onClick={handler}
-        tile={config.questions?.showAnswerBorder === true}
+        tile={this.config.questions?.showAnswerBorder === true}
       />
     );
   }
@@ -47,17 +54,14 @@ export abstract class Questions extends QuestionsCore {
    * @param props
    * @returns
    */
-  public static getRadios(
-    props: IQuestionData,
-    config: QuestionableConfig,
-  ): JSX.Element {
+  public getRadios(): JSX.Element {
     return (
       <Fieldset
-        legend={props.step.title}
+        legend={this.props.step.title}
         className={CSS_CLASS.MULTI_CHOICE_GROUP}
         legendStyle="srOnly"
       >
-        {props.step.answers.map((a) => Questions.getRadio(a, props, config))}
+        {this.props.step.answers.map((a) => this.getRadio(a, this.props, this.config))}
       </Fieldset>
     );
   }
@@ -68,27 +72,25 @@ export abstract class Questions extends QuestionsCore {
    * @param props
    * @returns
    */
-  protected static getCheckbox(
-    answer: IRef,
-    props: IQuestionData,
-    config: QuestionableConfig,
+  protected getCheckbox(
+    answer: IRefCore,
   ): JSX.Element {
-    const title   = Questions.getString(answer);
-    const handler = () => Questions.updateForm(title, props, config);
-    const id      = Steps.getDomId(title, props);
+    const title   = this.gate.getString(answer);
+    const handler = () => this.gate.updateForm(title, this.props, this.config);
+    const id      = this.gate.getDomId(title, this.props);
 
     return (
       <Checkbox
         id={id}
         key={id}
-        name={Steps.getFieldSetName(props)}
+        name={this.gate.getFieldSetName(this.props)}
         label={title}
         value={title}
-        checked={Questions.isSelected(title, props) === true}
+        checked={this.gate.isSelected(title, this.props) === true}
         className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
-        tile={config.questions?.showAnswerBorder === true}
+        tile={this.config.questions?.showAnswerBorder === true}
       />
     );
   }
@@ -98,17 +100,14 @@ export abstract class Questions extends QuestionsCore {
    * @param props
    * @returns
    */
-  public static getCheckboxes(
-    props: IQuestionData,
-    config: QuestionableConfig,
-  ): JSX.Element {
+  public getCheckboxes(): JSX.Element {
     return (
       <Fieldset
-        legend={props.step.title}
+        legend={this.props.step.title}
         className={CSS_CLASS.MULTI_SELECT_GROUP}
         legendStyle="srOnly"
       >
-        {props.step.answers.map((a) => Questions.getCheckbox(a, props, config))}
+        {this.props.step.answers.map((a) => this.getCheckbox(a, this.props, this.config))}
       </Fieldset>
     );
   }

@@ -1,46 +1,46 @@
 import {
   catchError, error as log,
   EventEmitterCore,
+  IEventCore,
   noop,
 } from '@usds.gov/questionable-core';
-import { IForm } from '../survey';
+import { IFormCore } from '../survey';
 import {
-  IEvent,
   TAnswerData,
   TEvent,
-  TOnError,
-  TOnEvent,
+  TOnErrorCore,
+  TOnEventCore,
   TPageData,
   TResultData,
 } from '../survey/IEvent';
 
-export class EventEmitter extends EventEmitterCore implements IEvent {
-  onActionClick: TOnEvent = noop;
+export class EventEmitter extends EventEmitterCore implements IEventCore {
+  onActionClick: TOnEventCore = noop;
 
-  onAnswer: TOnEvent = noop;
+  onAnswer: TOnEventCore = noop;
 
-  onError: TOnError = noop;
+  onError: TOnErrorCore = noop;
 
-  onAnyEvent: TOnEvent = noop;
+  onAnyEvent: TOnEventCore = noop;
 
-  onPage: TOnEvent = noop;
+  onPage: TOnEventCore = noop;
 
-  onInit: TOnEvent = noop;
+  onInit: TOnEventCore = noop;
 
-  onResults: TOnEvent = noop;
+  onResults: TOnEventCore = noop;
 
-  onNoResults: TOnEvent = noop;
+  onNoResults: TOnEventCore = noop;
 
   constructor(obj: Partial<EventEmitter>) {
     super(obj);
     Object.assign(this, obj);
   }
 
-  action(data: IForm): void {
+  action(data: IFormCore): void {
     this.event(data, this.onActionClick);
   }
 
-  init(data: IForm): void {
+  init(data: IFormCore): void {
     this.event(data, this.onInit);
   }
 
@@ -56,7 +56,7 @@ export class EventEmitter extends EventEmitterCore implements IEvent {
     this.event(data, this.onResults);
   }
 
-  noResult(data: IForm): void {
+  noResult(data: IFormCore): void {
     this.event(data, this.onNoResults);
   }
 
@@ -68,7 +68,7 @@ export class EventEmitter extends EventEmitterCore implements IEvent {
     }
   }
 
-  event(data: TEvent, callback: TOnEvent, noAny = true): void {
+  event(data: TEvent, callback: TOnEventCore, noAny = true): void {
     if (noAny) {
       // This is a recursive call, so we do not need to catch errors
       this.event(data, this.onAnyEvent, false);

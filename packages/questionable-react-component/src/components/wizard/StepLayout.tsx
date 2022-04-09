@@ -1,10 +1,9 @@
 import {
   Card, CardBody, CardFooter, CardGroup, CardHeader,
 } from '@trussworks/react-uswds';
-import { IStepData } from '../../survey/IStepData';
+import { TQstn }     from '../lib/types';
 import { NavBar }    from './NavBar';
 import { Wizard }    from '../lib/Wizard';
-import { useGlobal } from '../../state/GlobalState';
 import { CSS_CLASS } from '../../lib';
 
 /**
@@ -12,8 +11,8 @@ import { CSS_CLASS } from '../../lib';
  * @param props
  * @returns
  */
-export const StepLayout = (props: IStepData): JSX.Element => {
-  const { config }                  = useGlobal();
+export const StepLayout = ({ props, comp }: TQstn): JSX.Element => {
+  const { config }                  = comp;
   const { borderClass, titleClass } = config.steps;
 
   const getCssClass = (name: string) => Wizard.getCssClass(CSS_CLASS.STEP_LAYOUT, name, props);

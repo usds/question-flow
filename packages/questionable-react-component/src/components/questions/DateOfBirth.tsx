@@ -5,19 +5,18 @@ import {
 import { TDateOfBirthCore } from '@usds.gov/questionable-core';
 import { noel }             from '../../lib/noel';
 import { useGlobal }        from '../../state/GlobalState';
-import { IQuestionData }    from '../../survey/IQuestionData';
-import { Questions }        from '../lib/Questions';
 import { StepLayout }       from '../wizard/StepLayout';
 import {
   TDoBUtilParams,
   IInfoBox,
   getDateInputGroup,
 } from './lib/DateOfBirthUtils';
+import type { TQst } from '../lib/types';
 
-export const DateOfBirth = (props: IQuestionData): JSX.Element => {
+export const DateOfBirth = ({ props, comp }: TQst): JSX.Element => {
   const { config, questionnaire } = useGlobal();
   const { step }                  = props;
-  const birthdate                 = Questions.getBirthdate(props);
+  const birthdate                 = comp.getBirthdate(props);
   const dob: TDateOfBirthCore     = {
     day:   birthdate?.day?.toString(),
     month: birthdate?.month?.toString(),
@@ -44,8 +43,8 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
   return getDateInputGroup('date_of_birth', props, config, params);
 };
 
-export const DateOfBirthStep = (props: IQuestionData): JSX.Element => (
-  <StepLayout {...props}>
-    <DateOfBirth {...props} />
+export const DateOfBirthStep = ({ props, comp }: TQst): JSX.Element => (
+  <StepLayout props={props} comp={comp}>
+    <DateOfBirth props={props} comp={comp}/>
   </StepLayout>
 );

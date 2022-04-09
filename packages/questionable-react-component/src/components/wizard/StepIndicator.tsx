@@ -2,12 +2,12 @@ import {
   StepIndicator as SI,
   StepIndicatorStep,
 } from '@trussworks/react-uswds';
-import { noel }      from '../../lib/noel';
-import { useGlobal } from '../../state/GlobalState';
-import { ISection }  from '../../survey/IStep';
-import { IStepData } from '../../survey/IStepData';
+import { noel }         from '../../lib/noel';
+import { useGlobal }    from '../../state/GlobalState';
+import { ISectionCore } from '../../survey/IStep';
+import { IStepData }    from '../../survey/IStepData';
 
-const getIndicatorStep = (s: ISection) => {
+const getIndicatorStep = (s: ISectionCore) => {
   if (!s.title) {
     return noel();
   }

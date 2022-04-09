@@ -4,8 +4,8 @@
 import { kebabCase }     from 'lodash';
 // import { getStepSchema } from '../../schema/editStepSchema';
 import { useGlobal }     from '../../state/GlobalState';
-import { IPageData }     from '../../survey/IPageData';
-import { IQuestionData } from '../../survey/IQuestionData';
+import { IPageData }     from '../../survey/IStepData';
+import { IQuestionData } from '../../survey/IStepData';
 import { Wizard }        from '../lib';
 import { DesignLayout }  from '../wizard/DesignLayout';
 

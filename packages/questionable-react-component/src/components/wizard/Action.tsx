@@ -2,12 +2,12 @@ import { Link }         from '@trussworks/react-uswds';
 import { CSS_CLASS }    from '../../lib';
 import { noel }         from '../../lib/noel';
 import { useGlobal }    from '../../state';
-import { IForm }        from '../../survey';
+import { IFormCore }    from '../../survey';
 import { IAction }      from '../../survey/IAction';
 import { H2, H3, Span } from '../factories/NodeFactory';
 
 export const Action = ({ action, page }:
-  { action: Partial<IAction>, page: IForm }): JSX.Element => {
+  { action: Partial<IAction>, page: IFormCore }): JSX.Element => {
   const global     = useGlobal();
   const { config } = global;
 

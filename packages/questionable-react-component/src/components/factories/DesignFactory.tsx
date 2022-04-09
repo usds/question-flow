@@ -1,17 +1,15 @@
-import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '@usds.gov/questionable-core';
-import { noel }                             from '../../lib/noel';
-import { useGlobal }                        from '../../state/GlobalState';
-import { IStep }                            from '../../survey/IStep';
-import { IStepData }                        from '../../survey/IStepData';
-import { IPageData }                        from '../../survey/IPageData';
-import { IQuestionData }                    from '../../survey/IQuestionData';
-import { EditStep }                         from '../design/Edit';
+import { isEnum, PAGE_TYPE, QUESTION_TYPE }    from '@usds.gov/questionable-core';
+import { noel }                                from '../../lib/noel';
+import { useGlobal }                           from '../../state/GlobalState';
+import { IStep }                               from '../../survey/IStep';
+import { IStepData, IPageData, IQuestionData } from '../../survey/IStepData';
+import { EditStep }                            from '../design/Edit';
 /**
  * Given a step of a known question type, generates a question component
  * @param props
  * @returns
  */
-export const DesignFactory = (props: IStepData, step: IStep): JSX.Element => {
+export const DesignFactory = (props: IStepData, step: Required<IStep>): JSX.Element => {
   const { questionnaire }   = useGlobal();
   const question            = questionnaire.getStepById(step.id);
   const stepData: IStepData = { ...{ step: question, ...props } };

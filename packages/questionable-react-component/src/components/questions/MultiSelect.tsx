@@ -1,22 +1,21 @@
-import { noel }          from '../../lib/noel';
-import { useGlobal }     from '../../state/GlobalState';
-import { IQuestionData } from '../../survey/IQuestionData';
-import { Questions }     from '../lib/Questions';
-import { StepLayout }    from '../wizard/StepLayout';
+import { noel }       from '../../lib/noel';
+import { useGlobal }  from '../../state/GlobalState';
+import { StepLayout } from '../wizard/StepLayout';
+import type { TQst }  from '../lib/types';
 
 /**
  * Renders a question and a checkbox list of allowed answers
  * @param props
  * @returns
  */
-export const MultiSelect = (props: IQuestionData): JSX.Element => {
+export const MultiSelect = ({ props, comp }: TQst): JSX.Element => {
   const { config } = useGlobal();
 
   if (props?.step?.answers === undefined) {
     return noel();
   }
 
-  return Questions.getCheckboxes(props, config);
+  return comp.getCheckboxes(props, config);
 };
 
 /**
@@ -24,8 +23,8 @@ export const MultiSelect = (props: IQuestionData): JSX.Element => {
  * @param props
  * @returns
  */
-export const MultiSelectStep = (props: IQuestionData): JSX.Element => (
-  <StepLayout {...props}>
-    <MultiSelect {...props} />
+export const MultiSelectStep = ({ props, comp }: TQst): JSX.Element => (
+  <StepLayout props={props} comp={comp}>
+    <MultiSelect props={props} comp={comp}/>
   </StepLayout>
 );

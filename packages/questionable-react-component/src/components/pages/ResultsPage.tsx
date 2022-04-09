@@ -1,8 +1,7 @@
 import { Action }     from '../wizard/Action';
 import { CSS_CLASS }  from '../../lib';
-import { IPageData }  from '../../survey/IPageData';
+import { TQstn }      from '../lib/types';
 import { noel }       from '../../lib/noel';
-import { Pages }      from '../lib';
 import { Span }       from '../factories/NodeFactory';
 import { StepLayout } from '../wizard/StepLayout';
 import { useGlobal }  from '../../state/GlobalState';
@@ -12,7 +11,7 @@ import { useGlobal }  from '../../state/GlobalState';
  * @param props
  * @returns
  */
-export const ResultsPage = (props: IPageData): JSX.Element => {
+export const ResultsPage = ({ props, comp }: TQstn): JSX.Element => {
   const { step }                  = props;
   const global                    = useGlobal();
   const { questionnaire, config } = global;
@@ -41,7 +40,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
   config.events.onResults({ ...props.form, results: genResults });
 
   return (
-    <StepLayout {...props}>
+    <StepLayout {...props} comp={comp}>
       <div className={CSS_CLASS.RESULTS_SUMMARY_HEADER}>
         <Span
           node={step.bodyHeader}
@@ -54,7 +53,7 @@ export const ResultsPage = (props: IPageData): JSX.Element => {
         <ul
           className={`usa-list usa-list--unstyled ${CSS_CLASS.RESULTS_SUMMARY_BOX}`}
         >
-          {Pages.getResults(props, global)}
+          {comp.getResults()}
         </ul>
         <Span node={step.body} className={CSS_CLASS.RESULTS_BODY} />
         <Span node={step.children} className={CSS_CLASS.RESULTS_CHILDREN} />

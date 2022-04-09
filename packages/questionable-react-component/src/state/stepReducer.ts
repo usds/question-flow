@@ -1,7 +1,5 @@
-import { merge }       from 'lodash';
-import { ACTION_TYPE } from '@usds.gov/questionable-core';
-import { Form }        from '../composable/Form';
-import { IForm }       from '../survey/IForm';
+import { merge }                  from 'lodash';
+import { ACTION_TYPE, IFormCore } from '@usds.gov/questionable-core';
 
 /**
  * Merges the form's answer state as the user progresses through the survey
@@ -10,15 +8,15 @@ import { IForm }       from '../survey/IForm';
  * @returns
  */
 export const stepReducer = (
-  previousState: IForm,
+  previousState: IFormCore,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: { type: ACTION_TYPE; value: any },
-): IForm => {
+): IFormCore => {
   // Action should never be null,
   // except when we attempt to storybook/test individual components in isolation
   switch (action?.type) {
     case ACTION_TYPE.RESET:
-      return new Form();
+      return new FormCore();
 
     case ACTION_TYPE.UPDATE:
       return merge(

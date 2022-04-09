@@ -1,6 +1,5 @@
 import {
   IButtonCore,
-  TButtonModeCore,
   THorizontalPositionCore,
   TVerticalPositionCore,
 } from '@usds.gov/questionable-core';
@@ -8,42 +7,24 @@ import {
 /**
  * Represents a navigation button
  */
-export interface IButton extends IButtonCore {
+export type IButton = IButtonCore & {
   /**
    * Horizontal orientation (left or right)
    *
    * @title Horizontal Position
    * @default left
    */
-  horizontalPos?: THorizontalPositionCore;
-  /**
-   * Link to tie to button click
-   *
-   * @title Link
-   */
-  link?: string;
+  horizontalPos?: THorizontalPositionCore | undefined;
   /**
    * Show an outline
    *
    * @title Outline
    */
-  outline?: boolean;
-  /**
-   * Render mode (link or button)
-   *
-   * @title Mode
-   */
-  type?: TButtonModeCore;
+  outline?: boolean | undefined;
   /**
    * Vertical orientation (top or bottom)
    *
    * @title Vertical Position
    */
-  verticalPos?: TVerticalPositionCore;
-  /**
-   * Visibility status of the button (show/hide)
-   *
-   * @title Visible
-   */
-  visible?: boolean;
+  verticalPos?: TVerticalPositionCore | undefined;
 }

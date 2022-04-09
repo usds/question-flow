@@ -1,5 +1,8 @@
-import { ArrayUnique }             from 'class-validator';
-import { groupBy, isEmpty, merge } from 'lodash';
+import {
+  groupBy,
+  isEmpty,
+  merge,
+} from 'lodash';
 import {
   log,
   QuestionnaireCore,
@@ -14,58 +17,35 @@ import {
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   STEP_TYPE,
-}                     from '@usds.gov/questionable-core';
-import { IAction }            from '../survey/IAction';
-import { IBranch }            from '../survey/IBranch';
-import { IForm }              from '../survey/IForm';
-import { IPageConfig }        from '../survey/IQuestionableConfig';
-import { IPages }             from '../survey/IPages';
-import { IQuestionnaire }     from '../survey/IQuestionnaire';
-import { IResult }            from '../survey/IResult';
-import { IStepData }          from '../survey/IStepData';
-import { QuestionableConfig } from './QuestionableConfig';
-import { setBranch }          from '../state/persists';
-import {
-  IPage,
-  IQuestion,
-  IRequirement,
-  IResponse,
-  ISection,
-  IStep,
-} from '../survey/IStep';
+  IResultCore,
+  IQuestionCore,
+  IPageCore,
+  GateLogicCore,
+  IRequirementCore,
+  IResponseCore,
+  ISectionCore,
+  IStepCore,
+  IPageConfigCore,
+  IFormCore,
+}                    from '@usds.gov/questionable-core';
+import { IAction }   from '../survey/IAction';
+import { IStepData } from '../survey/IStepData';
+import { setBranch } from '../state/persists';
 
 /**
  * Utility wrapper for survey state
  */
-export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
-  @ArrayUnique((action: IAction) => action.id)
-  public actions: IAction[] = [];
+export class Questionnaire extends QuestionnaireCore {
+  public getGate(form: IFormCore) {
+    return new GateLogicCore(this, form);
+  }
 
-  public branches: IBranch[] = [];
+  #config: QuestionableConfig;
 
-  public config: QuestionableConfig = new QuestionableConfig();
-
-  public flow: string[] = [];
-
-  public header = '';
-
-  @ArrayUnique((result: IResult) => result.label)
-  public results: IResult[] = [];
-
-  public pages!: IPages;
-
-  @ArrayUnique((question: IQuestion) => question.id)
-  public questions: IQuestion[] = [];
-
-  @ArrayUnique((section: ISection) => section.id)
-  public sections: ISection[] = [];
-
-  protected steps: IStep[] = [];
-
-  constructor(data: Partial<IQuestionnaire>) {
+  constructor(data: Partial<Questionnaire>) {
     super(data);
     merge(this, data);
-
+    this.#config = QuestionableConfig.create(data.config);
     // Create a new collection for our flow logic
     this.steps = this.questions.map((q, i) => ({
       order: i,
@@ -78,12 +58,20 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
     this.flow = this.steps.map((q) => q.id);
   }
 
+  get config() {
+    return this.#config;
+  }
+
+  set config(val: QuestionableConfig) {
+    this.#config = val;
+  }
+
   /**
    * Fetches a question by its id
    * @param id unique identifier of the question
    * @returns
    */
-  getStepById(id: string): IStep {
+  getStepById(id: string): IStepCore {
     const ret = this.steps.find((q) => q.id === id);
     if (!ret) {
       this.throw(`Step id: ${id} not found in survery`);
@@ -96,12 +84,12 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param id unique identifier of the question
    * @returns
    */
-  getPageById(id: string): IPage {
+  getPageById(id: string): IPageCore {
     const ret = this.getStepById(id);
     if (!isEnum(PAGE_TYPE, ret.type)) {
       this.throw(`Step id: ${id} is not a page`);
     }
-    return ret as IPage;
+    return ret as IPageCore;
   }
 
   /**
@@ -109,7 +97,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param id unique identifier of the question
    * @returns
    */
-  getQuestion(q: Partial<IQuestion>): IQuestion {
+  getQuestion(q?: Partial<IQuestionCore>): IQuestionCore {
     if (!q.id) {
       this.throw(`Question ${q} is not defined`);
     }
@@ -121,19 +109,19 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param id unique identifier of the question
    * @returns
    */
-  getQuestionById(id: string): IQuestion {
+  getQuestionById(id: string): IQuestionCore {
     const ret = this.getStepById(id);
     if (!isEnum(QUESTION_TYPE, ret.type)) {
       this.throw(`Step id: ${id} not a question`);
     }
-    return ret as IQuestion;
+    return ret as IQuestionCore;
   }
 
   /**
    * Returns the next step in the sequence which is permitted by the current state of the form
    */
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  getStep(thisStep: string, form: IForm, direction: DIRECTION, skip = 0): string {
+  getStep(thisStep: string, form: IFormCore, direction: DIRECTION, skip = 0): string {
     const nextStep =      this.flow.indexOf(thisStep) !== -1
       ? this.flow[this.flow.indexOf(thisStep) + direction]
       : undefined;
@@ -280,7 +268,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
     }
 
     if (this.branches.length) {
-      const question = step as IQuestion;
+      const question = step as IQuestionCore;
       return this.getBranchQuestions(question);
     }
     return this.getQuestionsWithoutBranches();
@@ -291,8 +279,8 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param step
    * @returns string[]
    */
-  protected getBranchQuestions(step: IQuestion): string[] {
-    const question = step as IQuestion;
+  protected getBranchQuestions(step: IQuestionCore): string[] {
+    const question = step as IQuestionCore;
 
     if (question.branch) {
       setBranch(this.header, `${question.branch.title}`);
@@ -338,7 +326,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param props
    * @returns
    */
-  getSections(props: IStepData): ISection[] {
+  getSections(props: IStepData): ISectionCore[] {
     if (!props || !this.sections || this.sections.length === 0) {
       return [];
     }
@@ -384,7 +372,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param form
    * @returns
    */
-  getResults(form: IForm): IResult[] {
+  getResults(form: IFormCore): IResultCore[] {
     return this.results.filter((r) =>
       r.requirements.some((match) => {
         if (this.meetsAllRequirements(match, form)) {
@@ -411,7 +399,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * Gets the appropriate action given a set of results
    * @returns
    */
-  getAction(results: IResult[]): IAction {
+  getAction(results: IResultCore[]): IAction {
     const groupedByAction = groupBy(results, 'action.id');
     const hybrid          = this.actions.find((a) => a.type === ACTION.HYBRID);
     // If group above has more than one type of action, the resolved action will be a hybrid
@@ -496,8 +484,8 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
   protected getPageSet = (
     type: PAGE_TYPE,
   ): {
-    config?: Partial<IPageConfig>;
-    data?: IPage;
+    config?: Partial<IPageConfigCore>;
+    data?: IPageCore;
   } => {
     switch (type) {
       case PAGE_TYPE.LANDING:
@@ -580,8 +568,8 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
   }
 
   public meetsAllRequirements(
-    requirement: IRequirement,
-    form: IForm,
+    requirement: IRequirementCore,
+    form: IFormCore,
     allowUnanswered = false,
   ) {
     const {
@@ -603,7 +591,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param minAge a TAge object or undefined
    * @returns true if no min age, else true if age is >= min age
    */
-  public static meetsMinAgeRequirements(form: IForm, minAge?: TAgeCore): boolean {
+  public static meetsMinAgeRequirements(form: IFormCore, minAge?: TAgeCore): boolean {
     if (!minAge) return true;
 
     if (form.age === undefined) {
@@ -625,7 +613,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @param maxAge a TAge object or undefined
    * @returns true if no max age, else true if age is <= max age
    */
-  public static meetsMaxAgeRequirements(form: IForm, maxAge?: TAgeCore): boolean {
+  public static meetsMaxAgeRequirements(form: IFormCore, maxAge?: TAgeCore): boolean {
     if (!maxAge) return true;
     if (form.age === undefined) {
       return false;
@@ -647,7 +635,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @returns
    */
   protected static meetsAgeCalcRequirements(
-    form: IForm,
+    form: IFormCore,
     ageCalc?: TAgeCalcCore,
   ): boolean {
     if (!ageCalc) return true;
@@ -699,7 +687,7 @@ export class Questionnaire extends QuestionnaireCore implements IQuestionnaire {
    * @returns true if all answers are valid or if no answers are required
    */
   protected meetsAnswerRequirements(
-    answers?: IResponse[],
+    answers?: IResponseCore[],
     allowUnanswered = false,
   ): boolean {
     if (!answers || answers.length <= 0) return true;

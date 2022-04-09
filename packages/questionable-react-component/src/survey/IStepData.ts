@@ -1,13 +1,18 @@
-import { IStepDataCore, TReducerCore } from '@usds.gov/questionable-core';
-import { ReactNode }                   from 'react';
-import { IWizard }                     from 'use-wizard/lib/cjs/useWizard/types/IWizard';
-import { IForm }                       from './IForm';
-import { IStep }                       from './IStep';
+import {
+  TReducerCore,
+  IFormCore,
+  QuestionCore,
+  StepCore,
+  PageCore,
+} from '@usds.gov/questionable-core';
+import { ReactNode } from 'react';
+import { IWizard }   from 'use-wizard/lib/cjs/useWizard/types/IWizard';
+import { IStep }     from './IStep';
 
 /**
  * Data defintion for base wizard step
  */
-export interface IStepData extends IStepDataCore {
+export type IStepData = {
   /**
    * Child component(s) to render
    *
@@ -25,7 +30,7 @@ export interface IStepData extends IStepDataCore {
    *
    * @title Form
    */
-  form: IForm;
+  form: IFormCore;
   /**
    * Current step
    *
@@ -46,4 +51,25 @@ export interface IStepData extends IStepDataCore {
    * @hidden Not viewable/editable in Design Mode
    */
   wizard: IWizard;
+};
+
+/**
+ * Data defintion for design step
+ */
+export type IDesignData = IStepData & {
+  step: StepCore;
+};
+
+/**
+ * Data defintion for question step
+ */
+export type IQuestionData = IStepData & {
+  step: QuestionCore;
+};
+
+/**
+ * Data defintion for page step
+ */
+export type IPageData = IStepData & {
+  step: PageCore;
 }

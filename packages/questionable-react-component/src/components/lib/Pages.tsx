@@ -1,31 +1,39 @@
-import { kebabCase }    from 'lodash';
-import { ReactNode }    from 'react';
-import { groupBy }      from '@usds.gov/questionable-core';
-import { CSS_CLASS }    from '../../lib/enums';
-import { Div }          from '../factories/NodeFactory';
-import { IGlobalState } from '../../state/GlobalState';
-import { IResult }      from '../../survey/IResult';
-import { IStepData }    from '../../survey/IStepData';
-import { setResults }   from '../../state/persists';
-import { TResultData }  from '../../survey/IEvent';
+/* eslint-disable import/no-cycle */
+/* eslint-disable max-classes-per-file */
+import { kebabCase }              from 'lodash';
+import { ReactNode }              from 'react';
+import { groupBy, GateLogicCore } from '@usds.gov/questionable-core';
+import { CSS_CLASS }              from '../../lib/enums';
+import { Div }                    from '../factories/NodeFactory';
+import { IResult }                from '../../survey/IResult';
+import { setResults }             from '../../state/persists';
+import { TResultData }            from '../../survey/IEvent';
+import { IQuestionData }          from '../../survey/IStepData';
+import { QuestionableConfig }     from '../../composable/QuestionableConfig';
+import { Questionnaire }          from '../../composable/Questionnaire';
+import { TComp }                  from './types';
 
-/**
- * Static utility methods for page components
- */
-export abstract class Pages {
+export class PageComposer {
+  props: IQuestionData;
+
+  config: QuestionableConfig;
+
+  questionnaire: Questionnaire;
+
+  gate: GateLogicCore;
+
+  constructor(data: TComp) {
+    this = data;
+  }
+
   /**
    * Internal method to compute reason for a result
    * @param props
    * @param result
    * @returns
    */
-  static getReason(
-    props: IStepData,
-    result: IResult,
-    global: IGlobalState,
-  ): string {
-    let reason                      = result.match?.explanation;
-    const { questionnaire, config } = global;
+  static getReason(result: IResult): string {
+    let reason = result.match?.explanation;
 
     if (!reason) {
       return '';
@@ -38,14 +46,14 @@ export abstract class Pages {
         || result.match.minAge !== undefined
         || result.match.maxAge !== undefined
       ) {
-        reason += `You are ${props.form.age?.years} years `;
-        reason += `and ${props.form.age?.months} months old. `;
+        reason += `You are ${this.props.form.age?.years} years `;
+        reason += `and ${this.props.form.age?.months} months old. `;
       }
       result.match.responses.forEach((r) => {
         if (!r.question.id) {
           return;
         }
-        const q = questionnaire.getQuestionById(r.question.id);
+        const q = this.questionnaire.getQuestionById(r.question.id);
         reason += `You answered "<b>${q.answer}</b>" to the question "<i>${q.title}.</i>" `;
       });
     }
@@ -57,22 +65,21 @@ export abstract class Pages {
    * @param props
    * @returns
    */
-  static getResults(props: IStepData, global: IGlobalState): ReactNode {
-    const { questionnaire } = global;
+  getResults(): ReactNode {
     const data: TResultData = {
       props,
-      results: questionnaire.getResults(props.form).map((result) => ({
+      results: this.questionnaire.getResults(this.props.form).map((result) => ({
         category: result.category,
         id:       result.id,
         label:    result.label,
-        reason:   Pages.getReason(props, result, global),
+        reason:   this.getReason(result),
         title:    result.title,
       })),
       step: 'results',
     };
 
     setResults(
-      kebabCase(questionnaire.header),
+      kebabCase(this.questionnaire.header),
       data.results.map((r) => ({
         description: r.reason,
         name:        r.title,

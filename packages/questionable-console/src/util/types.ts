@@ -5,7 +5,7 @@ export type TVal = {
   answer: string | number | boolean | string[],
   name: string,
   short?: string,
-  value?: string
+  value?: string,
 };
 export type TTypeVal = TVal | string[];
 export type TChoice = { answer: string, key: string, name: string }
@@ -29,7 +29,7 @@ export type TAnswerType = {
   type: 'number' | 'input' | 'password' | 'list' | 'expand' |
     'checkbox' | 'confirm' | 'editor' | 'rawlist' | 'fuzzypath' | 'date',
   validate?: TBoolFn,
-  values?: string[] | TChoice[]
+  values?: string[] | TChoice[],
 };
 export type TOnAnswer = (answer: TVal, step: Step, ...params: unknown[]) => Promise<void>;
 export type TOnDisplay = (answer:TVal, step: Step, ...params: unknown[]) => Promise<void>;

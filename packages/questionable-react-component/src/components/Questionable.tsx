@@ -1,23 +1,26 @@
 import { useReducer }          from 'react';
 import { useWizard }           from 'use-wizard';
+import { FormCore }            from '@usds.gov/questionable-core';
 import { CSS_CLASS }           from '../lib/enums';
 import { DevPanel }            from './wizard/DevPanel';
-import { Form }                from '../composable/Form';
 import { GlobalStateProvider } from '../state/GlobalState';
-import { IQuestionable }       from '../survey/IQuestionable';
+import { Questionnaire }       from '../composable/Questionnaire';
 import { ProgressFactory }     from './factories/ProgressFactory';
 import { StepFactory }         from './factories/StepFactory';
 import { stepReducer }         from '../state/stepReducer';
 import { IStepData }           from '../survey';
 
-export const Questionable = ({ questionnaire }: IQuestionable): JSX.Element => {
+type TQ = {
+  questionnaire: Questionnaire,
+};
+export const Questionable = ({ questionnaire }: TQ): JSX.Element => {
   if (!questionnaire) {
     throw new Error('questionable is undefined');
   }
 
   const [step, wizard] = useWizard(questionnaire.flow);
   // This is only used to store user inputs
-  const [form, dispatchForm] = useReducer(stepReducer, new Form());
+  const [form, dispatchForm] = useReducer(stepReducer, new FormCore());
   const props: IStepData     = {
     dispatchForm,
     form,
