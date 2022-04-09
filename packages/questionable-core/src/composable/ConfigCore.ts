@@ -12,7 +12,7 @@ import {
   QuestionConfigCore,
   StepConfigCore,
 } from './config';
-import { IQuestionableConfigCore }                 from '../survey/IQuestionableConfigCore';
+import { IQuestionableConfigCore }                 from '../survey/IConfigCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { BaseCore }                                from './BaseCore';
 

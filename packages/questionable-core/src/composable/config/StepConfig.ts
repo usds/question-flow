@@ -1,16 +1,11 @@
 import { merge }                                   from 'lodash';
-import { IStepConfigCore }                         from '../../survey/IQuestionableConfigCore';
 import { BaseCore }                                from '../BaseCore';
 import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
 
 /**
  * Customizations for styling and formatting of the steps
  */
-export class StepConfigCore extends BaseCore implements IStepConfigCore {
-  get __core() {
-    return 'step';
-  }
-
+export class StepConfigCore extends BaseCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.config;
   }
@@ -55,4 +50,6 @@ export class StepConfigCore extends BaseCore implements IStepConfigCore {
    * @default ''
    */
   titleClass?: 'bg-base-lightest' | '';
+
+  visible?: boolean | undefined;
 }

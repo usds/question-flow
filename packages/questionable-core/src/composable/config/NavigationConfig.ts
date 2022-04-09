@@ -1,17 +1,12 @@
 import { merge }                                   from 'lodash';
 import { ButtonConfigCore }                        from './ButtonConfig';
-import { INavigationConfigCore }                   from '../../survey/IQuestionableConfigCore';
 import { BaseCore }                                from '../BaseCore';
 import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
 
 /**
  * Configuration for navigation
  */
-export class NavigationConfigCore extends BaseCore implements INavigationConfigCore {
-  get __core() {
-    return 'nav';
-  }
-
+export class NavigationConfigCore extends BaseCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.config;
   }
@@ -48,4 +43,6 @@ export class NavigationConfigCore extends BaseCore implements INavigationConfigC
    * Previous/Go back button
    */
   prev?: Partial<ButtonConfigCore> | undefined;
+
+  visible?: boolean | undefined;
 }

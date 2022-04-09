@@ -2,6 +2,10 @@ import { MODE }                                      from '../util/enums';
 import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
 import { IEventCore }                                from './IEventCore';
 
+type TVisible = {
+  visible?: boolean | undefined,
+};
+
 /**
  * Configuration for customized behavior of Questionable
  */
@@ -40,13 +44,13 @@ export interface IQuestionableConfigCore {
    *
    * @title Navigation
    */
-  nav?: Partial<INavigationConfigCore> | undefined;
+  nav?: TVisible | undefined;
   /**
    * Page configuration
    *
    * @title Pages
    */
-  pages?: Partial<IPagesConfigCore> | undefined;
+  pages?: TVisible | undefined;
   /**
    * Properties produced from `getRuntimeConfig()`
    * @title Params
@@ -58,53 +62,18 @@ export interface IQuestionableConfigCore {
    *
    * @title Progress Bar
    */
-  progressBar?: Partial<IProgressBarConfigCore> | undefined;
+  progressBar?: TVisible | undefined;
   /**
    * Question configuration
    *
    * @title Question Configuration
    */
-  questions?: Partial<IQuestionConfigCore> | undefined;
+  questions?: TVisible | undefined;
 
   /**
    * Step configuration
    *
    * @title Step Configuration
    */
-  steps?: Partial<IStepConfigCore> | undefined;
+  steps?: TVisible | undefined;
 }
-
-type TConfigBase = {
-  __core?: string | undefined;
-}
-
-/**
- * Customizations for styling and formatting of the steps
- */
-export type IStepConfigCore = TConfigBase;
-
-/**
- * Configuration options for the progress bar
- */
-export type IProgressBarConfigCore = TConfigBase;
-
-/**
- * Configuration for question display
- */
-export type IQuestionConfigCore  = TConfigBase;
-
-/**
- * Configuration for buttons
- */
-export type IButtonConfigCore  = TConfigBase;
-
-/**
- * Configuration for navigation
- */
-export type INavigationConfigCore  = TConfigBase;
-
-export interface IPageConfigCore extends TConfigBase {
-  visible?: boolean;
-}
-
-export type IPagesConfigCore  = TConfigBase;

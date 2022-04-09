@@ -5,7 +5,7 @@ export * from './IButtonCore';
 export * from './IEventCore';
 export * from './IFormCore';
 export * from './IPagesCore';
-export * from './IQuestionableConfigCore';
+export * from './IConfigCore';
 export * from './IQuestionnaireCore';
 export * from './IRefCore';
 export * from './IResultCore';

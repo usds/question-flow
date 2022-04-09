@@ -85,7 +85,7 @@
     "lint": "yarn lint:ts",
     "lint:fix": "yarn pretty && pretty-quick --staged && yarn lint:ts --fix",
     "lint:ts": "eslint src/**/*.ts",
-    "pretty": "prettier --write src/**/*.ts",
+    "pretty": "prettier src/**/*.ts",
     "type-check": "yarn build:tsc --noEmit"
   },
   "types": "dist/index.d.ts",

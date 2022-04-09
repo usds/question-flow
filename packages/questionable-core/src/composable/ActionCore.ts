@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { IActionCore }                             from '../survey/IActionCore';
-import { IButtonCore }                             from '../survey/IButtonCore';
+import { ButtonCore }                              from './ButtonCore';
 import { IRefCore }                                from '../survey/IRefCore';
 import { ACTION }                                  from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
@@ -30,7 +30,7 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
     return ActionCore.create(data);
   }
 
-  #buttons: IButtonCore[];
+  #buttons: ButtonCore[];
 
   #label: string;
 
@@ -40,7 +40,7 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   constructor(data: Partial<ActionCore>) {
     super(data);
-    this.#buttons  = data.buttons || [];
+    this.#buttons  = data.buttons?.map((b) => ButtonCore.create(b)) || [];
     this.#label    = data.label || '';
     this.#subTitle = data.subTitle || '';
     this.#type     = data.type || ACTION.DEFAULT;
@@ -51,11 +51,11 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
    * @title Buttons
    * @hidden
    */
-  public get buttons(): IButtonCore[] {
+  public get buttons(): ButtonCore[] {
     return this.#buttons;
   }
 
-  public set buttons(val: IButtonCore[]) {
+  public set buttons(val: ButtonCore[]) {
     this.#buttons = val;
   }
 

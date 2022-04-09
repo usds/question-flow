@@ -1,6 +1,4 @@
 import { merge }                                                           from 'lodash';
-import { IButtonCore }                                                     from '../../survey/IButtonCore';
-import { IButtonConfigCore }                                               from '../../survey/IQuestionableConfigCore';
 import { BaseCore }                                                        from '../BaseCore';
 import { THorizontalPositionCore, TVerticalPositionCore, TButtonModeCore } from '../../util/types';
 import { ClassList, TInstanceOf, checkInstanceOf }                         from '../../util/instanceOf';
@@ -8,11 +6,7 @@ import { ClassList, TInstanceOf, checkInstanceOf }                         from 
 /**
  * Configuration for buttons
  */
-export class ButtonConfigCore extends BaseCore implements IButtonConfigCore, IButtonCore {
-  get __core() {
-    return 'button';
-  }
-
+export class ButtonConfigCore extends BaseCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.config;
   }
@@ -32,8 +26,9 @@ export class ButtonConfigCore extends BaseCore implements IButtonConfigCore, IBu
   constructor(data: Partial<ButtonConfigCore> = {}) {
     super(data);
     merge(this, data);
-    this.title = data.title || '';
-    this.type  = data.type || '';
+    this.title   = data.title || '';
+    this.type    = data.type || '';
+    this.visible = data.visible !== false;
   }
 
   /**

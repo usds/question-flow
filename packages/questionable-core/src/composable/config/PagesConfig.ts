@@ -1,15 +1,10 @@
 import { merge }                                   from 'lodash';
-import { IPagesConfigCore }                        from '../../survey/IQuestionableConfigCore';
 import { BaseCore }                                from '../BaseCore';
 import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
 /**
  * Configuration for Pages display
  */
-export class PagesConfigCore  extends BaseCore implements IPagesConfigCore {
-  get __core() {
-    return 'pages';
-  }
-
+export class PagesConfigCore  extends BaseCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.config;
   }
@@ -30,4 +25,6 @@ export class PagesConfigCore  extends BaseCore implements IPagesConfigCore {
     super(data);
     merge(this, data);
   }
+
+  visible?: boolean | undefined;
 }

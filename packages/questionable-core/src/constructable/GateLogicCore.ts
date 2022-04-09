@@ -24,7 +24,7 @@ import {
 import { log, toggleOut }         from '../util/logger';
 import { matches }                from '../util/helpers';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { IPageConfigCore }        from '../survey/IQuestionableConfigCore';
+import { IPageConfigCore }        from '../survey/IConfigCore';
 import { ActionCore }             from '../composable/ActionCore';
 import { Questioner }             from './Questioner';
 

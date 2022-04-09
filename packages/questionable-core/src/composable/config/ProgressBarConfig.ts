@@ -1,17 +1,12 @@
 import { merge }                                       from 'lodash';
 import { TVerticalPositionCore, TProgressBarTypeCore } from '../../util/types';
-import { IProgressBarConfigCore }                      from '../../survey/IQuestionableConfigCore';
 import { BaseCore }                                    from '../BaseCore';
 import { ClassList, TInstanceOf, checkInstanceOf }     from '../../util/instanceOf';
 
 /**
  * Configuration options for the progress bar
  */
-export class ProgressBarConfigCore  extends BaseCore implements IProgressBarConfigCore {
-  get __core() {
-    return 'progress';
-  }
-
+export class ProgressBarConfigCore  extends BaseCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.config;
   }
@@ -74,4 +69,6 @@ export class ProgressBarConfigCore  extends BaseCore implements IProgressBarConf
    * @default 'progress-bar'
    */
   type?: TProgressBarTypeCore | undefined;
+
+  visible?: boolean | undefined;
 }

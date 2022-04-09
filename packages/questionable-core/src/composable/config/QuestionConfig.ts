@@ -1,15 +1,10 @@
 import { merge }                                   from 'lodash';
-import { IQuestionConfigCore }                     from '../../survey/IQuestionableConfigCore';
 import { BaseCore }                                from '../BaseCore';
 import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
 /**
  * Configuration for question display
  */
-export class QuestionConfigCore  extends BaseCore implements IQuestionConfigCore {
-  get __core() {
-    return 'question';
-  }
-
+export class QuestionConfigCore  extends BaseCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.config;
   }
@@ -38,4 +33,6 @@ export class QuestionConfigCore  extends BaseCore implements IQuestionConfigCore
    * @default true
    */
   showAnswerBorder?: boolean | undefined;
+
+  visible?: boolean | undefined;
 }
