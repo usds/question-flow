@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import fs                            from 'fs';
 import '@testing-library/jest-dom/extend-expect';
-
+import "jest-dom/extend-expect";
 import { Container } from 'react-dom';
 import { App }       from './App';
 

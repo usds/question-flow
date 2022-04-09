@@ -4,6 +4,7 @@
       "ESNext",
       "dom"
     ],
+    "jsx": "react-jsx",
     "target": "ESNext",
     "module": "esnext",
     "paths": {

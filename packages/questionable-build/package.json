@@ -32,7 +32,6 @@
     "@types/rollup-plugin-peer-deps-external": "^2",
     "@typescript-eslint/eslint-plugin": "npm:^5.17.0",
     "@typescript-eslint/parser": "npm:^5.17.0",
-    "@usds.gov/questionable-build": "workspace:*",
     "eslint": "npm:^8.12.0",
     "eslint-config-airbnb-base": "npm:^15.0.0",
     "eslint-config-prettier": "npm:^8.5.0",

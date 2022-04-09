@@ -1,10 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs');
+/* eslint-disable import/no-extraneous-dependencies */
+import { parseSchema } from '@usds.gov/questionable-build';
 
-const rawdata = fs.readFileSync('./dist/survey.json');
-
-const schema = `// This files is code generated. Do not edit.
-/* eslint-disable */
-export const survey = ${rawdata};`;
-
-fs.writeFileSync('./src/schema/survey.ts', schema);
+parseSchema('./dist/survey.json', './src/schema/survey.ts');

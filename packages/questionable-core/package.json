@@ -31,6 +31,7 @@
     "@types/uuid": "npm:^8.3.4",
     "@typescript-eslint/eslint-plugin": "npm:^5.17.0",
     "@typescript-eslint/parser": "npm:^5.17.0",
+    "@usds.gov/questionable-build": "workspace:*",
     "babel-loader": "npm:8.2.4",
     "cross-env": "^7.0.3",
     "eslint": "npm:^8.12.0",

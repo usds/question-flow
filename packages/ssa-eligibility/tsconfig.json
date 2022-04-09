@@ -31,6 +31,10 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES2019",
+    "types": [
+      "jest-styled-components",
+      "@types/testing-library__jest-dom"
+    ],
     "paths": {
       "@usds.gov/questionable-core": [
         "../questionable-core/src/index.ts"
