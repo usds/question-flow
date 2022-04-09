@@ -26,10 +26,11 @@ import { matches }                from '../util/helpers';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
 import { ActionCore }             from '../composable/ActionCore';
 import { Questioner }             from './Questioner';
-import {PageConfigCore} from '../composable/config'
+import { PagesConfigCore }         from '../composable/config';
+
 type TPageSet =
   | {
-      config?: Partial<PageConfigCore>;
+      config?: Partial<PagesConfigCore>;
       data?: PageCore;
     }
   | undefined;

@@ -40,7 +40,9 @@ export class ButtonCore extends RefCore implements IButtonCore {
    *
    * @title Mode
    */
-  #type?: TButtonModeCore | undefined;
+  override get type(): TButtonModeCore | '' {
+    return super.type as TButtonModeCore;
+  }
 
   /**
    * Visibility status of the button (show/hide)
