@@ -11,7 +11,7 @@ import {
   StepCore,
 }         from './StepCore';
 import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
-import { QuestionableConfigCore } from './QuestionableConfigCore';
+import { QuestionableConfigCore } from './ConfigCore';
 import { BaseCore }               from './BaseCore';
 import { PagesCore }              from './PagesCore';
 import {

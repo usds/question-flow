@@ -1,6 +1,5 @@
 import { MODE }                                      from '../util/enums';
 import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
-import { IButtonCore }                               from './IButtonCore';
 import { IEventCore }                                from './IEventCore';
 
 /**
@@ -75,46 +74,37 @@ export interface IQuestionableConfigCore {
   steps?: Partial<IStepConfigCore> | undefined;
 }
 
+type TConfigBase = {
+  __core?: string | undefined;
+}
+
 /**
  * Customizations for styling and formatting of the steps
  */
-export interface IStepConfigCore {
-  readonly core?: 'IStepConfig' | 'I';
-}
+export type IStepConfigCore = TConfigBase;
 
 /**
  * Configuration options for the progress bar
  */
-export interface IProgressBarConfigCore {
-  readonly core?: 'IProgressBarConfig' | 'I';
-}
+export type IProgressBarConfigCore = TConfigBase;
 
 /**
  * Configuration for question display
  */
-export interface IQuestionConfigCore {
-  readonly core?: 'IQuestionConfig' | 'I';
-}
+export type IQuestionConfigCore  = TConfigBase;
 
 /**
  * Configuration for buttons
  */
-export interface IButtonConfigCore extends IButtonCore {
-  readonly core?: 'IButtonConfig' | 'I';
-}
+export type IButtonConfigCore  = TConfigBase;
 
 /**
  * Configuration for navigation
  */
-export interface INavigationConfigCore {
-  readonly core?: 'INavigationConfig' | 'I';
-}
+export type INavigationConfigCore  = TConfigBase;
 
-export interface IPageConfigCore {
-  readonly core?: 'IPageConfig' | 'I';
+export interface IPageConfigCore extends TConfigBase {
   visible?: boolean;
 }
 
-export interface IPagesConfigCore {
-  readonly core?: 'IPagesConfig' | 'I';
-}
+export type IPagesConfigCore  = TConfigBase;

@@ -5,7 +5,7 @@ export * from './EventEmitterCore';
 export * from './FormCore';
 export * from './PageCore';
 export * from './PagesCore';
-export * from './QuestionableConfigCore';
+export * from './ConfigCore';
 export * from './QuestionnaireCore';
 export * from './RefCore';
 export * from './ResultCore';

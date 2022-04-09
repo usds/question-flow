@@ -6,13 +6,13 @@ import { EventEmitterCore }                          from './EventEmitterCore';
 import { isEnum, MODE }                              from '../util/enums';
 import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
 import {
-  INavigationConfigCore,
-  IPagesConfigCore,
-  IProgressBarConfigCore,
-  IQuestionableConfigCore,
-  IQuestionConfigCore,
-  IStepConfigCore,
-} from '../survey/IQuestionableConfigCore';
+  NavigationConfigCore,
+  PagesConfigCore,
+  ProgressBarConfigCore,
+  QuestionConfigCore,
+  StepConfigCore,
+} from './config';
+import { IQuestionableConfigCore }                 from '../survey/IQuestionableConfigCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { BaseCore }                                from './BaseCore';
 
@@ -56,15 +56,15 @@ export class QuestionableConfigCore
 
   #mode!: MODE;
 
-  #nav!: INavigationConfigCore;
+  #nav!: NavigationConfigCore;
 
-  #pages!: IPagesConfigCore;
+  #pages!: PagesConfigCore;
 
-  #progressBar!: IProgressBarConfigCore;
+  #progressBar!: ProgressBarConfigCore;
 
-  #questions!: IQuestionConfigCore;
+  #questions!: QuestionConfigCore;
 
-  #steps!: IStepConfigCore;
+  #steps!: StepConfigCore;
 
   #events!: EventEmitterCore;
 
@@ -79,7 +79,12 @@ export class QuestionableConfigCore
     if (data.params?.dev) {
       this.#mode = MODE.DEV;
     }
-    this.events = new EventEmitterCore(data.events);
+    this.#events      = EventEmitterCore.create(data.events);
+    this.#steps       = StepConfigCore.create(data.steps);
+    this.#questions   = QuestionConfigCore.create(data.questions);
+    this.#progressBar = ProgressBarConfigCore.create(data.progressBar);
+    this.#pages       = PagesConfigCore.create(data.pages);
+    this.#nav         = NavigationConfigCore.create(data.nav);
   }
 
   get dev(): boolean {
@@ -117,58 +122,58 @@ export class QuestionableConfigCore
     return this.#params;
   }
 
-  get nav(): INavigationConfigCore {
+  get nav(): NavigationConfigCore {
     if (isEmpty(this.#nav)) {
-      this.#nav = {};
+      this.#nav = new NavigationConfigCore();
     }
-    return { ...this.#nav };
+    return this.#nav;
   }
 
-  set nav(val: INavigationConfigCore) {
+  set nav(val: NavigationConfigCore) {
     merge(this.#nav, val);
   }
 
-  get pages(): IPagesConfigCore {
+  get pages(): PagesConfigCore {
     if (isEmpty(this.#pages)) {
-      this.#pages = {};
+      this.#pages = new PagesConfigCore();
     }
     return this.#pages;
   }
 
-  set pages(val: IPagesConfigCore) {
+  set pages(val: PagesConfigCore) {
     merge(this.#pages, val);
   }
 
-  get progressBar(): IProgressBarConfigCore {
+  get progressBar(): ProgressBarConfigCore {
     if (isEmpty(this.#progressBar)) {
-      this.#progressBar = {};
+      this.#progressBar = new ProgressBarConfigCore();
     }
-    return { ...this.#progressBar };
+    return this.#progressBar;
   }
 
-  set progressBar(val: IProgressBarConfigCore) {
+  set progressBar(val: ProgressBarConfigCore) {
     merge(this.#progressBar, val);
   }
 
-  get questions(): IQuestionConfigCore {
+  get questions(): QuestionConfigCore {
     if (isEmpty(this.#questions)) {
-      this.#questions = {};
+      this.#questions = new QuestionConfigCore();
     }
-    return { ...this.#questions };
+    return this.#questions;
   }
 
-  set questions(val: IQuestionConfigCore) {
+  set questions(val: QuestionConfigCore) {
     merge(this.#questions, val);
   }
 
-  get steps(): IStepConfigCore {
+  get steps(): StepConfigCore {
     if (isEmpty(this.#steps)) {
-      this.#steps = {};
+      this.#steps = new StepConfigCore();
     }
-    return { ...this.#steps };
+    return this.#steps;
   }
 
-  set steps(val: IStepConfigCore) {
+  set steps(val: StepConfigCore) {
     merge(this.#steps, val);
   }
 }
