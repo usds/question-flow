@@ -25,8 +25,9 @@ import { log, toggleOut }         from '../util/logger';
 import { matches }                from '../util/helpers';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
 import { ActionCore }             from '../composable/ActionCore';
-import { Questioner }             from './Questioner';
-import { PagesConfigCore }         from '../composable/config';
+import { isValid, Questioner }    from './Questioner';
+import { PagesConfigCore }        from '../composable/config';
+import { TQForm }                 from './types';
 
 type TPageSet =
   | {
@@ -53,32 +54,36 @@ export class GateLogicCore {
     this.setPageDefaults();
   }
 
-  protected get questionnaire() {
+  public get questionnaire() {
     return this.#questionnaire;
   }
 
-  protected get form() {
+  public get form() {
     return this.#form;
   }
 
-  protected get flow() {
+  public get flow() {
     return this.questionnaire.flow;
   }
 
-  protected get config() {
+  public get config() {
     return this.questionnaire.config;
   }
 
-  protected get steps() {
+  public get steps() {
     return this.questionnaire.steps;
   }
 
-  protected get pages() {
+  public get pages() {
     return this.questionnaire.pages;
   }
 
-  protected get pageList() {
+  public get pageList() {
     return this.pages.all();
+  }
+
+  public getQuestioner({ question, form }: TQForm) {
+    return new Questioner({ form: (form || this.#form), question });
   }
 
   public enableLog() {
@@ -125,10 +130,10 @@ export class GateLogicCore {
     if (!s.id) {
       throw new Error('This survery is not defined');
     }
-    if (s.id === STEP_TYPE.LANDING) {
+    if (s.type === STEP_TYPE.LANDING) {
       return true;
     }
-    if (s.id === STEP_TYPE.SUMMARY) {
+    if (s.type === STEP_TYPE.SUMMARY) {
       return true;
     }
     // KLUDGE Alert: this is not an elegant way to solve this
@@ -139,7 +144,7 @@ export class GateLogicCore {
     if (!this.form) {
       return false;
     }
-    return Questioner.isValid(s, this.form);
+    return isValid({ form: this.form, step: s });
   }
 
   /**

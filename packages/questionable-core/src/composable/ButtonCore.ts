@@ -72,4 +72,6 @@ export class ButtonCore extends RefCore implements IButtonCore {
   public set visible(val: boolean) {
     this.#visible = val;
   }
+
+  public pointer?: 'back' | 'next' | undefined;
 }

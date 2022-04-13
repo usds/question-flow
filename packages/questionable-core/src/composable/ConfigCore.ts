@@ -54,6 +54,20 @@ export class QuestionableConfigCore
     return checkInstanceOf([ClassList.config], obj);
   }
 
+  public static override create(data: Partial<QuestionableConfigCore>) {
+    if (data instanceof QuestionableConfigCore) {
+      return data;
+    }
+    return new QuestionableConfigCore(data);
+  }
+
+  public static override createOptional(data?: Partial<QuestionableConfigCore>) {
+    if (!data || !super.createOptional(data)) {
+      return undefined;
+    }
+    return QuestionableConfigCore.create(data);
+  }
+
   #mode!: MODE;
 
   #nav!: NavigationConfigCore;

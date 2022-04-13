@@ -1,3 +1,3 @@
 export * from './EventEmitter';
-export * from './QuestionableConfig';
+export * from './config';
 export * from './Questionnaire';

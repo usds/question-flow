@@ -9,7 +9,7 @@ import { IResult }                from '../../survey/IResult';
 import { setResults }             from '../../state/persists';
 import { TResultData }            from '../../survey/IEvent';
 import { IQuestionData }          from '../../survey/IStepData';
-import { QuestionableConfig }     from '../../composable/QuestionableConfig';
+import { QuestionableConfig }     from '../../composable/config';
 import { Questionnaire }          from '../../composable/Questionnaire';
 import { TComp }                  from './types';
 

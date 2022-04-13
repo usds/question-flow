@@ -3,7 +3,7 @@
 /* eslint-disable no-param-reassign */
 import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
 import { IRefCore }                  from '@usds.gov/questionable-core';
-import { QuestionableConfig }        from '../../composable/QuestionableConfig';
+import { QuestionableConfig }        from '../../composable/config';
 import { IQuestionData }             from '../../survey/IStepData';
 import { CSS_CLASS }                 from '../../lib/enums';
 

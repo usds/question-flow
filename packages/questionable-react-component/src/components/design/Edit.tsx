@@ -17,7 +17,7 @@ import { DesignLayout }  from '../wizard/DesignLayout';
 export const Edit = (_props: IQuestionData | IPageData): JSX.Element => {
   const { questionnaire } = useGlobal();
   //const schema            = getStepSchema(props);
-  const fileName          = kebabCase(questionnaire.header);
+  const fileName          = kebabCase(questionnaire.questionnaire.header);
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const onSubmit = ({ formData }: any) => {

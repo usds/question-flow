@@ -15,6 +15,7 @@ export class RefCore extends BaseCore implements IRefCore {
     return ClassList.ref;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
     return checkInstanceOf([ClassList.ref], obj);
   }

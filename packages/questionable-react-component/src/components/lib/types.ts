@@ -3,7 +3,7 @@ import { GateLogicCore }                       from '@usds.gov/questionable-core
 import { QuestionComposer }                    from './Questions';
 import { PageComposer }                        from './Pages';
 import { IQuestionData, IStepData, IPageData } from '../../survey/IStepData';
-import { QuestionableConfig }                  from '../../composable/QuestionableConfig';
+import { QuestionableConfig }                  from '../../composable/config';
 import { Questionnaire }                       from '../../composable/Questionnaire';
 
 export type TQstn = {

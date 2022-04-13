@@ -41,7 +41,7 @@
   },
   "extends": "../../tsconfig.json",
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],
   "references": [
     {

@@ -1,5 +1,7 @@
 export * from './ActionCore';
 export * from './BaseCore';
+export * from './ButtonCore';
+export * from './config';
 export * from './Dictionary';
 export * from './EventEmitterCore';
 export * from './FormCore';

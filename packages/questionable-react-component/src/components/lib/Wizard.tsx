@@ -1,7 +1,7 @@
 import { SiteAlert }          from '@trussworks/react-uswds';
 import FileSaver              from 'file-saver';
 import { ACTION_TYPE }        from '@usds.gov/questionable-core';
-import { QuestionableConfig } from '../../composable/QuestionableConfig';
+import { QuestionableConfig } from '../../composable/config';
 import {  CSS_CLASS }         from '../../lib/enums';
 import { noel }               from '../../lib/noel';
 import { IStepData }          from '../../survey/IStepData';

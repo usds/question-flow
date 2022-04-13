@@ -17,7 +17,7 @@ import { setAge }             from '../../../state/persists';
 import { IQuestionData }      from '../../../survey/IStepData';
 import { Steps }              from '../../lib/Steps';
 import { CSS_CLASS }          from '../../../lib/enums';
-import { QuestionableConfig } from '../../../composable/QuestionableConfig';
+import { QuestionableConfig } from '../../../composable/config';
 
 type TInfoBox = 'error' | 'warning' | 'info';
 

@@ -32,6 +32,8 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   #buttons: ButtonCore[];
 
+  #icon: string;
+
   #label: string;
 
   #subTitle: string;
@@ -44,6 +46,7 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
     this.#label    = data.label || '';
     this.#subTitle = data.subTitle || '';
     this.#type     = data.type || ACTION.DEFAULT;
+    this.#icon     = data.icon || '';
   }
 
   /**
@@ -57,6 +60,10 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   public set buttons(val: ButtonCore[]) {
     this.#buttons = val;
+  }
+
+  public get icon(): string {
+    return this.#icon;
   }
 
   /**
