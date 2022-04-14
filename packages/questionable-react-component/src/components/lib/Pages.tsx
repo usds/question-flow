@@ -1,29 +1,38 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable max-classes-per-file */
-import { kebabCase }              from 'lodash';
-import { ReactNode }              from 'react';
-import { groupBy, GateLogicCore } from '@usds.gov/questionable-core';
-import { CSS_CLASS }              from '../../lib/enums';
-import { Div }                    from '../factories/NodeFactory';
-import { IResult }                from '../../survey/IResult';
-import { setResults }             from '../../state/persists';
-import { TResultData }            from '../../survey/IEvent';
-import { IQuestionData }          from '../../survey/IStepData';
-import { QuestionableConfig }     from '../../composable/config';
-import { Questionnaire }          from '../../composable/Questionnaire';
-import { TComp }                  from './types';
+import { kebabCase } from 'lodash';
+import { ReactNode } from 'react';
+import {
+  groupBy,
+  GateLogicCore,
+  QuestionableConfigCore,
+  QuestionnaireCore,
+  ResultCore,
+} from '@usds.gov/questionable-core';
+import { CSS_CLASS }  from '../../lib/enums';
+import { Div }        from '../factories/NodeFactory';
+import { setResults } from '../../state/persists';
+import { Page }       from '../../composable';
+import { TComp }      from './types';
 
 export class PageComposer {
-  props: IQuestionData;
+  page!: Page;
 
-  config: QuestionableConfig;
+  config!: QuestionableConfigCore;
 
-  questionnaire: Questionnaire;
+  questionnaire!: QuestionnaireCore;
 
-  gate: GateLogicCore;
+  gate!: GateLogicCore;
 
-  constructor(data: TComp) {
-    this = data;
+  constructor({
+    page, gate,
+  }: {
+    gate: GateLogicCore, page: Page,
+  }) {
+    this.page          = page;
+    this.gate          = gate;
+    this.questionnaire = gate.questionnaire;
+    this.config        = gate.config;
   }
 
   /**
@@ -32,28 +41,28 @@ export class PageComposer {
    * @param result
    * @returns
    */
-  static getReason(result: IResult): string {
+  getReason({ result }:{result: ResultCore}): string {
     let reason = result.match?.explanation;
 
     if (!reason) {
       return '';
     }
 
-    if (config?.dev && result.match) {
+    if (this.config?.dev && result.match) {
       reason += '<br><br>';
       if (
         result.match.ageCalc !== undefined
         || result.match.minAge !== undefined
         || result.match.maxAge !== undefined
       ) {
-        reason += `You are ${this.props.form.age?.years} years `;
-        reason += `and ${this.props.form.age?.months} months old. `;
+        reason += `You are ${this.gate.form.age?.years} years `;
+        reason += `and ${this.gate.form.age?.months} months old. `;
       }
       result.match.responses.forEach((r) => {
-        if (!r.question.id) {
+        if (!r.question?.id) {
           return;
         }
-        const q = this.questionnaire.getQuestionById(r.question.id);
+        const q = this.gate.getQuestionById(r.question.id);
         reason += `You answered "<b>${q.answer}</b>" to the question "<i>${q.title}.</i>" `;
       });
     }
@@ -66,9 +75,9 @@ export class PageComposer {
    * @returns
    */
   getResults(): ReactNode {
-    const data: TResultData = {
-      props,
-      results: this.questionnaire.getResults(this.props.form).map((result) => ({
+    const data = {
+      page:    this.page,
+      results: this.gate.getResults().map((result: any) => ({
         category: result.category,
         id:       result.id,
         label:    result.label,
@@ -90,9 +99,9 @@ export class PageComposer {
     const categories = groupBy(data.results, 'category');
     return Object.keys(categories).map((key) => {
       const cat   = categories[key];
-      const group = cat.map((result) => (
+      const group = cat.map((result: any) => (
         <li
-          key={`${props.stepId}_${result.id}`}
+          key={`${this.page.id}_${result.id}`}
           className={CSS_CLASS.RESULTS_BENEFITS}
         >
           <span role="heading" aria-level={6}>

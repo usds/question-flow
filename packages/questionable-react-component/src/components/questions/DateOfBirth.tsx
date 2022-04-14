@@ -11,13 +11,13 @@ import {
   IInfoBox,
   getDateInputGroup,
 } from './lib/DateOfBirthUtils';
-import type { TQst } from '../lib/types';
+import { Question }         from '../../composable';
+import { QuestionComposer } from '../lib';
 
-export const DateOfBirth = ({ props, comp }: TQst): JSX.Element => {
-  const { config, questionnaire } = useGlobal();
-  const { step }                  = props;
-  const birthdate                 = comp.getBirthdate(props);
-  const dob: TDateOfBirthCore     = {
+export const DateOfBirth = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => {
+  const { questionnaire }     = useGlobal();
+  const birthdate             = comp.getBirthdate();
+  const dob: TDateOfBirthCore = {
     day:   birthdate?.day?.toString(),
     month: birthdate?.month?.toString(),
     year:  birthdate?.year?.toString(),
@@ -26,7 +26,7 @@ export const DateOfBirth = ({ props, comp }: TQst): JSX.Element => {
   const [state, setState]           = useState(dob);
   const startMessage: IInfoBox      = { message: '', type: 'info' };
   const [error, setError]           = useState(startMessage);
-  const [cookieName, setCookieName] = useState(kebabCase(questionnaire.header));
+  const [cookieName, setCookieName] = useState(kebabCase(questionnaire.questionnaire.header));
 
   if (!step) {
     return noel();
@@ -40,11 +40,11 @@ export const DateOfBirth = ({ props, comp }: TQst): JSX.Element => {
     setState,
     state,
   };
-  return getDateInputGroup('date_of_birth', props, config, params);
+  return getDateInputGroup('date_of_birth', step, params, comp);
 };
 
-export const DateOfBirthStep = ({ props, comp }: TQst): JSX.Element => (
-  <StepLayout props={props} comp={comp}>
-    <DateOfBirth props={props} comp={comp}/>
+export const DateOfBirthStep = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => (
+  <StepLayout step={step} comp={comp}>
+    <DateOfBirth step={step} comp={comp}/>
   </StepLayout>
 );

@@ -1,23 +1,52 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-param-reassign */
-import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
-import { IRefCore }                  from '@usds.gov/questionable-core';
-import { QuestionableConfig }        from '../../composable/config';
-import { IQuestionData }             from '../../survey/IStepData';
-import { CSS_CLASS }                 from '../../lib/enums';
+import {
+  Checkbox,
+  Fieldset,
+  Radio,
+} from '@trussworks/react-uswds';
+import {
+  GateLogicCore,
+  QuestionableConfigCore,
+  QuestionnaireCore,
+  TStepReducerAction,
+  TDateOfBirthCore,
+  FormCore,
+  updateForm,
+  isSelected,
+  getBirthdate,
+  toBirthdate,
+} from '@usds.gov/questionable-core';
+import { Question }  from '../../composable';
+import { CSS_CLASS } from '../../lib/enums';
 
 export class QuestionComposer {
-  props: IQuestionData;
+  question!: Question;
 
-  config: QuestionableConfig;
+  config!: QuestionableConfigCore;
 
-  questionnaire: Questionnaire;
+  questionnaire!: QuestionnaireCore;
 
-  gate: GateLogicCore;
+  gate!: GateLogicCore;
 
-  constructor(data: { config, gate, props, questionnaire }) {
-    this = data;
+  constructor({
+    question, gate,
+  }: {
+    gate: GateLogicCore, question: Question,
+  }) {
+    this.question      = question;
+    this.gate          = gate;
+    this.questionnaire = gate.questionnaire;
+    this.config        = gate.config;
+  }
+
+  public updateForm(title: string) {
+    return updateForm({ answer: title, form: this.gate.form, question: this.question });
+  }
+
+  public isSelected(title: string) {
+    return isSelected({ answer: title, form: this.gate.form, question: this.question }) === true;
   }
 
   /**
@@ -27,20 +56,20 @@ export class QuestionComposer {
    * @returns
    */
   private getRadio(
-    answer: IRefCore,
+    { answer }: {answer: {title: string}},
   ): JSX.Element {
-    const title   = this.gate.getString(answer);
-    const handler = () => this.gate.updateForm(title, this.props, this.config);
-    const id      = this.gate.getDomId(title, this.props);
+    const { title } = answer;
+    const handler   = () => this.updateForm(title);
+    const id        = this.question.getDomId(title);
 
     return (
       <Radio
         id={id}
         key={id}
-        name={this.gate.getFieldSetName(this.props)}
+        name={this.question.getFieldSetName()}
         label={title}
         value={title}
-        checked={this.gate.isSelected(title, this.props) === true}
+        checked={this.isSelected(title)}
         className={CSS_CLASS.MULTI_CHOICE}
         onChange={handler}
         onClick={handler}
@@ -57,11 +86,11 @@ export class QuestionComposer {
   public getRadios(): JSX.Element {
     return (
       <Fieldset
-        legend={this.props.step.title}
+        legend={this.question.title}
         className={CSS_CLASS.MULTI_CHOICE_GROUP}
         legendStyle="srOnly"
       >
-        {this.props.step.answers.map((a) => this.getRadio(a, this.props, this.config))}
+        {this.question.answers.map((answer) => this.getRadio({ answer }))}
       </Fieldset>
     );
   }
@@ -73,20 +102,20 @@ export class QuestionComposer {
    * @returns
    */
   protected getCheckbox(
-    answer: IRefCore,
+    { answer }: {answer: {title: string}},
   ): JSX.Element {
-    const title   = this.gate.getString(answer);
-    const handler = () => this.gate.updateForm(title, this.props, this.config);
-    const id      = this.gate.getDomId(title, this.props);
+    const { title } = answer;
+    const handler   = () => this.updateForm(title);
+    const id        = this.question.getDomId(title);
 
     return (
       <Checkbox
         id={id}
         key={id}
-        name={this.gate.getFieldSetName(this.props)}
+        name={this.question.getFieldSetName()}
         label={title}
         value={title}
-        checked={this.gate.isSelected(title, this.props) === true}
+        checked={this.isSelected(title)}
         className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
@@ -103,12 +132,24 @@ export class QuestionComposer {
   public getCheckboxes(): JSX.Element {
     return (
       <Fieldset
-        legend={this.props.step.title}
+        legend={this.question.title}
         className={CSS_CLASS.MULTI_SELECT_GROUP}
         legendStyle="srOnly"
       >
-        {this.props.step.answers.map((a) => this.getCheckbox(a, this.props, this.config))}
+        {this.question.answers.map((answer) => this.getCheckbox({ answer }))}
       </Fieldset>
     );
+  }
+
+  public getBirthdate() {
+    return getBirthdate({ form: this.gate.form, question: this.question });
+  }
+
+  public toBirthdate(dob: TDateOfBirthCore) {
+    return toBirthdate({ dob, question: this.question });
+  }
+
+  public dispatchForm(action: TStepReducerAction) {
+    return FormCore.reducer(this.gate.form, action);
   }
 }

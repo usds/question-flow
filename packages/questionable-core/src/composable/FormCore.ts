@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable import/no-cycle */
 import { merge }        from 'lodash';
 import { eventedCore }  from '../state/pubsub';
 import { IFormCore }    from '../survey/IFormCore';
-import { ACTION_TYPE }  from '../util/enums';
 import { matches }      from '../util/helpers';
 import { TAgeCore }     from '../util/types';
 import { BaseCore }     from './BaseCore';
@@ -12,14 +12,65 @@ import {
   ClassList,
   TInstanceOf,
 } from '../util/instanceOf';
+import { ACTION_TYPE } from '../util/enums';
 
-type TReducer = (
-  previousForm: FormCore,
-  reducedForm: FormCore,
-  action: { type: ACTION_TYPE; value: unknown }
+export type TStepReducerAction = {
+  type: ACTION_TYPE;
+  value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+export type TStepReducer = {
+  action: TStepReducerAction,
+};
+export type TReducer = {
+  action: TStepReducerAction;
+  previousState: Partial<FormCore>;
+}
+
+export type TReducerFn = (
+  previousState: Partial<FormCore>, action: TStepReducerAction, callback?: TReducerFn
 ) => FormCore;
-// Return the results of the current reducer
-const defaultReducer: TReducer = (_previous, _reduced) => _reduced;
+
+/**
+ * Merges the form's answer state as the user progresses through the survey
+ * @param previousState
+ * @param action
+ * @returns
+ */
+export const defaultReducer: TReducerFn = (previousState, action, callback?: TReducerFn) => {
+  // Action should never be null,
+  // __EXCEPT__ when we attempt to storybook/test individual components in isolation
+  let ret: FormCore;
+  switch (action?.type) {
+    case ACTION_TYPE.RESET:
+      ret = new FormCore();
+      break;
+
+    case ACTION_TYPE.UPDATE:
+      ret = FormCore.create(merge(
+        {
+          ...previousState,
+        },
+        {
+          ...action.value,
+        },
+      ));
+      break;
+
+    // Effective a noop that triggers a re-render of the page
+    case ACTION_TYPE.RERENDER:
+      ret = FormCore.create(previousState);
+      break;
+
+    default:
+      ret =  FormCore.create(previousState);
+      break;
+  }
+  if (callback) {
+    callback(ret, action);
+  }
+  eventedCore.publish({ event: ret, type: 'reduce' });
+  return ret;
+};
 
 export class FormCore extends BaseCore implements IFormCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -54,8 +105,6 @@ export class FormCore extends BaseCore implements IFormCore {
   #finished;
 
   #responses;
-
-  #reducer = defaultReducer;
 
   constructor(data: Partial<FormCore> = {}) {
     super(data);
@@ -107,25 +156,22 @@ export class FormCore extends BaseCore implements IFormCore {
     this.#responses = val;
   }
 
-  public existsIn(data: QuestionCore | TReducer): boolean {
+  public existsIn(data: QuestionCore): boolean {
     if (data instanceof QuestionCore) {
       return this.#responses.some(
         (q) => q === data || matches(q.title, data.title),
       );
     }
-    // === TReducer
-    return this.#reducer !== defaultReducer;
+    return false;
   }
 
-  public add(data: QuestionCore | TReducer): FormCore {
+  public add(data: QuestionCore): FormCore {
     const exists = this.existsIn(data);
     if (exists) {
       return this;
     }
     if (data instanceof QuestionCore) {
       this.#responses.push(data);
-    } else {
-      this.#reducer = data;
     }
     return this;
   }
@@ -136,51 +182,10 @@ export class FormCore extends BaseCore implements IFormCore {
    * @param action
    * @returns
    */
-  public static reducer(
-    previousState: FormCore,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    action: { type: ACTION_TYPE; value: any },
-    callback?: TReducer,
-  ) {
-    let reducedForm = previousState;
-    // Action should never be null,
-    // except when we attempt to storybook/test individual components in isolation
-    switch (action?.type) {
-      case ACTION_TYPE.RESET:
-        reducedForm = new FormCore();
-        break;
-
-      case ACTION_TYPE.UPDATE:
-        reducedForm = new FormCore(
-          merge(
-            {
-              ...previousState,
-            },
-            {
-              ...action.value,
-            },
-          ),
-        );
-        break;
-      // Effectively a noop that triggers a re-render of the page
-      case ACTION_TYPE.RERENDER:
-        reducedForm = new FormCore({
-          ...previousState,
-        });
-        break;
-      default:
-        reducedForm = new FormCore({ ...previousState });
-        break;
-    }
-    if (callback) {
-      callback(previousState, reducedForm, action);
-    }
-    eventedCore.publish({ event: reducedForm, type: 'reduce' });
-    return reducedForm;
-  }
+  public static reducer: TReducerFn = (form, action, callback) => defaultReducer(form, action, callback);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  reduce(action: { type: ACTION_TYPE; value: any }) {
-    return FormCore.reducer(this, action, this.#reducer);
+  reduce(action: TStepReducerAction, callback?: TReducerFn) {
+    return FormCore.reducer(this, action, callback);
   }
 }

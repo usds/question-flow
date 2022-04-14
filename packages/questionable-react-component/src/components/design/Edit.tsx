@@ -4,17 +4,18 @@
 import { kebabCase }     from 'lodash';
 // import { getStepSchema } from '../../schema/editStepSchema';
 import { useGlobal }     from '../../state/GlobalState';
-import { IPageData }     from '../../survey/IStepData';
-import { IQuestionData } from '../../survey/IStepData';
+import { PageData }     from '../../composable/PageData';
+import { QuestionData } from '../../composable/QuestionData';
 import { Wizard }        from '../lib';
 import { DesignLayout }  from '../wizard/DesignLayout';
+import { Step } from '../../composable/Step';
 
 /**
  * Renders a question and a radio list of allowed answers
  * @param props
  * @returns
  */
-export const Edit = (_props: IQuestionData | IPageData): JSX.Element => {
+export const Edit = ({step}: {step: Step}): JSX.Element => {
   const { questionnaire } = useGlobal();
   //const schema            = getStepSchema(props);
   const fileName          = kebabCase(questionnaire.questionnaire.header);
@@ -56,8 +57,8 @@ export const Edit = (_props: IQuestionData | IPageData): JSX.Element => {
  * @param props
  * @returns
  */
-export const EditStep = (props: IQuestionData | IPageData): JSX.Element => (
-  <DesignLayout {...props}>
-    <Edit {...props} />
+export const EditStep = ({step}: {step: Step}): JSX.Element => (
+  <DesignLayout step={step}>
+    <Edit step={step} />
   </DesignLayout>
 );

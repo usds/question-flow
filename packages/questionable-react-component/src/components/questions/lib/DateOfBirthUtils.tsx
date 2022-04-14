@@ -10,14 +10,16 @@ import {
   ACTION_TYPE,
   DATE_UNIT,
   getAge,
+  QuestionableConfigCore,
   TDateOfBirthCore,
 } from '@usds.gov/questionable-core';
-import { noel }               from '../../../lib/noel';
-import { setAge }             from '../../../state/persists';
-import { IQuestionData }      from '../../../survey/IStepData';
-import { Steps }              from '../../lib/Steps';
-import { CSS_CLASS }          from '../../../lib/enums';
-import { QuestionableConfig } from '../../../composable/config';
+import { noel }             from '../../../lib/noel';
+import { setAge }           from '../../../state/persists';
+import { QuestionData }     from '../../../composable/QuestionData';
+import { Steps }            from '../../lib/Steps';
+import { CSS_CLASS }        from '../../../lib/enums';
+import { Question }         from '../../../composable';
+import { QuestionComposer } from '../../lib';
 
 type TInfoBox = 'error' | 'warning' | 'info';
 
@@ -111,10 +113,9 @@ export const onDoBKeyPress = (
 export const onDateOfBirthChange = (
   e: ChangeEvent<HTMLInputElement>,
   unit: DATE_UNIT,
-  props: IQuestionData,
-  config: QuestionableConfig,
+  question: Question,
   utilParams: TDoBUtilParams,
-  comp,
+  comp: QuestionComposer,
   // eslint-disable-next-line sonarjs/cognitive-complexity
 ): void => {
   const {
@@ -146,20 +147,20 @@ export const onDateOfBirthChange = (
   if (age && bd) {
     setError({ message: '', type: 'info' });
     setAge(cookieName, age.years);
-    props.dispatchForm({
+    comp.dispatchForm({
       type:  ACTION_TYPE.UPDATE,
       value: {
         age,
         birthdate: bd,
       },
     });
-    comp.updateForm(bd, props, config);
-    if (props.step.exitRequirements && age.years > 0) {
-      const invalid = props.step.exitRequirements.every(
+    comp.updateForm(bd);
+    if (question.exitRequirements && age.years > 0) {
+      const invalid = question.exitRequirements.every(
         (r) => r.minAge && age.years < r.minAge.years,
       );
       if (invalid) {
-        const min = props.step.exitRequirements
+        const min = question.exitRequirements
           .map((r) => r.minAge?.years)
           .join(', ');
         // eslint-disable-next-line max-len
@@ -170,7 +171,7 @@ export const onDateOfBirthChange = (
       }
     }
   } else if ((monthIsValid || dayIsValid || yearIsValid)
-    || (props.form?.age?.years && props.form.age.years > 0)) {
+    || (comp.gate.form?.age?.years && comp.gate.form.age.years > 0)) {
     let text = '';
     if ((yearIsValid && !monthIsValid) || (dayIsValid && !monthIsValid)) {
       text += ' month';
@@ -190,7 +191,7 @@ export const onDateOfBirthChange = (
       message: `"${message.join(' ')}`,
       type:    'error',
     });
-    props.dispatchForm({
+    comp.dispatchForm({
       type:  ACTION_TYPE.UPDATE,
       value: {
         age:       { years: 0 },
@@ -203,9 +204,9 @@ export const onDateOfBirthChange = (
 export const getDateInput = (
   unit: DATE_UNIT,
   label: string,
-  props: IQuestionData,
-  config: QuestionableConfig,
+  question: Question,
   utilParams: TDoBUtilParams,
+  comp: QuestionComposer,
 ): JSX.Element => {
   const { state }  = utilParams;
   let disabled     = true;
@@ -242,7 +243,7 @@ export const getDateInput = (
 
   return (
     <DateInput
-      id={Steps.getDomId(unit, props)}
+      id={question.getDomId(unit)}
       className={disabled ? CSS_CLASS.DISABLED_INPUT : ''}
       name={label}
       label={capitalize(unit)}
@@ -252,7 +253,7 @@ export const getDateInput = (
       maxLength={reqs.length}
       minLength={reqs.length}
       defaultValue={state[unit]}
-      onChange={(e) => onDateOfBirthChange(e, unit, props, config, utilParams)}
+      onChange={(e) => onDateOfBirthChange(e, unit, question, utilParams, comp)}
       onKeyPress={(e) => onDoBKeyPress(e, unit)}
     />
   );
@@ -282,15 +283,15 @@ export const getInfoBox = (utilParams: TDoBUtilParams): JSX.Element => {
 
 export const getDateInputGroup = (
   label: string,
-  props: IQuestionData,
-  config: QuestionableConfig,
+  question: Question,
   utilParams: TDoBUtilParams,
+  comp: QuestionComposer,
 ): JSX.Element => (
   <div>
-    <DateInputGroup role="group" aria-label={props.step.title}>
-      {getDateInput(DATE_UNIT.MONTH, label, props, config, utilParams)}
-      {getDateInput(DATE_UNIT.DAY, label, props, config, utilParams)}
-      {getDateInput(DATE_UNIT.YEAR, label, props, config, utilParams)}
+    <DateInputGroup role="group" aria-label={question.title}>
+      {getDateInput(DATE_UNIT.MONTH, label, question, utilParams, comp)}
+      {getDateInput(DATE_UNIT.DAY, label, question, utilParams, comp)}
+      {getDateInput(DATE_UNIT.YEAR, label, question, utilParams, comp)}
     </DateInputGroup>
     {getInfoBox(utilParams)}
   </div>

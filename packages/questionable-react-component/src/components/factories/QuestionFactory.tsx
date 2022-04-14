@@ -1,9 +1,10 @@
 import {
+  GateLogicCore,
   isEnum, QUESTION_TYPE,
 } from '@usds.gov/questionable-core';
-import { noel }                     from '../../lib/noel';
-import { useGlobal }                from '../../state/GlobalState';
-import { IStepData, IQuestionData } from '../../survey/IStepData';
+import { noel }      from '../../lib/noel';
+import { useGlobal } from '../../state/GlobalState';
+import { Question, Step }  from '../../composable';
 import {
   DateOfBirthStep,
   MultipleChoiceStep,
@@ -16,27 +17,22 @@ import { QuestionComposer } from '../lib/Questions';
  * @param props
  * @returns
  */
-export const QuestionFactory = (props: IStepData): JSX.Element => {
-  const { stepId }                = props;
-  const { questionnaire, config } = useGlobal();
-  const step                      = questionnaire.getStepById(`${stepId}`);
+export const QuestionFactory = ({ step, gate }: {gate: GateLogicCore, step: Step}): JSX.Element => {
+  const { questionnaire } = useGlobal();
   if (!isEnum(QUESTION_TYPE, step.type)) {
     return noel('Not a question');
   }
-  const question = questionnaire.getQuestionById(step.id);
-  const stepData = { ...{ step: question, ...props } } as IQuestionData;
-  const gate     = questionnaire.getGate(props.form);
-  const comp     = new QuestionComposer({
-    config, gate, props: question, questionnaire,
-  });
+  const question = questionnaire.getQuestionById(step.id) as Question;
+  // const stepData = { ...{ step: question, ...props } } as Partial<QuestionData>;
+  const comp = new QuestionComposer({ gate, question });
 
   switch (question.type) {
     case QUESTION_TYPE.DOB:
-      return <DateOfBirthStep {...stepData} comp={comp} />;
+      return <DateOfBirthStep step={question} comp={comp} />;
     case QUESTION_TYPE.MULTIPLE_CHOICE:
-      return <MultipleChoiceStep {...stepData} comp={comp}  />;
+      return <MultipleChoiceStep step={question} comp={comp}  />;
     case QUESTION_TYPE.MULTIPLE_SELECT:
-      return <MultiSelectStep {...stepData} comp={comp}  />;
+      return <MultiSelectStep step={question} comp={comp}  />;
     default:
       return noel('Question does not exist', 'QuestionFactory');
   }

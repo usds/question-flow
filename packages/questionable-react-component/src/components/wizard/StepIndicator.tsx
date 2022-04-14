@@ -2,12 +2,12 @@ import {
   StepIndicator as SI,
   StepIndicatorStep,
 } from '@trussworks/react-uswds';
-import { noel }         from '../../lib/noel';
-import { useGlobal }    from '../../state/GlobalState';
-import { ISectionCore } from '../../survey/IStep';
-import { IStepData }    from '../../survey/IStepData';
+import { SectionCore } from '@usds.gov/questionable-core';
+import { noel }        from '../../lib/noel';
+import { useGlobal }   from '../../state/GlobalState';
+import { Step }        from '../../composable/Step';
 
-const getIndicatorStep = (s: ISectionCore) => {
+const getIndicatorStep = (s: SectionCore) => {
   if (!s.title) {
     return noel();
   }
@@ -20,14 +20,14 @@ const getIndicatorStep = (s: ISectionCore) => {
   );
 };
 
-export const StepIndicator = (props: IStepData): JSX.Element => {
+export const StepIndicator = ({ step }: {step: Step}): JSX.Element => {
   const { config, questionnaire } = useGlobal();
 
   if (config.progressBar.hide) {
     return noel();
   }
 
-  const sections = questionnaire.getSections(props);
+  const sections = questionnaire.getSections(step);
   if (sections.length === 0) {
     return noel();
   }

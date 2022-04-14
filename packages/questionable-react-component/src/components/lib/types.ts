@@ -1,19 +1,20 @@
 /* eslint-disable import/no-cycle */
-import { GateLogicCore }                       from '@usds.gov/questionable-core';
-import { QuestionComposer }                    from './Questions';
-import { PageComposer }                        from './Pages';
-import { IQuestionData, IStepData, IPageData } from '../../survey/IStepData';
-import { QuestionableConfig }                  from '../../composable/config';
-import { Questionnaire }                       from '../../composable/Questionnaire';
+import { GateLogicCore, QuestionableConfigCore, QuestionnaireCore } from '@usds.gov/questionable-core';
+import { QuestionComposer }                                         from './Questions';
+import { PageComposer }                                             from './Pages';
+import {
+  QuestionData, StepData, PageData, Page, Question, Step,
+}   from '../../composable';
 
 export type TQstn = {
   comp: QuestionComposer | PageComposer;
-  props: IQuestionData | IPageData;
+  props?: Partial<QuestionData> | Partial<PageData>;
+  step: Step | Question | Page;
 };
 
 export type TComp = {
-  config: QuestionableConfig;
+  config: QuestionableConfigCore;
   gate: GateLogicCore;
-  props: IQuestionData | IPageData | IStepData;
-  questionnaire: Questionnaire;
+  props: Partial<QuestionData> | Partial<PageData> | Partial<StepData>;
+  questionnaire: QuestionnaireCore;
 };

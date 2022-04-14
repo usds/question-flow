@@ -355,7 +355,7 @@ export const survey = {
           "type": "object"
         },
         "step": {
-          "$ref": "#/definitions/IStep",
+          "$ref": "#/definitions/Partial<Step>",
           "description": "Current step"
         },
         "stepId": {
@@ -708,7 +708,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IPageData": {
+    "Partial<PageData>": {
       "description": "Data defintion for page step",
       "properties": {
         "form": {
@@ -1188,12 +1188,12 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IQuestionData": {
+    "Partial<QuestionData>": {
       "description": "Data defintion for question step",
       "properties": {
         "core": {
           "enum": [
-            "IQuestionData",
+            "Partial<QuestionData>",
             "I"
           ],
           "type": "string"
@@ -2005,7 +2005,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IStep": {
+    "Partial<Step>": {
       "description": "Generic step data definition. Applies to all types of steps.",
       "properties": {
         "buttons": {
@@ -2160,7 +2160,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IStepData": {
+    "Partial<StepData>": {
       "description": "Data defintion for base wizard step",
       "properties": {
         "form": {
@@ -2169,7 +2169,7 @@ export const survey = {
           "title": "Form"
         },
         "step": {
-          "$ref": "#/definitions/IStep",
+          "$ref": "#/definitions/Partial<Step>",
           "description": "Current step",
           "title": "Step"
         },

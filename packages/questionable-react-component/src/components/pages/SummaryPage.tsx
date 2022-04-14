@@ -1,30 +1,37 @@
+/* eslint-disable no-script-url */
 import { ReactNode }     from 'react';
+import { GateLogicCore } from '@usds.gov/questionable-core';
 import { CSS_CLASS }     from '../../lib/enums';
-import { IPageData }     from '../../survey/IStepData';
-import { IQuestionCore } from '../../survey';
+import { Question }      from '../../composable/Question';
 import { noel }          from '../../lib/noel';
 import { StepLayout }    from '../wizard/StepLayout';
-import { TQstn }         from '../lib';
-/* eslint-disable no-script-url */
+import { Step }          from '../../composable';
+import { PageComposer }  from '../lib';
 
+type tGa = {
+  comp: PageComposer,
+  gate: GateLogicCore,
+  onClick?: (question: Question) => void,
+  step: Step
+}
 /**
  * Internal method to generate a list of the survey answers
  * @param props
  * @returns
  */
-const getAnswers = (props: IPageData, onClick: (question: IQuestionCore) => void): ReactNode => {
-  const answers = props.form.responses.map((question, i) => (
+const getAnswers = ({ onClick, gate }: tGa): ReactNode => {
+  const answers = gate.form.responses.map((question, i) => (
       <li key={question.id} className={CSS_CLASS.SUMMARY_QA_LIST}>
         <span className="text-light">
         <span role={'link'} tabIndex={i}
           // eslint-disable-next-line max-len
           dangerouslySetInnerHTML={{ __html: `<a class="usa-link" href="javascript:void(0)">${question.title}</a>` }}
           onClick={() => {
-            onClick(question);
+            if (onClick) onClick(question);
             return false;
           }}
           onKeyDown={() => {
-            onClick(question);
+            if (onClick) onClick(question);
             return false;
           }}
           >
@@ -43,16 +50,16 @@ const getAnswers = (props: IPageData, onClick: (question: IQuestionCore) => void
  * @param props
  * @returns
  */
-export const SummaryPage = ({ props, comp }: TQstn): JSX.Element => {
-  const { step: page } = props;
-
-  if (!page) {
+export const SummaryPage = ({ step, gate, comp }: tGa): JSX.Element => {
+  if (!step) {
     return noel();
   }
 
-  const onClick = (question: IQuestionCore) => {
-    comp.goToStep({ props, step: question.id });
+  const onClick = (question: Question) => {
+    gate.goToStep(question);
   };
 
-  return <StepLayout {...props} comp={comp}>{getAnswers(props, onClick)}</StepLayout>;
+  return <StepLayout step={step} comp={comp}>{getAnswers({
+    comp, gate, onClick, step,
+  })}</StepLayout>;
 };

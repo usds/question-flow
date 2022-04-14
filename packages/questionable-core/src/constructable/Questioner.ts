@@ -1,7 +1,6 @@
 import { merge, values }                         from 'lodash';
 import { DateTime }                              from 'luxon';
 import { eventedCore }                           from '../state/pubsub';
-import { defaultReducer as stepReducer }         from '../state/reducers';
 import { ACTION_TYPE, QUESTION_TYPE, STEP_TYPE } from '../util/enums';
 import { getDateTime }                           from '../util/date';
 import { FormCore }                              from '../composable/FormCore';
@@ -111,9 +110,9 @@ const updateForm = ({ answer, question, form }: TQForm & {answer: string}): void
     event: { answer, props: question, question: question.id },
     type:  'answer',
   });
-  stepReducer(form, {
+  form.reduce({
     type:  ACTION_TYPE.UPDATE,
-    value: { ...form },
+    value: form,
   });
 };
 
@@ -197,16 +196,6 @@ class Questioner {
   public isValid(): boolean {
     return isValid({ form: this.#form, step: this.#question });
   }
-
-  /**
-   * Merges the form's answer state as the user progresses through the survey
-   * @param previousState
-   * @param action
-   * @returns
-   */
-  public static dispatch = stepReducer;
-
-  public static stepReducer = stepReducer;
 }
 
 export {
@@ -214,7 +203,6 @@ export {
   isSelected,
   isValid,
   Questioner,
-  stepReducer,
   toBirthdate,
   toString,
   updateForm,
