@@ -3,7 +3,6 @@ import {
   FormCore,
 } from '@usds.gov/questionable-core';
 import { ReactNode } from 'react';
-import { IWizard }   from 'use-wizard/lib/cjs/useWizard/types/IWizard';
 import { Step }      from './Step';
 import { TWizard }   from './Wizard';
 

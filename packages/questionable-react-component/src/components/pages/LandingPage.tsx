@@ -1,4 +1,3 @@
-import { ReactNode }    from 'react';
 import { Page }         from '../../composable/Page';
 import { noel }         from '../../lib/noel';
 import { Span }         from '../factories/NodeFactory';

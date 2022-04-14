@@ -12828,6 +12828,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:17.0.23"],\
             ["@types/react", "npm:17.0.44"],\
             ["@types/react-dom", "npm:17.0.15"],\
+            ["@usds.gov/questionable-build", "workspace:packages/questionable-build"],\
             ["@usds.gov/questionable-core", "workspace:packages/questionable-core"],\
             ["@usds.gov/questionable-mocks", "workspace:packages/questionable-mocks"],\
             ["@usds.gov/questionable-react-component", "workspace:packages/questionable-react-component"],\

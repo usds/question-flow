@@ -1,7 +1,11 @@
-import { merge }                            from 'lodash';
-import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '@usds.gov/questionable-core';
-import { PageData, QuestionData, Step }           from '../composable';
-import { survey }                           from './survey';
+import { merge }   from 'lodash';
+import {
+  isEnum,
+  PAGE_TYPE,
+  QUESTION_TYPE,
+} from '@usds.gov/questionable-core';
+import { Step }   from '../composable';
+import { survey } from './survey';
 
 const schemaPart = {
   properties: {

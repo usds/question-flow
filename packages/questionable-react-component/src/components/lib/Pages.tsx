@@ -13,7 +13,6 @@ import { CSS_CLASS }  from '../../lib/enums';
 import { Div }        from '../factories/NodeFactory';
 import { setResults } from '../../state/persists';
 import { Page }       from '../../composable';
-import { TComp }      from './types';
 
 export class PageComposer {
   page!: Page;
@@ -77,11 +76,11 @@ export class PageComposer {
   getResults(): ReactNode {
     const data = {
       page:    this.page,
-      results: this.gate.getResults().map((result: any) => ({
+      results: this.gate.getResults().map((result) => ({
         category: result.category,
         id:       result.id,
         label:    result.label,
-        reason:   this.getReason(result),
+        reason:   this.getReason({ result }),
         title:    result.title,
       })),
       step: 'results',
@@ -99,7 +98,7 @@ export class PageComposer {
     const categories = groupBy(data.results, 'category');
     return Object.keys(categories).map((key) => {
       const cat   = categories[key];
-      const group = cat.map((result: any) => (
+      const group = cat.map((result) => (
         <li
           key={`${this.page.id}_${result.id}`}
           className={CSS_CLASS.RESULTS_BENEFITS}

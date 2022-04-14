@@ -10,13 +10,10 @@ import {
   ACTION_TYPE,
   DATE_UNIT,
   getAge,
-  QuestionableConfigCore,
   TDateOfBirthCore,
 } from '@usds.gov/questionable-core';
 import { noel }             from '../../../lib/noel';
 import { setAge }           from '../../../state/persists';
-import { QuestionData }     from '../../../composable/QuestionData';
-import { Steps }            from '../../lib/Steps';
 import { CSS_CLASS }        from '../../../lib/enums';
 import { Question }         from '../../../composable';
 import { QuestionComposer } from '../../lib';

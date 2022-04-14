@@ -2,9 +2,9 @@ import {
   GateLogicCore,
   isEnum, QUESTION_TYPE,
 } from '@usds.gov/questionable-core';
-import { noel }      from '../../lib/noel';
-import { useGlobal } from '../../state/GlobalState';
-import { Question, Step }  from '../../composable';
+import { noel }           from '../../lib/noel';
+import { useGlobal }      from '../../state/GlobalState';
+import { Question, Step } from '../../composable';
 import {
   DateOfBirthStep,
   MultipleChoiceStep,
