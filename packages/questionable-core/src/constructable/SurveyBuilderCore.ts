@@ -14,7 +14,9 @@ import {
   ResponseCore as Response,
   ResultCore as Result,
   SectionCore as Section,
+  TCtor,
 } from '../composable';
+import { Factory } from './Factory';
 import { ClassList } from '../util';
 import { ACTION, MODE } from '../util/enums';
 import { merge } from '../util/merge';
@@ -22,12 +24,6 @@ import { merge } from '../util/merge';
 type TBuilderDefaults = {
   section?: Section;
 };
-
-type TCtor<T extends Base> = { new (data: Partial<T>): T };
-
-function create<T extends Base>(c: TCtor<T>, data: Partial<T>): T {
-  return new c(data);
-}
 
 export class SurveyBuilder {
   #actions: Action[] = [];
@@ -72,90 +68,70 @@ export class SurveyBuilder {
       },
       inp,
     );
-    const ret = create(Action, data);
-    this.#actions.push(ret);
-    return ret;
+    return Factory.addOne(Action, data,this.#actions);
   }
 
   addAnswers(data: Partial<Answer>[]) {
     return data.map((d) => this.#addAnswer(d));
   }
   #addAnswer(data: Partial<Answer>): Answer {
-    const ret = new Answer(data);
-    this.#answers.push(ret);
-    return ret;
+    return Factory.addOne(Answer, data, this.#answers);
   }
 
   addPages(data: Partial<Page>[]) {
     return data.map((d) => this.#addPage(d));
   }
   #addPage(data: Partial<Page>): Page {
-    const ret = new Page(data);
-    this.#page.push(ret);
-    return ret;
+    return Factory.addOne(Page, data, this.#page);
   }
 
   addBranches(data: Partial<Branch>[]) {
     return data.map((d) => this.#addBranch(d));
   }
   #addBranch(data: Partial<Branch>): Branch {
-    const ret = new Branch(data);
-    this.#branches.push(ret);
-    return ret;
+    return Factory.addOne(Branch, data, this.#branches);
   }
 
   addQuestions(data: Partial<Question>[]) {
     return data.map((d) => this.#addQuestion(d));
   }
   #addQuestion(data: Partial<Question>): Question {
-    const ret = new Question(data);
-    this.#questions.push(ret);
-    return ret;
+    return Factory.addOne(Question, data, this.#questions);
   }
 
   addRefs(data: Partial<Ref>[]) {
     return data.map((d) => this.#addRef(d));
   }
   #addRef(data: Partial<Ref>): Ref {
-    const ret = new Ref(data);
-    this.#refs.push(ret);
-    return ret;
+    return Factory.addOne(Ref, data, this.#refs);
   }
 
   addResults(data: Partial<Result>[]) {
     return data.map((d) => this.#addResult(d));
   }
   #addResult(data: Partial<Result>): Result {
-    const ret = new Result(data);
-    this.#results.push(ret);
-    return ret;
+    return Factory.addOne(Result, data, this.#results);
   }
 
   addRequirements(data: Partial<Requirement>[]) {
     return data.map((d) => this.#addRequirement(d));
   }
   #addRequirement(data: Partial<Requirement>): Requirement {
-    const ret = new Requirement(data);
-    this.#requirements.push(ret);
-    return ret;
+    return Factory.addOne(Requirement,data, this.#requirements);
   }
 
   addResponses(data: Partial<Response>[]) {
     return data.map((d) => this.#addResponse(d));
   }
   #addResponse(data: Partial<Response>): Response {
-    const ret = new Response(data);
-    this.#responses.push(ret);
-    return ret;
+    return Factory.addOne(Response,data, this.#responses);
   }
 
   addSections(data: Partial<Section>[]) {
     return data.map((d) => this.#addSection(d));
   }
   #addSection(data: Partial<Section>): Section {
-    const ret = new Section(data);
-    this.#sections.push(ret);
-    return ret;
+    return Factory.addOne(Section, data, this.#sections);
   }
 
   add<T extends Base>(c: TCtor<T>, inp: Partial<T>[]) {

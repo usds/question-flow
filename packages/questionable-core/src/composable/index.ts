@@ -12,3 +12,4 @@ export * from './QuestionnaireCore';
 export * from './RefCore';
 export * from './ResultCore';
 export * from './StepCore';
+export * from './TCtor';
