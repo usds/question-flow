@@ -3,24 +3,6 @@
 export const survey = {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "BASE": {
-      "const": "default",
-      "description": "Defines the known component types for pages",
-      "type": "string"
-    },
-    "DESIGN_TYPE": {
-      "const": "Edit",
-      "description": "Defines the known component types for design",
-      "type": "string"
-    },
-    "DIRECTION": {
-      "description": "Navigation direction for steps by array index (+1 or -1)",
-      "enum": [
-        1,
-        -1
-      ],
-      "type": "number"
-    },
     "IActionCore": {
       "description": "Represents something the customer can do in response to receiving a result",
       "properties": {
@@ -121,6 +103,10 @@ export const survey = {
         },
         "type": {
           "description": "Render mode (link or button)",
+          "enum": [
+            "button",
+            "link"
+          ],
           "title": "Mode",
           "type": "string"
         },
@@ -316,9 +302,15 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/PAGE_TYPE",
           "description": "Type of page",
-          "title": "Page Type"
+          "enum": [
+            "Landing",
+            "No Results",
+            "Results",
+            "Summary"
+          ],
+          "title": "Page Type",
+          "type": "string"
         }
       },
       "required": [
@@ -422,9 +414,17 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/QUESTION_TYPE",
           "description": "Type of question",
-          "title": "Question Type"
+          "enum": [
+            "date_time",
+            "dob",
+            "multiple_choice",
+            "multiple_select",
+            "path",
+            "text"
+          ],
+          "title": "Question Type",
+          "type": "string"
         }
       },
       "required": [
@@ -438,10 +438,15 @@ export const survey = {
       "description": "Configuration for customized behavior of Questionable",
       "properties": {
         "mode": {
-          "$ref": "#/definitions/MODE",
           "default": "MODE.VIEW",
           "description": "View or edit mode",
-          "title": "Mode"
+          "enum": [
+            "dev",
+            "edit",
+            "view"
+          ],
+          "title": "Mode",
+          "type": "string"
         },
         "nav": {
           "description": "Navigation configuration",
@@ -829,9 +834,23 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TStepType",
           "description": "Step's type, usually implemented by @see{IPageStep} or @see{IQuestionStep}",
-          "title": "Step Type"
+          "enum": [
+            "Landing",
+            "No Results",
+            "Results",
+            "Summary",
+            "date_time",
+            "dob",
+            "multiple_choice",
+            "multiple_select",
+            "path",
+            "text",
+            "Edit",
+            "default"
+          ],
+          "title": "Step Type",
+          "type": "string"
         }
       },
       "required": [
@@ -839,38 +858,6 @@ export const survey = {
         "type"
       ],
       "type": "object"
-    },
-    "MODE": {
-      "enum": [
-        "dev",
-        "edit",
-        "view"
-      ],
-      "type": "string"
-    },
-    "PAGE_TYPE": {
-      "description": "Defines the known component types for pages",
-      "enum": [
-        "default",
-        "Landing",
-        "No Results",
-        "Results",
-        "Summary"
-      ],
-      "type": "string"
-    },
-    "QUESTION_TYPE": {
-      "description": "Defines the known component types for questions",
-      "enum": [
-        "date_time",
-        "default",
-        "dob",
-        "multiple_choice",
-        "multiple_select",
-        "path",
-        "text"
-      ],
-      "type": "string"
     },
     "TAnswerDataCore": {
       "description": "Event data structure to be sent with event callbacks",
@@ -948,7 +935,12 @@ export const survey = {
       "description": "Event data structure to be sent with event callbacks",
       "properties": {
         "dir": {
-          "$ref": "#/definitions/DIRECTION"
+          "description": "Navigation direction for steps by array index (+1 or -1)",
+          "enum": [
+            1,
+            -1
+          ],
+          "type": "number"
         }
       },
       "required": [
@@ -982,22 +974,6 @@ export const survey = {
       ],
       "title": "Event Result Type",
       "type": "object"
-    },
-    "TStepType": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/PAGE_TYPE"
-        },
-        {
-          "$ref": "#/definitions/QUESTION_TYPE"
-        },
-        {
-          "$ref": "#/definitions/DESIGN_TYPE"
-        },
-        {
-          "$ref": "#/definitions/BASE"
-        }
-      ]
     }
   }
 };

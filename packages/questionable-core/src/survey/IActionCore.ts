@@ -1,4 +1,4 @@
-import { ACTION }      from '../util/enums';
+import { TActionType } from '../util/enums';
 import { IButtonCore } from './IButtonCore';
 import { IRefCore }    from './IRefCore';
 
@@ -24,5 +24,5 @@ export interface IActionCore extends IRefCore {
    * @title Type
    * @hidden
    */
-  type: ACTION;
+  type: TActionType;
 }

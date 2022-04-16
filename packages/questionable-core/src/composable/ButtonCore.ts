@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { IButtonCore }                             from '../survey/IButtonCore';
+import { BUTTON_TYPE, TButtonType }                from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { TButtonModeCore }                         from '../util/types';
 import { RefCore }                                 from './RefCore';
 
 export class ButtonCore extends RefCore implements IButtonCore {
@@ -35,13 +35,15 @@ export class ButtonCore extends RefCore implements IButtonCore {
    */
   #link?: string | undefined;
 
+  #type: TButtonType;
+
   /**
    * Render mode (link or button)
    *
    * @title Mode
    */
-  override get type(): TButtonModeCore | '' {
-    return super.type as TButtonModeCore;
+  get type(): TButtonType {
+    return this.#type;
   }
 
   /**
@@ -55,6 +57,7 @@ export class ButtonCore extends RefCore implements IButtonCore {
     super(data);
     this.#link    = data.link || '';
     this.#visible = data.visible !== false;
+    this.#type    = data.type || BUTTON_TYPE.BUTTON;
   }
 
   public get link(): string {

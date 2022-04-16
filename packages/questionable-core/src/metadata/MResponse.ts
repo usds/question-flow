@@ -1,4 +1,4 @@
-import {  ClassProperties }                       from '../util';
+import {  ClassProperties }                       from '../util/types';
 import { ERefCoreProperties, TRefCoreProperties } from './MRef';
 
 type TTheseProperties = {

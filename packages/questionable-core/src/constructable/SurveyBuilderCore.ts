@@ -17,8 +17,8 @@ import {
   TCtor,
 } from '../composable';
 import { Factory } from './Factory';
-import { ClassList } from '../util';
-import { ACTION, MODE } from '../util/enums';
+import { ClassList } from '../util/instanceOf';
+import { ACTION_TYPE, MODE } from '../util/enums';
 import { merge } from '../util/merge';
 
 type TBuilderDefaults = {
@@ -63,7 +63,7 @@ export class SurveyBuilder {
   #addAction(inp: Partial<Action>): Action {
     const data = merge(
       {
-        type: ACTION.NONE,
+        type: ACTION_TYPE.NONE,
         label: inp.title,
       },
       inp,

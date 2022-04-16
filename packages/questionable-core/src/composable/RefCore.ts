@@ -1,6 +1,8 @@
 /* eslint-disable import/no-cycle */
+import { addToPool, existsInPool, TCollectable }   from '../constructable/types';
 import { TRefCoreProperties }                      from '../metadata/MRef';
 import { IRefCore }                                from '../survey/IRefCore';
+import { REF_TYPE, TRefType }                      from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { getGUID }                                 from '../util/uuid';
 import { BaseCore }                                from './BaseCore';
@@ -53,7 +55,7 @@ export class RefCore extends BaseCore implements IRefCore {
 
   #_label: string;
 
-  #_type: string;
+  #_type: TRefType;
 
   #_title: string;
 
@@ -70,7 +72,7 @@ export class RefCore extends BaseCore implements IRefCore {
     }
     this.#_label = data.label || '';
     this.#_title = data.title || '';
-    this.#_type  = data.type || '';
+    this.#_type  = data.type || REF_TYPE.DEFAULT;
   }
 
   public get id(): string {
@@ -85,7 +87,7 @@ export class RefCore extends BaseCore implements IRefCore {
     return this.#_title;
   }
 
-  public get type(): string {
+  public get type(): TRefType {
     return this.#_type;
   }
 
@@ -93,6 +95,14 @@ export class RefCore extends BaseCore implements IRefCore {
     this[`#_${prop}`] = val;
   }
 
+  public existsIn(data: TCollectable): boolean {
+    return existsInPool(data, this);
+  }
+
+  public add(data: TCollectable): RefCore {
+    addToPool(data, this);
+    return this;
+  }
   // /**
   //  *  Root class has no collections, will always be false
   //  * @param val

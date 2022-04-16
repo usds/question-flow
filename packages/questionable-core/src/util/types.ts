@@ -57,14 +57,22 @@ interface TDateOfBirthCore {
   year?: string | undefined;
 }
 
-type TProgressBarTypeCore = string;
-
-type TVerticalPositionCore = string;
-
-type THorizontalPositionCore = string;
-
-type TButtonModeCore = string;
-
+type TVerticalPositionCore = 'top' | 'bottom';
+const VERTICAL_POSITION: {
+  BOTTOM: TVerticalPositionCore & 'bottom',
+  TOP: TVerticalPositionCore & 'top'
+} = {
+  BOTTOM: 'bottom',
+  TOP:    'top',
+};
+type THorizontalPositionCore = 'left' | 'right';
+const HORIZONTAL_POSITION: {
+  LEFT: THorizontalPositionCore & 'left',
+  RIGHT: THorizontalPositionCore & 'right'
+} = {
+  LEFT:  'left',
+  RIGHT: 'right',
+};
 /**
  * Content type for blocks of copy
  */
@@ -104,18 +112,19 @@ type CoreProperties<X> = X[keyof X];
 type ClassProperties<T> = FlatStrings<CoreProperties<T>>;
 // type PrivateProperties<T> = T[keyof ClassProperties<T>]
 
+type TPointerDirection = 'in' | 'out';
+
 export {
+  HORIZONTAL_POSITION,
+  VERTICAL_POSITION,
   type ClassProperties,
-  // type CoreProperties,
-  // type FlatStrings,
+  type TPointerDirection,
   type TAgeCalcCore,
   type TAgeCore,
-  type TButtonModeCore,
   type TContentCore,
   type TDateOfBirthCore,
   type TGetDictionaryCore,
   type THorizontalPositionCore,
-  type TProgressBarTypeCore,
   type TReducerCore,
   type TStringDictionaryCore,
   type TVerticalPositionCore,

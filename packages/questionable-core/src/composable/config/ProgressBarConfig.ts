@@ -1,7 +1,8 @@
-import { merge }                                       from 'lodash';
-import { TVerticalPositionCore, TProgressBarTypeCore } from '../../util/types';
-import { BaseCore }                                    from '../BaseCore';
-import { ClassList, TInstanceOf, checkInstanceOf }     from '../../util/instanceOf';
+import { merge }                                   from 'lodash';
+import { TVerticalPositionCore }                   from '../../util/types';
+import { BaseCore }                                from '../BaseCore';
+import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
+import { TProgressBarStatusType }                  from '../../util/enums';
 
 /**
  * Configuration options for the progress bar
@@ -68,7 +69,7 @@ export class ProgressBarConfigCore  extends BaseCore {
    * @title Type
    * @default 'progress-bar'
    */
-  type?: TProgressBarTypeCore | undefined;
+  type?: TProgressBarStatusType;
 
   visible?: boolean | undefined;
 }

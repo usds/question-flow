@@ -4,9 +4,9 @@ import { ClassProperties } from './types';
 
 /**
  type TPrefix = {
-  ACTION,
+  ACTION_TYPE,
   ANSWER,
-  BASE,
+  TBaseType,
   BRANCH,
   BUTTON,
   BUTTONS,
@@ -37,7 +37,7 @@ import { ClassProperties } from './types';
 
  */
 type TPrefix = {
-  ACTION: 'action',
+  ACTION_TYPE: 'action',
   ANSWER: 'answer',
   BASE: 'base',
   BRANCH: 'branch',
@@ -66,11 +66,11 @@ type TPrefix = {
   STEPS: 'steps',
   STEP_DATA: 'step-data',
   SURVEY: 'survey',
-  SURVEY_BUILDER: 'survey-builder',
+  SURVEY_BUILDER: 'survey-builder'
 };
 
 const CLASS_NAME: TPrefix = {
-  ACTION:         'action' as const,
+  ACTION_TYPE:    'action' as const,
   ANSWER:         'answer' as const,
   BASE:           'base' as const,
   BRANCH:         'branch' as const,
@@ -106,7 +106,7 @@ interface IInstance {
   [key: string]: TInstanceOf;
 }
 interface IClassMap extends IInstance {
-  [CLASS_NAME.ACTION]: TInstanceOf;
+  [CLASS_NAME.ACTION_TYPE]: TInstanceOf;
   [CLASS_NAME.ANSWER]: TInstanceOf;
   [CLASS_NAME.BASE]: TInstanceOf;
   [CLASS_NAME.BRANCH]: TInstanceOf;

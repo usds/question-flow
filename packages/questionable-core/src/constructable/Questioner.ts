@@ -1,13 +1,13 @@
-import { merge, values }                         from 'lodash';
-import { DateTime }                              from 'luxon';
-import { eventedCore }                           from '../state/pubsub';
-import { ACTION_TYPE, QUESTION_TYPE, STEP_TYPE } from '../util/enums';
-import { getDateTime }                           from '../util/date';
-import { FormCore }                              from '../composable/FormCore';
-import { QuestionCore }                          from '../composable/StepCore';
-import { IQuestionCore }                         from '../survey/IStepCore';
-import { TDateOfBirthCore }                      from '../util/types';
-import { TQForm, TSForm }                        from './types';
+import { merge, values }                     from 'lodash';
+import { DateTime }                          from 'luxon';
+import { eventedCore }                       from '../state/pubsub';
+import { OP_TYPE, QUESTION_TYPE, STEP_TYPE } from '../util/enums';
+import { getDateTime }                       from '../util/date';
+import { FormCore }                          from '../composable/FormCore';
+import { QuestionCore }                      from '../composable/StepCore';
+import { IQuestionCore }                     from '../survey/IStepCore';
+import { TDateOfBirthCore }                  from '../util/types';
+import { TQForm, TSForm }                    from './types';
 
 const isValid = ({ step, form }: TSForm): boolean => {
   const q = form.responses.find((a) => a?.id === step.id);
@@ -111,7 +111,7 @@ const updateForm = ({ answer, question, form }: TQForm & {answer: string}): void
     type:  'answer',
   });
   form.reduce({
-    type:  ACTION_TYPE.UPDATE,
+    type:  OP_TYPE.UPDATE,
     value: form,
   });
 };

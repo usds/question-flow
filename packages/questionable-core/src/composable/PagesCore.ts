@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-restricted-syntax */
 import { IPagesCore }                              from '../survey/IPagesCore';
-import { PAGE_TYPE }                               from '../util/enums';
+import { PAGE_TYPE, TPageType }                    from '../util/enums';
 import { matches }                                 from '../util/helpers';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { merge }                                   from '../util/merge';
@@ -40,7 +40,7 @@ export class PagesCore extends BaseCore implements IPagesCore {
    * @param data Optional data
    * @returns
    */
-  #touchPage(type: PAGE_TYPE, data?: Partial<PageCore>): Partial<PageCore> {
+  #touchPage(type: TPageType, data?: Partial<PageCore>): Partial<PageCore> {
     const defaults = merge(
       {
         display: false,

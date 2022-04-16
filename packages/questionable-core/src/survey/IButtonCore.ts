@@ -1,5 +1,5 @@
-import { TButtonModeCore } from '../util/types';
-import { IRefCore }        from './IRefCore';
+import { TButtonType } from '../util/enums';
+import { IRefCore }    from './IRefCore';
 
 /**
  * Represents a navigation button
@@ -16,7 +16,7 @@ export interface IButtonCore extends IRefCore {
    *
    * @title Mode
    */
-  type?: TButtonModeCore | undefined;
+  type?: TButtonType;
   /**
    * Visibility status of the button (show/hide)
    *

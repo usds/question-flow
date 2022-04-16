@@ -12,10 +12,10 @@ import {
   ClassList,
   TInstanceOf,
 } from '../util/instanceOf';
-import { ACTION_TYPE } from '../util/enums';
+import { OP_TYPE, TOpType } from '../util/enums';
 
 export type TStepReducerAction = {
-  type: ACTION_TYPE;
+  type: TOpType;
   value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 export type TStepReducer = {
@@ -41,11 +41,11 @@ export const defaultReducer: TReducerFn = (previousState, action, callback?: TRe
   // __EXCEPT__ when we attempt to storybook/test individual components in isolation
   let ret: FormCore;
   switch (action?.type) {
-    case ACTION_TYPE.RESET:
+    case OP_TYPE.RESET:
       ret = new FormCore();
       break;
 
-    case ACTION_TYPE.UPDATE:
+    case OP_TYPE.UPDATE:
       ret = FormCore.create(merge(
         {
           ...previousState,
@@ -57,7 +57,7 @@ export const defaultReducer: TReducerFn = (previousState, action, callback?: TRe
       break;
 
     // Effective a noop that triggers a re-render of the page
-    case ACTION_TYPE.RERENDER:
+    case OP_TYPE.RERENDER:
       ret = FormCore.create(previousState);
       break;
 

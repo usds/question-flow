@@ -2,9 +2,10 @@
   @typescript-eslint/no-use-before-define,
   no-useless-constructor, import/no-cycle, max-classes-per-file */
 
-import { kebabCase }   from 'lodash';
-import { IAnswerCore } from '../survey/IAnswerCore';
-import { IBranchCore } from '../survey/IBranchCore';
+import { kebabCase }                             from 'lodash';
+import { addToPool, existsInPool, TCollectable } from '../constructable/types';
+import { IAnswerCore }                           from '../survey/IAnswerCore';
+import { IBranchCore }                           from '../survey/IBranchCore';
 import {
   IQuestionCore,
   IRequirementCore,
@@ -13,26 +14,29 @@ import {
   IStepCore,
 } from '../survey/IStepCore';
 import {
-  BASE,
   isEnum,
   PAGE_TYPE,
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   TStepType,
+  TSectionType,
+  SECTION_TYPE,
+  TQuestionType,
+  STEP_TYPE,
+  TResponseType,
+  RESPONSE_TYPE,
+  TRequirementType,
+  REQUIREMENT_TYPE,
+  BRANCH_TYPE,
+  TBranchType,
+  TAnswerType,
+  ANSWER_TYPE,
+  TProgressBarStatusType,
 } from '../util/enums';
-import { matches }                                 from '../util/helpers';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { TAgeCalcCore, TAgeCore }                  from '../util/types';
-import { RefCore }                                 from './RefCore';
-import { ResultCore }                              from './ResultCore';
-
-type TCollected =
-  | RequirementCore
-  | AnswerCore
-  | StepCore
-  | QuestionCore
-  | ResultCore;
-type TDirection = 'in' | 'out';
+import { matches }                                   from '../util/helpers';
+import { checkInstanceOf, ClassList, TInstanceOf }   from '../util/instanceOf';
+import { TAgeCalcCore, TAgeCore, TPointerDirection } from '../util/types';
+import { RefCore }                                   from './RefCore';
 
 export class StepCore extends RefCore implements IStepCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -67,29 +71,25 @@ export class StepCore extends RefCore implements IStepCore {
 
   #subTitle: string;
 
+  #type: TStepType;
+
   constructor(data: Partial<StepCore>) {
     super(data);
     this.#entryRequirements = data.entryRequirements?.map((r) => RequirementCore.create(r)) || [];
     this.#exitRequirements  = data.exitRequirements?.map((r) => RequirementCore.create(r)) || [];
-    if (!data.type || `${data.type}` === `${BASE.DEFAULT}`) {
-      this.set('type', BASE.DEFAULT);
-    } else {
-      this.set('type', data.type);
-    }
-    this.#footer        = data.footer || '';
-    this.#info          = data.info || '';
-    this.#internalNotes = data.internalNotes || '';
-    this.#order         = data.order || 0;
-    this.#section       = SectionCore.createOptional(data.section);
-    this.#subTitle      = data.subTitle || '';
+    const type: TStepType   = (!data.type || `${data.type}` === `${STEP_TYPE.DEFAULT}`) ? STEP_TYPE.DEFAULT : data.type;
+    this.#type              = type;
+    this.#footer            = data.footer || '';
+    this.#info              = data.info || '';
+    this.#internalNotes     = data.internalNotes || '';
+    this.#order             = data.order || 0;
+    this.#section           = SectionCore.createOptional(data.section);
+    this.#subTitle          = data.subTitle || '';
   }
 
   public toString() {
     return this.id;
   }
-  // static create(props: IStepDataCore, questionnaire: QuestionnaireCore) {
-  //   return new StepCore({ ...props.step, ...props, questionnaire } as TStepCtor);
-  // }
 
   public get entryRequirements(): RequirementCore[] {
     return this.#entryRequirements;
@@ -124,7 +124,7 @@ export class StepCore extends RefCore implements IStepCore {
   }
 
   public get type(): TStepType {
-    return super.type as TStepType; // this.#type;
+    return this.#type;
   }
 
   public getFieldSetName(): string {
@@ -146,7 +146,7 @@ export class StepCore extends RefCore implements IStepCore {
     return 'unknown';
   }
 
-  public existsIn(data: TCollected, direction?: TDirection): boolean {
+  public existsIn(data: TCollectable, direction?: TPointerDirection): boolean {
     if (data instanceof RequirementCore) {
       if (direction === 'out') {
         return this.#exitRequirements.some(
@@ -157,10 +157,10 @@ export class StepCore extends RefCore implements IStepCore {
         (q) => q === data || matches(q.title, data.title),
       );
     }
-    return false;
+    return existsInPool(data, this);
   }
 
-  public add(data: TCollected, direction?: TDirection): StepCore {
+  public add(data: TCollectable, direction?: TPointerDirection): StepCore {
     const exists = this.existsIn(data, direction);
     if (exists) {
       return this;
@@ -172,6 +172,7 @@ export class StepCore extends RefCore implements IStepCore {
         this.#entryRequirements.push(data);
       }
     }
+    addToPool(data, this);
     return this;
   }
 }
@@ -204,9 +205,11 @@ export class SectionCore extends RefCore implements ISectionCore {
 
   #requirements: RequirementCore[];
 
-  #status: PROGRESS_BAR_STATUS;
+  #status: TProgressBarStatusType;
 
   #order: number;
+
+  #type: TSectionType;
 
   constructor(data: Partial<SectionCore>) {
     super(data);
@@ -214,6 +217,7 @@ export class SectionCore extends RefCore implements ISectionCore {
     this.#lastStep     = data.lastStep;
     this.#order        = data.order || 0;
     this.#status       = data.status || PROGRESS_BAR_STATUS.INCOMPLETE;
+    this.#type         = data.type || SECTION_TYPE.UNLOCKED;
   }
 
   public get requirements(): RequirementCore[] {
@@ -236,31 +240,24 @@ export class SectionCore extends RefCore implements ISectionCore {
     this.#order = val;
   }
 
-  public get status(): PROGRESS_BAR_STATUS {
+  public get status(): TProgressBarStatusType {
     return this.#status;
   }
 
-  public set status(val: PROGRESS_BAR_STATUS) {
+  public set status(val: TProgressBarStatusType) {
     this.#status = val;
   }
 
+  public get type(): TSectionType {
+    return this.#type;
+  }
+
   public existsIn(data: RequirementCore): boolean {
-    if (data instanceof RequirementCore) {
-      return this.#requirements.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+    return existsInPool(data, this);
   }
 
   public add(data: RequirementCore): SectionCore {
-    const exists = this.existsIn(data);
-    if (exists) {
-      return this;
-    }
-    if (data instanceof RequirementCore) {
-      this.#requirements.push(data);
-    }
+    addToPool(data, this);
     return this;
   }
 }
@@ -301,16 +298,16 @@ export class QuestionCore extends StepCore implements IQuestionCore {
 
   #answered: string[] = [];
 
+  #type: TQuestionType;
+
   constructor(data: Partial<QuestionCore>) {
     super(data);
-    this.#answers = data.answers?.map((a) => AnswerCore.create(a)) || [];
-    this.#branch  = BranchCore.createOptional(data.branch);
-    this.#section = SectionCore.createOptional(data.section);
-    if (!data.type || `${data.type}` === `${QUESTION_TYPE.DEFAULT}`) {
-      this.set('type', QUESTION_TYPE.DEFAULT);
-    } else {
-      this.set('type', data.type);
-    }
+    const type: TQuestionType = (!data.type || `${data.type}` === `${QUESTION_TYPE.DEFAULT}`)
+      ? QUESTION_TYPE.TEXT : data.type;
+    this.#type                = type;
+    this.#answers             = data.answers?.map((a) => AnswerCore.create(a)) || [];
+    this.#branch              = BranchCore.createOptional(data.branch);
+    this.#section             = SectionCore.createOptional(data.section);
   }
 
   public get answer() {
@@ -346,29 +343,24 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     this.#section = val;
   }
 
-  public get type(): QUESTION_TYPE {
-    return super.type as QUESTION_TYPE;
+  public get type(): TQuestionType {
+    return this.#type;
   }
 
-  public override existsIn(data: TCollected, direction?: TDirection): boolean {
+  public override existsIn(data: TCollectable, direction?: TPointerDirection): boolean {
     if (super.existsIn(data, direction)) {
       return true;
     }
-    if (data instanceof AnswerCore) {
-      return this.#answers.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+    return existsInPool(data, this);
   }
 
-  public override add(data: TCollected, direction?: TDirection): QuestionCore {
+  public override add(data: TCollectable, direction?: TPointerDirection): QuestionCore {
     if (this.existsIn(data, direction)) {
       return this;
     }
+    addToPool(data, this);
     if (data instanceof AnswerCore) {
       data.add(this);
-      this.#answers.push(data);
     }
     return this;
   }
@@ -402,12 +394,15 @@ export class ResponseCore extends RefCore implements IResponseCore {
 
   #question: QuestionCore | undefined;
 
+  #type: TResponseType;
+
   constructor(data: Partial<ResponseCore>) {
     super(data);
     this.#answers = data.answers?.map((a) => AnswerCore.create(a)) || [];
     if (data.question) {
       this.#question = QuestionCore.create(data.question);
     }
+    this.#type = data.type || RESPONSE_TYPE.COMPLETE;
   }
 
   public get question(): QuestionCore | undefined {
@@ -418,22 +413,16 @@ export class ResponseCore extends RefCore implements IResponseCore {
     return this.#answers;
   }
 
-  public existsIn(data: TCollected): boolean {
-    if (data instanceof AnswerCore) {
-      return this.#answers.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+  public get type(): TResponseType {
+    return this.#type;
   }
 
-  public add(data: TCollected): ResponseCore {
-    if (this.existsIn(data)) {
-      return this;
-    }
-    if (data instanceof AnswerCore) {
-      this.#answers.push(data);
-    }
+  public existsIn(data: TCollectable): boolean {
+    return existsInPool(data, this);
+  }
+
+  public add(data: TCollectable): ResponseCore {
+    addToPool(data, this);
     return this;
   }
 }
@@ -472,6 +461,8 @@ export class RequirementCore extends RefCore implements IRequirementCore {
 
   #responses;
 
+  #type: TRequirementType;
+
   constructor(data: Partial<RequirementCore>) {
     super(data);
     this.#ageCalc     = data.ageCalc || (() => true);
@@ -479,6 +470,7 @@ export class RequirementCore extends RefCore implements IRequirementCore {
     this.#maxAge      = data.maxAge;
     this.#minAge      = data.minAge;
     this.#responses   = data.responses?.map((q) => new ResponseCore(q)) || [];
+    this.#type        = data.type || REQUIREMENT_TYPE.NON_REQUIRED;
   }
 
   get ageCalc(): TAgeCalcCore | undefined {
@@ -501,22 +493,18 @@ export class RequirementCore extends RefCore implements IRequirementCore {
     return this.#responses;
   }
 
-  public existsIn(data: TCollected): boolean {
-    if (data instanceof ResponseCore) {
-      return this.#responses.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+  get type(): TRequirementType {
+    return this.#type;
   }
 
-  public add(data: TCollected): RequirementCore {
-    if (this.existsIn(data)) {
-      return this;
-    }
+  public existsIn(data: TCollectable): boolean {
+    return existsInPool(data, this);
+  }
+
+  public add(data: TCollectable): RequirementCore {
+    addToPool(data, this);
     if (data instanceof ResponseCore) {
-      data.add(this);
-      this.#responses.push(data);
+      (data as ResponseCore).add(this);
     }
     return this;
   }
@@ -550,10 +538,13 @@ export class BranchCore extends RefCore implements IBranchCore {
 
   #sections;
 
+  #type: TBranchType;
+
   constructor(data: Partial<BranchCore>) {
     super(data);
     this.#questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
     this.#sections  = data.sections?.map((q) => SectionCore.create(q)) || [];
+    this.#type      = data.type || BRANCH_TYPE.LINEAR;
   }
 
   public get questions(): QuestionCore[] {
@@ -564,32 +555,17 @@ export class BranchCore extends RefCore implements IBranchCore {
     return this.#sections;
   }
 
-  public existsIn(data: TCollected): boolean {
-    if (data instanceof SectionCore) {
-      return this.#sections.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    if (data instanceof QuestionCore) {
-      return this.#questions.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+  public get type(): TBranchType {
+    return this.#type;
   }
 
-  public add(data: TCollected): BranchCore {
-    if (this.existsIn(data)) {
-      return this;
-    }
-    if (data instanceof SectionCore) {
-      data.branch = this;
-      this.#sections.push(data);
-    }
-    if (data instanceof QuestionCore) {
-      data.branch = this;
-      this.#questions.push(data);
-    }
+  public existsIn(data: SectionCore | QuestionCore): boolean {
+    return existsInPool(data, this);
+  }
+
+  public add(data: SectionCore | QuestionCore): BranchCore {
+    data.branch = this;
+    addToPool(data, this);
     return this;
   }
 }
@@ -632,10 +608,13 @@ export class AnswerCore extends RefCore implements IAnswerCore {
 
   #synonyms: string[] = [];
 
+  #type: TAnswerType;
+
   constructor(data: Partial<AnswerCore>) {
     super(data);
     this.#key      = data.key || '';
     this.#synonyms = data.synonyms || [];
+    this.#type     = data.type || ANSWER_TYPE.FIXED;
   }
 
   public get key() {
@@ -650,22 +629,16 @@ export class AnswerCore extends RefCore implements IAnswerCore {
     return this.#synonyms;
   }
 
+  public get type(): TAnswerType {
+    return this.#type;
+  }
+
   public existsIn(data: QuestionCore): boolean {
-    if (data instanceof QuestionCore) {
-      return this.#questions.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+    return existsInPool(data, this);
   }
 
   public add(data: QuestionCore): AnswerCore {
-    if (data instanceof QuestionCore) {
-      const exists = this.existsIn(data);
-      if (!exists) {
-        this.#questions.push(data);
-      }
-    }
+    addToPool(data, this);
     return this;
   }
 }

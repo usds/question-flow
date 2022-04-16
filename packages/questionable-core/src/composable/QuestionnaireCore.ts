@@ -12,22 +12,26 @@ import {
 }         from './StepCore';
 import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
 import { QuestionableConfigCore } from './ConfigCore';
-import { BaseCore }               from './BaseCore';
 import { PagesCore }              from './PagesCore';
 import {
   checkInstanceOf,
   ClassList,
   TInstanceOf,
 } from '../util/instanceOf';
-import { ResultCore } from './ResultCore';
-import { matches }    from '../util/helpers';
+import { ResultCore }        from './ResultCore';
+import { matches }           from '../util/helpers';
+import {
+  addToPool, TCollectable,
+} from '../constructable/types';
+import { RefCore }  from './RefCore';
+import { TRefType } from '../util/enums';
 
 type TCollected = QuestionCore | BranchCore | SectionCore | ActionCore | ResultCore;
 
 /**
  * Utility wrapper for survey state
  */
-export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
+export class QuestionnaireCore extends RefCore implements IQuestionnaireCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.questionnaire;
   }
@@ -138,6 +142,22 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return this.#pages;
   }
 
+  public get id(): string {
+    return '1';
+  }
+
+  public get label() {
+    return '';
+  }
+
+  public get title(): string {
+    return this.header;
+  }
+
+  public get type(): TRefType {
+    return 'default';
+  }
+
   public existsIn(data: TCollected): boolean {
     if (data instanceof QuestionCore) {
       return this.#questions.some((q) => q === data || matches(q.title, data.title));
@@ -157,21 +177,8 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return false;
   }
 
-  public add(data: TCollected): QuestionnaireCore {
-    const exists = this.existsIn(data);
-    if (!exists) {
-      if (data instanceof QuestionCore) {
-        this.#questions.push(data);
-      } else if (data instanceof SectionCore) {
-        this.#sections.push(data);
-      } else if (data instanceof BranchCore) {
-        this.#branches.push(data);
-      } else if (data instanceof ResultCore) {
-        this.#results.push(data);
-      } else if (data instanceof ActionCore) {
-        this.#actions.push(data);
-      }
-    }
+  public add(data: TCollectable): QuestionnaireCore {
+    addToPool(data, this);
     return this;
   }
 }

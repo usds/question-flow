@@ -5,16 +5,18 @@ import { noop }             from 'lodash';
 import { blue, red, white } from '../util/logger';
 import {
   ActionCore,
+} from '../composable/ActionCore';
+import { SurveyBuilder }                         from '../constructable/SurveyBuilderCore';
+import { ACTION_TYPE, PAGE_TYPE, QUESTION_TYPE } from '../util/enums';
+import {
   AnswerCore,
-  PagesCore,
   QuestionCore,
   RequirementCore,
   ResponseCore,
-  ResultCore,
   SectionCore,
-} from '../composable';
-import { SurveyBuilder }                    from '../constructable';
-import { ACTION, PAGE_TYPE, QUESTION_TYPE } from '../util';
+} from '../composable/StepCore';
+import { ResultCore } from '../composable/ResultCore';
+import { PagesCore }  from '../composable/PagesCore';
 
 export class Scaffolding {
   // questionnaire: QuestionnaireCore;
@@ -36,7 +38,7 @@ export class Scaffolding {
       {
         requirements: [],
         title:        'VA.gov Onboarding',
-        type:         'onboarding',
+        type:         'unlocked',
       },
     ]);
     this.builder.setDefaults(onboarding);
@@ -46,13 +48,13 @@ export class Scaffolding {
         label: 'Restart onboarding',
         order: 1,
         title: 'Restart',
-        type:  ACTION.NONE,
+        type:  ACTION_TYPE.NONE,
       },
     ]);
     const [finished] = this.builder.add(ActionCore, [
       {
         title: 'Finished',
-        type:  ACTION.NONE,
+        type:  ACTION_TYPE.NONE,
       },
     ]);
     const [results]  = this.builder.add(ResultCore, [
@@ -61,7 +63,7 @@ export class Scaffolding {
         label:        'Complete',
         requirements: [],
         title:        'Results',
-        type:         'result',
+        type:         'match',
       },
     ]);
     this.builder.add(PagesCore, [

@@ -12,7 +12,7 @@ import {
   StepCore,
 } from '../composable/StepCore';
 import {
-  ACTION,
+  ACTION_TYPE,
   DIRECTION,
   isEnum,
   MODE,
@@ -20,6 +20,8 @@ import {
   PROGRESS_BAR_STATUS,
   QUESTION_TYPE,
   STEP_TYPE,
+  TActionType,
+  TPageType,
 } from '../util/enums';
 import { log, toggleOut }         from '../util/logger';
 import { matches }                from '../util/helpers';
@@ -499,7 +501,7 @@ export class GateLogicCore {
    * Gets the appropriate action given a set of results
    * @returns
    */
-  getActionByType(type: ACTION): ActionCore {
+  getActionByType(type: TActionType): ActionCore {
     const action = this.questionnaire.actions.find((a) => a.type === type);
     if (!action) {
       this.throw(`No matching action found for ${type}`);
@@ -514,7 +516,7 @@ export class GateLogicCore {
   getAction(results: ResultCore[]): ActionCore {
     const groupedByAction = groupBy(results, 'action.id');
     const hybrid          = this.questionnaire.actions.find(
-      (a) => a.type === ACTION.HYBRID,
+      (a) => a.type === ACTION_TYPE.HYBRID,
     );
     // If group above has more than one type of action, the resolved action will be a hybrid
     let match     = hybrid;
@@ -599,7 +601,7 @@ export class GateLogicCore {
    * @returns
    */
   // eslint-disable-next-line class-methods-use-this
-  protected getPageSet = (type: PAGE_TYPE): TPageSet => {
+  protected getPageSet = (type: TPageType): TPageSet => {
     const data = this.pageList.find(
       (p: PageCore | undefined) => p?.type === type,
     );
@@ -617,7 +619,7 @@ export class GateLogicCore {
    * @param idx index of the page in `this.steps`
    * @param type LANDING, RESULTS, etc
    */
-  protected setPage(idx: number, type: PAGE_TYPE): void {
+  protected setPage(idx: number, type: TPageType): void {
     const error = 'step is not correctly defined or defined more than once';
 
     const page = this.getPageSet(type);

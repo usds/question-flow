@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
+import { addToPool, existsInPool }                 from '../constructable/types';
 import { IResultCore }                             from '../survey/IResultCore';
-import { matches }                                 from '../util/helpers';
+import { RESULT_TYPE, TResultType }                from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { ActionCore }                              from './ActionCore';
 import { RefCore }                                 from './RefCore';
@@ -54,6 +55,8 @@ export class ResultCore extends RefCore implements IResultCore {
 
   #secondaryAction: ActionCore | undefined;
 
+  #type: TResultType;
+
   constructor(data: Partial<ResultCore>) {
     super(data);
     this.#action          = ActionCore.createOptional(data.action);
@@ -64,6 +67,7 @@ export class ResultCore extends RefCore implements IResultCore {
     this.#label           = data.label || '';
     this.#category        = data.category || '';
     this.#order           = data.order || 0;
+    this.#type            = data.type || RESULT_TYPE.MATCH;
   }
 
   public get action(): ActionCore | undefined {
@@ -110,23 +114,16 @@ export class ResultCore extends RefCore implements IResultCore {
     return this.#order;
   }
 
+  public get type(): TResultType {
+    return this.#type;
+  }
+
   public existsIn(data: RequirementCore): boolean {
-    if (data instanceof RequirementCore) {
-      return this.#requirements.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+    return existsInPool(data, this);
   }
 
   public add(data: RequirementCore): ResultCore {
-    const exists = this.existsIn(data);
-    if (exists) {
-      return this;
-    }
-    if (data instanceof RequirementCore) {
-      this.#requirements.push(data);
-    }
+    addToPool(data, this);
     return this;
   }
 }

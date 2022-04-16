@@ -2,7 +2,7 @@
 import { IActionCore }                             from '../survey/IActionCore';
 import { ButtonCore }                              from './ButtonCore';
 import { IRefCore }                                from '../survey/IRefCore';
-import { ACTION }                                  from '../util/enums';
+import { ACTION_TYPE, TActionType }                from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { RefCore }                                 from './RefCore';
 
@@ -38,14 +38,14 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
 
   #subTitle: string;
 
-  #type: ACTION;
+  #type: TActionType;
 
   constructor(data: Partial<ActionCore>) {
     super(data);
     this.#buttons  = data.buttons?.map((b) => ButtonCore.create(b)) || [];
     this.#label    = data.label || '';
     this.#subTitle = data.subTitle || '';
-    this.#type     = data.type || ACTION.DEFAULT;
+    this.#type     = data.type || ACTION_TYPE.NONE;
     this.#icon     = data.icon || '';
   }
 
@@ -85,11 +85,11 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
    * @title Type
    * @hidden
    */
-  public override get type(): ACTION {
+  public get type(): TActionType {
     return this.#type;
   }
 
-  public override set type(val: ACTION) {
+  public set type(val: TActionType) {
     this.#type = val;
   }
 }

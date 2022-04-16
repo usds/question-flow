@@ -16,8 +16,8 @@ import {
   SectionCore as Section,
   TCtor,
 } from '../composable';
-import { ACTION }    from '../util/enums';
-import { ClassList } from '../util/instanceOf';
+import { ACTION_TYPE } from '../util/enums';
+import { ClassList }   from '../util/instanceOf';
 
 export abstract class Factory {
   public static addActions(data: Partial<Action>[]) {
@@ -28,7 +28,7 @@ export abstract class Factory {
     const data = merge(
       {
         label: inp.title,
-        type:  ACTION.NONE,
+        type:  ACTION_TYPE.NONE,
       },
       inp,
     );

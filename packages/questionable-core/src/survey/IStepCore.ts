@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import {
-  PAGE_TYPE,
-  PROGRESS_BAR_STATUS,
-  QUESTION_TYPE,
+  TPageType,
+  TProgressBarStatusType,
+  TQuestionType,
   TStepType,
 } from '../util/enums';
 import { TAgeCalcCore, TAgeCore } from '../util/types';
@@ -109,7 +109,7 @@ export interface IQuestionCore extends IStepCore {
    *
    * @title Question Type
    */
-  type: QUESTION_TYPE;
+  type: TQuestionType;
 }
 
 /**
@@ -141,7 +141,7 @@ export interface IPageCore extends IStepCore {
    *
    * @title Page Type
    */
-  type: PAGE_TYPE;
+  type: TPageType;
 }
 
 /**
@@ -202,5 +202,5 @@ export interface ISectionCore extends IRefCore {
    * @title Status
    * @hidden Not viewable/editable in Design Mode
    */
-  status?: PROGRESS_BAR_STATUS | undefined;
+  status?: TProgressBarStatusType;
 }

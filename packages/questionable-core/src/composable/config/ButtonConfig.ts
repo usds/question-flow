@@ -1,7 +1,12 @@
-import { merge }                                                           from 'lodash';
-import { BaseCore }                                                        from '../BaseCore';
-import { THorizontalPositionCore, TVerticalPositionCore, TButtonModeCore } from '../../util/types';
-import { ClassList, TInstanceOf, checkInstanceOf }                         from '../../util/instanceOf';
+import { BaseCore }    from '../BaseCore';
+import {
+  THorizontalPositionCore,
+  TVerticalPositionCore,
+  HORIZONTAL_POSITION,
+  VERTICAL_POSITION,
+} from '../../util/types';
+import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
+import { BUTTON_TYPE, TButtonType }                from '../../util/enums';
 
 /**
  * Configuration for buttons
@@ -25,10 +30,12 @@ export class ButtonConfigCore extends BaseCore {
 
   constructor(data: Partial<ButtonConfigCore> = {}) {
     super(data);
-    merge(this, data);
-    this.title   = data.title || '';
-    this.type    = data.type || '';
-    this.visible = data.visible !== false;
+    this.title         = data.title || '';
+    this.type          = data.type || BUTTON_TYPE.BUTTON;
+    this.horizontalPos = data.horizontalPos || HORIZONTAL_POSITION.LEFT;
+    this.verticalPos   = data.verticalPos || VERTICAL_POSITION.BOTTOM;
+    this.visible       = data.visible !== false;
+    this.defaultLabel  = data.defaultLabel || this.title;
   }
 
   /**
@@ -42,21 +49,21 @@ export class ButtonConfigCore extends BaseCore {
    * @title Horizontal Position
    * @default left
    */
-  horizontalPos?: THorizontalPositionCore | undefined;
+  horizontalPos?: THorizontalPositionCore;
 
   /**
    * Render mode (link or button)
    *
    * @title Mode
    */
-  type?: TButtonModeCore | undefined;
+  type?: TButtonType;
 
   /**
    * Vertical orientation (top or bottom)
    *
    * @title Vertical Position
    */
-  verticalPos?: TVerticalPositionCore | undefined;
+  verticalPos?: TVerticalPositionCore;
 
   /**
    * Toggle whether button is visible

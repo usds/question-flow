@@ -1,5 +1,5 @@
 import { isEmpty }                from 'lodash';
-import { ClassList, TInstanceOf } from '../util';
+import { ClassList, TInstanceOf } from '../util/instanceOf';
 import { BaseCore }               from './BaseCore';
 
 export class Dictionary<K, V> extends BaseCore {
