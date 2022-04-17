@@ -1,7 +1,7 @@
 import {
   GateLogicCore,
   FormCore,
-  Questioner,
+  updateForm,
 } from '@usds.gov/questionable-core';
 import {
   Answers, DistinctQuestion, prompt, registerPrompt,
@@ -206,7 +206,7 @@ export class Iterable<Q extends Questionnaire, F extends FormCore> {
     if (question.validate) {
       isValid = await question.validate(a, question);
     }
-    Questioner.updateForm(answer, question, this.form);
+    updateForm({ answer, form: this.form, question });
     isValid = isValid && this.gateLogic.isNextEnabled(question);
     return isValid;
   }

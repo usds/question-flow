@@ -1,6 +1,4 @@
 // eslint-disable-next-line import/no-cycle
-import { Step } from '../composable/Step';
-
 export type TVal = {
   answer: string | number | boolean | string[],
   name: string,
@@ -9,9 +7,9 @@ export type TVal = {
 };
 export type TTypeVal = TVal | string[];
 export type TChoice = { answer: string, key: string, name: string }
-export type TChoices = string[] | TChoice[] | number[];
-export type TAnswerType = {
-  choices?: TChoices | TChoicesFn;
+// export type TChoices = string[] | TChoice[];
+export type TAnswerMap = {
+  choices?:  string[] | TChoice[] | TChoicesFn;
   clearable?: boolean,
   default?: string,
   depthLimit?: 1 | 2 | 3 | 4 | 5 | 6,
@@ -31,10 +29,7 @@ export type TAnswerType = {
   validate?: TBoolFn,
   values?: string[] | TChoice[],
 };
-export type TOnAnswer = (answer: TVal, step: Step, ...params: unknown[]) => Promise<void>;
-export type TOnDisplay = (answer:TVal, step: Step, ...params: unknown[]) => Promise<void>;
-export type TValidateFn = (answer: TVal, step: Step, ...params: unknown[]) => Promise<boolean>;
 export type TStringFn = (...params: unknown[]) => string;
 export type TBoolFn = (...params: unknown[]) => boolean;
 export type TNumberFn = (...params: unknown[]) => number;
-export type TChoicesFn = (...params: unknown[]) => TChoices;
+export type TChoicesFn = (...params: unknown[]) => string[] | TChoice[];

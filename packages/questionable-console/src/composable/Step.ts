@@ -3,10 +3,13 @@
 import {
   StepCore,
 } from '@usds.gov/questionable-core';
-import { IStep }                              from '../survey/IStep';
-import { TOnAnswer, TOnDisplay, TValidateFn } from '../util/types';
+import { TVal } from '../util/types';
 
-export class Step extends StepCore implements IStep {
+export type TOnAnswer = (answer: TVal, step: Step, ...params: unknown[]) => Promise<void>;
+export type TOnDisplay = (answer:TVal, step: Step, ...params: unknown[]) => Promise<void>;
+export type TValidateFn = (answer: TVal, step: Step, ...params: unknown[]) => Promise<boolean>;
+
+export class Step extends StepCore {
   constructor(data: Partial<Step>) {
     super(data);
   }

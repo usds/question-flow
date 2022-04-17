@@ -2,14 +2,17 @@
 import {
   noopAsync,
   QuestionCore,
+  AnswerCore as Answer,
+  TQuestionType,
 } from '@usds.gov/questionable-core';
 import {
   TStringFn,
+}              from '../util/types';
+import {
   TOnAnswer,
   TOnDisplay,
   TValidateFn,
-}              from '../util/types';
-import { Answer } from './Answer';
+} from './Step';
 
 export class Question extends QuestionCore {
   public static override create(data: Partial<Question>, order = 0) {
@@ -64,5 +67,9 @@ export class Question extends QuestionCore {
 
   public get validate() {
     return this.#validate;
+  }
+
+  public get type(): TQuestionType {
+    return super.type;
   }
 }
