@@ -2,7 +2,7 @@ import { merge }                                   from 'lodash';
 import { TVerticalPositionCore }                   from '../../util/types';
 import { BaseCore }                                from '../BaseCore';
 import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
-import { TProgressBarStatusType }                  from '../../util/enums';
+import { TProgressBarStatusType }                  from '../../survey/ISectionCore';
 
 /**
  * Configuration options for the progress bar

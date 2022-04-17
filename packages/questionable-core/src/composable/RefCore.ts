@@ -2,7 +2,7 @@
 import { addToPool, existsInPool, TCollectable }   from '../constructable/types';
 import { TRefCoreProperties }                      from '../metadata/MRef';
 import { IRefCore }                                from '../survey/IRefCore';
-import { REF_TYPE, TRefType }                      from '../util/enums';
+import { REF_TYPE, TRefType }                      from '../survey/Unions';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { getGUID }                                 from '../util/uuid';
 import { BaseCore }                                from './BaseCore';

@@ -15,3 +15,4 @@ export * from './IResponseCore';
 export * from './IResultCore';
 export * from './ISectionCore';
 export * from './IStepCore';
+export * from './Unions';

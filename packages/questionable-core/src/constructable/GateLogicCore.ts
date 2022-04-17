@@ -1,33 +1,27 @@
-import { groupBy, isEmpty, noop } from 'lodash';
-import { ResultCore }             from '../composable/ResultCore';
-import { FormCore }               from '../composable/FormCore';
-import { PageCore }               from '../composable/PageCore';
-import { QuestionnaireCore }      from '../composable/QuestionnaireCore';
-import {  StepCore }              from '../composable/StepCore';
-import {
-  ACTION_TYPE,
-  DIRECTION,
-  isEnum,
-  MODE,
-  PAGE_TYPE,
-  PROGRESS_BAR_STATUS,
-  QUESTION_TYPE,
-  STEP_TYPE,
-  TActionType,
-  TPageType,
-} from '../util/enums';
-import { log, toggleOut }         from '../util/logger';
-import { matches }                from '../util/helpers';
-import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { ActionCore }             from '../composable/ActionCore';
-import { isValid, Questioner }    from './Questioner';
-import { PagesConfigCore }        from '../composable/config';
-import { TQForm }                 from './types';
-import { QuestionCore }           from '../composable/QuestionCore';
-import { SectionCore }            from '../composable/SectionCore';
-import { BranchCore }             from '../composable/BranchCore';
-import { RequirementCore }        from '../composable/RequirementCore';
-import { ResponseCore }           from '../composable/ResponseCore';
+import { groupBy, isEmpty, noop }   from 'lodash';
+import { ResultCore }               from '../composable/ResultCore';
+import { FormCore }                 from '../composable/FormCore';
+import { PageCore }                 from '../composable/PageCore';
+import { QuestionnaireCore }        from '../composable/QuestionnaireCore';
+import {  StepCore }                from '../composable/StepCore';
+import { DIRECTION, isEnum, MODE }  from '../util/enums';
+import { log, toggleOut }           from '../util/logger';
+import { matches }                  from '../util/helpers';
+import { TAgeCalcCore, TAgeCore }   from '../util/types';
+import { ActionCore }               from '../composable/ActionCore';
+import { isValid, Questioner }      from './Questioner';
+import { PagesConfigCore }          from '../composable/config';
+import { TQForm }                   from './types';
+import { QuestionCore }             from '../composable/QuestionCore';
+import { SectionCore }              from '../composable/SectionCore';
+import { BranchCore }               from '../composable/BranchCore';
+import { RequirementCore }          from '../composable/RequirementCore';
+import { ResponseCore }             from '../composable/ResponseCore';
+import { STEP_TYPE }                from '../survey/Unions';
+import { QUESTION_TYPE }            from '../survey/IQuestionCore';
+import { PAGE_TYPE, TPageType }     from '../survey/IPageCore';
+import { PROGRESS_BAR_STATUS }      from '../survey/ISectionCore';
+import { ACTION_TYPE, TActionType } from '../survey/IActionCore';
 
 type TPageSet =
   | {

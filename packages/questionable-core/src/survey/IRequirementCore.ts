@@ -1,8 +1,17 @@
-import { TRequirementType }       from '../util/enums';
-import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { IRefCore }               from './IRefCore';
-import { IResponseCore }          from './IResponseCore';
+import { TAgeCalcCore, TAgeCore }            from '../util/types';
+import { BASE_TYPE, IRefCore, TEnmBaseType } from './IRefCore';
+import { IResponseCore }                     from './IResponseCore';
 
+export type TRequirementType = 'required' | 'non-required';
+type TEnmRequirementType = TEnmBaseType & {
+  NON_REQUIRED: TRequirementType & 'non-required',
+  REQUIRED: TRequirementType & 'required'
+}
+export const REQUIREMENT_TYPE: TEnmRequirementType = {
+  ...BASE_TYPE,
+  NON_REQUIRED: 'non-required',
+  REQUIRED:     'required',
+};
 /**
  * Defines an individual requirement for accessing a step
  */

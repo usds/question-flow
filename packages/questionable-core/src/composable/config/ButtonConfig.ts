@@ -6,7 +6,7 @@ import {
   VERTICAL_POSITION,
 } from '../../util/types';
 import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
-import { BUTTON_TYPE, TButtonType }                from '../../util/enums';
+import { BUTTON_TYPE, TButtonType }                from '../../survey/IButtonCore';
 
 /**
  * Configuration for buttons

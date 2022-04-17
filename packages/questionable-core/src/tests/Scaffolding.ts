@@ -6,15 +6,17 @@ import { blue, red, white } from '../util/logger';
 import {
   ActionCore,
 } from '../composable/ActionCore';
-import { SurveyBuilder }                         from '../constructable/SurveyBuilderCore';
-import { ACTION_TYPE, PAGE_TYPE, QUESTION_TYPE } from '../util/enums';
-import { ResultCore }                            from '../composable/ResultCore';
-import { PagesCore }                             from '../composable/PagesCore';
-import { SectionCore }                           from '../composable/SectionCore';
-import { AnswerCore }                            from '../composable/AnswerCore';
-import { QuestionCore }                          from '../composable/QuestionCore';
-import { ResponseCore }                          from '../composable/ResponseCore';
-import { RequirementCore }                       from '../composable/RequirementCore';
+import { SurveyBuilder }   from '../constructable/SurveyBuilderCore';
+import { ResultCore }      from '../composable/ResultCore';
+import { PagesCore }       from '../composable/PagesCore';
+import { SectionCore }     from '../composable/SectionCore';
+import { AnswerCore }      from '../composable/AnswerCore';
+import { QuestionCore }    from '../composable/QuestionCore';
+import { ResponseCore }    from '../composable/ResponseCore';
+import { RequirementCore } from '../composable/RequirementCore';
+import { ACTION_TYPE }     from '../survey/IActionCore';
+import { PAGE_TYPE }       from '../survey/IPageCore';
+import { QUESTION_TYPE }   from '../survey/IQuestionCore';
 
 export class Scaffolding {
   // questionnaire: QuestionnaireCore;

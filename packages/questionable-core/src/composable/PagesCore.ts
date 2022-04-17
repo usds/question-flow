@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
+import { PAGE_TYPE, TPageType }                    from '../survey/IPageCore';
 import { IPagesCore }                              from '../survey/IPagesCore';
-import { PAGE_TYPE, TPageType }                    from '../util/enums';
 import { matches }                                 from '../util/helpers';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { merge }                                   from '../util/merge';

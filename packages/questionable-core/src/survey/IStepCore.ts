@@ -1,10 +1,8 @@
 /* eslint-disable import/no-cycle */
-import {
-  TStepType,
-} from '../util/enums';
 import { IRefCore }         from './IRefCore';
 import { IRequirementCore } from './IRequirementCore';
 import { ISectionCore }     from './ISectionCore';
+import { TStepType }        from './Unions';
 
 /**
  * Generic step data definition. Applies to all types of steps.

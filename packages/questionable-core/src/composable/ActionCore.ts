@@ -1,8 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { IActionCore }                             from '../survey/IActionCore';
+import { ACTION_TYPE, IActionCore, TActionType }   from '../survey/IActionCore';
 import { ButtonCore }                              from './ButtonCore';
 import { IRefCore }                                from '../survey/IRefCore';
-import { ACTION_TYPE, TActionType }                from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { RefCore }                                 from './RefCore';
 

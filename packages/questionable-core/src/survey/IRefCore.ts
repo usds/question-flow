@@ -1,4 +1,7 @@
-import { TRefType } from '../util/enums';
+export type TBaseType = 'default';
+export const DEFAULT_TYPE: TBaseType = 'default';
+export type TEnmBaseType = { DEFAULT: TBaseType };
+export const BASE_TYPE: TEnmBaseType = { DEFAULT: DEFAULT_TYPE };
 
 /** Generic reference object */
 export interface IRefCore {
@@ -28,5 +31,5 @@ export interface IRefCore {
    * @title Type
    * @hidden
    */
-  type?: TRefType;
+  type?: string;
 }

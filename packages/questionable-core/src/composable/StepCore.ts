@@ -1,16 +1,11 @@
 /* eslint-disable import/no-cycle */
-import { kebabCase }                             from 'lodash';
-import { addToPool, existsInPool, TCollectable } from '../constructable/types';
-import {
-  IStepCore,
-} from '../survey/IStepCore';
-import {
-  isEnum,
-  PAGE_TYPE,
-  QUESTION_TYPE,
-  TStepType,
-  STEP_TYPE,
-} from '../util/enums';
+import { kebabCase }                               from 'lodash';
+import { addToPool, existsInPool, TCollectable }   from '../constructable/types';
+import { PAGE_TYPE }                               from '../survey/IPageCore';
+import { QUESTION_TYPE }                           from '../survey/IQuestionCore';
+import { IStepCore }                               from '../survey/IStepCore';
+import { STEP_TYPE, TStepType }                    from '../survey/Unions';
+import { isEnum }                                  from '../util/enums';
 import { matches }                                 from '../util/helpers';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { TPointerDirection }                       from '../util/types';

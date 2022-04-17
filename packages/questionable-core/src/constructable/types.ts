@@ -1,25 +1,21 @@
 /* eslint-disable import/no-cycle */
-import { ActionCore }   from '../composable/ActionCore';
-import { BranchCore }   from '../composable/BranchCore';
-import { FormCore }     from '../composable/FormCore';
-import { PageCore }     from '../composable/PageCore';
-import { QuestionCore } from '../composable/QuestionCore';
-import { RefCore }      from '../composable/RefCore';
-import { ResultCore }   from '../composable/ResultCore';
-import { SectionCore }  from '../composable/SectionCore';
-import { StepCore }     from '../composable/StepCore';
-import {
-  OP_TYPE,
-  isEnum,
-  PAGE_TYPE,
-  QUESTION_TYPE,
-  STEP_TYPE,
-  BRANCH_TYPE,
-  SECTION_TYPE,
-  RESULT_TYPE,
-  TRefType,
-} from '../util/enums';
-import { matches } from '../util/helpers';
+import { ActionCore }                   from '../composable/ActionCore';
+import { BranchCore }                   from '../composable/BranchCore';
+import { FormCore }                     from '../composable/FormCore';
+import { PageCore }                     from '../composable/PageCore';
+import { QuestionCore }                 from '../composable/QuestionCore';
+import { RefCore }                      from '../composable/RefCore';
+import { ResultCore }                   from '../composable/ResultCore';
+import { SectionCore }                  from '../composable/SectionCore';
+import { StepCore }                     from '../composable/StepCore';
+import { BRANCH_TYPE }                  from '../survey/IBranchCore';
+import { PAGE_TYPE }                    from '../survey/IPageCore';
+import { QUESTION_TYPE }                from '../survey/IQuestionCore';
+import { RESULT_TYPE }                  from '../survey/IResultCore';
+import { SECTION_TYPE }                 from '../survey/ISectionCore';
+import { OP_TYPE, STEP_TYPE, TRefType } from '../survey/Unions';
+import { isEnum }                       from '../util/enums';
+import { matches }                      from '../util/helpers';
 
 export type TQForm = {
   form: FormCore,

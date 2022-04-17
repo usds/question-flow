@@ -18,8 +18,9 @@ import {
 } from '../composable';
 import { Factory } from './Factory';
 import { ClassList } from '../util/instanceOf';
-import { ACTION_TYPE, MODE } from '../util/enums';
+import { MODE } from '../util/enums';
 import { merge } from '../util/merge';
+import { ACTION_TYPE } from '../survey/IActionCore';
 
 type TBuilderDefaults = {
   section?: Section;

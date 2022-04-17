@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
 import { addToPool, existsInPool } from '../constructable/types';
-import { ISectionCore }            from '../survey/ISectionCore';
 import {
+  ISectionCore,
   PROGRESS_BAR_STATUS,
   SECTION_TYPE,
   TProgressBarStatusType,
   TSectionType,
-} from '../util/enums';
+} from '../survey/ISectionCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { RefCore }                                 from './RefCore';
 import { RequirementCore }                         from './RequirementCore';

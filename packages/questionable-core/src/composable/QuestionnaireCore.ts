@@ -15,10 +15,10 @@ import {
   addToPool, TCollectable,
 } from '../constructable/types';
 import { RefCore }      from './RefCore';
-import { TRefType }     from '../util/enums';
 import { QuestionCore } from './QuestionCore';
 import { BranchCore }   from './BranchCore';
 import { SectionCore }  from './SectionCore';
+import { TRefType }     from '../survey/Unions';
 
 /**
  * Utility wrapper for survey state

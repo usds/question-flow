@@ -1,7 +1,17 @@
-import { TResultType }      from '../util';
-import { IActionCore }      from './IActionCore';
-import { IRefCore }         from './IRefCore';
-import { IRequirementCore } from './IRequirementCore';
+import { IActionCore }                       from './IActionCore';
+import { BASE_TYPE, IRefCore, TEnmBaseType } from './IRefCore';
+import { IRequirementCore }                  from './IRequirementCore';
+
+export type TResultType = 'match' | 'non-match';
+type TEnmResultType = TEnmBaseType & {
+  MATCH: TResultType & 'match',
+  NON_MATCH: TResultType & 'non-match';
+}
+export const RESULT_TYPE: TEnmResultType = {
+  ...BASE_TYPE,
+  MATCH:     'match',
+  NON_MATCH: 'non-match',
+};
 
 /**
  * Represents a potential result based on a customer's answers

@@ -10,8 +10,8 @@ import {
   ClassList,
   TInstanceOf,
 } from '../util/instanceOf';
-import { OP_TYPE, TOpType } from '../util/enums';
 import { QuestionCore }     from './QuestionCore';
+import { OP_TYPE, TOpType } from '../survey/Unions';
 
 export interface FormCore extends BaseCore, IFormCore {}
 

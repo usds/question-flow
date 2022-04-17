@@ -16,7 +16,7 @@ import {
   SectionCore as Section,
   TCtor,
 } from '../composable';
-import { ACTION_TYPE } from '../util/enums';
+import { ACTION_TYPE } from '../survey/IActionCore';
 import { ClassList }   from '../util/instanceOf';
 
 export abstract class Factory {

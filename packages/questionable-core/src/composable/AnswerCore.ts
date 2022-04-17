@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { addToPool, existsInPool }                 from '../constructable/types';
-import { IAnswerCore }                             from '../survey/IAnswerCore';
-import { ANSWER_TYPE, TAnswerType }                from '../util/enums';
+import { ANSWER_TYPE, IAnswerCore, TAnswerType }   from '../survey/IAnswerCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { QuestionCore }                            from './QuestionCore';
 import { RefCore }                                 from './RefCore';

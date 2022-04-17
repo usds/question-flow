@@ -1,6 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { IButtonCore }                             from '../survey/IButtonCore';
-import { BUTTON_TYPE, TButtonType }                from '../util/enums';
+import { BUTTON_TYPE, IButtonCore, TButtonType }   from '../survey/IButtonCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { RefCore }                                 from './RefCore';
 

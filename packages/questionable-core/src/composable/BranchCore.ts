@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { addToPool, existsInPool }                 from '../constructable/types';
-import { IBranchCore }                             from '../survey/IBranchCore';
-import { BRANCH_TYPE, TBranchType }                from '../util/enums';
+import { BRANCH_TYPE, IBranchCore, TBranchType }   from '../survey/IBranchCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { QuestionCore }                            from './QuestionCore';
 import { RefCore }                                 from './RefCore';

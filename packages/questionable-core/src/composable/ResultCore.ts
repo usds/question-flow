@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { addToPool, existsInPool }                 from '../constructable/types';
-import { IResultCore }                             from '../survey/IResultCore';
-import { RESULT_TYPE, TResultType }                from '../util/enums';
+import { IResultCore, RESULT_TYPE, TResultType }   from '../survey/IResultCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { ActionCore }                              from './ActionCore';
 import { RefCore }                                 from './RefCore';
@@ -14,7 +13,7 @@ export class ResultCore extends RefCore implements IResultCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.result, ClassList.ref], obj);
+    return checkInstanceOf([ClassList.result], obj);
   }
 
   // public static isResult(data: any): data is ResultCore {
@@ -59,15 +58,17 @@ export class ResultCore extends RefCore implements IResultCore {
 
   constructor(data: Partial<ResultCore>) {
     super(data);
-    this.#action          = ActionCore.createOptional(data.action);
-    this.#match           = RequirementCore.createOptional(data.match);
-    this.#requirements    = data.requirements?.map((r) => RequirementCore.create(r)) || [];
-    this.#secondaryAction = ActionCore.createOptional(data.secondaryAction);
-    this.#reason          = data.reason || '';
-    this.#label           = data.label || '';
-    this.#category        = data.category || '';
-    this.#order           = data.order || 0;
-    this.#type            = data.type || RESULT_TYPE.MATCH;
+    const type: TResultType = (!data.type || `${data.type}` === `${RESULT_TYPE.DEFAULT}`)
+      ? RESULT_TYPE.MATCH : data.type;
+    this.#type              = type;
+    this.#action            = ActionCore.createOptional(data.action);
+    this.#match             = RequirementCore.createOptional(data.match);
+    this.#requirements      = data.requirements?.map((r) => RequirementCore.create(r)) || [];
+    this.#secondaryAction   = ActionCore.createOptional(data.secondaryAction);
+    this.#reason            = data.reason || '';
+    this.#label             = data.label || '';
+    this.#category          = data.category || '';
+    this.#order             = data.order || 0;
   }
 
   public get action(): ActionCore | undefined {
