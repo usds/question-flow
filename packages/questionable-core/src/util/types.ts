@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-cycle, @typescript-eslint/no-explicit-any */
 /*
  * Defines an age relative to a date
  * @title Age Type

@@ -8,15 +8,13 @@ import {
 } from '../composable/ActionCore';
 import { SurveyBuilder }                         from '../constructable/SurveyBuilderCore';
 import { ACTION_TYPE, PAGE_TYPE, QUESTION_TYPE } from '../util/enums';
-import {
-  AnswerCore,
-  QuestionCore,
-  RequirementCore,
-  ResponseCore,
-  SectionCore,
-} from '../composable/StepCore';
-import { ResultCore } from '../composable/ResultCore';
-import { PagesCore }  from '../composable/PagesCore';
+import { ResultCore }                            from '../composable/ResultCore';
+import { PagesCore }                             from '../composable/PagesCore';
+import { SectionCore }                           from '../composable/SectionCore';
+import { AnswerCore }                            from '../composable/AnswerCore';
+import { QuestionCore }                          from '../composable/QuestionCore';
+import { ResponseCore }                          from '../composable/ResponseCore';
+import { RequirementCore }                       from '../composable/RequirementCore';
 
 export class Scaffolding {
   // questionnaire: QuestionnaireCore;

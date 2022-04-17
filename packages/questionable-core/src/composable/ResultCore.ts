@@ -5,7 +5,7 @@ import { RESULT_TYPE, TResultType }                from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { ActionCore }                              from './ActionCore';
 import { RefCore }                                 from './RefCore';
-import { RequirementCore }                         from './StepCore';
+import { RequirementCore }                         from './RequirementCore';
 
 export class ResultCore extends RefCore implements IResultCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -98,7 +98,7 @@ export class ResultCore extends RefCore implements IResultCore {
     this.#reason = val;
   }
 
-  public get requirements() {
+  public get requirements(): RequirementCore[] {
     return this.#requirements;
   }
 

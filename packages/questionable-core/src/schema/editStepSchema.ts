@@ -1,5 +1,6 @@
 import { merge }                            from 'lodash';
-import { IPageCore, IQuestionCore }         from '../survey/IStepCore';
+import { IPageCore }                        from '../survey/IPageCore';
+import { IQuestionCore }                    from '../survey/IQuestionCore';
 import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '../util/enums';
 import { survey }                           from './survey';
 

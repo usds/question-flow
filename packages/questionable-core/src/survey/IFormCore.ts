@@ -1,5 +1,5 @@
 import { TAgeCore }      from '../util/types';
-import { IQuestionCore } from './IStepCore';
+import { IQuestionCore } from './IQuestionCore';
 
 /**
  * Represents the survey as completed by the user
@@ -10,25 +10,25 @@ export interface IFormCore {
    *
    * @title Age
    */
-  age?: TAgeCore | undefined;
+  age?: TAgeCore;
   /**
    * Customer's entered birthdate
    *
    * @title Birthdate
    */
-  birthdate?: string | undefined;
+  birthdate?: string;
   /**
    * Time the survey was completed
    *
    * @title Finished
    */
-  finished?: Date | undefined;
+  finished?: Date;
   /**
    * All currently provided responses
    *
    * @title Responses
    */
-  responses?: IQuestionCore[] | undefined;
+  responses?: IQuestionCore[];
   /**
    * Time the survey was started
    *

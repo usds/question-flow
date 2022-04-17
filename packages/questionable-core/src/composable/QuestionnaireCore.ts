@@ -1,15 +1,6 @@
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable max-classes-per-file */
-import { ActionCore } from './ActionCore';
-import {
-  BranchCore,
-  QuestionCore,
-  SectionCore,
-  StepCore,
-}         from './StepCore';
+import { ActionCore }             from './ActionCore';
+import { StepCore }               from './StepCore';
 import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
 import { QuestionableConfigCore } from './ConfigCore';
 import { PagesCore }              from './PagesCore';
@@ -23,10 +14,11 @@ import { matches }           from '../util/helpers';
 import {
   addToPool, TCollectable,
 } from '../constructable/types';
-import { RefCore }  from './RefCore';
-import { TRefType } from '../util/enums';
-
-type TCollected = QuestionCore | BranchCore | SectionCore | ActionCore | ResultCore;
+import { RefCore }      from './RefCore';
+import { TRefType }     from '../util/enums';
+import { QuestionCore } from './QuestionCore';
+import { BranchCore }   from './BranchCore';
+import { SectionCore }  from './SectionCore';
 
 /**
  * Utility wrapper for survey state
@@ -158,7 +150,7 @@ export class QuestionnaireCore extends RefCore implements IQuestionnaireCore {
     return 'default';
   }
 
-  public existsIn(data: TCollected): boolean {
+  public existsIn(data: TCollectable): boolean {
     if (data instanceof QuestionCore) {
       return this.#questions.some((q) => q === data || matches(q.title, data.title));
     }

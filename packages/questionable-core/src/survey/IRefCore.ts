@@ -1,3 +1,5 @@
+import { TRefType } from '../util/enums';
+
 /** Generic reference object */
 export interface IRefCore {
   /**
@@ -5,19 +7,19 @@ export interface IRefCore {
    *
    * @title Id
    */
-  id?: string | undefined;
+  id?: string;
   /**
    * @title Optional label
    * @hidden
    */
-  label?: string | undefined;
+  label?: string;
   /**
    * Optional order
    *
    * @title Order
    * @hidden
    */
-  order?: number | undefined;
+  order?: number;
   /**
    * @title Title
    */
@@ -26,5 +28,5 @@ export interface IRefCore {
    * @title Type
    * @hidden
    */
-  type?: string | undefined;
+  type?: TRefType;
 }

@@ -1,8 +1,10 @@
-import { DIRECTION }                               from '../util/enums';
-import { TStringDictionaryCore }                   from '../util/types';
-import { IFormCore }                               from './IFormCore';
-import { IResultCore }                             from './IResultCore';
-import { IQuestionCore, IResponseCore, IStepCore } from './IStepCore';
+import { DIRECTION }             from '../util/enums';
+import { TStringDictionaryCore } from '../util/types';
+import { IFormCore }             from './IFormCore';
+import { IQuestionCore }         from './IQuestionCore';
+import { IResponseCore }         from './IResponseCore';
+import { IResultCore }           from './IResultCore';
+import { IStepCore }             from './IStepCore';
 
 /**
  * Event data structure to be sent with event callbacks
@@ -94,14 +96,14 @@ export type TOnGateSwitchCore = (
  * @title Event
  */
 export interface IEventCore {
-  readonly onActionClick: TOnEventCore | undefined;
-  readonly onAnswer: TOnEventCore | undefined;
-  readonly onAnyEvent: TOnEventCore | undefined;
-  readonly onBranch: TOnEventCore | undefined;
-  readonly onError: TOnErrorCore | undefined;
-  readonly onGateSwitch: TOnEventCore | undefined;
-  readonly onInit: TOnEventCore | undefined;
-  readonly onNoResults: TOnEventCore | undefined;
-  readonly onPage: TOnEventCore | undefined;
-  readonly onResults: TOnEventCore | undefined;
+  readonly onActionClick?: TOnEventCore;
+  readonly onAnswer?: TOnEventCore;
+  readonly onAnyEvent?: TOnEventCore;
+  readonly onBranch?: TOnEventCore;
+  readonly onError?: TOnErrorCore;
+  readonly onGateSwitch?: TOnEventCore;
+  readonly onInit?: TOnEventCore;
+  readonly onNoResults?: TOnEventCore;
+  readonly onPage?: TOnEventCore;
+  readonly onResults?: TOnEventCore;
 }

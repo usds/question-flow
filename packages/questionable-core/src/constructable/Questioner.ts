@@ -4,8 +4,8 @@ import { eventedCore }                       from '../state/pubsub';
 import { OP_TYPE, QUESTION_TYPE, STEP_TYPE } from '../util/enums';
 import { getDateTime }                       from '../util/date';
 import { FormCore }                          from '../composable/FormCore';
-import { QuestionCore }                      from '../composable/StepCore';
-import { IQuestionCore }                     from '../survey/IStepCore';
+import { QuestionCore }                      from '../composable/QuestionCore';
+import { IQuestionCore }                     from '../survey/IQuestionCore';
 import { TDateOfBirthCore }                  from '../util/types';
 import { TQForm, TSForm }                    from './types';
 

@@ -10,7 +10,7 @@ export interface IButtonCore extends IRefCore {
    *
    * @title Link
    */
-  link?: string | undefined;
+  link?: string;
   /**
    * Render mode (link or button)
    *
@@ -22,5 +22,5 @@ export interface IButtonCore extends IRefCore {
    *
    * @title Visible
    */
-  visible?: boolean | undefined;
+  visible?: boolean;
 }

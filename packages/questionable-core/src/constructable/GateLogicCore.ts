@@ -3,14 +3,7 @@ import { ResultCore }             from '../composable/ResultCore';
 import { FormCore }               from '../composable/FormCore';
 import { PageCore }               from '../composable/PageCore';
 import { QuestionnaireCore }      from '../composable/QuestionnaireCore';
-import {
-  BranchCore,
-  QuestionCore,
-  RequirementCore,
-  ResponseCore,
-  SectionCore,
-  StepCore,
-} from '../composable/StepCore';
+import {  StepCore }              from '../composable/StepCore';
 import {
   ACTION_TYPE,
   DIRECTION,
@@ -30,6 +23,11 @@ import { ActionCore }             from '../composable/ActionCore';
 import { isValid, Questioner }    from './Questioner';
 import { PagesConfigCore }        from '../composable/config';
 import { TQForm }                 from './types';
+import { QuestionCore }           from '../composable/QuestionCore';
+import { SectionCore }            from '../composable/SectionCore';
+import { BranchCore }             from '../composable/BranchCore';
+import { RequirementCore }        from '../composable/RequirementCore';
+import { ResponseCore }           from '../composable/ResponseCore';
 
 type TPageSet =
   | {

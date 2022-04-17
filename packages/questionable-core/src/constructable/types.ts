@@ -1,9 +1,13 @@
-import { ActionCore, RefCore, ResultCore }           from '../composable';
-import { FormCore }                                  from '../composable/FormCore';
-import { PageCore }                                  from '../composable/PageCore';
-import {
-  BranchCore, QuestionCore, SectionCore, StepCore,
-} from '../composable/StepCore';
+/* eslint-disable import/no-cycle */
+import { ActionCore }   from '../composable/ActionCore';
+import { BranchCore }   from '../composable/BranchCore';
+import { FormCore }     from '../composable/FormCore';
+import { PageCore }     from '../composable/PageCore';
+import { QuestionCore } from '../composable/QuestionCore';
+import { RefCore }      from '../composable/RefCore';
+import { ResultCore }   from '../composable/ResultCore';
+import { SectionCore }  from '../composable/SectionCore';
+import { StepCore }     from '../composable/StepCore';
 import {
   OP_TYPE,
   isEnum,

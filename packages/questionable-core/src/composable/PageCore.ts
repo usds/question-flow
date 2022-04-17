@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
 import { TCollectable }                            from '../constructable/types';
-import { IPageCore }                               from '../survey/IStepCore';
 import { TPointerDirection }                       from '../util/types';
 import { PAGE_TYPE, TPageType }                    from '../util/enums';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
 import { StepCore }                                from './StepCore';
+import { IPageCore }                               from '../survey/IPageCore';
 
 const className = ClassList.page;
 export class PageCore extends StepCore implements IPageCore {

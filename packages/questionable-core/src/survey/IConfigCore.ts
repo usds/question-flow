@@ -3,7 +3,7 @@ import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
 import { IEventCore }                                from './IEventCore';
 
 type TVisible = {
-  visible?: boolean | undefined,
+  visible?: boolean,
 };
 
 /**
@@ -24,56 +24,56 @@ export interface IQuestionableConfigCore {
    * @title Events
    * @hidden
    */
-  events?: IEventCore | undefined;
+  events?: IEventCore;
   /**
    * Optional method to fetch environment variables or query string parameters
    *
    * @title Get Runtime Config
    * @hidden
    */
-  getRuntimeConfig?: TGetDictionaryCore | undefined;
+  getRuntimeConfig?: TGetDictionaryCore;
   /**
    * View or edit mode
    *
    * @title Mode
    * @default MODE.VIEW
    */
-  mode: MODE | undefined;
+  mode?: MODE;
   /**
    * Navigation configuration
    *
    * @title Navigation
    */
-  nav?: TVisible | undefined;
+  nav?: TVisible;
   /**
    * Page configuration
    *
    * @title Pages
    */
-  pages?: TVisible | undefined;
+  pages?: TVisible;
   /**
    * Properties produced from `getRuntimeConfig()`
    * @title Params
    * @default {}
    */
-  params?: TStringDictionaryCore | undefined;
+  params?: TStringDictionaryCore;
   /**
    * Progress Bar configuration
    *
    * @title Progress Bar
    */
-  progressBar?: TVisible | undefined;
+  progressBar?: TVisible;
   /**
    * Question configuration
    *
    * @title Question Configuration
    */
-  questions?: TVisible | undefined;
+  questions?: TVisible;
 
   /**
    * Step configuration
    *
    * @title Step Configuration
    */
-  steps?: TVisible | undefined;
+  steps?: TVisible;
 }

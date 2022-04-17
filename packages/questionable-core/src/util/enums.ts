@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 type TBaseTypeDefaultName = 'default';
 const DEFAULT: TBaseTypeDefaultName = 'default';
 type TBaseType = { DEFAULT: TBaseTypeDefaultName };

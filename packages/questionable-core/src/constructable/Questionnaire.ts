@@ -3,19 +3,18 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-classes-per-file */
-import { ActionCore } from '../composable/ActionCore';
-import {
-  BranchCore,
-  QuestionCore,
-  SectionCore,
-  StepCore,
-}         from '../composable/StepCore';
+import { ActionCore }             from '../composable/ActionCore';
+import { StepCore }               from '../composable/StepCore';
 import { QuestionableConfigCore } from '../composable/ConfigCore';
 import { ResultCore }             from '../composable/ResultCore';
 import {
   addToPool, TCollectable,
 } from '.';
-import { PageCore, QuestionnaireCore } from '../composable';
+import { PageCore }          from '../composable/PageCore';
+import { QuestionnaireCore } from '../composable/QuestionnaireCore';
+import { QuestionCore }      from '../composable/QuestionCore';
+import { BranchCore }        from '../composable/BranchCore';
+import { SectionCore }       from '../composable/SectionCore';
 
 /**
  * Utility wrapper for survey state

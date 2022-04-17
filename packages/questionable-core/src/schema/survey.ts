@@ -48,6 +48,13 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "enum": [
+            "fixed",
+            "variable"
+          ],
+          "type": "string"
         }
       },
       "required": [
@@ -76,6 +83,13 @@ export const survey = {
         },
         "title": {
           "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "linear",
+            "non-linear"
+          ],
           "type": "string"
         }
       },
@@ -123,38 +137,6 @@ export const survey = {
     },
     "IEventCore": {
       "description": "Event Model",
-      "properties": {
-        "onActionClick": {
-          "not": {}
-        },
-        "onAnswer": {
-          "not": {}
-        },
-        "onAnyEvent": {
-          "not": {}
-        },
-        "onBranch": {
-          "not": {}
-        },
-        "onError": {
-          "not": {}
-        },
-        "onGateSwitch": {
-          "not": {}
-        },
-        "onInit": {
-          "not": {}
-        },
-        "onNoResults": {
-          "not": {}
-        },
-        "onPage": {
-          "not": {}
-        },
-        "onResults": {
-          "not": {}
-        }
-      },
       "title": "Event",
       "type": "object"
     },
@@ -231,7 +213,6 @@ export const survey = {
       "type": "object"
     },
     "IPageCore": {
-      "description": "Defines step content for Page types",
       "properties": {
         "body": {
           "description": "Defines the body content of the page",
@@ -353,7 +334,6 @@ export const survey = {
       "type": "object"
     },
     "IQuestionCore": {
-      "description": "Defines step content for Question type",
       "properties": {
         "answers": {
           "description": "Collection of allowed answers",
@@ -677,6 +657,13 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "enum": [
+            "required",
+            "non-required"
+          ],
+          "type": "string"
         }
       },
       "required": [
@@ -705,6 +692,13 @@ export const survey = {
         },
         "title": {
           "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "complete",
+            "incomplete"
+          ],
           "type": "string"
         }
       },
@@ -747,6 +741,13 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "enum": [
+            "match",
+            "non-match"
+          ],
+          "type": "string"
         }
       },
       "required": [
@@ -772,6 +773,13 @@ export const survey = {
         },
         "title": {
           "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "locked",
+            "unlocked"
+          ],
           "type": "string"
         }
       },

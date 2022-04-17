@@ -1,6 +1,7 @@
+import { TResultType }      from '../util';
 import { IActionCore }      from './IActionCore';
 import { IRefCore }         from './IRefCore';
-import { IRequirementCore } from './IStepCore';
+import { IRequirementCore } from './IRequirementCore';
 
 /**
  * Represents a potential result based on a customer's answers
@@ -12,11 +13,11 @@ export interface IResultCore extends IRefCore {
    * @title Call to Action
    * @hidden
    */
-  action?: IActionCore | undefined;
+  action?: IActionCore;
   /**
    * Optional tag/category to group results
    */
-  category?: string | undefined;
+  category?: string;
   /**
    * Identify the result (e.g. 'Benefit name')
    *
@@ -30,13 +31,13 @@ export interface IResultCore extends IRefCore {
    * @title Match
    * @hidden Not viewable/editable in Design Mode
    */
-  match?: IRequirementCore | undefined;
+  match?: IRequirementCore;
   /**
    * Human readable explanation of result determination
    *
    * @title Reason
    */
-  reason?: string | undefined;
+  reason?: string;
   /**
    * Collection of requirements required to achieve this result
    *
@@ -49,5 +50,7 @@ export interface IResultCore extends IRefCore {
    * @title Secondary Action
    * @hidden
    */
-  secondaryAction?: IActionCore | undefined;
+  secondaryAction?: IActionCore;
+
+  type?: TResultType;
 }

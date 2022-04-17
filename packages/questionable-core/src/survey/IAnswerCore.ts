@@ -1,6 +1,8 @@
-import { IRefCore } from './IRefCore';
+import { TAnswerType } from '../util';
+import { IRefCore }    from './IRefCore';
 
 export interface IAnswerCore extends IRefCore {
-  key?: string | undefined;
-  synonyms?: string[] | undefined;
+  key?: string;
+  synonyms?: string[];
+  type?: TAnswerType;
 }

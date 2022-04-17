@@ -1,5 +1,4 @@
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-restricted-syntax */
 import { IPagesCore }                              from '../survey/IPagesCore';
 import { PAGE_TYPE, TPageType }                    from '../util/enums';
 import { matches }                                 from '../util/helpers';

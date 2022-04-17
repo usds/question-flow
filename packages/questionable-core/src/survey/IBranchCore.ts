@@ -1,7 +1,10 @@
-import { IRefCore }                    from './IRefCore';
-import { IQuestionCore, ISectionCore } from './IStepCore';
+import { TBranchType }   from '../util';
+import { IQuestionCore } from './IQuestionCore';
+import { IRefCore }      from './IRefCore';
+import { ISectionCore }  from './ISectionCore';
 
 export interface IBranchCore extends IRefCore {
-  questions?: IQuestionCore[] | undefined;
-  sections?: ISectionCore[] | undefined;
+  questions?: IQuestionCore[];
+  sections?: ISectionCore[];
+  type?: TBranchType;
 }

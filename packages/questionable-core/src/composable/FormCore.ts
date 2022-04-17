@@ -1,18 +1,19 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable import/no-cycle */
-import { merge }        from 'lodash';
-import { eventedCore }  from '../state/pubsub';
-import { IFormCore }    from '../survey/IFormCore';
-import { matches }      from '../util/helpers';
-import { TAgeCore }     from '../util/types';
-import { BaseCore }     from './BaseCore';
-import { QuestionCore } from './StepCore';
+import { merge }       from 'lodash';
+import { eventedCore } from '../state/pubsub';
+import { IFormCore }   from '../survey/IFormCore';
+import { matches }     from '../util/helpers';
+import { TAgeCore }    from '../util/types';
+import { BaseCore }    from './BaseCore';
 import {
   checkInstanceOf,
   ClassList,
   TInstanceOf,
 } from '../util/instanceOf';
 import { OP_TYPE, TOpType } from '../util/enums';
+import { QuestionCore }     from './QuestionCore';
+
+export interface FormCore extends BaseCore, IFormCore {}
 
 export type TStepReducerAction = {
   type: TOpType;
