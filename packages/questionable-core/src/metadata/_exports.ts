@@ -15,5 +15,5 @@ export * from './IResponseCore';
 export * from './IResultCore';
 export * from './ISectionCore';
 export * from './IStepCore';
-export * from './properties';
-export * from './types';
+export * from './properties/_exports';
+export * from './types/_exports';

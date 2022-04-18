@@ -14,7 +14,7 @@ export class PagesCore extends BaseCore implements IPagesCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.pages], obj);
+    return checkInstanceOf({ names: [ClassList.pages], obj });
   }
 
   #pages: PageCore[];
@@ -42,11 +42,13 @@ export class PagesCore extends BaseCore implements IPagesCore {
   #touchPage(type: TPageType, data?: Partial<PageCore>): Partial<PageCore> {
     const defaults = merge(
       {
-        display: false,
-        title:   type,
+        params: [{
+          display: false,
+          title:   type,
+        },
+        data,
+        { id: type, type }],
       },
-      data,
-      { id: type, type },
     );
     defaults.type  = type;
     return defaults;

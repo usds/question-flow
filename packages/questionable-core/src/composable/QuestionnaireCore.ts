@@ -13,7 +13,7 @@ import { ResultCore } from './ResultCore';
 import { matches }    from '../lib/helpers';
 import {
   addToPool,
-} from '../constructable/types';
+} from '../constructable/lib/pools';
 import { TCollectable } from '../metadata/types/TCollectable';
 import { RefCore }      from './RefCore';
 import { QuestionCore } from './QuestionCore';
@@ -31,7 +31,7 @@ export class QuestionnaireCore extends RefCore implements IQuestionnaireCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.questionnaire, ClassList.base], obj);
+    return checkInstanceOf({ names: [ClassList.questionnaire, ClassList.base], obj });
   }
 
   public static override create(data: Partial<QuestionnaireCore>) {

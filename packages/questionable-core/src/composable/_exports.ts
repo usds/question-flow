@@ -3,7 +3,7 @@ export * from './AnswerCore';
 export * from './BaseCore';
 export * from './BranchCore';
 export * from './ButtonCore';
-export * from './config';
+export * from './config/_exports';
 export * from './ConfigCore';
 export * from './Dictionary';
 export * from './EventEmitterCore';

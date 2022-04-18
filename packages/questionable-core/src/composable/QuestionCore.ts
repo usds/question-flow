@@ -1,14 +1,17 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool }                 from '../constructable/types';
-import { TCollectable }                            from '../metadata/types/TCollectable';
-import { IQuestionCore }                           from '../metadata/IQuestionCore';
-import { QUESTION_TYPE, TQuestionType }            from '../metadata/properties/type/TQuestionType';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
-import { TPointerDirection }                       from '../lib/types';
-import { AnswerCore }                              from './AnswerCore';
-import { BranchCore }                              from './BranchCore';
-import { SectionCore }                             from './SectionCore';
-import { StepCore }                                from './StepCore';
+import { addToPool, existsInPool }                       from '../constructable/lib/pools';
+import { TCollectable }                                  from '../metadata/types/TCollectable';
+import { IQuestionCore }                                 from '../metadata/IQuestionCore';
+import { QUESTION_TYPE, TQuestionType }                  from '../metadata/properties/type/TQuestionType';
+import {
+  checkInstanceOf, ClassList, EClassList, TInstanceOf,
+} from '../lib/instanceOf';
+import { TPointerDirection } from '../lib/types';
+import { AnswerCore }        from './AnswerCore';
+import { BranchCore }        from './BranchCore';
+import { SectionCore }       from './SectionCore';
+import { StepCore }          from './StepCore';
+import { classCreate }       from '../constructable/Factory';
 
 export class QuestionCore extends StepCore implements IQuestionCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -17,7 +20,7 @@ export class QuestionCore extends StepCore implements IQuestionCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.question, ClassList.step], obj);
+    return checkInstanceOf({ names: [ClassList.question, ClassList.step], obj });
   }
 
   public static override create(data: Partial<QuestionCore>) {
@@ -53,9 +56,9 @@ export class QuestionCore extends StepCore implements IQuestionCore {
     const type: TQuestionType = (!data.type || `${data.type}` === `${QUESTION_TYPE.DEFAULT}`)
       ? QUESTION_TYPE.TEXT : data.type;
     this.#type                = type;
-    this.#answers             = data.answers?.map((a) => AnswerCore.create(a)) || [];
-    this.#branch              = BranchCore.createOptional(data.branch);
-    this.#section             = SectionCore.createOptional(data.section);
+    this.#answers             = data.answers?.map((itm) => classCreate(EClassList.ANSWER, itm)) || [];
+    this.#branch              = classCreate(EClassList.BRANCH, data.branch, true);
+    this.#section             = classCreate(EClassList.SECTION, data.section, true);
   }
 
   public get answer() {

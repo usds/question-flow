@@ -1,21 +1,19 @@
 /* eslint-disable */
-import {
-  ActionCore as Action,
-  AnswerCore as Answer,
-  BaseCore as Base,
-  BranchCore as Branch,
-  PageCore as Page,
-  PagesCore as Pages,
-  QuestionableConfigCore as Config,
-  QuestionCore as Question,
-  QuestionnaireCore as Questionnaire,
-  RefCore as Ref,
-  RequirementCore as Requirement,
-  ResponseCore as Response,
-  ResultCore as Result,
-  SectionCore as Section,
-  TCtor,
-} from '../composable';
+import { ActionCore as Action }     from '../composable/ActionCore';
+import { AnswerCore as Answer }     from '../composable/AnswerCore';
+import { BaseCore as Base }         from '../composable/BaseCore';
+import { BranchCore as Branch }     from '../composable/BranchCore';
+import { QuestionCore as Question } from '../composable/QuestionCore';
+import { PageCore as Page } from '../composable/PageCore';
+      import { PagesCore as Pages } from '../composable/PagesCore';
+      import { QuestionableConfigCore as Config } from '../composable/ConfigCore';
+      import { QuestionnaireCore as Questionnaire } from '../composable/QuestionnaireCore';
+      import { RefCore as Ref } from '../composable/RefCore';
+      import { RequirementCore as Requirement } from '../composable/RequirementCore';
+      import { ResponseCore as Response } from '../composable/ResponseCore';
+      import { ResultCore as Result } from '../composable/ResultCore';
+      import { SectionCore as Section } from '../composable/SectionCore';
+import {TCtor} from '../composable/TCtor';
 import { Factory } from './Factory';
 import { ClassList } from '../lib/instanceOf';
 import { MODE } from '../lib/enums';
@@ -54,7 +52,7 @@ export class SurveyBuilder {
 
   setDefaults(data: Section | Branch) {
     if (data instanceof Section) {
-      return merge(this.#defaults.section, data);
+      return merge({ params: [this.#defaults.section, data] });
     }
   }
 
@@ -64,10 +62,12 @@ export class SurveyBuilder {
   #addAction(inp: Partial<Action>): Action {
     const data = merge(
       {
-        type: ACTION_TYPE.NONE,
-        label: inp.title,
+        params: [{
+          type: ACTION_TYPE.NONE,
+          label: inp.title,
+        },
+          inp]
       },
-      inp,
     );
     return Factory.addOne(Action, data,this.#actions);
   }

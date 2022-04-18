@@ -1,18 +1,21 @@
 /* eslint-disable import/no-cycle */
-import { kebabCase }                               from 'lodash';
-import { addToPool, existsInPool }                 from '../constructable/types';
-import { TCollectable }                            from '../metadata/types/TCollectable';
-import { PAGE_TYPE }                               from '../metadata/properties/type/TPageType';
-import { QUESTION_TYPE }                           from '../metadata/properties/type/TQuestionType';
-import { IStepCore }                               from '../metadata/IStepCore';
-import { STEP_TYPE, TStepType }                    from '../metadata/properties/type/TStepType';
-import { isEnum }                                  from '../lib/enums';
-import { matches }                                 from '../lib/helpers';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
-import { TPointerDirection }                       from '../lib/types';
-import { RefCore }                                 from './RefCore';
-import { RequirementCore }                         from './RequirementCore';
-import { SectionCore }                             from './SectionCore';
+import { kebabCase }                                     from 'lodash';
+import { addToPool, existsInPool }                       from '../constructable/lib/pools';
+import { TCollectable }                                  from '../metadata/types/TCollectable';
+import { PAGE_TYPE }                                     from '../metadata/properties/type/TPageType';
+import { QUESTION_TYPE }                                 from '../metadata/properties/type/TQuestionType';
+import { IStepCore }                                     from '../metadata/IStepCore';
+import { STEP_TYPE, TStepType }                          from '../metadata/properties/type/TStepType';
+import { isEnum }                                        from '../lib/enums';
+import { matches }                                       from '../lib/helpers';
+import {
+  checkInstanceOf, ClassList, EClassList, TInstanceOf,
+} from '../lib/instanceOf';
+import { TPointerDirection } from '../lib/types';
+import { RefCore }           from './RefCore';
+import { RequirementCore }   from './RequirementCore';
+import { SectionCore }       from './SectionCore';
+import { classCreate }       from '../constructable/Factory';
 
 export class StepCore extends RefCore implements IStepCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -21,7 +24,7 @@ export class StepCore extends RefCore implements IStepCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.step, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.step, ClassList.ref], obj });
   }
 
   public static override create(data: Partial<StepCore>) {
@@ -51,15 +54,15 @@ export class StepCore extends RefCore implements IStepCore {
 
   constructor(data: Partial<StepCore>) {
     super(data);
-    this.#entryRequirements = data.entryRequirements?.map((r) => RequirementCore.create(r)) || [];
-    this.#exitRequirements  = data.exitRequirements?.map((r) => RequirementCore.create(r)) || [];
+    this.#entryRequirements = data.entryRequirements?.map((itm) => classCreate(EClassList.REQUIREMENT, itm)) || [];
+    this.#exitRequirements  = data.exitRequirements?.map((itm) => classCreate(EClassList.REQUIREMENT, itm)) || [];
     const type: TStepType   = (!data.type || `${data.type}` === `${STEP_TYPE.DEFAULT}`) ? STEP_TYPE.DEFAULT : data.type;
     this.#type              = type;
     this.#footer            = data.footer || '';
     this.#info              = data.info || '';
     this.#internalNotes     = data.internalNotes || '';
     this.#order             = data.order || 0;
-    this.#section           = SectionCore.createOptional(data.section);
+    this.#section           = classCreate(EClassList.SECTION, data.section, true);
     this.#subTitle          = data.subTitle || '';
   }
 
@@ -113,10 +116,10 @@ export class StepCore extends RefCore implements IStepCore {
   }
 
   public getStepType() {
-    if (isEnum(QUESTION_TYPE, this.type)) {
+    if (isEnum({ enm: QUESTION_TYPE, value: this.type })) {
       return 'question';
     }
-    if (isEnum(PAGE_TYPE, this.type)) {
+    if (isEnum({ enm: PAGE_TYPE, value: this.type })) {
       return 'page';
     }
     return 'unknown';

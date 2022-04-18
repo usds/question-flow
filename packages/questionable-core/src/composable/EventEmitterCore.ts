@@ -26,7 +26,7 @@ export class EventEmitterCore extends BaseCore implements IEventCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className], obj);
+    return checkInstanceOf({ names: [className], obj });
   }
 
   readonly onActionClick: TOnEventCore;
@@ -121,7 +121,7 @@ export class EventEmitterCore extends BaseCore implements IEventCore {
     try {
       callback(data);
     } catch (e) {
-      const error = catchError(e);
+      const error = catchError({ e });
       this.error(error, data);
     }
   }

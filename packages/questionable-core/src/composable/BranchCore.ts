@@ -1,11 +1,19 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool }                 from '../constructable/types';
-import { IBranchCore }                             from '../metadata/IBranchCore';
-import { BRANCH_TYPE, TBranchType }                from '../metadata/properties/type/TBranchType';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
-import { QuestionCore }                            from './QuestionCore';
-import { RefCore }                                 from './RefCore';
-import { SectionCore }                             from './SectionCore';
+import { addToPool, existsInPool }                       from '../constructable/lib/pools';
+import { IBranchCore }                                   from '../metadata/IBranchCore';
+import { BRANCH_TYPE, TBranchType }                      from '../metadata/properties/type/TBranchType';
+import {
+  checkInstanceOf, ClassList, EClassList, TInstanceOf,
+} from '../lib/instanceOf';
+import { QuestionCore } from './QuestionCore';
+import { RefCore }      from './RefCore';
+import { SectionCore }  from './SectionCore';
+import { TCollectable } from '../metadata/types/TCollectable';
+import { classCreate }  from '../constructable/Factory';
+
+type TBranchable = TCollectable & {
+  branch?: BranchCore;
+}
 
 export class BranchCore extends RefCore implements IBranchCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -14,7 +22,7 @@ export class BranchCore extends RefCore implements IBranchCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.branch, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.branch, ClassList.ref], obj });
   }
 
   public static override create(data: Partial<BranchCore>) {
@@ -39,8 +47,8 @@ export class BranchCore extends RefCore implements IBranchCore {
 
   constructor(data: Partial<BranchCore>) {
     super(data);
-    this.#questions = data.questions?.map((q) => QuestionCore.create(q)) || [];
-    this.#sections  = data.sections?.map((q) => SectionCore.create(q)) || [];
+    this.#questions = data.questions?.map((itm) => classCreate(EClassList.QUESTION, itm)) || [];
+    this.#sections  = data.sections?.map((itm) => classCreate(EClassList.SECTION, itm)) || [];
     this.#type      = data.type || BRANCH_TYPE.LINEAR;
   }
 
@@ -56,11 +64,11 @@ export class BranchCore extends RefCore implements IBranchCore {
     return this.#type;
   }
 
-  public existsIn(data: SectionCore | QuestionCore): boolean {
+  public existsIn(data: TBranchable): boolean {
     return existsInPool(data, this);
   }
 
-  public add(data: SectionCore | QuestionCore): BranchCore {
+  public add(data: TBranchable): BranchCore {
     data.branch = this; // eslint-disable-line no-param-reassign
     addToPool(data, this);
     return this;

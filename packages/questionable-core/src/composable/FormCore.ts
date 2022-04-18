@@ -1,5 +1,4 @@
 /* eslint-disable import/no-cycle */
-import { merge }       from 'lodash';
 import { eventedCore } from '../state/pubsub';
 import { IFormCore }   from '../metadata/IFormCore';
 import { matches }     from '../lib/helpers';
@@ -10,68 +9,10 @@ import {
   ClassList,
   TInstanceOf,
 } from '../lib/instanceOf';
-import { QuestionCore }     from './QuestionCore';
-import { OP_TYPE, TOpType } from '../metadata/types/TOpType';
+import { QuestionCore }                                        from './QuestionCore';
+import { defaultReducer, TStepReducerAction, type TReducerFn } from '../constructable/lib/defaultReducer';
 
 export interface FormCore extends BaseCore, IFormCore {}
-
-export type TStepReducerAction = {
-  type: TOpType;
-  value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-}
-export type TStepReducer = {
-  action: TStepReducerAction,
-};
-export type TReducer = {
-  action: TStepReducerAction;
-  previousState: Partial<FormCore>;
-}
-
-export type TReducerFn = (
-  previousState: Partial<FormCore>, action: TStepReducerAction, callback?: TReducerFn
-) => FormCore;
-
-/**
- * Merges the form's answer state as the user progresses through the survey
- * @param previousState
- * @param action
- * @returns
- */
-export const defaultReducer: TReducerFn = (previousState, action, callback?: TReducerFn) => {
-  // Action should never be null,
-  // __EXCEPT__ when we attempt to storybook/test individual components in isolation
-  let ret: FormCore;
-  switch (action?.type) {
-    case OP_TYPE.RESET:
-      ret = new FormCore();
-      break;
-
-    case OP_TYPE.UPDATE:
-      ret = FormCore.create(merge(
-        {
-          ...previousState,
-        },
-        {
-          ...action.value,
-        },
-      ));
-      break;
-
-    // Effective a noop that triggers a re-render of the page
-    case OP_TYPE.RERENDER:
-      ret = FormCore.create(previousState);
-      break;
-
-    default:
-      ret =  FormCore.create(previousState);
-      break;
-  }
-  if (callback) {
-    callback(ret, action);
-  }
-  eventedCore.publish({ event: ret, type: 'reduce' });
-  return ret;
-};
 
 export class FormCore extends BaseCore implements IFormCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -80,7 +21,7 @@ export class FormCore extends BaseCore implements IFormCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.form], obj);
+    return checkInstanceOf({ names: [ClassList.form], obj });
   }
 
   public static override create(data: Partial<FormCore> = {}) {
@@ -183,10 +124,15 @@ export class FormCore extends BaseCore implements IFormCore {
    * @param action
    * @returns
    */
-  public static reducer: TReducerFn = (form, action, callback) => defaultReducer(form, action, callback);
+  public static reducer({ form, action, callback }:
+    {action: TStepReducerAction; callback?: TReducerFn<FormCore>; form: Partial<FormCore>}) {
+    return defaultReducer({
+      Form: FormCore, action, callback, oldState: form,
+    });
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  reduce(action: TStepReducerAction, callback?: TReducerFn) {
-    return FormCore.reducer(this, action, callback);
+  reduce({ action, callback }: { action: TStepReducerAction; callback?: TReducerFn<FormCore> }) {
+    return FormCore.reducer({ action, callback, form: this });
   }
 }

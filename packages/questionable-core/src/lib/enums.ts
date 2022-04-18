@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const isEnum = (enm: object, value: string): boolean =>
-  Object.values(enm).includes(value);
+export function isEnum({ enm, value }: { enm: object; value: string; }): boolean {
+  return Object.values(enm).includes(value);
+}
 
 // Traditional enums
 

@@ -1,11 +1,15 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool }                 from '../constructable/types';
-import { IResultCore }                             from '../metadata/IResultCore';
-import { RESULT_TYPE, TResultType }                from '../metadata/properties/type/TResultType';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
-import { ActionCore }                              from './ActionCore';
-import { RefCore }                                 from './RefCore';
-import { RequirementCore }                         from './RequirementCore';
+import { addToPool, existsInPool }                       from '../constructable/lib/pools';
+import { IResultCore }                                   from '../metadata/IResultCore';
+import { RESULT_TYPE, TResultType }                      from '../metadata/properties/type/TResultType';
+import {
+  checkInstanceOf, ClassList, EClassList, TInstanceOf,
+} from '../lib/instanceOf';
+import { ActionCore }      from './ActionCore';
+import { RefCore }         from './RefCore';
+import { RequirementCore } from './RequirementCore';
+import { classCreate }     from '../constructable/Factory';
+import { TCollectable }    from '../metadata/types/TCollectable';
 
 export class ResultCore extends RefCore implements IResultCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -14,7 +18,7 @@ export class ResultCore extends RefCore implements IResultCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.result], obj);
+    return checkInstanceOf({ names: [ClassList.result], obj });
   }
 
   // public static isResult(data: any): data is ResultCore {
@@ -62,10 +66,10 @@ export class ResultCore extends RefCore implements IResultCore {
     const type: TResultType = (!data.type || `${data.type}` === `${RESULT_TYPE.DEFAULT}`)
       ? RESULT_TYPE.MATCH : data.type;
     this.#type              = type;
-    this.#action            = ActionCore.createOptional(data.action);
-    this.#match             = RequirementCore.createOptional(data.match);
-    this.#requirements      = data.requirements?.map((r) => RequirementCore.create(r)) || [];
-    this.#secondaryAction   = ActionCore.createOptional(data.secondaryAction);
+    this.#action            = classCreate(EClassList.ACTION, data.action, true);
+    this.#match             = classCreate(EClassList.REQUIREMENT, data.match, true);
+    this.#requirements      = data.requirements?.map((itm) => classCreate(EClassList.REQUIREMENT, itm)) || [];
+    this.#secondaryAction   = classCreate(EClassList.ACTION, data.secondaryAction, true);
     this.#reason            = data.reason || '';
     this.#label             = data.label || '';
     this.#category          = data.category || '';
@@ -120,11 +124,11 @@ export class ResultCore extends RefCore implements IResultCore {
     return this.#type;
   }
 
-  public existsIn(data: RequirementCore): boolean {
+  public existsIn(data: TCollectable): boolean {
     return existsInPool(data, this);
   }
 
-  public add(data: RequirementCore): ResultCore {
+  public add(data: TCollectable): ResultCore {
     addToPool(data, this);
     return this;
   }

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { matches } from '../lib/helpers';
+import { matches } from '../../lib/helpers';
 import {
   isAction,
   isBranch,
@@ -7,8 +7,8 @@ import {
   isResult,
   isSection,
 } from './validators';
-import { TCollectable }    from '../metadata/types/TCollectable';
-import { TReferentialble } from '../metadata/types/TReferentialble';
+import { TCollectable }    from '../../metadata/types/TCollectable';
+import { TReferentialble } from '../../metadata/types/TReferentialble';
 
 type TPoolName = 'questions' | 'branches' | 'sections' | 'results' | 'answers' | 'requirements' | 'actions';
 function getNameOfPool<T extends TCollectable>(item: T): TPoolName {
@@ -49,12 +49,12 @@ export function getPool<T extends TCollectable>(item: T, obj: TReferentialble): 
   return pool;
 }
 
-export function existsInPool<T extends TCollectable>(item: T, obj: TReferentialble) {
+export function existsInPool<T extends TCollectable>(item: T, obj: TCollectable) {
   const pool = getPool(item, obj);
   return existsIn(item, pool);
 }
 
-export function addToPool<T extends TCollectable>(item: T, obj: TReferentialble) {
+export function addToPool<T extends TCollectable>(item: T, obj: TCollectable) {
   const pool   = getPool(item, obj);
   const exists = existsIn(item, pool);
   if (exists) {

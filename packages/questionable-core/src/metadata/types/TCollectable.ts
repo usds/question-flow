@@ -1,3 +1,8 @@
 import { TTypeable } from './TTypeable';
 
-export type TCollectable = TTypeable & { title: string; };
+type TAdd = (param: TCollectable) => void;
+
+export type TCollectable = TTypeable & {
+  add?: TAdd;
+  title: string;
+};

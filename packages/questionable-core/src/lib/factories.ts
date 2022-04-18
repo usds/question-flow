@@ -9,7 +9,7 @@ import {
   ResponseCore,
   QuestionCore,
   RefCore,
-} from '../composable';
+} from '../composable/_exports';
 import { ResultCore }  from '../composable/ResultCore';
 import { TInstanceOf } from './instanceOf';
 

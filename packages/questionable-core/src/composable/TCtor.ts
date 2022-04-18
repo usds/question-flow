@@ -1,11 +1,9 @@
-import {
-  ActionCore as Action,
-  AnswerCore as Answer,
-  BaseCore as Base,
-  BranchCore as Branch,
-  FormCore as Form,
-  QuestionCore as Question,
-} from '.';
+import { ActionCore as Action }     from './ActionCore';
+import { AnswerCore as Answer }     from './AnswerCore';
+import { BaseCore as Base }         from './BaseCore';
+import { BranchCore as Branch }     from './BranchCore';
+import { FormCore as Form }         from './FormCore';
+import { QuestionCore as Question } from './QuestionCore';
 
 export type TCtor<T extends Base> = { new (data: Partial<T>): T };
 export type TCtorQuestion<T extends Question> = { new (data: Partial<T>): T };

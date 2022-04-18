@@ -14,7 +14,7 @@ export class PageCore extends StepCore implements IPageCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className, ClassList.page], obj);
+    return checkInstanceOf({ names: [className, ClassList.page], obj });
   }
 
   public static override create(data: Partial<PageCore>) {

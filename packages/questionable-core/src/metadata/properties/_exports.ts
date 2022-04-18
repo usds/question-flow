@@ -16,4 +16,4 @@ export * from './MRequirement';
 export * from './MResult';
 export * from './MSection';
 export * from './MStep';
-export * from './type';
+export * from './type/_exports';

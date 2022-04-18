@@ -11,7 +11,7 @@ export class PagesConfigCore  extends BaseCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.config], obj);
+    return checkInstanceOf({ names: [ClassList.config], obj });
   }
 
   public static override create(data: Partial<PagesConfigCore> = {}) {

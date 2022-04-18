@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-export const catchError = (e: any): Error => {
+export function catchError({ e }: { e: any; }): Error {
   if (e instanceof Error) {
     return e;
   }
@@ -14,4 +14,4 @@ export const catchError = (e: any): Error => {
     return new Error(`${e}`);
   }
   throw new Error(`${e}`);
-};
+}

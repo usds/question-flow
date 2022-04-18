@@ -11,7 +11,7 @@ import {
 } from 'lodash';
 
 // eslint-disable-next-line consistent-return
-const customizer = (objValue: any, srcValue: any): any | void => {
+function customizer(objValue: any, srcValue: any): any | void {
   if (isArray(objValue) && isArray(srcValue)) {
     return objValue.concat(srcValue);
   }
@@ -21,62 +21,52 @@ const customizer = (objValue: any, srcValue: any): any | void => {
   if (isEmpty(srcValue)) {
     return objValue;
   }
-  if (
-    isFunction(objValue)
+  if (isFunction(objValue)
     && (srcValue === noop
       || isEmpty(srcValue)
       || srcValue === null
-      || srcValue === undefined)
-  ) {
+      || srcValue === undefined)) {
     return objValue;
   }
-  if (
-    isFunction(srcValue)
+  if (isFunction(srcValue)
     && (objValue === noop
       || isEmpty(objValue)
       || objValue === null
-      || objValue === undefined)
-  ) {
+      || objValue === undefined)) {
     return srcValue;
   }
   if (isString(objValue) || isString(srcValue)) {
-    if (
-      isEmpty(srcValue)
+    if (isEmpty(srcValue)
       || srcValue === null
       || srcValue === undefined
-      || !srcValue
-    ) {
+      || !srcValue) {
       return objValue;
     }
-    if (
-      isEmpty(objValue)
+    if (isEmpty(objValue)
       || objValue === null
       || objValue === undefined
-      || !objValue
-    ) {
+      || !objValue) {
       return srcValue;
     }
     return srcValue || objValue;
   }
   if (isNumber(objValue) || isNumber(srcValue)) {
-    if (
-      isEmpty(srcValue)
+    if (isEmpty(srcValue)
       || srcValue === null
       || srcValue === undefined
-      || srcValue + ''.length === 0
-    ) {
+      || srcValue + ''.length === 0) {
       return objValue;
     }
-    if (
-      isEmpty(objValue)
+    if (isEmpty(objValue)
       || objValue === null
       || objValue === undefined
-      || objValue + ''.length === 0
-    ) {
+      || objValue + ''.length === 0) {
       return srcValue;
     }
     return srcValue || objValue;
   }
-};
+}
 
-export const merge = (...params: any[]) => mergeWith([...params], customizer);
+export function merge({ params = [] }: { params?: any[]; } = {}) {
+  return mergeWith([...params], customizer);
+}

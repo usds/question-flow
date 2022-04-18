@@ -6,30 +6,31 @@ import { TAgeCore } from '../metadata/types/TAgeCore';
  * @param dt
  * @returns
  */
-export const isValidDate = (dt: string | undefined): boolean =>
-  !(!dt || dt.length < 8);
+export function isValidDate({ dt }: { dt: string | undefined; }): boolean {
+  return !(!dt || dt.length < 8);
+}
 
 /**
  * Gets a luxon DateTime object from a date string
  * @param dt DateTime as string- should always be in the format `MM/DD/YYYY`
  * @returns DateTime or undefined
  */
-export const getDateTime = (dt: string): DateTime | undefined => {
-  if (!isValidDate(dt)) return undefined;
+export function getDateTime({ dt }: { dt: string; }): DateTime | undefined {
+  if (!isValidDate({ dt })) return undefined;
   const date = new Date(
     +dt.substring(6, 10),
     +dt.substring(0, 2) - 1,
     +dt.substring(3, 5),
   );
   return DateTime.fromJSDate(date);
-};
+}
 
 /**
  * Gets an age from a DateTime object
  * @param dob - luxon DateTime
  * @returns an age with years, months, days
  */
-export const getDateTimeAge = (dob: DateTime): TAgeCore => {
+export function getDateTimeAge({ dob }: { dob: DateTime; }): TAgeCore {
   const now = DateTime.now();
 
   const yearNow  = now.year;
@@ -68,20 +69,22 @@ export const getDateTimeAge = (dob: DateTime): TAgeCore => {
     months,
     years,
   };
-};
+}
 
 /**
  * Parses a date/time string and returns an Age object
  * @param dateOfBirth - should always be in the format `MM/DD/YYYY`
  * @returns an age, if the date is valid
  */
-export const getAge = (
-  dateOfBirth: string | undefined,
-): TAgeCore | undefined => {
-  if (!dateOfBirth || !isValidDate(dateOfBirth)) return undefined;
+export function getAge({ dateOfBirth }: { dateOfBirth: string | undefined; }): TAgeCore | undefined {
+  if (!dateOfBirth || !isValidDate({ dt: dateOfBirth })) {
+    return undefined;
+  }
 
-  const dob = getDateTime(dateOfBirth);
-  if (!dob) return undefined;
+  const dob = getDateTime({ dt: dateOfBirth });
+  if (!dob) {
+    return undefined;
+  }
 
-  return getDateTimeAge(dob);
-};
+  return getDateTimeAge({ dob });
+}

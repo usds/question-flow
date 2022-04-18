@@ -54,12 +54,12 @@ const alphaSeq: alphabet[] = [
   'Z',
 ];
 
-const makeLabelGenerator = () => {
-  const used: { [key: string]: boolean } = {};
-  let iteration                          = 0;
-  let lastIssued                         = 0;
+function makeLabelGenerator() {
+  const used: { [key: string]: boolean; } = {};
+  let iteration                           = 0;
+  let lastIssued                          = 0;
 
-  function generate(idx = lastIssued): { label: string; next: number } {
+  function generate(idx = lastIssued): { label: string; next: number; } {
     let next = idx;
     if (next >= alphaSeq.length) {
       next       = 0;
@@ -84,6 +84,6 @@ const makeLabelGenerator = () => {
     lastIssued      = nis.next;
     return nis.label;
   };
-};
+}
 
 export const getNextLabel = makeLabelGenerator();

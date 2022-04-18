@@ -24,12 +24,12 @@ const schemaFull: any = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getStepSchema = (step: IQuestionCore | IPageCore): any => {
+export function getStepSchema({ step }: { step: IQuestionCore | IPageCore; }): any {
   const schemaProps = { ...schemaPart };
-  if (isEnum(PAGE_TYPE, step.type)) {
+  if (isEnum({ enm: PAGE_TYPE, value: step.type })) {
     schemaProps.properties.step.$ref = '#/definitions/IPageCore';
-  } else if (isEnum(QUESTION_TYPE, step.type)) {
+  } else if (isEnum({ enm: QUESTION_TYPE, value: step.type })) {
     schemaProps.properties.step.$ref = '#/definitions/IQuestionCore';
   }
   return merge(schemaProps, schemaFull);
-};
+}

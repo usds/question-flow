@@ -1,13 +1,16 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool }                 from '../constructable/types';
-import { TCollectable }                            from '../metadata/types/TCollectable';
-import { IRequirementCore }                        from '../metadata/IRequirementCore';
-import { REQUIREMENT_TYPE, TRequirementType }      from '../metadata/properties/type/TRequirementType';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
-import { TAgeCalcCore }                            from '../lib/types';
-import { TAgeCore }                                from '../metadata/types/TAgeCore';
-import { RefCore }                                 from './RefCore';
-import { ResponseCore }                            from './ResponseCore';
+import { addToPool, existsInPool }                       from '../constructable/lib/pools';
+import { TCollectable }                                  from '../metadata/types/TCollectable';
+import { IRequirementCore }                              from '../metadata/IRequirementCore';
+import { REQUIREMENT_TYPE, TRequirementType }            from '../metadata/properties/type/TRequirementType';
+import {
+  checkInstanceOf, ClassList, EClassList, TInstanceOf,
+} from '../lib/instanceOf';
+import { TAgeCalcCore } from '../lib/types';
+import { TAgeCore }     from '../metadata/types/TAgeCore';
+import { RefCore }      from './RefCore';
+import { ResponseCore } from './ResponseCore';
+import { classCreate }  from '../constructable/Factory';
 
 export class RequirementCore extends RefCore implements IRequirementCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -16,7 +19,7 @@ export class RequirementCore extends RefCore implements IRequirementCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.requirement, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.requirement, ClassList.ref], obj });
   }
 
   public static override create(data: Partial<RequirementCore>) {
@@ -51,7 +54,7 @@ export class RequirementCore extends RefCore implements IRequirementCore {
     this.#explanation = data.explanation || '';
     this.#maxAge      = data.maxAge;
     this.#minAge      = data.minAge;
-    this.#responses   = data.responses?.map((q) => new ResponseCore(q)) || [];
+    this.#responses   = data.responses?.map((itm) => classCreate(EClassList.RESPONSE, itm)) || [];
     this.#type        = data.type || REQUIREMENT_TYPE.NON_REQUIRED;
   }
 
@@ -85,8 +88,8 @@ export class RequirementCore extends RefCore implements IRequirementCore {
 
   public add(data: TCollectable): RequirementCore {
     addToPool(data, this);
-    if (data instanceof ResponseCore) {
-      (data as ResponseCore).add(this);
+    if (data.instanceOfCheck === ClassList.response && data.add) {
+      data.add(this);
     }
     return this;
   }

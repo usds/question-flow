@@ -1,112 +1,108 @@
 import { isEmpty }         from 'lodash';
-import { BaseCore }        from '../composable';
+import { BaseCore }        from '../composable/BaseCore';
 import { ClassProperties } from '../metadata/types/ClassProperties';
 
-/**
- type TPrefix = {
-  ACTION_TYPE,
-  ANSWER,
-  TBaseType,
-  BRANCH,
-  BUTTON,
-  BUTTONS,
-  CONFIG,
-  DESIGN,
-  DESIGN_DATA,
-  EVENT,
-  EVENT_EMITTER,
-  FORM,
-  PAGE,
-  PAGES,
-  PAGE_DATA,
-  QUESTION,
-  QUESTIONNAIRE,
-  QUESTIONS,
-  QUESTION_DATA,
-  REF,
-  REQUIREMENT,
-  RESPONSE,
-  RESULT,
-  RESULTS,
-  SECTION,
-  STEP,
-  STEPS,
-  STEP_DATA,
-  SURVEY,
-  SURVEY_BUILDER,
+enum EClassList {
+  ACTION = 'action',
+  ANSWER = 'answer',
+  BASE = 'base',
+  BRANCH = 'branch',
+  BUTTON = 'button',
+  BUTTONS = 'buttons',
+  CONFIG = 'config',
+  DESIGN = 'design',
+  DESIGN_DATA = 'design-data',
+  EVENT = 'event',
+  EVENT_EMITTER = 'event-emitter',
+  FORM = 'form',
+  PAGE = 'page',
+  PAGES = 'pages',
+  PAGE_DATA = 'page-data',
+  QUESTION = 'question',
+  QUESTIONNAIRE = 'questionnaire',
+  QUESTIONS = 'questions',
+  QUESTION_DATA = 'question-data',
+  REF = 'ref',
+  REQUIREMENT = 'requirement',
+  RESPONSE = 'response',
+  RESULT = 'result',
+  RESULTS = 'results',
+  SECTION = 'section',
+  STEP = 'step',
+  STEPS = 'steps',
+  STEP_DATA = 'step-data',
+  SURVEY = 'survey',
+  SURVEY_BUILDER = 'survey-builder'
+}
 
- */
 type TPrefix = {
-  ACTION_TYPE: 'action',
-  ANSWER: 'answer',
-  BASE: 'base',
-  BRANCH: 'branch',
-  BUTTON: 'button',
-  BUTTONS: 'buttons',
-  CONFIG: 'config',
-  DESIGN: 'design',
-  DESIGN_DATA: 'design-data',
-  EVENT: 'event',
-  EVENT_EMITTER: 'event-emitter',
-  FORM: 'form',
-  PAGE: 'page',
-  PAGES: 'pages',
-  PAGE_DATA: 'page-data',
-  QUESTION: 'question',
-  QUESTIONNAIRE: 'questionnaire',
-  QUESTIONS: 'questions',
-  QUESTION_DATA: 'question-data',
-  REF: 'ref',
-  REQUIREMENT: 'requirement',
-  RESPONSE: 'response',
-  RESULT: 'result',
-  RESULTS: 'results',
-  SECTION: 'section',
-  STEP: 'step',
-  STEPS: 'steps',
-  STEP_DATA: 'step-data',
-  SURVEY: 'survey',
-  SURVEY_BUILDER: 'survey-builder'
+  ACTION: EClassList.ACTION,
+  ANSWER: EClassList.ANSWER,
+  BASE: EClassList.BASE,
+  BRANCH: EClassList.BRANCH,
+  BUTTON: EClassList.BUTTON,
+  BUTTONS: EClassList.BUTTONS,
+  CONFIG: EClassList.CONFIG,
+  DESIGN: EClassList.DESIGN,
+  DESIGN_DATA: EClassList.DESIGN_DATA,
+  EVENT: EClassList.EVENT,
+  EVENT_EMITTER: EClassList.EVENT_EMITTER,
+  FORM: EClassList.FORM,
+  PAGE: EClassList.PAGE,
+  PAGES: EClassList.PAGES,
+  PAGE_DATA: EClassList.PAGE_DATA,
+  QUESTION: EClassList.QUESTION,
+  QUESTIONNAIRE: EClassList.QUESTIONNAIRE,
+  QUESTIONS: EClassList.QUESTIONS,
+  QUESTION_DATA: EClassList.QUESTION_DATA,
+  REF: EClassList.REF,
+  REQUIREMENT: EClassList.REQUIREMENT,
+  RESPONSE: EClassList.RESPONSE,
+  RESULT: EClassList.RESULT,
+  RESULTS: EClassList.RESULTS,
+  SECTION: EClassList.SECTION,
+  STEP: EClassList.STEP,
+  STEPS: EClassList.STEPS,
+  STEP_DATA: EClassList.STEP_DATA,
+  SURVEY: EClassList.SURVEY,
+  SURVEY_BUILDER: EClassList.SURVEY_BUILDER,
 };
 
 const CLASS_NAME: TPrefix = {
-  ACTION_TYPE:    'action' as const,
-  ANSWER:         'answer' as const,
-  BASE:           'base' as const,
-  BRANCH:         'branch' as const,
-  BUTTON:         'button' as const,
-  BUTTONS:        'buttons' as const,
-  CONFIG:         'config' as const,
-  DESIGN:         'design' as const,
-  DESIGN_DATA:    'design-data' as const,
-  EVENT:          'event' as const,
-  EVENT_EMITTER:  'event-emitter' as const,
-  FORM:           'form' as const,
-  PAGE:           'page' as const,
-  PAGES:          'pages' as const,
-  PAGE_DATA:      'page-data' as const,
-  QUESTION:       'question' as const,
-  QUESTIONNAIRE:  'questionnaire' as const,
-  QUESTIONS:      'questions' as const,
-  QUESTION_DATA:  'question-data' as const,
-  REF:            'ref' as const,
-  REQUIREMENT:    'requirement' as const,
-  RESPONSE:       'response' as const,
-  RESULT:         'result' as const,
-  RESULTS:        'results' as const,
-  SECTION:        'section' as const,
-  STEP:           'step' as const,
-  STEPS:          'steps' as const,
-  STEP_DATA:      'step-data' as const,
-  SURVEY:         'survey' as const,
-  SURVEY_BUILDER: 'survey-builder' as const,
+  ACTION:         EClassList.ACTION,
+  ANSWER:         EClassList.ANSWER,
+  BASE:           EClassList.BASE,
+  BRANCH:         EClassList.BRANCH,
+  BUTTON:         EClassList.BUTTON,
+  BUTTONS:        EClassList.BUTTONS,
+  CONFIG:         EClassList.CONFIG,
+  DESIGN:         EClassList.DESIGN,
+  DESIGN_DATA:    EClassList.DESIGN_DATA,
+  EVENT:          EClassList.EVENT,
+  EVENT_EMITTER:  EClassList.EVENT_EMITTER,
+  FORM:           EClassList.FORM,
+  PAGE:           EClassList.PAGE,
+  PAGES:          EClassList.PAGES,
+  PAGE_DATA:      EClassList.PAGE_DATA,
+  QUESTION:       EClassList.QUESTION,
+  QUESTIONNAIRE:  EClassList.QUESTIONNAIRE,
+  QUESTIONS:      EClassList.QUESTIONS,
+  QUESTION_DATA:  EClassList.QUESTION_DATA,
+  REF:            EClassList.REF,
+  REQUIREMENT:    EClassList.REQUIREMENT,
+  RESPONSE:       EClassList.RESPONSE,
+  RESULT:         EClassList.RESULT,
+  RESULTS:        EClassList.RESULTS,
+  SECTION:        EClassList.SECTION,
+  STEP:           EClassList.STEP,
+  STEPS:          EClassList.STEPS,
+  STEP_DATA:      EClassList.STEP_DATA,
+  SURVEY:         EClassList.SURVEY,
+  SURVEY_BUILDER: EClassList.SURVEY_BUILDER,
 };
 
-interface IInstance {
-  [key: string]: TInstanceOf;
-}
-interface IClassMap extends IInstance {
-  [CLASS_NAME.ACTION_TYPE]: TInstanceOf;
+interface IClassMap {
+  [CLASS_NAME.ACTION]: TInstanceOf;
   [CLASS_NAME.ANSWER]: TInstanceOf;
   [CLASS_NAME.BASE]: TInstanceOf;
   [CLASS_NAME.BRANCH]: TInstanceOf;
@@ -166,11 +162,10 @@ type TECoi = ClassProperties<typeof COI>;
   | `${TECoi}${TEPrefix}s`
   | `${TECoi}${TEPrefix}`;
 
- function makeName(name: TEPrefix, suffix: TESuffix | '', coi: TECoi): TInstanceOf;
+function makeName({ name, suffix, coi }:
+  { coi: TECoi; name: TEPrefix; suffix?: TESuffix | ''; }): TInstanceOf;
 function makeName(
-  name: TEPrefix,
-  suffix: TESuffix | '' = SUFFIX.CORE,
-  coi: boolean | TECoi = false,
+  { name, suffix = SUFFIX.CORE, coi = false }: { coi?: boolean | TECoi; name: TEPrefix; suffix?: TESuffix | ''; },
 ): TInstanceOf {
   const isInterface    = coi === true || coi === COI.INTERFACE;
   let ret: TInstanceOf = `${isInterface ? COI.INTERFACE : COI.CLASS}${name}`;
@@ -180,15 +175,15 @@ function makeName(
   return ret;
 }
 
-function getClassName(name: TEPrefix, suffix: TESuffix = SUFFIX.CORE): TInstanceOf {
-  return makeName(name, suffix, COI.CLASS);
+function getClassName({ name, suffix = SUFFIX.CORE }: { name: TEPrefix; suffix?: TESuffix; }): TInstanceOf {
+  return makeName({ coi: COI.CLASS, name, suffix });
 }
 
-function getInterfaceName(name: TEPrefix, suffix: TESuffix = SUFFIX.CORE): TInstanceOf {
-  return makeName(name, suffix, COI.INTERFACE);
+function getInterfaceName({ name, suffix = SUFFIX.CORE }: { name: TEPrefix; suffix?: TESuffix; }): TInstanceOf {
+  return makeName({ coi: COI.INTERFACE, name, suffix });
 }
 
-function extractNames(name: TInstanceOf): TInstanceOf[] {
+function extractNames({ name }: { name: TInstanceOf; }): TInstanceOf[] {
   const names: TInstanceOf[] = [name];
   let parts: string[];
   let coi: TECoi             = COI.CLASS;
@@ -200,11 +195,11 @@ function extractNames(name: TInstanceOf): TInstanceOf[] {
   }
   const prefix: TEPrefix      = parts[0] as TEPrefix;
   const suffix: TESuffix | '' = (isEmpty(parts[1]) ? '' : parts[1] as TESuffix);
-  names.push(makeName(prefix, '', coi));
+  names.push(makeName({ coi, name: prefix, suffix: '' }));
   if (suffix !== '') {
-    names.push(makeName(prefix, suffix, coi));
+    names.push(makeName({ coi, name: prefix, suffix }));
   } else {
-    names.push(makeName(prefix, SUFFIX.CORE, coi));
+    names.push(makeName({ coi, name: prefix, suffix: SUFFIX.CORE }));
   }
   if (names.some((n) => n.startsWith(CLASS_NAME.REF))) {
     names.push('base-core');
@@ -212,36 +207,37 @@ function extractNames(name: TInstanceOf): TInstanceOf[] {
   return names;
 }
 
-function getClassesAndInterfaces(names: TInstanceOf[]): TInstanceOf[] {
+function getClassesAndInterfaces({ names }: { names: TInstanceOf[]; }): TInstanceOf[] {
   const ret = names.concat(names.reduce((_p, currentValue, _i, out) =>
-    out.concat(extractNames(currentValue)), names));
+    out.concat(extractNames({ name: currentValue })), names));
   return [...new Set([...ret])];
 }
 
-function checkInstanceOf(names: TInstanceOf[], obj: BaseCore) {
-  const checking = getClassesAndInterfaces(names);
+function checkInstanceOf({ names, obj }: { names: TInstanceOf[]; obj: BaseCore; }) {
+  const checking = getClassesAndInterfaces({ names });
   return checking.some((i) => `${i}` === `${obj?.instanceOfCheck}`);
 }
 
 type instanceMap = Map<TEPrefix, TInstanceOf>;
 
-const assembleClassNames = () => {
+function assembleClassNames() {
   const ret: instanceMap = new Map<TEPrefix, TInstanceOf>();
 
   for (const name of Object.values(CLASS_NAME)) {
-    ret.set(name, getClassName(name));
+    ret.set(name, getClassName({ name }));
   }
   return ret;
-};
+}
 
 const ClassMap = assembleClassNames();
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const getInstanceName = <T extends TEPrefix>(name: T): TInstanceOf => ClassMap.get(name)!;
+function getInstanceName<T extends TEPrefix>({ name }: { name: T; }): TInstanceOf {
+  return ClassMap.get(name)!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
+}
 
-const classes: IInstance = {};
+const classes = {} as IClassMap;
 Object.values(CLASS_NAME).forEach((key) => {
-  classes[key] = getInstanceName(key);
+  classes[key] = getInstanceName({ name: key });
 });
 
 const ClassList = { ...classes } as IClassMap;
@@ -251,6 +247,7 @@ export {
   checkInstanceOf,
   ClassMap,
   ClassList,
+  EClassList,
   COI,
   extractNames,
   getClassesAndInterfaces,

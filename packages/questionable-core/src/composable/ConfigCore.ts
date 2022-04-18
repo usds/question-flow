@@ -11,7 +11,7 @@ import {
   ProgressBarConfigCore,
   QuestionConfigCore,
   StepConfigCore,
-} from './config';
+} from './config/_exports';
 import { IQuestionableConfigCore }                 from '../metadata/IConfigCore';
 import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
 import { BaseCore }                                from './BaseCore';
@@ -51,7 +51,7 @@ export class QuestionableConfigCore
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.config], obj);
+    return checkInstanceOf({ names: [ClassList.config], obj });
   }
 
   public static override create(data: Partial<QuestionableConfigCore>) {
@@ -119,7 +119,7 @@ export class QuestionableConfigCore
 
   set mode(val: MODE | string) {
     if (isString(val)) {
-      if (isEnum(MODE, val)) {
+      if (isEnum({ enm: MODE, value: val })) {
         this.#mode = val as MODE;
       } else {
         this.#mode = MODE.VIEW;

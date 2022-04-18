@@ -10,10 +10,11 @@ interface IGrouped<T> {
  * @param prop A property name to group by
  * @returns IGrouped<T>
  */
-export const groupBy = <T>(array: T[], prop: string): IGrouped<T> =>
-  array.reduce((groups: IGrouped<T>, item: any) => {
+export function groupBy<T>({ array, prop }: { array: T[]; prop: string; }): IGrouped<T> {
+  return array.reduce((groups: IGrouped<T>, item: any) => {
     const val   = item[prop];
     groups[val] = groups[val] || [];
     groups[val].push(item);
     return groups;
   }, {});
+}

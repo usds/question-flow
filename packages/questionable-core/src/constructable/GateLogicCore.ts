@@ -10,9 +10,8 @@ import { matches }                  from '../lib/helpers';
 import { TAgeCalcCore }             from '../lib/types';
 import { TAgeCore }                 from '../metadata/types/TAgeCore';
 import { ActionCore }               from '../composable/ActionCore';
-import { isValid, Questioner }      from './Questioner';
-import { PagesConfigCore }          from '../composable/config';
-import { TQForm }                   from './TQForm';
+import { isValid }                  from './lib/isValid';
+import { PagesConfigCore }          from '../composable/config/PagesConfig';
 import { QuestionCore }             from '../composable/QuestionCore';
 import { SectionCore }              from '../composable/SectionCore';
 import { BranchCore }               from '../composable/BranchCore';
@@ -75,10 +74,6 @@ export class GateLogicCore {
 
   public get pageList() {
     return this.pages.all();
-  }
-
-  public getQuestioner({ question, form }: TQForm) {
-    return new Questioner({ form: (form || this.#form), question });
   }
 
   public enableLog() {
@@ -180,7 +175,7 @@ export class GateLogicCore {
    */
   getPageById(id: string): PageCore {
     const ret = this.getStepById(id);
-    if (!isEnum(PAGE_TYPE, ret.type)) {
+    if (!isEnum({ enm: PAGE_TYPE, value: ret.type })) {
       this.throw(`Step id: ${id} is not a page`);
     }
     return ret as PageCore;
@@ -205,7 +200,7 @@ export class GateLogicCore {
    */
   getQuestionById(id: string): QuestionCore {
     const ret = this.getStepById(id);
-    if (!isEnum(QUESTION_TYPE, ret.type)) {
+    if (!isEnum({ enm: QUESTION_TYPE, value: ret.type })) {
       this.throw(`Step id: ${id} not a question`);
     }
     return ret as QuestionCore;
@@ -364,7 +359,7 @@ export class GateLogicCore {
    * @returns string[]
    */
   getAllAnswerableQuestions(step: StepCore): string[] {
-    if (!isEnum(QUESTION_TYPE, step.type)) {
+    if (!isEnum({ enm: QUESTION_TYPE, value: step.type })) {
       return [];
     }
 
@@ -406,7 +401,7 @@ export class GateLogicCore {
    */
   protected getQuestionsWithoutBranches(): string[] {
     return this.steps
-      .filter((q) => isEnum(QUESTION_TYPE, q.type))
+      .filter((q) => isEnum({ enm: QUESTION_TYPE, value: q.type }))
       .map((q) => q.id);
   }
 
@@ -809,10 +804,10 @@ export class GateLogicCore {
   }
 
   getStepType(step: StepCore) {
-    if (isEnum(QUESTION_TYPE, step.type)) {
+    if (isEnum({ enm: QUESTION_TYPE, value: step.type })) {
       return 'question';
     }
-    if (isEnum(PAGE_TYPE, step.type)) {
+    if (isEnum({ enm: PAGE_TYPE, value: step.type })) {
       return 'page';
     }
     return 'unknown';

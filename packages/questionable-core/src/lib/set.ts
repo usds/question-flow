@@ -9,8 +9,7 @@ type IRefCore = {
 }
 
 export function toSet<T extends string | IRefCore>(
-  data: T[],
-  join = new Set<T>(),
+  { data, join = new Set<T>() }: { data: T[]; join?: Set<T>; },
 ): Set<T> {
   if (isEmpty(data) && isEmpty(join)) {
     return new Set<T>();
@@ -27,6 +26,6 @@ export function toSet<T extends string | IRefCore>(
   return new Set<T>(unique);
 }
 
-export function fromSet<T extends string | IRefCore>(data: Set<T>) {
+export function fromSet<T extends string | IRefCore>({ data }: { data: Set<T>; }) {
   return Array.from(data);
 }

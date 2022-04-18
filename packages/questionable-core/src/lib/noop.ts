@@ -7,4 +7,6 @@ import { noop } from 'lodash';
  */
 export { noop };
 
-export const noopAsync = async (..._params: unknown[]) => noop(..._params);
+export async function noopAsync(..._params: unknown[]) {
+  return noop(..._params);
+}

@@ -13,7 +13,7 @@ import { QuestionCore }           from '../composable/QuestionCore';
 import { BranchCore }             from '../composable/BranchCore';
 import { SectionCore }            from '../composable/SectionCore';
 import { TCollectable }           from '../metadata/types/TCollectable';
-import { addToPool }              from './types';
+import { addToPool }              from './lib/pools';
 
 /**
  * Utility wrapper for survey state

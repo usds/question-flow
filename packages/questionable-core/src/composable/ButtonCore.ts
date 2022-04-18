@@ -11,7 +11,7 @@ export class ButtonCore extends RefCore implements IButtonCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.button, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.button, ClassList.ref], obj });
   }
 
   public static override create(data: Partial<ButtonCore>) {

@@ -39,7 +39,7 @@ export abstract class BaseCore implements TBaseSource {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.base, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.base, ClassList.ref], obj });
   }
 
   /**

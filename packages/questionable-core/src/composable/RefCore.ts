@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool }                 from '../constructable/types';
+import { addToPool, existsInPool }                 from '../constructable/lib/pools';
 import { TCollectable }                            from '../metadata/types/TCollectable';
 import { TRefCoreProperties }                      from '../metadata/properties/MRef';
 import { IRefCore }                                from '../metadata/IRefCore';
@@ -20,7 +20,7 @@ export class RefCore extends BaseCore implements IRefCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.ref], obj });
   }
 
   // public static isRef(data: any): data is RefCore {
@@ -69,7 +69,7 @@ export class RefCore extends BaseCore implements IRefCore {
     if (data.id && data.id.length > 0) {
       this.#_id = data.id;
     } else {
-      this.#_id = getGUID(true);
+      this.#_id = getGUID({ short: true });
     }
     this.#_label = data.label || '';
     this.#_title = data.title || '';
