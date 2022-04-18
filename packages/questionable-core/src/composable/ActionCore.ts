@@ -1,11 +1,11 @@
 /* eslint-disable import/no-cycle */
-import { ACTION_TYPE, IActionCore, TActionType }   from '../survey/IActionCore';
+import { IActionCore }                             from '../metadata/IActionCore';
+import { ACTION_TYPE, TActionType }                from '../metadata/properties/type/TActionType';
 import { ButtonCore }                              from './ButtonCore';
-import { IRefCore }                                from '../survey/IRefCore';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
 import { RefCore }                                 from './RefCore';
 
-export class ActionCore extends RefCore implements IActionCore, IRefCore {
+export class ActionCore extends RefCore implements IActionCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.action;
   }

@@ -1,10 +1,11 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool, TCollectable }   from '../constructable/types';
-import { TRefCoreProperties }                      from '../metadata/MRef';
-import { IRefCore }                                from '../survey/IRefCore';
-import { REF_TYPE, TRefType }                      from '../survey/Unions';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { getGUID }                                 from '../util/uuid';
+import { addToPool, existsInPool }                 from '../constructable/types';
+import { TCollectable }                            from '../metadata/types/TCollectable';
+import { TRefCoreProperties }                      from '../metadata/properties/MRef';
+import { IRefCore }                                from '../metadata/IRefCore';
+import { REF_TYPE, TRefType }                      from '../metadata/properties/type/TRefType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { getGUID }                                 from '../lib/uuid';
 import { BaseCore }                                from './BaseCore';
 
 /**

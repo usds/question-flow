@@ -1,18 +1,20 @@
 /* eslint-disable import/no-cycle */
-import { noop }      from 'lodash';
+import { noop } from 'lodash';
 import {
   IEventCore,
-  TAnswerDataCore,
+} from '../metadata/IEventCore';
+import {
   TEventCore,
   TGateDataCore,
   TOnErrorCore,
   TOnEventCore,
-  TPageDataCore,
-  TResultDataCore,
-} from '../survey/IEventCore';
-import { catchError }                              from '../util/error';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { error as log }                            from '../util/logger';
+} from '../metadata/types/TGateCore';
+import { TResultDataCore }                         from '../metadata/types/TResultDataCore';
+import { TAnswerDataCore }                         from '../metadata/types/TAnswerDataCore';
+import { TPageDataCore }                           from '../metadata/types/TPageDataCore';
+import { catchError }                              from '../lib/error';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { error as log }                            from '../lib/logger';
 import { BaseCore }                                from './BaseCore';
 import { FormCore }                                from './FormCore';
 

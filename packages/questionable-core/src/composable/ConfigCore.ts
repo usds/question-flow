@@ -3,8 +3,8 @@ import {
   isEmpty, isString, merge, noop,
 }            from 'lodash';
 import { EventEmitterCore }                          from './EventEmitterCore';
-import { isEnum, MODE }                              from '../util/enums';
-import { TGetDictionaryCore, TStringDictionaryCore } from '../util/types';
+import { isEnum, MODE }                              from '../lib/enums';
+import { TGetDictionaryCore, TStringDictionaryCore } from '../metadata/types/TStringDictionaryCore';
 import {
   NavigationConfigCore,
   PagesConfigCore,
@@ -12,8 +12,8 @@ import {
   QuestionConfigCore,
   StepConfigCore,
 } from './config';
-import { IQuestionableConfigCore }                 from '../survey/IConfigCore';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { IQuestionableConfigCore }                 from '../metadata/IConfigCore';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
 import { BaseCore }                                from './BaseCore';
 
 const defaults = {

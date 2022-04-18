@@ -1,10 +1,13 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool, TCollectable }                from '../constructable/types';
-import { IRequirementCore, REQUIREMENT_TYPE, TRequirementType } from '../survey/IRequirementCore';
-import { checkInstanceOf, ClassList, TInstanceOf }              from '../util/instanceOf';
-import { TAgeCalcCore, TAgeCore }                               from '../util/types';
-import { RefCore }                                              from './RefCore';
-import { ResponseCore }                                         from './ResponseCore';
+import { addToPool, existsInPool }                 from '../constructable/types';
+import { TCollectable }                            from '../metadata/types/TCollectable';
+import { IRequirementCore }                        from '../metadata/IRequirementCore';
+import { REQUIREMENT_TYPE, TRequirementType }      from '../metadata/properties/type/TRequirementType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { TAgeCalcCore }                            from '../lib/types';
+import { TAgeCore }                                from '../metadata/types/TAgeCore';
+import { RefCore }                                 from './RefCore';
+import { ResponseCore }                            from './ResponseCore';
 
 export class RequirementCore extends RefCore implements IRequirementCore {
   public get instanceOfCheck(): TInstanceOf {

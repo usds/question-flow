@@ -1,6 +1,6 @@
 import { merge }                                   from 'lodash';
 import { BaseCore }                                from '../BaseCore';
-import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
+import { ClassList, TInstanceOf, checkInstanceOf } from '../../lib/instanceOf';
 
 /**
  * Customizations for styling and formatting of the steps

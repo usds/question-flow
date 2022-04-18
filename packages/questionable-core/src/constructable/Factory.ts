@@ -16,8 +16,8 @@ import {
   SectionCore as Section,
   TCtor,
 } from '../composable';
-import { ACTION_TYPE } from '../survey/IActionCore';
-import { ClassList }   from '../util/instanceOf';
+import { ACTION_TYPE } from '../metadata/properties/type/TActionType';
+import { ClassList }   from '../lib/instanceOf';
 
 export abstract class Factory {
   public static addActions(data: Partial<Action>[]) {

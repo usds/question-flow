@@ -2,14 +2,15 @@
 import { addToPool, existsInPool } from '../constructable/types';
 import {
   ISectionCore,
-  PROGRESS_BAR_STATUS,
+} from '../metadata/ISectionCore';
+import {
   SECTION_TYPE,
-  TProgressBarStatusType,
   TSectionType,
-} from '../survey/ISectionCore';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { RefCore }                                 from './RefCore';
-import { RequirementCore }                         from './RequirementCore';
+} from '../metadata/properties/type/TSectionType';
+import { PROGRESS_BAR_STATUS, TProgressBarStatusType } from '../metadata/types/TProgressBarStatusType';
+import { checkInstanceOf, ClassList, TInstanceOf }     from '../lib/instanceOf';
+import { RefCore }                                     from './RefCore';
+import { RequirementCore }                             from './RequirementCore';
 
 export class SectionCore extends RefCore implements ISectionCore {
   public get instanceOfCheck(): TInstanceOf {

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
 import { noop }             from 'lodash';
-import { blue, red, white } from '../util/logger';
+import { blue, red, white } from '../lib/logger';
 import {
   ActionCore,
 } from '../composable/ActionCore';
@@ -14,9 +14,9 @@ import { AnswerCore }      from '../composable/AnswerCore';
 import { QuestionCore }    from '../composable/QuestionCore';
 import { ResponseCore }    from '../composable/ResponseCore';
 import { RequirementCore } from '../composable/RequirementCore';
-import { ACTION_TYPE }     from '../survey/IActionCore';
-import { PAGE_TYPE }       from '../survey/IPageCore';
-import { QUESTION_TYPE }   from '../survey/IQuestionCore';
+import { ACTION_TYPE }     from '../metadata/properties/type/TActionType';
+import { PAGE_TYPE }       from '../metadata/properties/type/TPageType';
+import { QUESTION_TYPE }   from '../metadata/properties/type/TQuestionType';
 
 export class Scaffolding {
   // questionnaire: QuestionnaireCore;

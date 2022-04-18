@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { addToPool, existsInPool }                 from '../constructable/types';
-import { IResultCore, RESULT_TYPE, TResultType }   from '../survey/IResultCore';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { IResultCore }                             from '../metadata/IResultCore';
+import { RESULT_TYPE, TResultType }                from '../metadata/properties/type/TResultType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
 import { ActionCore }                              from './ActionCore';
 import { RefCore }                                 from './RefCore';
 import { RequirementCore }                         from './RequirementCore';

@@ -1,6 +1,6 @@
 import { merge }                                   from 'lodash';
 import { BaseCore }                                from '../BaseCore';
-import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
+import { ClassList, TInstanceOf, checkInstanceOf } from '../../lib/instanceOf';
 /**
  * Configuration for Pages display
  */

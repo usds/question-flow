@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
-import { PAGE_TYPE, TPageType }                    from '../survey/IPageCore';
-import { IPagesCore }                              from '../survey/IPagesCore';
-import { matches }                                 from '../util/helpers';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { merge }                                   from '../util/merge';
+import { PAGE_TYPE, TPageType }                    from '../metadata/properties/type/TPageType';
+import { IPagesCore }                              from '../metadata/IPagesCore';
+import { matches }                                 from '../lib/helpers';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { merge }                                   from '../lib/merge';
 import { BaseCore }                                from './BaseCore';
 import { PageCore }                                from './PageCore';
 

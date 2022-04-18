@@ -1,8 +1,10 @@
-import { merge }                        from 'lodash';
-import { IPageCore, PAGE_TYPE }         from '../survey/IPageCore';
-import { IQuestionCore, QUESTION_TYPE } from '../survey/IQuestionCore';
-import { isEnum }                       from '../util/enums';
-import { survey }                       from './survey';
+import { merge }         from 'lodash';
+import { IPageCore }     from '../metadata/IPageCore';
+import { PAGE_TYPE }     from '../metadata/properties/type/TPageType';
+import { IQuestionCore } from '../metadata/IQuestionCore';
+import { QUESTION_TYPE } from '../metadata/properties/type/TQuestionType';
+import { isEnum }        from '../lib/enums';
+import { survey }        from './survey';
 
 const schemaPart = {
   properties: {

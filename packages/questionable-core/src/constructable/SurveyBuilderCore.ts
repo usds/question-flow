@@ -17,10 +17,10 @@ import {
   TCtor,
 } from '../composable';
 import { Factory } from './Factory';
-import { ClassList } from '../util/instanceOf';
-import { MODE } from '../util/enums';
-import { merge } from '../util/merge';
-import { ACTION_TYPE } from '../survey/IActionCore';
+import { ClassList } from '../lib/instanceOf';
+import { MODE } from '../lib/enums';
+import { merge } from '../lib/merge';
+import { ACTION_TYPE } from "../metadata/properties/type/TActionType";
 
 type TBuilderDefaults = {
   section?: Section;

@@ -1,7 +1,7 @@
 import { merge }                                   from 'lodash';
 import { ButtonConfigCore }                        from './ButtonConfig';
 import { BaseCore }                                from '../BaseCore';
-import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
+import { ClassList, TInstanceOf, checkInstanceOf } from '../../lib/instanceOf';
 
 /**
  * Configuration for navigation

@@ -1,10 +1,12 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool, TCollectable }       from '../constructable/types';
-import { IResponseCore, RESPONSE_TYPE, TResponseType } from '../survey/IResponseCore';
-import { checkInstanceOf, ClassList, TInstanceOf }     from '../util/instanceOf';
-import { AnswerCore }                                  from './AnswerCore';
-import { QuestionCore }                                from './QuestionCore';
-import { RefCore }                                     from './RefCore';
+import { addToPool, existsInPool }                 from '../constructable/types';
+import { TCollectable }                            from '../metadata/types/TCollectable';
+import { IResponseCore }                           from '../metadata/IResponseCore';
+import { RESPONSE_TYPE, TResponseType }            from '../metadata/properties/type/TResponseType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { AnswerCore }                              from './AnswerCore';
+import { QuestionCore }                            from './QuestionCore';
+import { RefCore }                                 from './RefCore';
 
 export class ResponseCore extends RefCore implements IResponseCore {
   public get instanceOfCheck(): TInstanceOf {

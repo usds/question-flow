@@ -1,17 +1,17 @@
 /* eslint-disable import/no-cycle */
 import { merge }       from 'lodash';
 import { eventedCore } from '../state/pubsub';
-import { IFormCore }   from '../survey/IFormCore';
-import { matches }     from '../util/helpers';
-import { TAgeCore }    from '../util/types';
+import { IFormCore }   from '../metadata/IFormCore';
+import { matches }     from '../lib/helpers';
+import { TAgeCore }    from '../metadata/types/TAgeCore';
 import { BaseCore }    from './BaseCore';
 import {
   checkInstanceOf,
   ClassList,
   TInstanceOf,
-} from '../util/instanceOf';
+} from '../lib/instanceOf';
 import { QuestionCore }     from './QuestionCore';
-import { OP_TYPE, TOpType } from '../survey/Unions';
+import { OP_TYPE, TOpType } from '../metadata/types/TOpType';
 
 export interface FormCore extends BaseCore, IFormCore {}
 

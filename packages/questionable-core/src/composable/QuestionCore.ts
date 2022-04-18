@@ -1,12 +1,14 @@
 /* eslint-disable import/no-cycle */
-import { addToPool, existsInPool, TCollectable }       from '../constructable/types';
-import { IQuestionCore, QUESTION_TYPE, TQuestionType } from '../survey/IQuestionCore';
-import { checkInstanceOf, ClassList, TInstanceOf }     from '../util/instanceOf';
-import { TPointerDirection }                           from '../util/types';
-import { AnswerCore }                                  from './AnswerCore';
-import { BranchCore }                                  from './BranchCore';
-import { SectionCore }                                 from './SectionCore';
-import { StepCore }                                    from './StepCore';
+import { addToPool, existsInPool }                 from '../constructable/types';
+import { TCollectable }                            from '../metadata/types/TCollectable';
+import { IQuestionCore }                           from '../metadata/IQuestionCore';
+import { QUESTION_TYPE, TQuestionType }            from '../metadata/properties/type/TQuestionType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { TPointerDirection }                       from '../lib/types';
+import { AnswerCore }                              from './AnswerCore';
+import { BranchCore }                              from './BranchCore';
+import { SectionCore }                             from './SectionCore';
+import { StepCore }                                from './StepCore';
 
 export class QuestionCore extends StepCore implements IQuestionCore {
   public get instanceOfCheck(): TInstanceOf {

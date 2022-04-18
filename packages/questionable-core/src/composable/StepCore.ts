@@ -1,14 +1,15 @@
 /* eslint-disable import/no-cycle */
 import { kebabCase }                               from 'lodash';
-import { addToPool, existsInPool, TCollectable }   from '../constructable/types';
-import { PAGE_TYPE }                               from '../survey/IPageCore';
-import { QUESTION_TYPE }                           from '../survey/IQuestionCore';
-import { IStepCore }                               from '../survey/IStepCore';
-import { STEP_TYPE, TStepType }                    from '../survey/Unions';
-import { isEnum }                                  from '../util/enums';
-import { matches }                                 from '../util/helpers';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { TPointerDirection }                       from '../util/types';
+import { addToPool, existsInPool }                 from '../constructable/types';
+import { TCollectable }                            from '../metadata/types/TCollectable';
+import { PAGE_TYPE }                               from '../metadata/properties/type/TPageType';
+import { QUESTION_TYPE }                           from '../metadata/properties/type/TQuestionType';
+import { IStepCore }                               from '../metadata/IStepCore';
+import { STEP_TYPE, TStepType }                    from '../metadata/properties/type/TStepType';
+import { isEnum }                                  from '../lib/enums';
+import { matches }                                 from '../lib/helpers';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { TPointerDirection }                       from '../lib/types';
 import { RefCore }                                 from './RefCore';
 import { RequirementCore }                         from './RequirementCore';
 import { SectionCore }                             from './SectionCore';

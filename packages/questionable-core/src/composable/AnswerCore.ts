@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { addToPool, existsInPool }                 from '../constructable/types';
-import { ANSWER_TYPE, IAnswerCore, TAnswerType }   from '../survey/IAnswerCore';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { IAnswerCore }                             from '../metadata/IAnswerCore';
+import { ANSWER_TYPE, TAnswerType }                from '../metadata/properties/type/TAnswerType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
 import { QuestionCore }                            from './QuestionCore';
 import { RefCore }                                 from './RefCore';
 

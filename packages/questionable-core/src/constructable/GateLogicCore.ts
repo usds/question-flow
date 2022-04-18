@@ -4,24 +4,25 @@ import { FormCore }                 from '../composable/FormCore';
 import { PageCore }                 from '../composable/PageCore';
 import { QuestionnaireCore }        from '../composable/QuestionnaireCore';
 import {  StepCore }                from '../composable/StepCore';
-import { DIRECTION, isEnum, MODE }  from '../util/enums';
-import { log, toggleOut }           from '../util/logger';
-import { matches }                  from '../util/helpers';
-import { TAgeCalcCore, TAgeCore }   from '../util/types';
+import { DIRECTION, isEnum, MODE }  from '../lib/enums';
+import { log, toggleOut }           from '../lib/logger';
+import { matches }                  from '../lib/helpers';
+import { TAgeCalcCore }             from '../lib/types';
+import { TAgeCore }                 from '../metadata/types/TAgeCore';
 import { ActionCore }               from '../composable/ActionCore';
 import { isValid, Questioner }      from './Questioner';
 import { PagesConfigCore }          from '../composable/config';
-import { TQForm }                   from './types';
+import { TQForm }                   from './TQForm';
 import { QuestionCore }             from '../composable/QuestionCore';
 import { SectionCore }              from '../composable/SectionCore';
 import { BranchCore }               from '../composable/BranchCore';
 import { RequirementCore }          from '../composable/RequirementCore';
 import { ResponseCore }             from '../composable/ResponseCore';
-import { STEP_TYPE }                from '../survey/Unions';
-import { QUESTION_TYPE }            from '../survey/IQuestionCore';
-import { PAGE_TYPE, TPageType }     from '../survey/IPageCore';
-import { PROGRESS_BAR_STATUS }      from '../survey/ISectionCore';
-import { ACTION_TYPE, TActionType } from '../survey/IActionCore';
+import { STEP_TYPE }                from '../metadata/properties/type/TStepType';
+import { QUESTION_TYPE }            from '../metadata/properties/type/TQuestionType';
+import { PAGE_TYPE, TPageType }     from '../metadata/properties/type/TPageType';
+import { PROGRESS_BAR_STATUS }      from '../metadata/types/TProgressBarStatusType';
+import { ACTION_TYPE, TActionType } from '../metadata/properties/type/TActionType';
 
 type TPageSet =
   | {

@@ -7,14 +7,13 @@ import { ActionCore }             from '../composable/ActionCore';
 import { StepCore }               from '../composable/StepCore';
 import { QuestionableConfigCore } from '../composable/ConfigCore';
 import { ResultCore }             from '../composable/ResultCore';
-import {
-  addToPool, TCollectable,
-} from '.';
-import { PageCore }          from '../composable/PageCore';
-import { QuestionnaireCore } from '../composable/QuestionnaireCore';
-import { QuestionCore }      from '../composable/QuestionCore';
-import { BranchCore }        from '../composable/BranchCore';
-import { SectionCore }       from '../composable/SectionCore';
+import { PageCore }               from '../composable/PageCore';
+import { QuestionnaireCore }      from '../composable/QuestionnaireCore';
+import { QuestionCore }           from '../composable/QuestionCore';
+import { BranchCore }             from '../composable/BranchCore';
+import { SectionCore }            from '../composable/SectionCore';
+import { TCollectable }           from '../metadata/types/TCollectable';
+import { addToPool }              from './types';
 
 /**
  * Utility wrapper for survey state

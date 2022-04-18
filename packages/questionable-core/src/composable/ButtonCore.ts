@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { BUTTON_TYPE, IButtonCore, TButtonType }   from '../survey/IButtonCore';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { IButtonCore }                             from '../metadata/IButtonCore';
+import { BUTTON_TYPE, TButtonType }                from '../metadata/properties/type/TButtonType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
 import { RefCore }                                 from './RefCore';
 
 export class ButtonCore extends RefCore implements IButtonCore {

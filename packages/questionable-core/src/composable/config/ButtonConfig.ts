@@ -1,12 +1,11 @@
 import { BaseCore }    from '../BaseCore';
 import {
-  THorizontalPositionCore,
   TVerticalPositionCore,
-  HORIZONTAL_POSITION,
   VERTICAL_POSITION,
-} from '../../util/types';
-import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
-import { BUTTON_TYPE, TButtonType }                from '../../survey/IButtonCore';
+} from '../../metadata/types/TVerticalPositionCore';
+import { THorizontalPositionCore, HORIZONTAL_POSITION } from '../../metadata/types/THorizontalPositionCore';
+import { ClassList, TInstanceOf, checkInstanceOf }      from '../../lib/instanceOf';
+import { BUTTON_TYPE, TButtonType }                     from '../../metadata/properties/type/TButtonType';
 
 /**
  * Configuration for buttons

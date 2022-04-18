@@ -1,8 +1,8 @@
 import { merge }                                   from 'lodash';
-import { TVerticalPositionCore }                   from '../../util/types';
+import { TVerticalPositionCore }                   from '../../metadata/types/TVerticalPositionCore';
 import { BaseCore }                                from '../BaseCore';
-import { ClassList, TInstanceOf, checkInstanceOf } from '../../util/instanceOf';
-import { TProgressBarStatusType }                  from '../../survey/ISectionCore';
+import { ClassList, TInstanceOf, checkInstanceOf } from '../../lib/instanceOf';
+import { TProgressBarStatusType }                  from '../../metadata/types/TProgressBarStatusType';
 
 /**
  * Configuration options for the progress bar

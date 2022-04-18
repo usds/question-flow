@@ -1,24 +1,25 @@
 /* eslint-disable import/no-cycle */
 import { ActionCore }             from './ActionCore';
 import { StepCore }               from './StepCore';
-import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
+import { IQuestionnaireCore }     from '../metadata/IQuestionnaireCore';
 import { QuestionableConfigCore } from './ConfigCore';
 import { PagesCore }              from './PagesCore';
 import {
   checkInstanceOf,
   ClassList,
   TInstanceOf,
-} from '../util/instanceOf';
-import { ResultCore }        from './ResultCore';
-import { matches }           from '../util/helpers';
+} from '../lib/instanceOf';
+import { ResultCore } from './ResultCore';
+import { matches }    from '../lib/helpers';
 import {
-  addToPool, TCollectable,
+  addToPool,
 } from '../constructable/types';
+import { TCollectable } from '../metadata/types/TCollectable';
 import { RefCore }      from './RefCore';
 import { QuestionCore } from './QuestionCore';
 import { BranchCore }   from './BranchCore';
 import { SectionCore }  from './SectionCore';
-import { TRefType }     from '../survey/Unions';
+import { TRefType }     from '../metadata/properties/type/TRefType';
 
 /**
  * Utility wrapper for survey state
