@@ -2,27 +2,26 @@ import {
   GateLogicCore,
   FormCore,
   Questioner,
+  error,
+  log,
+  white,
+  yellow,
 } from '@usds.gov/questionable-core';
 import {
-  Answers, DistinctQuestion, prompt, registerPrompt,
+  Answers,
+  DistinctQuestion,
+  prompt,
 } from 'inquirer';
 import PromptUI                from 'inquirer/lib/ui/prompt';
 import { merge }               from 'lodash';
 import { Observable, Subject } from 'rxjs';
 import { getAnswer }           from '../util/helper';
-import {
-  error, log, white, yellow,
-} from '../util/logger';
-import { TVal }          from '../util/types';
-import { PromptFactory } from './PromptFactory';
-import { Question }      from './Question';
-import { Questionnaire } from './Questionnaire';
-import { Step }          from './Step';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-registerPrompt('date', require('inquirer-date-prompt'));
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
+import { TVal }                from '../util/types';
+import { PromptFactory }       from './PromptFactory';
+import { Question }            from './Question';
+import { Questionnaire }       from './Questionnaire';
+import { Step }                from './Step';
+import '../util/inquirer';
 
 export class Iterable<Q extends Questionnaire, F extends FormCore> {
   #current: Question;
@@ -206,7 +205,8 @@ export class Iterable<Q extends Questionnaire, F extends FormCore> {
     if (question.validate) {
       isValid = await question.validate(a, question);
     }
-    Questioner.updateForm(answer, question, this.form);
+    const qrr = new Questioner({ form: this.form, question });
+    qrr.updateForm({ answer });
     isValid = isValid && this.gateLogic.isNextEnabled(question);
     return isValid;
   }

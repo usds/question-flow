@@ -3,16 +3,6 @@
 export const survey = {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "BASE": {
-      "const": "default",
-      "description": "Defines the known component types for pages",
-      "type": "string"
-    },
-    "DESIGN_TYPE": {
-      "const": "Edit",
-      "description": "Defines the known component types for design",
-      "type": "string"
-    },
     "DIRECTION": {
       "description": "Navigation direction for steps by array index (+1 or -1)",
       "enum": [
@@ -66,6 +56,9 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TAnswerType"
         }
       },
       "required": [
@@ -95,46 +88,9 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
-        }
-      },
-      "required": [
-        "title"
-      ],
-      "type": "object"
-    },
-    "IButtonConfigCore": {
-      "description": "Configuration for buttons",
-      "properties": {
-        "core": {
-          "enum": [
-            "IButtonConfig",
-            "I"
-          ],
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "link": {
-          "description": "Link to tie to button click",
-          "title": "Link",
-          "type": "string"
-        },
-        "title": {
-          "title": "Title",
-          "type": "string"
         },
         "type": {
-          "description": "Render mode (link or button)",
-          "title": "Mode",
-          "type": "string"
-        },
-        "visible": {
-          "description": "Visibility status of the button (show/hide)",
-          "title": "Visible",
-          "type": "boolean"
+          "$ref": "#/definitions/TBranchType"
         }
       },
       "required": [
@@ -160,9 +116,9 @@ export const survey = {
           "type": "string"
         },
         "type": {
+          "$ref": "#/definitions/TButtonType",
           "description": "Render mode (link or button)",
-          "title": "Mode",
-          "type": "string"
+          "title": "Mode"
         },
         "visible": {
           "description": "Visibility status of the button (show/hide)",
@@ -177,38 +133,6 @@ export const survey = {
     },
     "IEventCore": {
       "description": "Event Model",
-      "properties": {
-        "onActionClick": {
-          "not": {}
-        },
-        "onAnswer": {
-          "not": {}
-        },
-        "onAnyEvent": {
-          "not": {}
-        },
-        "onBranch": {
-          "not": {}
-        },
-        "onError": {
-          "not": {}
-        },
-        "onGateSwitch": {
-          "not": {}
-        },
-        "onInit": {
-          "not": {}
-        },
-        "onNoResults": {
-          "not": {}
-        },
-        "onPage": {
-          "not": {}
-        },
-        "onResults": {
-          "not": {}
-        }
-      },
       "title": "Event",
       "type": "object"
     },
@@ -284,34 +208,6 @@ export const survey = {
       ],
       "type": "object"
     },
-    "INavigationConfigCore": {
-      "description": "Configuration for navigation",
-      "properties": {
-        "core": {
-          "enum": [
-            "INavigationConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IPageConfigCore": {
-      "properties": {
-        "core": {
-          "enum": [
-            "IPageConfig",
-            "I"
-          ],
-          "type": "string"
-        },
-        "visible": {
-          "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
     "IPageCore": {
       "description": "Defines step content for Page types",
       "properties": {
@@ -384,7 +280,7 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/PAGE_TYPE",
+          "$ref": "#/definitions/TPageType",
           "description": "Type of page",
           "title": "Page Type"
         }
@@ -394,18 +290,6 @@ export const survey = {
         "title",
         "type"
       ],
-      "type": "object"
-    },
-    "IPagesConfigCore": {
-      "properties": {
-        "core": {
-          "enum": [
-            "IPagesConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
       "type": "object"
     },
     "IPagesCore": {
@@ -440,34 +324,7 @@ export const survey = {
       },
       "type": "object"
     },
-    "IProgressBarConfigCore": {
-      "description": "Configuration options for the progress bar",
-      "properties": {
-        "core": {
-          "enum": [
-            "IProgressBarConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IQuestionConfigCore": {
-      "description": "Configuration for question display",
-      "properties": {
-        "core": {
-          "enum": [
-            "IQuestionConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "IQuestionCore": {
-      "description": "Defines step content for Question type",
       "properties": {
         "answers": {
           "description": "Collection of allowed answers",
@@ -528,7 +385,7 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/QUESTION_TYPE",
+          "$ref": "#/definitions/TQuestionType",
           "description": "Type of question",
           "title": "Question Type"
         }
@@ -552,12 +409,8 @@ export const survey = {
         "nav": {
           "description": "Navigation configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "INavigationConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Navigation",
@@ -566,12 +419,8 @@ export const survey = {
         "pages": {
           "description": "Page configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IPagesConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Pages",
@@ -589,12 +438,8 @@ export const survey = {
         "progressBar": {
           "description": "Progress Bar configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IProgressBarConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Progress Bar",
@@ -603,12 +448,8 @@ export const survey = {
         "questions": {
           "description": "Question configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IQuestionConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Question Configuration",
@@ -617,12 +458,8 @@ export const survey = {
         "steps": {
           "description": "Step configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IStepConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Step Configuration",
@@ -798,6 +635,9 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TRequirementType"
         }
       },
       "required": [
@@ -827,6 +667,9 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TResponseType"
         }
       },
       "required": [
@@ -868,6 +711,9 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TResultType"
         }
       },
       "required": [
@@ -894,24 +740,14 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TSectionType"
         }
       },
       "required": [
         "title"
       ],
-      "type": "object"
-    },
-    "IStepConfigCore": {
-      "description": "Customizations for styling and formatting of the steps",
-      "properties": {
-        "core": {
-          "enum": [
-            "IStepConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
       "type": "object"
     },
     "IStepCore": {
@@ -987,27 +823,13 @@ export const survey = {
       ],
       "type": "string"
     },
-    "PAGE_TYPE": {
-      "description": "Defines the known component types for pages",
+    "TActionType": {
       "enum": [
-        "default",
-        "Landing",
-        "No Results",
-        "Results",
-        "Summary"
-      ],
-      "type": "string"
-    },
-    "QUESTION_TYPE": {
-      "description": "Defines the known component types for questions",
-      "enum": [
-        "date_time",
-        "default",
-        "dob",
-        "multiple_choice",
-        "multiple_select",
-        "path",
-        "text"
+        "call",
+        "hybrid",
+        "none",
+        "online",
+        "shell"
       ],
       "type": "string"
     },
@@ -1039,6 +861,47 @@ export const survey = {
         "responses"
       ],
       "title": "Event Data Type",
+      "type": "object"
+    },
+    "TAnswerType": {
+      "enum": [
+        "fixed",
+        "variable"
+      ],
+      "type": "string"
+    },
+    "TBaseType": {
+      "const": "default",
+      "type": "string"
+    },
+    "TBranchType": {
+      "enum": [
+        "linear",
+        "non-linear"
+      ],
+      "type": "string"
+    },
+    "TButtonType": {
+      "enum": [
+        "button",
+        "link"
+      ],
+      "type": "string"
+    },
+    "TDesignType": {
+      "const": "Edit",
+      "description": "Defines the known component types for design",
+      "type": "string"
+    },
+    "TEnmBaseType": {
+      "properties": {
+        "DEFAULT": {
+          "$ref": "#/definitions/TBaseType"
+        }
+      },
+      "required": [
+        "DEFAULT"
+      ],
       "type": "object"
     },
     "TEventCore": {
@@ -1083,6 +946,15 @@ export const survey = {
       ],
       "type": "object"
     },
+    "TOpType": {
+      "enum": [
+        "RERENDER",
+        "RESET",
+        "undo",
+        "UPDATE"
+      ],
+      "type": "string"
+    },
     "TPageDataCore": {
       "description": "Event data structure to be sent with event callbacks",
       "properties": {
@@ -1096,11 +968,86 @@ export const survey = {
       "title": "Event Data Type",
       "type": "object"
     },
+    "TPageType": {
+      "description": "Defines the known component types for pages",
+      "enum": [
+        "Landing",
+        "No Results",
+        "Results",
+        "Summary"
+      ],
+      "type": "string"
+    },
     "TPages": {
       "additionalProperties": {
         "$ref": "#/definitions/IPageCore"
       },
       "type": "object"
+    },
+    "TProgressBarStatusType": {
+      "enum": [
+        "complete",
+        "current",
+        "incomplete"
+      ],
+      "type": "string"
+    },
+    "TQuestionType": {
+      "description": "Defines the known component types for questions",
+      "enum": [
+        "date_time",
+        "dob",
+        "multiple_choice",
+        "multiple_select",
+        "path",
+        "text"
+      ],
+      "type": "string"
+    },
+    "TRefType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TStepType"
+        },
+        {
+          "$ref": "#/definitions/TActionType"
+        },
+        {
+          "$ref": "#/definitions/TAnswerType"
+        },
+        {
+          "$ref": "#/definitions/TBranchType"
+        },
+        {
+          "$ref": "#/definitions/TButtonType"
+        },
+        {
+          "$ref": "#/definitions/TRequirementType"
+        },
+        {
+          "$ref": "#/definitions/TResponseType"
+        },
+        {
+          "$ref": "#/definitions/TResultType"
+        },
+        {
+          "$ref": "#/definitions/TSectionType"
+        }
+      ]
+    },
+    "TRequirementType": {
+      "enum": [
+        "required",
+        "non-required"
+      ],
+      "type": "string"
+    },
+    "TResponseType": {
+      "enum": [
+        "complete",
+        "incomplete"
+      ],
+      "type": "string"
     },
     "TResultDataCore": {
       "description": "Event data structure for results",
@@ -1122,19 +1069,33 @@ export const survey = {
       "title": "Event Result Type",
       "type": "object"
     },
+    "TResultType": {
+      "enum": [
+        "match",
+        "non-match"
+      ],
+      "type": "string"
+    },
+    "TSectionType": {
+      "enum": [
+        "locked",
+        "unlocked"
+      ],
+      "type": "string"
+    },
     "TStepType": {
       "anyOf": [
         {
-          "$ref": "#/definitions/PAGE_TYPE"
+          "$ref": "#/definitions/TPageType"
         },
         {
-          "$ref": "#/definitions/QUESTION_TYPE"
+          "$ref": "#/definitions/TQuestionType"
         },
         {
-          "$ref": "#/definitions/DESIGN_TYPE"
+          "$ref": "#/definitions/TDesignType"
         },
         {
-          "$ref": "#/definitions/BASE"
+          "$ref": "#/definitions/TBaseType"
         }
       ]
     }

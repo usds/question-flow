@@ -1,8 +1,10 @@
 /* eslint-disable import/no-cycle */
-import { IPageCore }                               from '../survey/IStepCore';
-import { PAGE_TYPE }                               from '../util/enums';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
+import { TCollectable }                            from '../metadata/types/TCollectable';
+import { TPointerDirection }                       from '../lib/types';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
 import { StepCore }                                from './StepCore';
+import { IPageCore }                               from '../metadata/IPageCore';
+import { PAGE_TYPE, TPageType }                    from '../metadata/properties/type/TPageType';
 
 const className = ClassList.page;
 export class PageCore extends StepCore implements IPageCore {
@@ -12,7 +14,7 @@ export class PageCore extends StepCore implements IPageCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([className, ClassList.page], obj);
+    return checkInstanceOf({ names: [className, ClassList.page], obj });
   }
 
   public static override create(data: Partial<PageCore>) {
@@ -34,11 +36,8 @@ export class PageCore extends StepCore implements IPageCore {
   constructor(data: Partial<PageCore>) {
     super(data);
 
-    if (!data.type || `${data.type}` === `${PAGE_TYPE.DEFAULT}`) {
-      this.#type = PAGE_TYPE.DEFAULT;
-    } else {
-      this.#type = data.type;
-    }
+    const type          = (!data.type || `${data.type}` === `${PAGE_TYPE.DEFAULT}`) ? PAGE_TYPE.LANDING : data.type;
+    this.#type          = type;
     this.#body          = data.body || '';
     this.#bodyHeader    = data.bodyHeader || '';
     this.#bodySubHeader = data.bodySubHeader || '';
@@ -67,9 +66,18 @@ export class PageCore extends StepCore implements IPageCore {
     return this.#display;
   }
 
-  #type: PAGE_TYPE;
+  #type: TPageType;
 
   public override get type() {
     return this.#type;
+  }
+
+  public existsIn(data: TCollectable, direction?: TPointerDirection): boolean {
+    return super.existsIn(data, direction);
+  }
+
+  public add(data: TCollectable, direction?: TPointerDirection): PageCore {
+    super.add(data, direction);
+    return this;
   }
 }

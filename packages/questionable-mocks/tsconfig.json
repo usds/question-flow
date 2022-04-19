@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
@@ -25,8 +26,7 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "rootDir": "src",
-    "resolveJsonModule": false,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
@@ -35,16 +35,22 @@
     "strictPropertyInitialization": true,
     "target": "ES2021",
     "useDefineForClassFields": false,
+    "paths": {
+      "@usds.gov/questionable-build": [
+        "../questionable-build/src/index.ts"
+      ],
+    }
   },
   "include": [
-    "typings.d.ts",
     "src/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "dist"
   ],
-  "ts-node": {
-    "swc": true
-  }
+  "references": [
+    {
+      "path": "../questionable-build"
+    }
+  ]
 }

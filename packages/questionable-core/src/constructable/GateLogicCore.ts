@@ -1,39 +1,34 @@
-import {
-  groupBy, isEmpty, noop,
-} from 'lodash';
-import { ResultCore }        from '../composable/ResultCore';
-import { FormCore }          from '../composable/FormCore';
-import { PageCore }          from '../composable/PageCore';
-import { QuestionnaireCore } from '../composable/QuestionnaireCore';
-import {
-  BranchCore,
-  QuestionCore,
-  RequirementCore,
-  ResponseCore,
-  SectionCore,
-  StepCore,
-} from '../composable/StepCore';
-import {
-  ACTION,
-  DIRECTION,
-  isEnum,
-  MODE,
-  PAGE_TYPE,
-  PROGRESS_BAR_STATUS,
-  QUESTION_TYPE,
-  STEP_TYPE,
-} from '../util/enums';
-import { log, toggleOut }         from '../util/logger';
-import { matches }                from '../util/helpers';
-import { TAgeCalcCore, TAgeCore } from '../util/types';
-import { IPageConfigCore }        from '../survey/IQuestionableConfigCore';
-import { ActionCore }             from '../composable/ActionCore';
-import { Questioner }             from './Questioner';
+import { groupBy, isEmpty, noop }   from 'lodash';
+import { ResultCore }               from '../composable/ResultCore';
+import { FormCore }                 from '../composable/FormCore';
+import { PageCore }                 from '../composable/PageCore';
+import { QuestionnaireCore }        from '../composable/QuestionnaireCore';
+import {  StepCore }                from '../composable/StepCore';
+import { DIRECTION, isEnum, MODE }  from '../lib/enums';
+import { log, toggleOut }           from '../lib/logger';
+import { matches }                  from '../lib/helpers';
+import { TAgeCalcCore }             from '../lib/types';
+import { TAgeCore }                 from '../metadata/types/TAgeCore';
+import { ActionCore }               from '../composable/ActionCore';
+import { isValid }                  from './lib/isValid';
+import { PagesConfigCore }          from '../composable/config/PagesConfig';
+import { QuestionCore }             from '../composable/QuestionCore';
+import { SectionCore }              from '../composable/SectionCore';
+import { BranchCore }               from '../composable/BranchCore';
+import { RequirementCore }          from '../composable/RequirementCore';
+import { ResponseCore }             from '../composable/ResponseCore';
+import { STEP_TYPE }                from '../metadata/properties/type/TStepType';
+import { QUESTION_TYPE }            from '../metadata/properties/type/TQuestionType';
+import { PAGE_TYPE, TPageType }     from '../metadata/properties/type/TPageType';
+import { PROGRESS_BAR_STATUS }      from '../metadata/types/TProgressBarStatusType';
+import { ACTION_TYPE, TActionType } from '../metadata/properties/type/TActionType';
 
-type TPageSet = {
-  config?: Partial<IPageConfigCore>;
-  data?: PageCore;
-} | undefined;
+type TPageSet =
+  | {
+      config?: Partial<PagesConfigCore>;
+      data?: PageCore;
+    }
+  | undefined;
 
 export class GateLogicCore {
   #form!: FormCore;
@@ -53,31 +48,31 @@ export class GateLogicCore {
     this.setPageDefaults();
   }
 
-  protected get questionnaire() {
+  public get questionnaire() {
     return this.#questionnaire;
   }
 
-  protected get form() {
+  public get form() {
     return this.#form;
   }
 
-  protected get flow() {
+  public get flow() {
     return this.questionnaire.flow;
   }
 
-  protected get config() {
+  public get config() {
     return this.questionnaire.config;
   }
 
-  protected get steps() {
+  public get steps() {
     return this.questionnaire.steps;
   }
 
-  protected get pages() {
+  public get pages() {
     return this.questionnaire.pages;
   }
 
-  protected get pageList() {
+  public get pageList() {
     return this.pages.all();
   }
 
@@ -103,7 +98,8 @@ export class GateLogicCore {
     const step = this.getNextStep(s);
     const dir  = DIRECTION.FORWARD;
     this.config.events?.page({
-      dir, step,
+      dir,
+      step,
     });
     this.goToStep(step);
   }
@@ -124,10 +120,10 @@ export class GateLogicCore {
     if (!s.id) {
       throw new Error('This survery is not defined');
     }
-    if (s.id === STEP_TYPE.LANDING) {
+    if (s.type === STEP_TYPE.LANDING) {
       return true;
     }
-    if (s.id === STEP_TYPE.SUMMARY) {
+    if (s.type === STEP_TYPE.SUMMARY) {
       return true;
     }
     // KLUDGE Alert: this is not an elegant way to solve this
@@ -138,7 +134,7 @@ export class GateLogicCore {
     if (!this.form) {
       return false;
     }
-    return Questioner.isValid(s, this.form);
+    return isValid({ form: this.form, step: s });
   }
 
   /**
@@ -179,7 +175,7 @@ export class GateLogicCore {
    */
   getPageById(id: string): PageCore {
     const ret = this.getStepById(id);
-    if (!isEnum(PAGE_TYPE, ret.type)) {
+    if (!isEnum({ enm: PAGE_TYPE, value: ret.type })) {
       this.throw(`Step id: ${id} is not a page`);
     }
     return ret as PageCore;
@@ -204,7 +200,7 @@ export class GateLogicCore {
    */
   getQuestionById(id: string): QuestionCore {
     const ret = this.getStepById(id);
-    if (!isEnum(QUESTION_TYPE, ret.type)) {
+    if (!isEnum({ enm: QUESTION_TYPE, value: ret.type })) {
       this.throw(`Step id: ${id} not a question`);
     }
     return ret as QuestionCore;
@@ -236,9 +232,11 @@ export class GateLogicCore {
       return thisQuestion;
     }
 
-    if (skip === 0
+    if (
+      skip === 0
       && direction === DIRECTION.FORWARD
-      && !isEmpty(thisQuestion.exitRequirements)) {
+      && !isEmpty(thisQuestion.exitRequirements)
+    ) {
       const allowExit = thisQuestion.exitRequirements.every((r) =>
         this.meetsAllRequirements(r));
       if (!allowExit) {
@@ -361,7 +359,7 @@ export class GateLogicCore {
    * @returns string[]
    */
   getAllAnswerableQuestions(step: StepCore): string[] {
-    if (!isEnum(QUESTION_TYPE, step.type)) {
+    if (!isEnum({ enm: QUESTION_TYPE, value: step.type })) {
       return [];
     }
 
@@ -403,7 +401,7 @@ export class GateLogicCore {
    */
   protected getQuestionsWithoutBranches(): string[] {
     return this.steps
-      .filter((q) => isEnum(QUESTION_TYPE, q.type))
+      .filter((q) => isEnum({ enm: QUESTION_TYPE, value: q.type }))
       .map((q) => q.id);
   }
 
@@ -418,8 +416,7 @@ export class GateLogicCore {
         (q) =>
           !q.entryRequirements
           || q.entryRequirements.length === 0
-          || q.entryRequirements.some((r) =>
-            this.meetsAllRequirements(r, true)),
+          || q.entryRequirements.some((r) => this.meetsAllRequirements(r, true)),
       )
       .map((q) => q.id);
   }
@@ -430,7 +427,11 @@ export class GateLogicCore {
    * @returns
    */
   getSections(thisQuestion: StepCore): SectionCore[] {
-    if (!thisQuestion || !this.questionnaire.sections || this.questionnaire.sections.length === 0) {
+    if (
+      !thisQuestion
+      || !this.questionnaire.sections
+      || this.questionnaire.sections.length === 0
+    ) {
       return [];
     }
 
@@ -488,7 +489,7 @@ export class GateLogicCore {
    * Gets the appropriate action given a set of results
    * @returns
    */
-  getActionByType(type: ACTION): ActionCore {
+  getActionByType(type: TActionType): ActionCore {
     const action = this.questionnaire.actions.find((a) => a.type === type);
     if (!action) {
       this.throw(`No matching action found for ${type}`);
@@ -502,7 +503,9 @@ export class GateLogicCore {
    */
   getAction(results: ResultCore[]): ActionCore {
     const groupedByAction = groupBy(results, 'action.id');
-    const hybrid          = this.questionnaire.actions.find((a) => a.type === ACTION.HYBRID);
+    const hybrid          = this.questionnaire.actions.find(
+      (a) => a.type === ACTION_TYPE.HYBRID,
+    );
     // If group above has more than one type of action, the resolved action will be a hybrid
     let match     = hybrid;
     const actions = Object.keys(groupedByAction);
@@ -553,7 +556,9 @@ export class GateLogicCore {
     // Branches defined take priority; sync these first
     this.questionnaire.branches.forEach((b) => {
       b.questions.forEach((bq) => {
-        const question = this.questionnaire.questions.find((q) => q.id === bq.id);
+        const question = this.questionnaire.questions.find(
+          (q) => q.id === bq.id,
+        );
         if (question && question?.branch?.id !== b.id) {
           question.branch = b;
         }
@@ -565,7 +570,9 @@ export class GateLogicCore {
       if (!q.branch?.id) {
         return;
       }
-      const exists         = this.questionnaire.branches.find((b) => b.existsIn(q) || q.branch === b);
+      const exists         = this.questionnaire.branches.find(
+        (b) => b.existsIn(q) || q.branch === b,
+      );
       const validateBranch = exists || (q.branch as BranchCore);
       if (!exists) {
         this.questionnaire.add(validateBranch);
@@ -582,10 +589,10 @@ export class GateLogicCore {
    * @returns
    */
   // eslint-disable-next-line class-methods-use-this
-  protected getPageSet = (
-    type: PAGE_TYPE,
-  ): TPageSet => {
-    const data = this.pageList.find((p: PageCore | undefined) => p?.type === type);
+  protected getPageSet = (type: TPageType): TPageSet => {
+    const data = this.pageList.find(
+      (p: PageCore | undefined) => p?.type === type,
+    );
     if (data) {
       return {
         config: {},
@@ -600,7 +607,7 @@ export class GateLogicCore {
    * @param idx index of the page in `this.steps`
    * @param type LANDING, RESULTS, etc
    */
-  protected setPage(idx: number, type: PAGE_TYPE): void {
+  protected setPage(idx: number, type: TPageType): void {
     const error = 'step is not correctly defined or defined more than once';
 
     const page = this.getPageSet(type);
@@ -664,7 +671,10 @@ export class GateLogicCore {
    * @param minAge a TAge object or undefined
    * @returns true if no min age, else true if age is >= min age
    */
-  public static meetsMinAgeRequirements(form: FormCore, minAge?: TAgeCore): boolean {
+  public static meetsMinAgeRequirements(
+    form: FormCore,
+    minAge?: TAgeCore,
+  ): boolean {
     if (!minAge) return true;
 
     if (form.age === undefined) {
@@ -686,7 +696,10 @@ export class GateLogicCore {
    * @param maxAge a TAge object or undefined
    * @returns true if no max age, else true if age is <= max age
    */
-  public static meetsMaxAgeRequirements(form: FormCore, maxAge?: TAgeCore): boolean {
+  public static meetsMaxAgeRequirements(
+    form: FormCore,
+    maxAge?: TAgeCore,
+  ): boolean {
     if (!maxAge) return true;
     if (form.age === undefined) {
       return false;
@@ -791,10 +804,10 @@ export class GateLogicCore {
   }
 
   getStepType(step: StepCore) {
-    if (isEnum(QUESTION_TYPE, step.type)) {
+    if (isEnum({ enm: QUESTION_TYPE, value: step.type })) {
       return 'question';
     }
-    if (isEnum(PAGE_TYPE, step.type)) {
+    if (isEnum({ enm: PAGE_TYPE, value: step.type })) {
       return 'page';
     }
     return 'unknown';

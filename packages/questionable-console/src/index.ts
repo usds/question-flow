@@ -10,7 +10,7 @@ export const Questionable = (): any => {
   // }
   // const prompts = new Subject();
   // const inq     = prompt(prompts);
-  const data          = simple_all as unknown as Partial<Questionnaire>;
+  const data          = simple_all as unknown as Partial<Questionnaire>; // eslint-disable-line camelcase
   const form          = new FormCore();
   const questionnaire = new Questionnaire(data);
   const iterator      = new Iterable(questionnaire, form);

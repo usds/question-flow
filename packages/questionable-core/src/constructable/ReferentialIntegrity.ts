@@ -2,11 +2,9 @@
 
 export class ReferentialIntegrity {
   // #questionnaire: QuestionnaireCore;
-
   // constructor(questionnaire: QuestionnaireCore) {
   //   this.#questionnaire = questionnaire;
   // }
-
   // // eslint-disable-next-line class-methods-use-this
   // syncBranches(_branch: BranchCore) {
   //   // TODO finish this

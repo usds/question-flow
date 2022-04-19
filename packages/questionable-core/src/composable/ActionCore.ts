@@ -1,19 +1,21 @@
 /* eslint-disable import/no-cycle */
-import { IActionCore }                             from '../survey/IActionCore';
-import { IButtonCore }                             from '../survey/IButtonCore';
-import { IRefCore }                                from '../survey/IRefCore';
-import { ACTION }                                  from '../util/enums';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { RefCore }                                 from './RefCore';
+import { IActionCore }                       from '../metadata/IActionCore';
+import { ACTION_TYPE, TActionType }          from '../metadata/properties/type/TActionType';
+import { ButtonCore }                        from './ButtonCore';
+import {
+  checkInstanceOf, ClassList, TInstanceOf,
+} from '../lib/instanceOf';
+import { RefCore } from './RefCore';
+// import { classCreate } from '../constructable/Factory';
 
-export class ActionCore extends RefCore implements IActionCore, IRefCore {
+export class ActionCore extends RefCore implements IActionCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.action;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.action, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.action, ClassList.ref], obj });
   }
 
   public static override create(data: Partial<ActionCore>) {
@@ -30,20 +32,23 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
     return ActionCore.create(data);
   }
 
-  #buttons: IButtonCore[];
+  #buttons: ButtonCore[] = [];
+
+  #icon: string;
 
   #label: string;
 
   #subTitle: string;
 
-  #type: ACTION;
+  #type: TActionType;
 
   constructor(data: Partial<ActionCore>) {
     super(data);
-    this.#buttons  = data.buttons || [];
+    // this.#buttons  = data.buttons?.map((itm) => classCreate(EClassList.BUTTON, itm)) || [];
     this.#label    = data.label || '';
     this.#subTitle = data.subTitle || '';
-    this.#type     = data.type || ACTION.DEFAULT;
+    this.#type     = data.type || ACTION_TYPE.NONE;
+    this.#icon     = data.icon || '';
   }
 
   /**
@@ -51,12 +56,16 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
    * @title Buttons
    * @hidden
    */
-  public get buttons(): IButtonCore[] {
+  public get buttons(): ButtonCore[] {
     return this.#buttons;
   }
 
-  public set buttons(val: IButtonCore[]) {
+  public set buttons(val: ButtonCore[]) {
     this.#buttons = val;
+  }
+
+  public get icon(): string {
+    return this.#icon;
   }
 
   /**
@@ -78,11 +87,11 @@ export class ActionCore extends RefCore implements IActionCore, IRefCore {
    * @title Type
    * @hidden
    */
-  public override get type(): ACTION {
+  public get type(): TActionType {
     return this.#type;
   }
 
-  public override set type(val: ACTION) {
+  public set type(val: TActionType) {
     this.#type = val;
   }
 }

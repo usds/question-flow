@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
-import { blue, red, white } from 'chalk';
 import { noop }             from 'lodash';
+import { blue, red, white } from '../lib/logger';
 import {
   ActionCore,
-  AnswerCore,
-  PagesCore,
-  QuestionCore,
-  RequirementCore,
-  ResponseCore,
-  ResultCore,
-  SectionCore,
-} from '../composable';
-import { SurveyBuilder }                    from '../constructable';
-import { ACTION, PAGE_TYPE, QUESTION_TYPE } from '../util';
+} from '../composable/ActionCore';
+import { SurveyBuilder }   from '../constructable/SurveyBuilderCore';
+import { ResultCore }      from '../composable/ResultCore';
+import { PagesCore }       from '../composable/PagesCore';
+import { SectionCore }     from '../composable/SectionCore';
+import { AnswerCore }      from '../composable/AnswerCore';
+import { QuestionCore }    from '../composable/QuestionCore';
+import { ResponseCore }    from '../composable/ResponseCore';
+import { RequirementCore } from '../composable/RequirementCore';
+import { ACTION_TYPE }     from '../metadata/properties/type/TActionType';
+import { PAGE_TYPE }       from '../metadata/properties/type/TPageType';
+import { QUESTION_TYPE }   from '../metadata/properties/type/TQuestionType';
 
 export class Scaffolding {
   // questionnaire: QuestionnaireCore;
@@ -36,7 +38,7 @@ export class Scaffolding {
       {
         requirements: [],
         title:        'VA.gov Onboarding',
-        type:         'onboarding',
+        type:         'unlocked',
       },
     ]);
     this.builder.setDefaults(onboarding);
@@ -46,13 +48,13 @@ export class Scaffolding {
         label: 'Restart onboarding',
         order: 1,
         title: 'Restart',
-        type:  ACTION.NONE,
+        type:  ACTION_TYPE.NONE,
       },
     ]);
     const [finished] = this.builder.add(ActionCore, [
       {
         title: 'Finished',
-        type:  ACTION.NONE,
+        type:  ACTION_TYPE.NONE,
       },
     ]);
     const [results]  = this.builder.add(ResultCore, [
@@ -61,7 +63,7 @@ export class Scaffolding {
         label:        'Complete',
         requirements: [],
         title:        'Results',
-        type:         'result',
+        type:         'match',
       },
     ]);
     this.builder.add(PagesCore, [

@@ -1,12 +1,12 @@
-import { QUESTION_TYPE }             from '@usds.gov/questionable-core';
-import { Answers, DistinctQuestion } from 'inquirer';
-import { TAnswerType }               from '../util/types';
-import { Question }                  from './Question';
+import { ANSWER_TYPE, QUESTION_TYPE } from '@usds.gov/questionable-core';
+import { Answers, DistinctQuestion }  from 'inquirer';
+import { TAnswerMap }                 from '../util/types';
+import { Question }                   from './Question';
 
 const ignorePaths = ['node_modules', '.'];
 
 export const PromptFactory = (q: Question): DistinctQuestion<Answers> => {
-  let ret: TAnswerType = { type: 'confirm' };
+  let ret: TAnswerMap = { type: 'confirm' };
   if (q.componentType) {
     switch (q.componentType) {
       case 'path':
@@ -34,7 +34,7 @@ export const PromptFactory = (q: Question): DistinctQuestion<Answers> => {
       case QUESTION_TYPE.MULTIPLE_CHOICE:
         ret = {
           choices: q.answers.map((e, i) => ({
-            answer: e.type || '',
+            answer: e.type || ANSWER_TYPE.FIXED,
             key:    `${i}`,
             name:   e.title || '',
           })),
@@ -44,7 +44,7 @@ export const PromptFactory = (q: Question): DistinctQuestion<Answers> => {
       case QUESTION_TYPE.MULTIPLE_SELECT:
         ret = {
           choices: q.answers.map((e, i) => ({
-            answer:   e.type || '',
+            answer:   `${e.type || ANSWER_TYPE.FIXED}`,
             disabled: false,
             key:      `${i}`,
             name:     e.title || '',

@@ -3,8 +3,10 @@
 import {
   noop,
   Questionable,
-  Questionnaire,
 } from '@usds.gov/questionable-react-component';
+import {
+  Questionnaire,
+} from '@usds.gov/questionable-core';
 import { isEmpty, merge } from 'lodash';
 import { useFetch }       from 'react-async';
 import { ErrorBoundary }  from 'react-error-boundary';
@@ -43,7 +45,7 @@ export const AppContainer = (data: any = {}): JSX.Element => {
   }
   const gtag = window.gtag || noop;
   gtag('config', 'ssa_eligibility_wizard', {
-    send_page_view: false,
+    send_page_view: false, // eslint-disable-line camelcase
   });
   const args = {
     questionnaire: new Questionnaire(eligibility),

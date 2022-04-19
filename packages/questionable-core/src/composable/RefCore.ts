@@ -1,8 +1,11 @@
 /* eslint-disable import/no-cycle */
-import { TRefCoreProperties }                      from '../metadata/MRef';
-import { IRefCore }                                from '../survey/IRefCore';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { getGUID }                                 from '../util/uuid';
+import { addToPool, existsInPool }                 from '../constructable/lib/pools';
+import { TCollectable }                            from '../metadata/types/TCollectable';
+import { TRefCoreProperties }                      from '../metadata/properties/MRef';
+import { IRefCore }                                from '../metadata/IRefCore';
+import { REF_TYPE, TRefType }                      from '../metadata/properties/type/TRefType';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { getGUID }                                 from '../lib/uuid';
 import { BaseCore }                                from './BaseCore';
 
 /**
@@ -15,8 +18,9 @@ export class RefCore extends BaseCore implements IRefCore {
     return ClassList.ref;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.ref], obj });
   }
 
   // public static isRef(data: any): data is RefCore {
@@ -52,7 +56,7 @@ export class RefCore extends BaseCore implements IRefCore {
 
   #_label: string;
 
-  #_type: string;
+  #_type: TRefType;
 
   #_title: string;
 
@@ -65,11 +69,11 @@ export class RefCore extends BaseCore implements IRefCore {
     if (data.id && data.id.length > 0) {
       this.#_id = data.id;
     } else {
-      this.#_id = getGUID(true);
+      this.#_id = getGUID({ short: true });
     }
     this.#_label = data.label || '';
     this.#_title = data.title || '';
-    this.#_type  = data.type || '';
+    this.#_type  = data.type || REF_TYPE.DEFAULT;
   }
 
   public get id(): string {
@@ -84,7 +88,7 @@ export class RefCore extends BaseCore implements IRefCore {
     return this.#_title;
   }
 
-  public get type(): string {
+  public get type(): TRefType {
     return this.#_type;
   }
 
@@ -92,6 +96,14 @@ export class RefCore extends BaseCore implements IRefCore {
     this[`#_${prop}`] = val;
   }
 
+  public existsIn(data: TCollectable): boolean {
+    return existsInPool(data, this);
+  }
+
+  public add(data: TCollectable): RefCore {
+    addToPool(data, this);
+    return this;
+  }
   // /**
   //  *  Root class has no collections, will always be false
   //  * @param val

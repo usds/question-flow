@@ -1,12 +1,11 @@
 /* eslint-disable import/no-cycle */
 import {
-  IQuestionnaireCore,
   matches,
   QuestionnaireCore,
 } from '@usds.gov/questionable-core';
 import { Question } from './Question';
 
-export class Questionnaire extends QuestionnaireCore implements IQuestionnaireCore {
+export class Questionnaire extends QuestionnaireCore {
   #questions: Question[];
 
   constructor(data: Partial<Questionnaire>) {

@@ -1,51 +1,67 @@
-import { kebabCase }    from 'lodash';
-import { ReactNode }    from 'react';
-import { groupBy }      from '@usds.gov/questionable-core';
-import { CSS_CLASS }    from '../../lib/enums';
-import { Div }          from '../factories/NodeFactory';
-import { IGlobalState } from '../../state/GlobalState';
-import { IResult }      from '../../survey/IResult';
-import { IStepData }    from '../../survey/IStepData';
-import { setResults }   from '../../state/persists';
-import { TResultData }  from '../../survey/IEvent';
+/* eslint-disable import/no-cycle */
+/* eslint-disable max-classes-per-file */
+import { kebabCase } from 'lodash';
+import { ReactNode } from 'react';
+import {
+  groupBy,
+  GateLogicCore,
+  QuestionableConfigCore,
+  QuestionnaireCore,
+  ResultCore,
+} from '@usds.gov/questionable-core';
+import { CSS_CLASS }  from '../../lib/enums';
+import { Div }        from '../factories/NodeFactory';
+import { setResults } from '../../state/persists';
+import { Page }       from '../../composable';
 
-/**
- * Static utility methods for page components
- */
-export abstract class Pages {
+export class PageComposer {
+  page!: Page;
+
+  config!: QuestionableConfigCore;
+
+  questionnaire!: QuestionnaireCore;
+
+  gate!: GateLogicCore;
+
+  constructor({
+    page, gate,
+  }: {
+    gate: GateLogicCore, page: Page,
+  }) {
+    this.page          = page;
+    this.gate          = gate;
+    this.questionnaire = gate.questionnaire;
+    this.config        = gate.config;
+  }
+
   /**
    * Internal method to compute reason for a result
    * @param props
    * @param result
    * @returns
    */
-  static getReason(
-    props: IStepData,
-    result: IResult,
-    global: IGlobalState,
-  ): string {
-    let reason                      = result.match?.explanation;
-    const { questionnaire, config } = global;
+  getReason({ result }:{result: ResultCore}): string {
+    let reason = result.match?.explanation;
 
     if (!reason) {
       return '';
     }
 
-    if (config?.dev && result.match) {
+    if (this.config?.dev && result.match) {
       reason += '<br><br>';
       if (
         result.match.ageCalc !== undefined
         || result.match.minAge !== undefined
         || result.match.maxAge !== undefined
       ) {
-        reason += `You are ${props.form.age?.years} years `;
-        reason += `and ${props.form.age?.months} months old. `;
+        reason += `You are ${this.gate.form.age?.years} years `;
+        reason += `and ${this.gate.form.age?.months} months old. `;
       }
       result.match.responses.forEach((r) => {
-        if (!r.question.id) {
+        if (!r.question?.id) {
           return;
         }
-        const q = questionnaire.getQuestionById(r.question.id);
+        const q = this.gate.getQuestionById(r.question.id);
         reason += `You answered "<b>${q.answer}</b>" to the question "<i>${q.title}.</i>" `;
       });
     }
@@ -57,22 +73,21 @@ export abstract class Pages {
    * @param props
    * @returns
    */
-  static getResults(props: IStepData, global: IGlobalState): ReactNode {
-    const { questionnaire } = global;
-    const data: TResultData = {
-      props,
-      results: questionnaire.getResults(props.form).map((result) => ({
+  getResults(): ReactNode {
+    const data = {
+      page:    this.page,
+      results: this.gate.getResults().map((result) => ({
         category: result.category,
         id:       result.id,
         label:    result.label,
-        reason:   Pages.getReason(props, result, global),
+        reason:   this.getReason({ result }),
         title:    result.title,
       })),
       step: 'results',
     };
 
     setResults(
-      kebabCase(questionnaire.header),
+      kebabCase(this.questionnaire.header),
       data.results.map((r) => ({
         description: r.reason,
         name:        r.title,
@@ -85,7 +100,7 @@ export abstract class Pages {
       const cat   = categories[key];
       const group = cat.map((result) => (
         <li
-          key={`${props.stepId}_${result.id}`}
+          key={`${this.page.id}_${result.id}`}
           className={CSS_CLASS.RESULTS_BENEFITS}
         >
           <span role="heading" aria-level={6}>

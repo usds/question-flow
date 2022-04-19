@@ -1,10 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { cloneDeep, merge, noop } from 'lodash';
-import {
-  TInstanceOf,
-  checkInstanceOf,
-  ClassList,
-} from '../util/instanceOf';
+import { cloneDeep, merge, noop }                  from 'lodash';
+import { TInstanceOf, checkInstanceOf, ClassList } from '../lib/instanceOf';
 
 export interface TBaseSource {
   [key: string]: unknown;
@@ -43,7 +39,7 @@ export abstract class BaseCore implements TBaseSource {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.base, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.base, ClassList.ref], obj });
   }
 
   /**

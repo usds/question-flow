@@ -1,13 +1,18 @@
 /* eslint-disable import/no-cycle */
-import { merge }                                   from 'lodash';
-import { eventedCore }                             from '../state/pubsub';
-import { IFormCore }                               from '../survey/IFormCore';
-import { ACTION_TYPE }                             from '../util/enums';
-import { matches }                                 from '../util/helpers';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { TAgeCore }                                from '../util/types';
-import { BaseCore }                                from './BaseCore';
-import { QuestionCore }                            from './StepCore';
+import { eventedCore } from '../state/pubsub';
+import { IFormCore }   from '../metadata/IFormCore';
+import { matches }     from '../lib/helpers';
+import { TAgeCore }    from '../metadata/types/TAgeCore';
+import { BaseCore }    from './BaseCore';
+import {
+  checkInstanceOf,
+  ClassList,
+  TInstanceOf,
+} from '../lib/instanceOf';
+import { QuestionCore }                                        from './QuestionCore';
+import { defaultReducer, TStepReducerAction, type TReducerFn } from '../constructable/lib/defaultReducer';
+
+export interface FormCore extends BaseCore, IFormCore {}
 
 export class FormCore extends BaseCore implements IFormCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -16,7 +21,7 @@ export class FormCore extends BaseCore implements IFormCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.form], obj);
+    return checkInstanceOf({ names: [ClassList.form], obj });
   }
 
   public static override create(data: Partial<FormCore> = {}) {
@@ -119,42 +124,15 @@ export class FormCore extends BaseCore implements IFormCore {
    * @param action
    * @returns
    */
-  public static stepReducer(
-    previousState: FormCore,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    action: { type: ACTION_TYPE; value: any },
-  ) {
-    // Action should never be null,
-    // except when we attempt to storybook/test individual components in isolation
-    switch (action?.type) {
-      case ACTION_TYPE.RESET:
-        return new FormCore();
-
-      case ACTION_TYPE.UPDATE:
-        return new FormCore(
-          merge(
-            {
-              ...previousState,
-            },
-            {
-              ...action.value,
-            },
-          ),
-        );
-
-      // Effectively a noop that triggers a re-render of the page
-      case ACTION_TYPE.RERENDER:
-        return new FormCore({
-          ...previousState,
-        });
-
-      default:
-        return previousState;
-    }
+  public static reducer({ form, action, callback }:
+    {action: TStepReducerAction; callback?: TReducerFn<FormCore>; form: Partial<FormCore>}) {
+    return defaultReducer({
+      Form: FormCore, action, callback, oldState: form,
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dispatchForm(action: { type: ACTION_TYPE; value: any }) {
-    return FormCore.stepReducer(this, action);
+  reduce({ action, callback }: { action: TStepReducerAction; callback?: TReducerFn<FormCore> }) {
+    return FormCore.reducer({ action, callback, form: this });
   }
 }

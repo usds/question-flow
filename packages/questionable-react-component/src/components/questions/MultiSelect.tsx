@@ -1,22 +1,18 @@
-import { noel }          from '../../lib/noel';
-import { useGlobal }     from '../../state/GlobalState';
-import { IQuestionData } from '../../survey/IQuestionData';
-import { Questions }     from '../lib/Questions';
-import { StepLayout }    from '../wizard/StepLayout';
+import { noel }             from '../../lib/noel';
+import { StepLayout }       from '../wizard/StepLayout';
+import { QuestionComposer } from '../lib/Questions';
+import { Question }         from '../../composable/Question';
 
 /**
  * Renders a question and a checkbox list of allowed answers
  * @param props
  * @returns
  */
-export const MultiSelect = (props: IQuestionData): JSX.Element => {
-  const { config } = useGlobal();
-
-  if (props?.step?.answers === undefined) {
+export const MultiSelect = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => {
+  if (step?.answers === undefined) {
     return noel();
   }
-
-  return Questions.getCheckboxes(props, config);
+  return comp.getCheckboxes();
 };
 
 /**
@@ -24,8 +20,8 @@ export const MultiSelect = (props: IQuestionData): JSX.Element => {
  * @param props
  * @returns
  */
-export const MultiSelectStep = (props: IQuestionData): JSX.Element => (
-  <StepLayout {...props}>
-    <MultiSelect {...props} />
+export const MultiSelectStep = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => (
+  <StepLayout step={step} comp={comp}>
+    <MultiSelect step={step} comp={comp}/>
   </StepLayout>
 );

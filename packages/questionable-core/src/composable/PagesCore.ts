@@ -1,10 +1,9 @@
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-restricted-syntax */
-import { IPagesCore }                              from '../survey/IPagesCore';
-import { PAGE_TYPE }                               from '../util/enums';
-import { matches }                                 from '../util/helpers';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { merge }                                   from '../util/merge';
+import { PAGE_TYPE, TPageType }                    from '../metadata/properties/type/TPageType';
+import { IPagesCore }                              from '../metadata/IPagesCore';
+import { matches }                                 from '../lib/helpers';
+import { checkInstanceOf, ClassList, TInstanceOf } from '../lib/instanceOf';
+import { merge }                                   from '../lib/merge';
 import { BaseCore }                                from './BaseCore';
 import { PageCore }                                from './PageCore';
 
@@ -15,7 +14,7 @@ export class PagesCore extends BaseCore implements IPagesCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.pages], obj);
+    return checkInstanceOf({ names: [ClassList.pages], obj });
   }
 
   #pages: PageCore[];
@@ -40,14 +39,16 @@ export class PagesCore extends BaseCore implements IPagesCore {
    * @param data Optional data
    * @returns
    */
-  #touchPage(type: PAGE_TYPE, data?: Partial<PageCore>): Partial<PageCore> {
+  #touchPage(type: TPageType, data?: Partial<PageCore>): Partial<PageCore> {
     const defaults = merge(
       {
-        display: false,
-        title:   type,
+        params: [{
+          display: false,
+          title:   type,
+        },
+        data,
+        { id: type, type }],
       },
-      data,
-      { id: type, type },
     );
     defaults.type  = type;
     return defaults;

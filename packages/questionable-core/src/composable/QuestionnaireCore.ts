@@ -1,40 +1,37 @@
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-useless-constructor */
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable max-classes-per-file */
-import { ActionCore } from './ActionCore';
-import {
-  BranchCore,
-  QuestionCore,
-  SectionCore,
-  StepCore,
-}         from './StepCore';
-import { IQuestionnaireCore }     from '../survey/IQuestionnaireCore';
-import { QuestionableConfigCore } from './QuestionableConfigCore';
-import { BaseCore }               from './BaseCore';
+import { ActionCore }             from './ActionCore';
+import { StepCore }               from './StepCore';
+import { IQuestionnaireCore }     from '../metadata/IQuestionnaireCore';
+import { QuestionableConfigCore } from './ConfigCore';
 import { PagesCore }              from './PagesCore';
 import {
   checkInstanceOf,
   ClassList,
   TInstanceOf,
-} from '../util/instanceOf';
+} from '../lib/instanceOf';
 import { ResultCore } from './ResultCore';
-import { matches }    from '../util/helpers';
-
-type TCollected = QuestionCore | BranchCore | SectionCore | ActionCore | ResultCore;
+import { matches }    from '../lib/helpers';
+import {
+  addToPool,
+} from '../constructable/lib/pools';
+import { TCollectable } from '../metadata/types/TCollectable';
+import { RefCore }      from './RefCore';
+import { QuestionCore } from './QuestionCore';
+import { BranchCore }   from './BranchCore';
+import { SectionCore }  from './SectionCore';
+import { TRefType }     from '../metadata/properties/type/TRefType';
 
 /**
  * Utility wrapper for survey state
  */
-export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
+export class QuestionnaireCore extends RefCore implements IQuestionnaireCore {
   public get instanceOfCheck(): TInstanceOf {
     return ClassList.questionnaire;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override[Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.questionnaire, ClassList.base], obj);
+    return checkInstanceOf({ names: [ClassList.questionnaire, ClassList.base], obj });
   }
 
   public static override create(data: Partial<QuestionnaireCore>) {
@@ -138,7 +135,23 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return this.#pages;
   }
 
-  public existsIn(data: TCollected): boolean {
+  public get id(): string {
+    return '1';
+  }
+
+  public get label() {
+    return '';
+  }
+
+  public get title(): string {
+    return this.header;
+  }
+
+  public get type(): TRefType {
+    return 'default';
+  }
+
+  public existsIn(data: TCollectable): boolean {
     if (data instanceof QuestionCore) {
       return this.#questions.some((q) => q === data || matches(q.title, data.title));
     }
@@ -157,21 +170,8 @@ export class QuestionnaireCore extends BaseCore implements IQuestionnaireCore {
     return false;
   }
 
-  public add(data: TCollected): QuestionnaireCore {
-    const exists = this.existsIn(data);
-    if (!exists) {
-      if (data instanceof QuestionCore) {
-        this.#questions.push(data);
-      } else if (data instanceof SectionCore) {
-        this.#sections.push(data);
-      } else if (data instanceof BranchCore) {
-        this.#branches.push(data);
-      } else if (data instanceof ResultCore) {
-        this.#results.push(data);
-      } else if (data instanceof ActionCore) {
-        this.#actions.push(data);
-      }
-    }
+  public add(data: TCollectable): QuestionnaireCore {
+    addToPool(data, this);
     return this;
   }
 }

@@ -1,35 +1,30 @@
 /* eslint-disable */
-import {
-  ActionCore as Action,
-  AnswerCore as Answer,
-  BaseCore as Base,
-  BranchCore as Branch,
-  PageCore as Page,
-  PagesCore as Pages,
-  QuestionableConfigCore as Config,
-  QuestionCore as Question,
-  QuestionnaireCore as Questionnaire,
-  RefCore as Ref,
-  RequirementCore as Requirement,
-  ResponseCore as Response,
-  ResultCore as Result,
-  SectionCore as Section,
-} from '../composable';
-import { ClassList } from '../util';
-import { ACTION, MODE } from '../util/enums';
-import { merge } from '../util/merge';
+import { ActionCore as Action }     from '../composable/ActionCore';
+import { AnswerCore as Answer }     from '../composable/AnswerCore';
+import { BaseCore as Base }         from '../composable/BaseCore';
+import { BranchCore as Branch }     from '../composable/BranchCore';
+import { QuestionCore as Question } from '../composable/QuestionCore';
+import { PageCore as Page } from '../composable/PageCore';
+      import { PagesCore as Pages } from '../composable/PagesCore';
+      import { QuestionableConfigCore as Config } from '../composable/ConfigCore';
+      import { QuestionnaireCore as Questionnaire } from '../composable/QuestionnaireCore';
+      import { RefCore as Ref } from '../composable/RefCore';
+      import { RequirementCore as Requirement } from '../composable/RequirementCore';
+      import { ResponseCore as Response } from '../composable/ResponseCore';
+      import { ResultCore as Result } from '../composable/ResultCore';
+      import { SectionCore as Section } from '../composable/SectionCore';
+import {TCtor} from '../composable/TCtor';
+import { Factory } from './Factory';
+import { ClassList } from '../lib/instanceOf';
+import { MODE } from '../lib/enums';
+import { merge } from '../lib/merge';
+import { ACTION_TYPE } from "../metadata/properties/type/TActionType";
 
 type TBuilderDefaults = {
   section?: Section;
 };
 
-type TCtor<T extends Base> = { new (data: Partial<T>): T }
-
-function create<T extends Base>(c: TCtor<T>, data: Partial<T>): T {
-  return new c(data);
-}
-
-export class SurveyBuilder{
+export class SurveyBuilder {
   #actions: Action[] = [];
   #answers: Answer[] = [];
   #branches: Branch[] = [];
@@ -46,7 +41,7 @@ export class SurveyBuilder{
 
   constructor(data: Partial<Questionnaire> = {}) {
     this.#actions = data.actions || [];
-    this.#branches = data.branches || []
+    this.#branches = data.branches || [];
     this.#config = data.config || new Config({ mode: MODE.VIEW });
     this.#defaults = {};
     this.#pages = data.pages || new Pages();
@@ -57,10 +52,9 @@ export class SurveyBuilder{
 
   setDefaults(data: Section | Branch) {
     if (data instanceof Section) {
-      return merge(this.#defaults.section, data);
+      return merge({ params: [this.#defaults.section, data] });
     }
   }
-
 
   addActions(data: Partial<Action>[]) {
     return data.map((d) => this.#addAction(d));
@@ -68,95 +62,77 @@ export class SurveyBuilder{
   #addAction(inp: Partial<Action>): Action {
     const data = merge(
       {
-        type: ACTION.NONE,
-        label: inp.title,
+        params: [{
+          type: ACTION_TYPE.NONE,
+          label: inp.title,
+        },
+          inp]
       },
-      inp,
     );
-    const ret = create(Action, data);
-    this.#actions.push(ret);
-    return ret;
+    return Factory.addOne(Action, data,this.#actions);
   }
 
   addAnswers(data: Partial<Answer>[]) {
     return data.map((d) => this.#addAnswer(d));
   }
   #addAnswer(data: Partial<Answer>): Answer {
-    const ret = new Answer(data);
-    this.#answers.push(ret);
-    return ret;
+    return Factory.addOne(Answer, data, this.#answers);
   }
 
   addPages(data: Partial<Page>[]) {
     return data.map((d) => this.#addPage(d));
   }
   #addPage(data: Partial<Page>): Page {
-    const ret = new Page(data);
-    this.#page.push(ret);
-    return ret;
+    return Factory.addOne(Page, data, this.#page);
   }
 
   addBranches(data: Partial<Branch>[]) {
     return data.map((d) => this.#addBranch(d));
   }
   #addBranch(data: Partial<Branch>): Branch {
-    const ret = new Branch(data);
-    this.#branches.push(ret);
-    return ret;
+    return Factory.addOne(Branch, data, this.#branches);
   }
 
   addQuestions(data: Partial<Question>[]) {
     return data.map((d) => this.#addQuestion(d));
   }
   #addQuestion(data: Partial<Question>): Question {
-    const ret = new Question(data);
-    this.#questions.push(ret);
-    return ret;
+    return Factory.addOne(Question, data, this.#questions);
   }
 
   addRefs(data: Partial<Ref>[]) {
     return data.map((d) => this.#addRef(d));
   }
   #addRef(data: Partial<Ref>): Ref {
-    const ret = new Ref(data);
-    this.#refs.push(ret);
-    return ret;
+    return Factory.addOne(Ref, data, this.#refs);
   }
 
   addResults(data: Partial<Result>[]) {
     return data.map((d) => this.#addResult(d));
   }
   #addResult(data: Partial<Result>): Result {
-    const ret = new Result(data);
-    this.#results.push(ret);
-    return ret;
+    return Factory.addOne(Result, data, this.#results);
   }
 
   addRequirements(data: Partial<Requirement>[]) {
     return data.map((d) => this.#addRequirement(d));
   }
   #addRequirement(data: Partial<Requirement>): Requirement {
-    const ret = new Requirement(data);
-    this.#requirements.push(ret);
-    return ret;
+    return Factory.addOne(Requirement,data, this.#requirements);
   }
 
   addResponses(data: Partial<Response>[]) {
     return data.map((d) => this.#addResponse(d));
   }
   #addResponse(data: Partial<Response>): Response {
-    const ret = new Response(data);
-    this.#responses.push(ret);
-    return ret;
+    return Factory.addOne(Response,data, this.#responses);
   }
 
   addSections(data: Partial<Section>[]) {
     return data.map((d) => this.#addSection(d));
   }
   #addSection(data: Partial<Section>): Section {
-    const ret = new Section(data);
-    this.#sections.push(ret);
-    return ret;
+    return Factory.addOne(Section, data, this.#sections);
   }
 
   add<T extends Base>(c: TCtor<T>, inp: Partial<T>[]) {
@@ -167,25 +143,46 @@ export class SurveyBuilder{
     const nu = new c(inp);
     if (nu instanceof Action || nu.instanceOfCheck === ClassList.action) {
       this.#addAction(nu);
-    } else if (nu instanceof Section || nu.instanceOfCheck === ClassList.section) {
+    } else if (
+      nu instanceof Section ||
+      nu.instanceOfCheck === ClassList.section
+    ) {
       this.#addSection(nu);
-    } else if (nu instanceof Question || nu.instanceOfCheck === ClassList.question) {
+    } else if (
+      nu instanceof Question ||
+      nu.instanceOfCheck === ClassList.question
+    ) {
       this.#addQuestion(nu);
     } else if (nu instanceof Page || nu.instanceOfCheck === ClassList.page) {
       this.#addPage(nu);
-    } else if (nu instanceof Branch || nu.instanceOfCheck === ClassList.branch) {
+    } else if (
+      nu instanceof Branch ||
+      nu.instanceOfCheck === ClassList.branch
+    ) {
       this.#addBranch(nu);
-    } else if (nu instanceof Result || nu.instanceOfCheck === ClassList.result) {
+    } else if (
+      nu instanceof Result ||
+      nu.instanceOfCheck === ClassList.result
+    ) {
       this.#addResult(nu);
     } else if (nu instanceof Config) {
       this.#config = nu;
-    } else if (nu instanceof Response || nu.instanceOfCheck === ClassList.response) {
+    } else if (
+      nu instanceof Response ||
+      nu.instanceOfCheck === ClassList.response
+    ) {
       this.#addResponse(nu);
-    } else if (nu instanceof Requirement || nu.instanceOfCheck === ClassList.requirement) {
+    } else if (
+      nu instanceof Requirement ||
+      nu.instanceOfCheck === ClassList.requirement
+    ) {
       this.#addRequirement(nu);
     } else if (nu instanceof Pages) {
       this.#pages = nu;
-    } else if (nu instanceof Answer || nu.instanceOfCheck === ClassList.answer) {
+    } else if (
+      nu instanceof Answer ||
+      nu.instanceOfCheck === ClassList.answer
+    ) {
       this.#addAnswer(nu);
     } else if (nu instanceof Ref || nu.instanceOfCheck === ClassList.ref) {
       this.#addRef(nu);
@@ -193,7 +190,7 @@ export class SurveyBuilder{
     return nu;
   }
 
-  init<Q extends Questionnaire>(c: TCtor<Q>, ): Q {
+  init<Q extends Questionnaire>(c: TCtor<Q>): Q {
     const q = {
       actions: this.#actions,
       branches: this.#branches,
@@ -208,4 +205,3 @@ export class SurveyBuilder{
     return questionnaire;
   }
 }
-

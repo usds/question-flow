@@ -1,10 +1,15 @@
 /* eslint-disable import/no-cycle */
-import { IResultCore }                             from '../survey/IResultCore';
-import { matches }                                 from '../util/helpers';
-import { checkInstanceOf, ClassList, TInstanceOf } from '../util/instanceOf';
-import { ActionCore }                              from './ActionCore';
-import { RefCore }                                 from './RefCore';
-import { RequirementCore }                         from './StepCore';
+import { addToPool, existsInPool }                       from '../constructable/lib/pools';
+import { IResultCore }                                   from '../metadata/IResultCore';
+import { RESULT_TYPE, TResultType }                      from '../metadata/properties/type/TResultType';
+import {
+  checkInstanceOf, ClassList, EClassList, TInstanceOf,
+} from '../lib/instanceOf';
+import { ActionCore }      from './ActionCore';
+import { RefCore }         from './RefCore';
+import { RequirementCore } from './RequirementCore';
+import { classCreate }     from '../constructable/Factory';
+import { TCollectable }    from '../metadata/types/TCollectable';
 
 export class ResultCore extends RefCore implements IResultCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -13,7 +18,7 @@ export class ResultCore extends RefCore implements IResultCore {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static override [Symbol.hasInstance](obj: any) {
-    return checkInstanceOf([ClassList.result, ClassList.ref], obj);
+    return checkInstanceOf({ names: [ClassList.result], obj });
   }
 
   // public static isResult(data: any): data is ResultCore {
@@ -54,16 +59,21 @@ export class ResultCore extends RefCore implements IResultCore {
 
   #secondaryAction: ActionCore | undefined;
 
+  #type: TResultType;
+
   constructor(data: Partial<ResultCore>) {
     super(data);
-    this.#action          = ActionCore.createOptional(data.action);
-    this.#match           = RequirementCore.createOptional(data.match);
-    this.#requirements    = data.requirements?.map((r) => RequirementCore.create(r)) || [];
-    this.#secondaryAction = ActionCore.createOptional(data.secondaryAction);
-    this.#reason          = data.reason || '';
-    this.#label           = data.label || '';
-    this.#category        = data.category || '';
-    this.#order           = data.order || 0;
+    const type: TResultType = (!data.type || `${data.type}` === `${RESULT_TYPE.DEFAULT}`)
+      ? RESULT_TYPE.MATCH : data.type;
+    this.#type              = type;
+    this.#action            = classCreate(EClassList.ACTION, data.action, true);
+    this.#match             = classCreate(EClassList.REQUIREMENT, data.match, true);
+    this.#requirements      = data.requirements?.map((itm) => classCreate(EClassList.REQUIREMENT, itm)) || [];
+    this.#secondaryAction   = classCreate(EClassList.ACTION, data.secondaryAction, true);
+    this.#reason            = data.reason || '';
+    this.#label             = data.label || '';
+    this.#category          = data.category || '';
+    this.#order             = data.order || 0;
   }
 
   public get action(): ActionCore | undefined {
@@ -94,7 +104,7 @@ export class ResultCore extends RefCore implements IResultCore {
     this.#reason = val;
   }
 
-  public get requirements() {
+  public get requirements(): RequirementCore[] {
     return this.#requirements;
   }
 
@@ -110,23 +120,16 @@ export class ResultCore extends RefCore implements IResultCore {
     return this.#order;
   }
 
-  public existsIn(data: RequirementCore): boolean {
-    if (data instanceof RequirementCore) {
-      return this.#requirements.some(
-        (q) => q === data || matches(q.title, data.title),
-      );
-    }
-    return false;
+  public get type(): TResultType {
+    return this.#type;
   }
 
-  public add(data: RequirementCore): ResultCore {
-    const exists = this.existsIn(data);
-    if (exists) {
-      return this;
-    }
-    if (data instanceof RequirementCore) {
-      this.#requirements.push(data);
-    }
+  public existsIn(data: TCollectable): boolean {
+    return existsInPool(data, this);
+  }
+
+  public add(data: TCollectable): ResultCore {
+    addToPool(data, this);
     return this;
   }
 }

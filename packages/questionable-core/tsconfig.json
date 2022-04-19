@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "outDir": "dist",
@@ -34,7 +35,11 @@
     "strictPropertyInitialization": true,
     "target": "ES2021",
     "useDefineForClassFields": false,
-
+    "paths": {
+      "@usds.gov/questionable-build": [
+        "../questionable-build/src/index.ts"
+      ],
+    }
   },
   "include": [
     "src/**/*.ts"
@@ -43,5 +48,9 @@
     "node_modules",
     "dist"
   ],
-  
+  "references": [
+    {
+      "path": "../questionable-build"
+    },
+  ]
 }
