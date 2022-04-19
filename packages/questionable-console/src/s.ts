@@ -2,8 +2,8 @@
 /* eslint-disable global-require */
 import { Command }     from 'commander';
 import shell           from 'shelljs';
+import { blue }        from '@usds.gov/questionable-core';
 import { Scaffolding } from './examples/Scaffolding';
-import { blue }        from './util/logger';
 
 const program = new Command();
 

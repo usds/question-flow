@@ -22,7 +22,7 @@
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "outDir": "out-tsc",
+    "outDir": "dist",
     "paths": {
       "@usds.gov/questionable-build": [
         "../questionable-build/src/index.ts"

@@ -3,7 +3,7 @@
                 sonarjs/no-duplicate-string,
  */
 import { merge }                    from 'lodash';
-import { ACTION, IAction, IButton } from '@usds.gov/questionable-react-component';
+import { ACTION_TYPE, IAction, IButton } from '@usds.gov/questionable-react-component';
 import { TActionMap }               from '../lib/contentMap';
 
 const online = {
@@ -17,7 +17,7 @@ export const buildActions = (json: TActionMap): IAction[] => [
       buttons: [online],
       icon:    '',
       id:      'a0',
-      type:    ACTION.ONLINE,
+      type:    ACTION_TYPE.ONLINE,
     },
     json.a0,
   ) as IAction,
@@ -26,7 +26,7 @@ export const buildActions = (json: TActionMap): IAction[] => [
       buttons: [],
       icon:    '',
       id:      'a3',
-      type:    ACTION.NONE,
+      type:    ACTION_TYPE.NONE,
     },
     json.a3,
   ) as IAction,

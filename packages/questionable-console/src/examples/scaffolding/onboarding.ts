@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
-import { blue, red, white } from 'chalk';
-import { noop }             from 'lodash';
-import os                   from 'os';
+import { noop }       from 'lodash';
+import os             from 'os';
 import {
   AnswerCore,
   PagesCore,
@@ -15,6 +14,7 @@ import {
   SECTION_TYPE,
   RESULT_TYPE,
   TResultType,
+  blue, red, white,
 } from '@usds.gov/questionable-core';
 import { TVal }     from '../../util/types';
 import { Question } from '../../composable/Question';

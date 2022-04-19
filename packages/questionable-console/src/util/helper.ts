@@ -1,4 +1,4 @@
-import { error }    from './logger';
+import { error }    from '@usds.gov/questionable-core';
 import { TTypeVal } from './types';
 
 // eslint-disable-next-line no-promise-executor-return

@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
-import { IActionCore }                                   from '../metadata/IActionCore';
-import { ACTION_TYPE, TActionType }                      from '../metadata/properties/type/TActionType';
-import { ButtonCore }                                    from './ButtonCore';
+import { IActionCore }                       from '../metadata/IActionCore';
+import { ACTION_TYPE, TActionType }          from '../metadata/properties/type/TActionType';
+import { ButtonCore }                        from './ButtonCore';
 import {
-  checkInstanceOf, ClassList, EClassList, TInstanceOf,
+  checkInstanceOf, ClassList, TInstanceOf,
 } from '../lib/instanceOf';
-import { RefCore }     from './RefCore';
-import { classCreate } from '../constructable/Factory';
+import { RefCore } from './RefCore';
+// import { classCreate } from '../constructable/Factory';
 
 export class ActionCore extends RefCore implements IActionCore {
   public get instanceOfCheck(): TInstanceOf {
@@ -32,7 +32,7 @@ export class ActionCore extends RefCore implements IActionCore {
     return ActionCore.create(data);
   }
 
-  #buttons: ButtonCore[];
+  #buttons: ButtonCore[] = [];
 
   #icon: string;
 
@@ -44,7 +44,7 @@ export class ActionCore extends RefCore implements IActionCore {
 
   constructor(data: Partial<ActionCore>) {
     super(data);
-    this.#buttons  = data.buttons?.map((itm) => classCreate(EClassList.BUTTON, itm)) || [];
+    // this.#buttons  = data.buttons?.map((itm) => classCreate(EClassList.BUTTON, itm)) || [];
     this.#label    = data.label || '';
     this.#subTitle = data.subTitle || '';
     this.#type     = data.type || ACTION_TYPE.NONE;

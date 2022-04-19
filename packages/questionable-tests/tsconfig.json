@@ -7,6 +7,7 @@
     "jsx": "react-jsx",
     "target": "ESNext",
     "module": "esnext",
+    "outDir": "dist",
     "paths": {
       "@usds.gov/questionable-core": [
         "../questionable-core/src/index.ts"

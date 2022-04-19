@@ -16,7 +16,8 @@
     "lib": [
       "dom",
       "ES2015",
-      "es2019"
+      "es2019",
+      "ESNext",
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -24,17 +25,13 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "out-tsc",
+    "outDir": "dist",
     "rootDir": "src",
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "ES2019",
-    "types": [
-      "jest-styled-components",
-      "@types/testing-library__jest-dom"
-    ],
     "paths": {
       "@usds.gov/questionable-core": [
         "../questionable-core/src/index.ts"

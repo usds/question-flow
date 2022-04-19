@@ -20,12 +20,12 @@ export const getRollupConfig = (pkg: any) => {
       output:   [
         {
           exports:   'auto',
-          file:      pkg.main,
+          file:      pkg.main || 'dist/index.js',
           format:    'cjs',
           sourcemap: production,
         },
         {
-          file:      pkg.module,
+          file:      pkg.module || 'dist/index.esm.js',
           format:    'esm',
           sourcemap: production,
         },
