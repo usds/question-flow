@@ -5,11 +5,10 @@ import {
   IResult,
   log,
   TOnError,
-  TEventCore,
 } from '@usds.gov/questionable';
-import { snakeCase }      from 'lodash';
-import { isDebug }        from '../flow/lib/debug';
-import { DrupalSettings } from './drupal';
+import { cloneDeep, snakeCase } from 'lodash';
+import { isDebug }              from '../flow/lib/debug';
+import { DrupalSettings }       from './drupal';
 
 declare global {
   interface Window {
@@ -38,8 +37,9 @@ export const gtag = (...args: any[]) => {
   }
 };
 
-export const onActionClick = (data?: TEventCore) => {
-  const action = (data as any).buttons;
+export const onActionClick = (obj?: any) => {
+  const data   = cloneDeep(obj || { buttons: [] });
+  const action = data.buttons;
   if (!action?.length) return;
 
   const button = action[0];
@@ -58,15 +58,17 @@ export const onActionClick = (data?: TEventCore) => {
   });
 };
 
-export const onInit = (data?: TEventCore) => {
+export const onInit = (obj?: any) => {
+  const data = cloneDeep(obj || {});
   gtag({
     event: 'begin_benefits_quest',
     ...data,
   });
 };
 
-export const onResults = (data?: TEventCore) => {
-  const results = (data as any).results as IResult[];
+export const onResults = (obj?: any) => {
+  const data    = cloneDeep(obj || { results: [] });
+  const results = data.results as IResult[];
   for (const r of results) {
     r.title = snakeCase(r.title);
     if (!r.category) {
@@ -79,14 +81,16 @@ export const onResults = (data?: TEventCore) => {
   });
 };
 
-export const onNoResults = (data?: TEventCore) => {
+export const onNoResults = (obj?: any) => {
+  const data = cloneDeep(obj || {});
   gtag({
     event: 'defer_benefits_quest',
     ...data,
   });
 };
 
-export const onError: TOnError = (e: Error, data?: TEventCore) => {
+export const onError: TOnError = (e: Error, obj?: any) => {
+  const data = cloneDeep(obj || {});
   gtag({
     description: e.message,
     event:       'exception',
@@ -95,7 +99,8 @@ export const onError: TOnError = (e: Error, data?: TEventCore) => {
   });
 };
 
-export const onPage = (data: any) => {
+export const onPage = (obj: any) => {
+  const data = cloneDeep(obj || {});
   gtag({
     event:         'step_benefits_quest',
     page_location: `${window.location.href}/#ssa-eligibility-wizard`,
