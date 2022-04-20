@@ -19,10 +19,10 @@ enum Category {
  * Retirement
  */
 const r1: Partial<IResult> = {
-  category: '',
+  category: 'Retirement',
   id:       'r1',
   label:    name,
-  title:    'Retirement',
+  title:    '',
 };
 
 /**

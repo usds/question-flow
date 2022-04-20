@@ -70,9 +70,10 @@ export const onResults = (obj?: any) => {
   const data    = cloneDeep(obj || { results: [] });
   const results = data.results as IResult[];
   for (const r of results) {
-    r.title = snakeCase(r.title);
+    const label = r.title || r.category || 'unknown';
+    r.title     = snakeCase(label);
     if (!r.category) {
-      r.category = r.title;
+      r.category = label;
     }
   }
   gtag({

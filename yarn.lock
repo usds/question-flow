@@ -5671,7 +5671,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@usds.gov/questionable-core@1.0.1, @usds.gov/questionable-core@workspace:*, @usds.gov/questionable-core@workspace:packages/core":
+"@usds.gov/questionable-core@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@usds.gov/questionable-core@npm:1.0.2"
+  dependencies:
+    "@reduxjs/toolkit": ^1.8.0
+    class-validator: ^0.13.2
+    cross-env: ^7.0.3
+    file-saver: ^2.0.5
+    lodash: ^4.17.21
+    luxon: ^2.3.1
+    serialize-error: ^9.1.1
+  checksum: 256cd6cfe31118ae22183b90e0408a6bf2cc2aebc0061107f19d7fb9f25a2e7fe2d345101eefa7e564894b53b3aea7bb7e34849465408531c6cfe87ec531be30
+  languageName: node
+  linkType: hard
+
+"@usds.gov/questionable-core@workspace:*, @usds.gov/questionable-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@usds.gov/questionable-core@workspace:packages/core"
   dependencies:
@@ -6089,7 +6104,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.15.0
     "@typescript-eslint/parser": ^5.15.0
     "@usds.gov/questionable": 1.5.8
-    "@usds.gov/questionable-core": 1.0.1
+    "@usds.gov/questionable-core": 1.0.2
     all-contributors-cli: ^6.20.0
     axios: ^0.26.1
     babel-loader: ^8.2.3

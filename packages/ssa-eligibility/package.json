@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@usds.gov/questionable": "1.5.8",
-    "@usds.gov/questionable-core": "1.0.1",
+    "@usds.gov/questionable-core": "1.0.2",
     "axios": "^0.26.1",
     "bluebird": "^3.7.2",
     "cross-env": "^7.0.3",
@@ -129,5 +129,5 @@
     "type-check": "tsc --noEmit"
   },
   "types": "dist/main.d.ts",
-  "version": "1.1.15"
+  "version": "1.1.16"
 }
