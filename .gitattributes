@@ -1,8 +1,203 @@
-# All files should have normalized LF line endings
-* text  eol=lf
-# This is a TypeScript project, allow comments in JSON
-*.json  linguist-language=JSON-with-Comments
-# Do not normalize images
-*.jpg		-text
-*.png		-text
-*.ico		-text
+# Assumptions
+#
+# All filetypes (file suffixes) in everyone's local filesystems will be lowercased.
+# Files with uppercased letters in the suffixes will be ignored by this config.
+# If we wanted to support mixed-case suffixes, we'd need to adjust this file like this:
+# *.jpg *.[jJ][pP][gG]
+# But doing that is harder to read ...aaAaAnD could lead to its own problems.
+# For later exploration: There might be some git-hook way to mandate this at the server.
+#
+# exceptions made: TGA FBX JPG TTF PNG XML
+#
+# In general, everyone will avoid committing filenames and paths that differ only in capitalization.
+# (If you do need to correct an improperly-cased file, some shenanigans will be necessary.)
+#
+
+# Notes
+# This config can use "macros" that you define with "[attr]" followed by the configuration line that
+# it should be replaced by/considered the same as.
+
+# Resources:
+#   - https://github.com/NYUGameCenter/Unity-Git-Config
+#   - https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+#   - http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/
+#   - https://git-scm.com/docs/gitattributes
+#
+#   - https://help.github.com/articles/dealing-with-line-endings/
+#   - https://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
+#   - https://www.edwardthomson.com/blog/git_for_windows_line_endings.html
+#   - https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
+
+# Set the default line-ending normalization behavior, in case people don't have core.autocrlf set.
+# * text=auto
+# Or, aggressively DON'T mess with line endings, in the case of a repo that already has files in it
+# that you don't have time to force everyone to run git renormalizaion and have merge conflicts.
+* -text
+
+# Source code and their preferred endings
+*.cs diff=csharp text
+*.go             text eol=lf
+*.java           text
+*.js             text
+*.json           text linguist-language=JSON-with-Comments
+*.md             text
+*.py             text eol=lf filter=tabspace
+*.scala          text
+*.sh             text eol=lf
+*.gradle         text
+*.xml            text
+*.XML            text
+*.bat            text eol=crlf
+*.info           text
+*.md             text
+*.inc            text
+*.msbuild        text
+
+# bash files not having the .sh extension
+gradlew          text eol=lf
+
+# other text
+makefile         text
+rakefile         text
+*.yaml           text
+*.yml            text
+*.csv            text
+*.sln            text eol=crlf
+
+# NPM "bin" scripts MUST have LF, or else the executable fails to run on Mac.
+# This fnmatch expression only matches files in a "bin" folder and without
+# a period in the filename.
+/*/*/bin/+([!.]) -text
+
+# LFS Image Files
+*.exr lfs-file
+*.png lfs-file
+*.PNG lfs-file
+*.jpg lfs-file
+*.JPG lfs-file
+*.jpeg lfs-file
+*.tif lfs-file
+*.tiff lfs-file
+*.bmp lfs-file
+*.eps lfs-file
+*.exr  lfs-file
+*.tga lfs-file
+*.TGA lfs-file
+*.psd lfs-file
+*.ai lfs-file
+*.indd lfs-file
+*.gif lfs-file
+*.pict lfs-file
+*.pdf lfs-file
+*.hdr lfs-file
+*.iff lfs-file
+*.xcf lfs-file
+*.spp lfs-file
+*.afdesign lfs-file
+*.dds lfs-file
+
+# LFS Video Files
+*.asf lfs-file
+*.mp4 lfs-file
+*.mov lfs-file
+*.m4a lfs-file
+*.mpg lfs-file
+*.mpeg lfs-file
+*.mpeg1 lfs-file
+*.mpeg2 lfs-file
+*.mpeg4 lfs-file
+*.avi lfs-file
+*.flv lfs-file
+*.wmv lfs-file
+*.264 lfs-file
+*.h264 lfs-file
+*.hvec lfs-file
+*.mjpeg lfs-file
+*.mjpg lfs-file
+*.3gp lfs-file
+*.3GP lfs-file
+*.DVX lfs-file
+*.dvx lfs-file
+*.ogv lfs-file
+*.webm lfs-file
+*.xvid lfs-file
+# LFS Substance Files
+*.sbs lfs-file
+*.sbsar lfs-file
+*.sbsprs lfs-file
+*.SBS lfs-file
+*.SBSAR lfs-file
+*.SBSPRS lfs-file
+
+# LFS Audio Files
+*.mp3 lfs-file
+*.ogg lfs-file
+*.wav lfs-file
+*.aif lfs-file
+*.aiff lfs-file
+*.flac lfs-file
+*.opus lfs-file
+*.imp lfs-file
+*.it lfs-file
+*.mod lfs-file
+*.xm lfs-file
+*.s3m lfs-file
+*.mid lfs-file
+*.midi lfs-file
+
+# LFS Fonts
+*.ttf lfs-file
+*.TTF lfs-file
+*.ttc lfs-file
+*.ufo lfs-file
+*.otf lfs-file
+*.fnt lfs-file
+*.fon lfs-file
+*.fot lfs-file
+*.woff lfs-file
+*.woff2 lfs-file
+
+# LFS Symbol Files
+*.pdb lfs-file
+
+# LFS Libraries
+*.dll lfs-file
+*.a lfs-file
+*.lib lfs-file
+*.dylib lfs-file
+*.so lfs-file
+
+# LFS Builds & Utilities
+*.apk lfs-file
+*.dmg lfs-file
+*.ipa lfs-file
+*.exe lfs-file
+*.app lfs-file
+
+# LFS Archives
+*.zip lfs-file
+*.zipx lfs-file
+*.s7z lfs-file
+*.jar lfs-file
+*.7z lfs-file
+*.zz lfs-file
+*.rar lfs-file
+*.ace lfs-file
+*.sitx lfs-file
+*.ar lfs-file
+*.iso lfs-file
+*.tar lfs-file
+*.gz lfs-file
+*.bz2 lfs-file
+*.lz lfs-file
+*.lzma lfs-file
+*.lzh lfs-file
+*.tar.gz lfs-file
+*.tgz lfs-file
+*.tar.Z lfs-file
+*.tar.bz2 lfs-file
+*.tar.lzma lfs-file
+*.tlz lfs-file
+*.tar.xz lfs-file
+*.txz lfs-file
+*.cab lfs-file
