@@ -35,22 +35,15 @@
     "strictPropertyInitialization": true,
     "target": "ES2021",
     "useDefineForClassFields": false,
-    "paths": {
-      "@usds.gov/questionable-build": [
-        "../questionable-build/src/index.ts"
-      ],
-    }
   },
-  "include": [
-    "src/**/*.ts"
-  ],
   "exclude": [
     "node_modules",
     "dist"
   ],
-  "references": [
-    {
-      "path": "../questionable-build"
-    }
-  ]
+  "include": [
+    "src"
+  ],
+  "ts-node": {
+    "swc": true
+  }
 }

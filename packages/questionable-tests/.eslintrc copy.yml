@@ -11,6 +11,7 @@ parserOptions:
     jsx: true
   ecmaVersion: 12
   sourceType: module
+  project: './tsconfig.json'
 plugins:
   - jsx-a11y
   - react
@@ -21,7 +22,6 @@ rules:
   react/jsx-uses-react: 'off'
   react/prop-types: 0
   react/react-in-jsx-scope: 'off'
-  import/no-cycle: off
 settings:
   react:
     version: detect
