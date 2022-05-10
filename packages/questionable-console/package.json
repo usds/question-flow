@@ -9,7 +9,7 @@
     "inquirer": "^8.2.2",
     "inquirer-date-prompt": "^2.0.1",
     "lodash": "^4.17.21",
-    "npm-check-updates": "^12.5.4",
+    "npm-check-updates": "^12.5.11",
     "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.5",
