@@ -1,8 +1,10 @@
-import { merge }                            from 'lodash';
-import { isEnum, PAGE_TYPE, QUESTION_TYPE } from '../util/enums';
-import { IPageDataCore }                    from '../survey/IPageDataCore';
-import { IQuestionDataCore }                from '../survey/IQuestionDataCore';
-import { survey }                           from './survey';
+import { merge }         from 'lodash';
+import { IPageCore }     from '../metadata/IPageCore';
+import { PAGE_TYPE }     from '../metadata/properties/type/TPageType';
+import { IQuestionCore } from '../metadata/IQuestionCore';
+import { QUESTION_TYPE } from '../metadata/properties/type/TQuestionType';
+import { isEnum }        from '../lib/enums';
+import { survey }        from './survey';
 
 const schemaPart = {
   properties: {
@@ -22,12 +24,12 @@ const schemaFull: any = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getStepSchema = (props: IQuestionDataCore | IPageDataCore): any => {
+export function getStepSchema({ step }: { step: IQuestionCore | IPageCore; }): any {
   const schemaProps = { ...schemaPart };
-  if (isEnum(PAGE_TYPE, props.step.type)) {
+  if (isEnum({ enm: PAGE_TYPE, value: step.type })) {
     schemaProps.properties.step.$ref = '#/definitions/IPageCore';
-  } else if (isEnum(QUESTION_TYPE, props.step.type)) {
+  } else if (isEnum({ enm: QUESTION_TYPE, value: step.type })) {
     schemaProps.properties.step.$ref = '#/definitions/IQuestionCore';
   }
   return merge(schemaProps, schemaFull);
-};
+}

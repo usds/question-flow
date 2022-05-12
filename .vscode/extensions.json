@@ -5,6 +5,8 @@
     "visualstudioexptteam.vscodeintellicode",
     "github.vscode-codeql",
     "github.vscode-pull-request-github",
-    "donjayamanne.git-extension-pack"
+    "donjayamanne.git-extension-pack",
+    "arcanis.vscode-zipfs",
+    "esbenp.prettier-vscode"
   ]
 }

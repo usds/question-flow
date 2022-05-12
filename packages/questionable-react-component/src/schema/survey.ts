@@ -44,7 +44,7 @@ export const survey = {
         },
         "questions": {
           "items": {
-            "$ref": "#/definitions/IRef"
+            "$ref": "#/definitions/IRefCore"
           },
           "type": "array"
         },
@@ -355,7 +355,7 @@ export const survey = {
           "type": "object"
         },
         "step": {
-          "$ref": "#/definitions/IStep",
+          "$ref": "#/definitions/Partial<Step>",
           "description": "Current step"
         },
         "stepId": {
@@ -374,7 +374,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IEvent": {
+    "IEventCore": {
       "properties": {
         "onActionClick": {
           "not": {}
@@ -406,7 +406,7 @@ export const survey = {
       },
       "type": "object"
     },
-    "IForm": {
+    "IFormCore": {
       "description": "Represents the survey as completed by the user",
       "properties": {
         "age": {
@@ -461,7 +461,7 @@ export const survey = {
         "responses": {
           "description": "All currently provided responses",
           "items": {
-            "$ref": "#/definitions/IQuestion"
+            "$ref": "#/definitions/IQuestionCore"
           },
           "title": "Responses",
           "type": "array"
@@ -612,7 +612,7 @@ export const survey = {
         "entryRequirements": {
           "description": "Collection of requirements to view/enter this step",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Requirements",
           "type": "array"
@@ -620,7 +620,7 @@ export const survey = {
         "exitRequirements": {
           "description": "Collection of requirements to leave this step",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Exit Requirements",
           "type": "array"
@@ -652,7 +652,7 @@ export const survey = {
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
-                "$ref": "#/definitions/IRequirement"
+                "$ref": "#/definitions/IRequirementCore"
               },
               "title": "Requirements",
               "type": "array"
@@ -708,7 +708,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IPageData": {
+    "Partial<PageData>": {
       "description": "Data defintion for page step",
       "properties": {
         "form": {
@@ -909,7 +909,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IPages": {
+    "IPagesCore": {
       "description": "Defines required pages for the survey flow",
       "properties": {
         "landingPage": {
@@ -1036,7 +1036,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IQuestion": {
+    "IQuestionCore": {
       "description": "Defines step content for Question type",
       "properties": {
         "answers": {
@@ -1088,7 +1088,7 @@ export const survey = {
         "entryRequirements": {
           "description": "Collection of requirements to view/enter this step",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Requirements",
           "type": "array"
@@ -1096,7 +1096,7 @@ export const survey = {
         "exitRequirements": {
           "description": "Collection of requirements to leave this step",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Exit Requirements",
           "type": "array"
@@ -1128,7 +1128,7 @@ export const survey = {
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
-                "$ref": "#/definitions/IRequirement"
+                "$ref": "#/definitions/IRequirementCore"
               },
               "title": "Requirements",
               "type": "array"
@@ -1188,12 +1188,12 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IQuestionData": {
+    "Partial<QuestionData>": {
       "description": "Data defintion for question step",
       "properties": {
         "core": {
           "enum": [
-            "IQuestionData",
+            "Partial<QuestionData>",
             "I"
           ],
           "type": "string"
@@ -1377,7 +1377,7 @@ export const survey = {
           "type": "object"
         },
         "step": {
-          "$ref": "#/definitions/IQuestion",
+          "$ref": "#/definitions/IQuestionCore",
           "description": "Current step"
         },
         "stepId": {
@@ -1659,11 +1659,11 @@ export const survey = {
           "type": "string"
         },
         "pages": {
-          "$ref": "#/definitions/IPages"
+          "$ref": "#/definitions/IPagesCore"
         },
         "questions": {
           "items": {
-            "$ref": "#/definitions/IQuestion"
+            "$ref": "#/definitions/IQuestionCore"
           },
           "type": "array"
         },
@@ -1675,7 +1675,7 @@ export const survey = {
         },
         "sections": {
           "items": {
-            "$ref": "#/definitions/ISection"
+            "$ref": "#/definitions/ISectionCore"
           },
           "type": "array"
         }
@@ -1692,7 +1692,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IRef": {
+    "IRefCore": {
       "description": "Generic reference object",
       "properties": {
         "id": {
@@ -1710,7 +1710,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IRequirement": {
+    "IRequirementCore": {
       "description": "Defines an individual requirement for accessing a step",
       "properties": {
         "explanation": {
@@ -1797,7 +1797,7 @@ export const survey = {
         "responses": {
           "description": "Map of step id to required answer values",
           "items": {
-            "$ref": "#/definitions/IResponse"
+            "$ref": "#/definitions/IResponseCore"
           },
           "title": "Answers",
           "type": "array"
@@ -1808,7 +1808,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IResponse": {
+    "IResponseCore": {
       "description": "Acceptable responses",
       "properties": {
         "answers": {
@@ -1892,7 +1892,7 @@ export const survey = {
                 "requirements": {
                   "description": "Collection of requirements to enable display of this status",
                   "items": {
-                    "$ref": "#/definitions/IRequirement"
+                    "$ref": "#/definitions/IRequirementCore"
                   },
                   "title": "Requirements",
                   "type": "array"
@@ -1961,7 +1961,7 @@ export const survey = {
         "requirements": {
           "description": "Collection of requirements required to achieve this result",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Requirements",
           "type": "array"
@@ -1978,7 +1978,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "ISection": {
+    "ISectionCore": {
       "description": "Defines a survey section, used in progress bar",
       "properties": {
         "id": {
@@ -1989,7 +1989,7 @@ export const survey = {
         "requirements": {
           "description": "Collection of requirements to enable display of this status",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Requirements",
           "type": "array"
@@ -2005,7 +2005,7 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IStep": {
+    "Partial<Step>": {
       "description": "Generic step data definition. Applies to all types of steps.",
       "properties": {
         "buttons": {
@@ -2034,7 +2034,7 @@ export const survey = {
         "entryRequirements": {
           "description": "Collection of requirements to view/enter this step",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Requirements",
           "type": "array"
@@ -2042,7 +2042,7 @@ export const survey = {
         "exitRequirements": {
           "description": "Collection of requirements to leave this step",
           "items": {
-            "$ref": "#/definitions/IRequirement"
+            "$ref": "#/definitions/IRequirementCore"
           },
           "title": "Exit Requirements",
           "type": "array"
@@ -2074,7 +2074,7 @@ export const survey = {
             "requirements": {
               "description": "Collection of requirements to enable display of this status",
               "items": {
-                "$ref": "#/definitions/IRequirement"
+                "$ref": "#/definitions/IRequirementCore"
               },
               "title": "Requirements",
               "type": "array"
@@ -2160,16 +2160,16 @@ export const survey = {
       ],
       "type": "object"
     },
-    "IStepData": {
+    "Partial<StepData>": {
       "description": "Data defintion for base wizard step",
       "properties": {
         "form": {
-          "$ref": "#/definitions/IForm",
+          "$ref": "#/definitions/IFormCore",
           "description": "The user's current form state",
           "title": "Form"
         },
         "step": {
-          "$ref": "#/definitions/IStep",
+          "$ref": "#/definitions/Partial<Step>",
           "description": "Current step",
           "title": "Step"
         },
@@ -2308,11 +2308,11 @@ export const survey = {
           "type": "string"
         },
         "pages": {
-          "$ref": "#/definitions/IPages"
+          "$ref": "#/definitions/IPagesCore"
         },
         "questions": {
           "items": {
-            "$ref": "#/definitions/IQuestion"
+            "$ref": "#/definitions/IQuestionCore"
           },
           "type": "array"
         },
@@ -2324,7 +2324,7 @@ export const survey = {
         },
         "sections": {
           "items": {
-            "$ref": "#/definitions/ISection"
+            "$ref": "#/definitions/ISectionCore"
           },
           "type": "array"
         }
@@ -2371,7 +2371,7 @@ export const survey = {
           "$ref": "#/definitions/TResultData"
         },
         {
-          "$ref": "#/definitions/IForm"
+          "$ref": "#/definitions/IFormCore"
         }
       ]
     },

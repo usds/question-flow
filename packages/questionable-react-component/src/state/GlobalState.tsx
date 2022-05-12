@@ -1,3 +1,4 @@
+import { GateLogicCore, QuestionableConfigCore } from '@usds.gov/questionable-core';
 import React, {
   createContext,
   Dispatch,
@@ -5,17 +6,15 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import { QuestionableConfig } from '../composable/QuestionableConfig';
-import { Questionnaire }      from '../composable/Questionnaire';
 
 const GlobalStateContext = createContext({
-  setState: {} as Dispatch<SetStateAction<Questionnaire>>,
-  state:    {} as Questionnaire,
+  setState: {} as Dispatch<SetStateAction<GateLogicCore>>,
+  state:    {} as GateLogicCore,
 });
 
 type TGlobalStateContext = {
-  setState: React.Dispatch<React.SetStateAction<Questionnaire>>;
-  state: Questionnaire;
+  setState: React.Dispatch<React.SetStateAction<GateLogicCore>>;
+  state: GateLogicCore;
 };
 
 const useGlobalState = (): TGlobalStateContext => {
@@ -28,10 +27,10 @@ const useGlobalState = (): TGlobalStateContext => {
 
 export const GlobalStateProvider = ({
   children,
-  value = {} as Questionnaire,
+  value = {} as GateLogicCore,
 }: {
   children: React.ReactNode;
-  value?: Questionnaire;
+  value?: GateLogicCore;
 }): JSX.Element => {
   const [state, setState] = useState(value);
   return (
@@ -41,7 +40,7 @@ export const GlobalStateProvider = ({
   );
 };
 
-const useQuestionnaire = (): Questionnaire => {
+const useQuestionnaire = (): GateLogicCore => {
   const questionnaire = useGlobalState().state;
 
   if (!questionnaire) {
@@ -50,11 +49,11 @@ const useQuestionnaire = (): Questionnaire => {
   return questionnaire;
 };
 
-const useConfig = (): QuestionableConfig => useQuestionnaire().config;
+const useConfig = (): QuestionableConfigCore => useQuestionnaire().config;
 
 export interface IGlobalState {
-  config: QuestionableConfig;
-  questionnaire: Questionnaire;
+  config: QuestionableConfigCore;
+  questionnaire: GateLogicCore;
 }
 
 export const useGlobal = (): IGlobalState => ({

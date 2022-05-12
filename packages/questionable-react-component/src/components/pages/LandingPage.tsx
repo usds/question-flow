@@ -1,21 +1,24 @@
-import { noel }       from '../../lib/noel';
-import { IPageData }  from '../../survey/IPageData';
-import { Span }       from '../factories/NodeFactory';
-import { StepLayout } from '../wizard/StepLayout';
+import { Page }         from '../../composable/Page';
+import { noel }         from '../../lib/noel';
+import { Span }         from '../factories/NodeFactory';
+import { PageComposer } from '../lib/Pages';
+import { StepLayout }   from '../wizard/StepLayout';
 
 /**
  * Generates the first/initial/landing page of the Wizard
  * @param props
  * @returns
  */
-export const LandingPage = (props: IPageData): JSX.Element => {
-  const { step } = props;
+export const LandingPage = ({ step, comp }: {
+  comp: PageComposer,
+  step: Page
+}): JSX.Element => {
   if (!step) {
     return noel();
   }
 
   return (
-    <StepLayout {...props}>
+    <StepLayout step={step} comp={comp}>
       <Span node={step.body} />
       <Span node={step.children} />
     </StepLayout>

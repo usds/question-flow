@@ -1,17 +1,17 @@
 import PB            from '@ramonak/react-progress-bar';
 import { useGlobal } from '../../state/GlobalState';
-import { IStepData } from '../../survey/IStepData';
+import { Step }      from '../../composable/Step';
 import { noel }      from '../../lib/noel';
 import { CSS_CLASS } from '../../lib';
 
-export const ProgressBar = (props: IStepData): JSX.Element => {
+export const ProgressBar = ({ step }: {step: Step}): JSX.Element => {
   const { config, questionnaire } = useGlobal();
 
   if (config.progressBar.hide) {
     return noel();
   }
 
-  const completed = questionnaire.getProgressPercent(props);
+  const completed = questionnaire.getProgressPercent(step);
 
   // Do not display the progress bar if there is no progress
   if (completed <= 0 || completed > 100) {

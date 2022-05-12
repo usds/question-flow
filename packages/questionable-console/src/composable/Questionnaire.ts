@@ -1,20 +1,38 @@
+/* eslint-disable import/no-cycle */
 import {
+  matches,
   QuestionnaireCore,
 } from '@usds.gov/questionable-core';
-import { IQuestionnaire } from '../survey/IQuestionnaire';
-import { IQuestion }      from '../survey/IStep';
+import { Question } from './Question';
 
 export class Questionnaire extends QuestionnaireCore {
-  questions: IQuestion[] = [];
+  #questions: Question[];
 
-  constructor(data: Partial<IQuestionnaire>) {
+  constructor(data: Partial<Questionnaire>) {
     super(data);
-    if (data.questions) {
-      this.questions = data.questions;
-    }
+    this.#questions = data.questions?.map((q, i) => Question.create(q, i)) || [];
   }
 
-  isComplete(stepId: string) {
-    return this.flow.indexOf(stepId) === this.flow.length - 1;
+  public get questions(): Question[] {
+    return this.#questions;
+  }
+
+  public existsIn(data: Question): boolean {
+    if (data instanceof Question) {
+      return this.#questions.some((q) => q === data || matches(q.title, data.title));
+    }
+    return super.existsIn(data);
+  }
+
+  public add(data: Question): QuestionnaireCore {
+    const exists = this.existsIn(data);
+    if (!exists) {
+      if (data instanceof Question) {
+        this.#questions.push(data);
+      } else {
+        super.add(data);
+      }
+    }
+    return this;
   }
 }

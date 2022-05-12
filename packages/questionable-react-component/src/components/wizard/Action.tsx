@@ -1,15 +1,13 @@
-import { Link }         from '@trussworks/react-uswds';
-import { CSS_CLASS }    from '../../lib';
-import { noel }         from '../../lib/noel';
-import { useGlobal }    from '../../state';
-import { IForm }        from '../../survey';
-import { IAction }      from '../../survey/IAction';
-import { H2, H3, Span } from '../factories/NodeFactory';
+import { Link }                 from '@trussworks/react-uswds';
+import { ActionCore, FormCore } from '@usds.gov/questionable-core';
+import { CSS_CLASS }            from '../../lib';
+import { noel }                 from '../../lib/noel';
+import { useGlobal }            from '../../state';
+import { H2, H3, Span }         from '../factories/NodeFactory';
 
 export const Action = ({ action, page }:
-  { action: Partial<IAction>, page: IForm }): JSX.Element => {
-  const global     = useGlobal();
-  const { config } = global;
+  { action: Partial<ActionCore>, page: FormCore }): JSX.Element => {
+  const { config } = useGlobal();
 
   const buttons = action.buttons?.map((a) => {
     if (!a.link) {
@@ -29,7 +27,7 @@ export const Action = ({ action, page }:
             variant={variant}
             href={a.link}
             onClick={() => {
-              config.events.action({ ...page, ...action });
+              config.events.action(page);
             }}
           >
             {a.title}

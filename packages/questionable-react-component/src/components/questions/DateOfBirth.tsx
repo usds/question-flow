@@ -5,20 +5,19 @@ import {
 import { TDateOfBirthCore } from '@usds.gov/questionable-core';
 import { noel }             from '../../lib/noel';
 import { useGlobal }        from '../../state/GlobalState';
-import { IQuestionData }    from '../../survey/IQuestionData';
-import { Questions }        from '../lib/Questions';
 import { StepLayout }       from '../wizard/StepLayout';
 import {
   TDoBUtilParams,
   IInfoBox,
   getDateInputGroup,
 } from './lib/DateOfBirthUtils';
+import { Question }         from '../../composable';
+import { QuestionComposer } from '../lib';
 
-export const DateOfBirth = (props: IQuestionData): JSX.Element => {
-  const { config, questionnaire } = useGlobal();
-  const { step }                  = props;
-  const birthdate                 = Questions.getBirthdate(props);
-  const dob: TDateOfBirthCore     = {
+export const DateOfBirth = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => {
+  const { questionnaire }     = useGlobal();
+  const birthdate             = comp.getBirthdate();
+  const dob: TDateOfBirthCore = {
     day:   birthdate?.day?.toString(),
     month: birthdate?.month?.toString(),
     year:  birthdate?.year?.toString(),
@@ -27,7 +26,7 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
   const [state, setState]           = useState(dob);
   const startMessage: IInfoBox      = { message: '', type: 'info' };
   const [error, setError]           = useState(startMessage);
-  const [cookieName, setCookieName] = useState(kebabCase(questionnaire.header));
+  const [cookieName, setCookieName] = useState(kebabCase(questionnaire.questionnaire.header));
 
   if (!step) {
     return noel();
@@ -41,11 +40,11 @@ export const DateOfBirth = (props: IQuestionData): JSX.Element => {
     setState,
     state,
   };
-  return getDateInputGroup('date_of_birth', props, config, params);
+  return getDateInputGroup('date_of_birth', step, params, comp);
 };
 
-export const DateOfBirthStep = (props: IQuestionData): JSX.Element => (
-  <StepLayout {...props}>
-    <DateOfBirth {...props} />
+export const DateOfBirthStep = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => (
+  <StepLayout step={step} comp={comp}>
+    <DateOfBirth step={step} comp={comp}/>
   </StepLayout>
 );

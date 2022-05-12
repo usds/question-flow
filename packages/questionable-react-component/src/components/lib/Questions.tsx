@@ -1,43 +1,79 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable max-classes-per-file */
 /* eslint-disable no-param-reassign */
-import { Checkbox, Fieldset, Radio } from '@trussworks/react-uswds';
-import { QuestionsCore }             from '@usds.gov/questionable-core';
-import { QuestionableConfig }        from '../../composable/QuestionableConfig';
-import { IQuestionData }             from '../../survey/IQuestionData';
-import { IRef }                      from '../../survey/IRef';
-import { Steps }                     from './Steps';
-import { CSS_CLASS }                 from '../../lib/enums';
+import {
+  Checkbox,
+  Fieldset,
+  Radio,
+} from '@trussworks/react-uswds';
+import {
+  GateLogicCore,
+  QuestionableConfigCore,
+  QuestionnaireCore,
+  TStepReducerAction,
+  TDateOfBirthCore,
+  FormCore,
+  updateForm,
+  isSelected,
+  getBirthdate,
+  toBirthdate,
+} from '@usds.gov/questionable-core';
+import { Question }  from '../../composable';
+import { CSS_CLASS } from '../../lib/enums';
 
-/**
- * Static utility methods for question components
- */
-export abstract class Questions extends QuestionsCore {
+export class QuestionComposer {
+  question!: Question;
+
+  config!: QuestionableConfigCore;
+
+  questionnaire!: QuestionnaireCore;
+
+  gate!: GateLogicCore;
+
+  constructor({
+    question, gate,
+  }: {
+    gate: GateLogicCore, question: Question,
+  }) {
+    this.question      = question;
+    this.gate          = gate;
+    this.questionnaire = gate.questionnaire;
+    this.config        = gate.config;
+  }
+
+  public updateForm(title: string) {
+    return updateForm({ answer: title, form: this.gate.form, question: this.question });
+  }
+
+  public isSelected(title: string) {
+    return isSelected({ answer: title, form: this.gate.form, question: this.question }) === true;
+  }
+
   /**
    * Generates a radio button given a question definition
    * @param answer
    * @param props
    * @returns
    */
-  private static getRadio(
-    answer: IRef,
-    props: IQuestionData,
-    config: QuestionableConfig,
+  private getRadio(
+    { answer }: {answer: {title: string}},
   ): JSX.Element {
-    const title   = Questions.getString(answer);
-    const handler = () => Questions.updateForm(title, props, config);
-    const id      = Steps.getDomId(title, props);
+    const { title } = answer;
+    const handler   = () => this.updateForm(title);
+    const id        = this.question.getDomId(title);
 
     return (
       <Radio
         id={id}
         key={id}
-        name={Steps.getFieldSetName(props)}
+        name={this.question.getFieldSetName()}
         label={title}
         value={title}
-        checked={Questions.isSelected(title, props) === true}
+        checked={this.isSelected(title)}
         className={CSS_CLASS.MULTI_CHOICE}
         onChange={handler}
         onClick={handler}
-        tile={config.questions?.showAnswerBorder === true}
+        tile={this.config.questions?.showAnswerBorder === true}
       />
     );
   }
@@ -47,17 +83,14 @@ export abstract class Questions extends QuestionsCore {
    * @param props
    * @returns
    */
-  public static getRadios(
-    props: IQuestionData,
-    config: QuestionableConfig,
-  ): JSX.Element {
+  public getRadios(): JSX.Element {
     return (
       <Fieldset
-        legend={props.step.title}
+        legend={this.question.title}
         className={CSS_CLASS.MULTI_CHOICE_GROUP}
         legendStyle="srOnly"
       >
-        {props.step.answers.map((a) => Questions.getRadio(a, props, config))}
+        {this.question.answers.map((answer) => this.getRadio({ answer }))}
       </Fieldset>
     );
   }
@@ -68,27 +101,25 @@ export abstract class Questions extends QuestionsCore {
    * @param props
    * @returns
    */
-  protected static getCheckbox(
-    answer: IRef,
-    props: IQuestionData,
-    config: QuestionableConfig,
+  protected getCheckbox(
+    { answer }: {answer: {title: string}},
   ): JSX.Element {
-    const title   = Questions.getString(answer);
-    const handler = () => Questions.updateForm(title, props, config);
-    const id      = Steps.getDomId(title, props);
+    const { title } = answer;
+    const handler   = () => this.updateForm(title);
+    const id        = this.question.getDomId(title);
 
     return (
       <Checkbox
         id={id}
         key={id}
-        name={Steps.getFieldSetName(props)}
+        name={this.question.getFieldSetName()}
         label={title}
         value={title}
-        checked={Questions.isSelected(title, props) === true}
+        checked={this.isSelected(title)}
         className={CSS_CLASS.MULTI_SELECT}
         onChange={handler}
         onClick={handler}
-        tile={config.questions?.showAnswerBorder === true}
+        tile={this.config.questions?.showAnswerBorder === true}
       />
     );
   }
@@ -98,18 +129,27 @@ export abstract class Questions extends QuestionsCore {
    * @param props
    * @returns
    */
-  public static getCheckboxes(
-    props: IQuestionData,
-    config: QuestionableConfig,
-  ): JSX.Element {
+  public getCheckboxes(): JSX.Element {
     return (
       <Fieldset
-        legend={props.step.title}
+        legend={this.question.title}
         className={CSS_CLASS.MULTI_SELECT_GROUP}
         legendStyle="srOnly"
       >
-        {props.step.answers.map((a) => Questions.getCheckbox(a, props, config))}
+        {this.question.answers.map((answer) => this.getCheckbox({ answer }))}
       </Fieldset>
     );
+  }
+
+  public getBirthdate() {
+    return getBirthdate({ form: this.gate.form, question: this.question });
+  }
+
+  public toBirthdate(dob: TDateOfBirthCore) {
+    return toBirthdate({ dob, question: this.question });
+  }
+
+  public dispatchForm(action: TStepReducerAction) {
+    return FormCore.reducer(this.gate.form, action);
   }
 }

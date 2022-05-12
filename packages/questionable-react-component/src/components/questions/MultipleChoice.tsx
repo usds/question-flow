@@ -1,31 +1,27 @@
-import { noel }          from '../../lib/noel';
-import { useGlobal }     from '../../state';
-import { IQuestionData } from '../../survey/IQuestionData';
-import { Questions }     from '../lib/Questions';
-import { StepLayout }    from '../wizard/StepLayout';
+import { Question }         from '../../composable/Question';
+import { noel }             from '../../lib/noel';
+import { QuestionComposer } from '../lib/Questions';
+import { StepLayout }       from '../wizard/StepLayout';
 
 /**
  * Renders a question and a radio list of allowed answers
- * @param props
+ * @param step
  * @returns
  */
-export const MultipleChoice = (props: IQuestionData): JSX.Element => {
-  const { config } = useGlobal();
-
-  if (props?.step?.answers === undefined) {
+export const MultipleChoice = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => {
+  if (step?.answers === undefined) {
     return noel('Question and answer are not defined');
   }
-
-  return Questions.getRadios(props, config);
+  return comp.getRadios();
 };
 
 /**
  * Renders a question and a radio list of allowed answers
- * @param props
+ * @param step
  * @returns
  */
-export const MultipleChoiceStep = (props: IQuestionData): JSX.Element => (
-  <StepLayout {...props}>
-    <MultipleChoice {...props} />
+export const MultipleChoiceStep = ({ step, comp }: {comp: QuestionComposer, step: Question}): JSX.Element => (
+  <StepLayout step={step} comp={comp}>
+    <MultipleChoice step={step} comp={comp} />
   </StepLayout>
 );
