@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
     "composite": true,
@@ -15,7 +16,8 @@
     "lib": [
       "dom",
       "ES2015",
-      "es2019"
+      "es2019",
+      "ESNext",
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
@@ -23,13 +25,27 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "out-tsc",
+    "outDir": "dist",
     "rootDir": "src",
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "ES2019",
+    "paths": {
+      "@usds.gov/questionable-core": [
+        "../questionable-core/src/index.ts"
+      ],
+      "@usds.gov/questionable-mocks": [
+        "../questionable-mocks/src/index.ts"
+      ],
+      "@usds.gov/questionable-react-component": [
+        "../questionable-react-component/src/index.ts"
+      ],
+      "@usds.gov/questionable-build": [
+        "../questionable-build/src/index.ts"
+      ],
+    }
   },
   "include": [
     "src"
@@ -37,6 +53,12 @@
   "references": [
     {
       "path": "../questionable-react-component"
+    },
+    {
+      "path": "../questionable-build"
+    },
+    {
+      "path": "../questionable-core"
     },
     {
       "path": "../questionable-mocks"

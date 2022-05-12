@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "composite": true,
     "alwaysStrict": true,
-    "baseUrl": "./packages",
+    "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
@@ -12,12 +12,11 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "lib": [
-      "ES2015",
-      "es2019"
+      "esnext",
     ],
     "module": "CommonJS",
     "moduleResolution": "node",
-    "noEmit": true,
+    "noEmit": false,
     "outDir": "dist",
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -25,26 +24,37 @@
     "strict": true,
     "target": "ES2019",
     "paths": {
-      "@usds.gov/questionable-react-component": [
-        "questionable-react-component"
+      "@usds.gov/*": [
+        "packages/*/src/index.ts",
       ],
-      "@usds.gov/questionable-core": [
-        "questionable-core"
-      ],
-      "@usds.gov/ssa-eligibility": [
-        "ssa-eligibility"
-      ],
-      "@usds.gov/questionable-tests": [
-        "questionable-tests"
-      ],
-      "@usds.gov/questionable-storybook": [
-        "questionable-storybook"
-      ],
-      "@usds.gov/questionable-mocks": [
-        "questionable-mocks"
-      ]
-    }
+    },
   },
+  "references": [
+    {
+      "path": "packages/questionable-core",
+    },
+    {
+      "path": "packages/questionable-console",
+    },
+    {
+      "path": "packages/questionable-mocks",
+    },
+    {
+      "path": "packages/questionable-build",
+    },
+    {
+      "path": "packages/questionable-storybook",
+    },
+    {
+      "path": "packages/questionable-tests",
+    },
+    {
+      "path": "packages/ssa-eligibility"
+    },
+    {
+      "path": "packages/questionable-react-component"
+    }
+  ],
   "exclude": [
     "node_modules",
   ],
@@ -52,4 +62,7 @@
     "types.d.ts",
     "src"
   ],
+  "ts-node": {
+    "swc": true
+  }
 }
