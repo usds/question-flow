@@ -1,90 +1,112 @@
 import {
+  GateLogicCore,
   FormCore,
-  IQuestionDataCore,
-  IStepCore,
-  QuestionableConfigCore,
-  QuestionsCore,
-  QUESTION_TYPE,
-  stepReducer,
-  StepsCore,
+  Questioner,
+  error,
+  log,
+  white,
+  yellow,
 } from '@usds.gov/questionable-core';
 import {
-  Answers, DistinctQuestion, prompt,
+  Answers,
+  DistinctQuestion,
+  prompt,
 } from 'inquirer';
-import BottomBar               from 'inquirer/lib/ui/bottom-bar';
 import PromptUI                from 'inquirer/lib/ui/prompt';
+import { merge }               from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import { IQuestion }           from '../survey/IStep';
+import { getAnswer }           from '../util/helper';
+import { TVal }                from '../util/types';
+import { PromptFactory }       from './PromptFactory';
+import { Question }            from './Question';
 import { Questionnaire }       from './Questionnaire';
+import { Step }                from './Step';
+import '../util/inquirer';
 
-type TVal = { answer: any, name: string };
-type TChoice = { answer: string, key: string, name: string }
-type TAnswerType = {
-  type: 'number' | 'input' | 'password' | 'list' | 'expand' |
-  'checkbox' | 'confirm' | 'editor' | 'rawlist',
-  values?: string[] | TChoice[]
-};
+export class Iterable<Q extends Questionnaire, F extends FormCore> {
+  #current: Question;
 
-export class Iterable {
-  protected current: IQuestion;
+  public get current() {
+    return this.#current;
+  }
 
-  protected started = false;
+  private set current(val: Question) {
+    this.#current = val;
+  }
 
-  protected observable = new Subject<DistinctQuestion<Answers>>();
+  #started = false;
 
-  protected form = new FormCore();
+  public get started() {
+    return this.#started;
+  }
 
-  protected process: Observable<TVal>;
+  private set started(val: boolean) {
+    this.#started = val;
+  }
 
-  protected config = new QuestionableConfigCore();
+  #observable = new Subject<DistinctQuestion<Answers>>();
 
-  protected prompt: Promise<Answers> & {
+  protected get observable() {
+    return this.#observable;
+  }
+
+  private set observable(val) {
+    this.#observable = val;
+  }
+
+  #form: F;
+
+  protected get form(): F {
+    return this.#form;
+  }
+
+  private set form(val) {
+    this.#form = val;
+  }
+
+  #process: Observable<TVal>;
+
+  protected get process() {
+    return this.#process;
+  }
+
+  #prompt: Promise<Answers> & {
     ui: PromptUI<Answers>;
   };
 
-  protected questionnaire: Questionnaire;
+  protected get prompt() {
+    return this.#prompt;
+  }
 
-  protected bottomBar!: BottomBar;
+  #questionnaire: Q;
+
+  protected get questionnaire() {
+    return this.#questionnaire;
+  }
+
+  protected get config() {
+    return this.#questionnaire.config;
+  }
+
+  #gateLogic: GateLogicCore;
+
+  protected get gateLogic() {
+    return this.#gateLogic;
+  }
 
   constructor(
-    questionnaire: Questionnaire,
-    config: QuestionableConfigCore = new QuestionableConfigCore(),
+    questionnaire: Q,
+    form: F,
   ) {
-    this.questionnaire = questionnaire;
-    this.config        = config;
-    this.prompt        = prompt(this.observable);
-    this.process       = this.prompt.ui.process;
-    [this.current]     = this.questionnaire.questions;
-    this.makeProgressBar();
+    this.#questionnaire = questionnaire;
+    this.#form          = form;
+    this.#prompt        = prompt(this.observable);
+    this.#process       = this.#prompt.ui.process;
+    [this.#current]     = this.#questionnaire.questions;
+    this.#gateLogic     = new GateLogicCore(questionnaire, form);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getType(q: IQuestion): TAnswerType {
-    let ret: TAnswerType = { type: 'confirm' };
-    switch (q.type) {
-      case QUESTION_TYPE.MULTIPLE_CHOICE:
-        ret = {
-          type:   'list',
-          values: q.answers.map((e, i) => ({
-            answer: e.type || '',
-            key:    `${i}`,
-            name:   e.title || '',
-          })),
-        };
-        break;
-      case QUESTION_TYPE.DOB:
-        ret = {
-          type: 'input',
-        };
-        break;
-      default:
-        ret = { type: 'confirm' };
-        break;
-    }
-    return ret;
-  }
-
-  makePage(step: IStepCore) {
+  async makePage(step: Step) {
     this.observable.next({
       message: step.title,
       name:    step.id,
@@ -93,24 +115,30 @@ export class Iterable {
     });
   }
 
-  makeQuestion(question: IQuestion) {
-    const { type, values } = this.getType(question);
-    this.observable.next({
-      choices:  values,
-      message:  question.title,
-      name:     question.id,
+  async makeQuestion(question: Question) {
+    const mould = PromptFactory(question);
+    const prmpt = merge(mould, {
+      askAnswered: true,
+      default:     question.default,
+      loop:        true,
+      message:     question.title,
+      name:        question.id,
       // suffix:   question.subTitle,
-      type,
-      validate: (answer) => {
-        QuestionsCore.updateForm(answer, this.props(question), this.config);
-        return StepsCore.isNextEnabled(this.props(question));
-      },
-    });
+      validate:    async (a: TVal) => this.validate(a, question),
+    }) as DistinctQuestion<Answers>;
+    this.observable.next(prmpt);
   }
 
-  makeStep(step: IStepCore) {
-    if (StepsCore.getStepType(step) === 'question') {
-      const nextQuestion = step as IQuestion;
+  async makeStep(step: Step) {
+    if (step.onDisplay) {
+      yellow(this.current);
+      await step.onDisplay({
+        answer: this.current.answer,
+        name:   this.current.title,
+      }, step);
+    }
+    if (this.gateLogic.getStepType(step) === 'question') {
+      const nextQuestion = step as Question;
       this.makeQuestion(nextQuestion);
       this.current = nextQuestion;
     } else {
@@ -118,44 +146,40 @@ export class Iterable {
     }
   }
 
-  next(val: TVal): IQuestion | undefined {
+  async next(val: TVal): Promise<Question | undefined> {
     try {
       if (!this.current) {
-        this.current = this.questionnaire.getFirstStep();
+        this.current = this.gateLogic.getFirstStep();
         return this.next({ answer: val.answer, name: this.current.id });
       }
       if (val.name) {
-        this.current = this.questionnaire.getStepById(val.name) as IQuestion;
+        this.current = this.gateLogic.getStepById(val.name) as Question;
       }
-      if (this.questionnaire.isComplete(this.current.id)) {
+      const progress = this.gateLogic.getProgressPercent(this.current);
+      if (progress === 100 || this.gateLogic.isComplete(this.current)) {
         this.observable.complete();
         return undefined;
       }
-      if (this.validate(val.answer, this.current)) {
-        this.current.exec(this.props(this.current));
-        const nextStepId = this.questionnaire.getNextStep(this.props(this.current));
-        const nextStep   = this.questionnaire.getStepById(nextStepId);
-        this.makeStep(nextStep);
+      if (await this.validate(val, this.current)) {
+        if (this.current.onAnswer) {
+          await this.current.onAnswer(val, this.current);
+        }
+        const nextStep = this.gateLogic.getNextStep(this.current);
+        // const nextStep   = this.gateLogic.getStepById(nextStepId);
+        await this.makeStep(nextStep);
       } else {
-        this.makeStep(this.current);
+        await this.makeStep(this.current);
       }
+      // log(`${this.gateLogic.getProgressPercent(this.current)}%`);
       return this.current;
     } catch (e) {
-      this.bottomBar.log.write(e);
+      error(e);
     }
     return undefined;
   }
 
-  props(question: IQuestion = this.current): IQuestionDataCore {
-    return ({
-      dispatchForm: stepReducer,
-      form:         this.form,
-      step:         question,
-      stepId:       question.id,
-    });
-  }
-
-  start() {
+  async start() {
+    log(this);
     if (this.started) return;
 
     this.process.subscribe({
@@ -165,40 +189,25 @@ export class Iterable {
     });
     this.process.subscribe({
       complete: () => {
-        console.log('log');
+        white('complete');
       },
       error: (e) => {
-        console.error(e);
+        error(e);
       },
     });
-    this.makeQuestion(this.current);
+    await this.makeQuestion(this.current);
     this.started = true;
   }
 
-  validate(answer: string, question: IQuestion) {
-    QuestionsCore.updateForm(answer, this.props(question), this.config);
-    return StepsCore.isNextEnabled(this.props(question));
-  }
-
-  private makeProgressBar(spinnerText = 'Working') {
-    const loader   = [
-      `/ ${spinnerText}`,
-      `| ${spinnerText}`,
-      `\\ ${spinnerText}`,
-      `- ${spinnerText}`,
-    ];
-    let i          = 0;
-    this.bottomBar = new BottomBar();
-    // this.bottomBar = new BottomBar({ bottomBar: `\r\n${loader[i]}` });
-
-    setInterval(() => {
-      // this.bottomBar.updateBottomBar('');
-      // this.bottomBar.updateBottomBar(`\r\n${loader[i]}`);
-      if (i >= 3) {
-        i = 0;
-      } else {
-        i += 1;
-      }
-    }, 300);
+  async validate(a: TVal, question: Question) {
+    let isValid  = true;
+    const answer = getAnswer(a);
+    if (question.validate) {
+      isValid = await question.validate(a, question);
+    }
+    const qrr = new Questioner({ form: this.form, question });
+    qrr.updateForm({ answer });
+    isValid = isValid && this.gateLogic.isNextEnabled(question);
+    return isValid;
   }
 }

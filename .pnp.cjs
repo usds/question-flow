@@ -10252,7 +10252,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-yaml", "npm:0.5.0"],\
             ["prettier", "npm:2.6.2"],\
             ["prettier-plugin-organize-imports", "virtual:4abdaac96bcf92ee1013007d151e2a65969ace133ced60c3aab4f2718e0f9f6cb571d7ac9de1597d1713ce3524fab4c6406035213bff7a25756a36c88c73a697#npm:2.3.4"],\
-            ["pretty-quick", "virtual:4abdaac96bcf92ee1013007d151e2a65969ace133ced60c3aab4f2718e0f9f6cb571d7ac9de1597d1713ce3524fab4c6406035213bff7a25756a36c88c73a697#npm:3.1.3"],\
             ["rimraf", "npm:3.0.2"],\
             ["rollup", "npm:2.70.2"],\
             ["rollup-plugin-copy", "npm:3.4.0"],\
@@ -10397,7 +10396,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["short-unique-id", "npm:4.4.4"],\
             ["ts-json-schema-generator", "npm:1.0.0"],\
             ["ts-node", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:10.7.0"],\
-            ["tslib", "npm:2.4.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"],\
             ["uuid", "npm:8.3.2"]\
           ],\
@@ -10483,7 +10481,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/rimraf", "npm:3.0.2"],\
             ["@typescript-eslint/eslint-plugin", "virtual:4abdaac96bcf92ee1013007d151e2a65969ace133ced60c3aab4f2718e0f9f6cb571d7ac9de1597d1713ce3524fab4c6406035213bff7a25756a36c88c73a697#npm:5.21.0"],\
             ["@typescript-eslint/parser", "virtual:4abdaac96bcf92ee1013007d151e2a65969ace133ced60c3aab4f2718e0f9f6cb571d7ac9de1597d1713ce3524fab4c6406035213bff7a25756a36c88c73a697#npm:5.21.0"],\
-            ["@usds.gov/questionable-build", "workspace:packages/questionable-build"],\
             ["@usds.gov/questionable-core", "workspace:packages/questionable-core"],\
             ["babel-loader", "virtual:9e4304a1ef9f2f27a1c168a696ea5f6c317ed4ef495adbb738e5cfc19f0ea6a8eceac7bd471718e6e4ae0912f24a63773a54430ca00a412e8431b883e3645d79#npm:8.2.5"],\
             ["babel-preset-react-app", "npm:10.0.1"],\
@@ -10526,7 +10523,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["semantic-ui-react", "virtual:9e4304a1ef9f2f27a1c168a696ea5f6c317ed4ef495adbb738e5cfc19f0ea6a8eceac7bd471718e6e4ae0912f24a63773a54430ca00a412e8431b883e3645d79#npm:2.1.2"],\
             ["ts-json-schema-generator", "npm:1.0.0"],\
             ["ts-node", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:10.7.0"],\
-            ["tslib", "npm:2.4.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=bda367"],\
             ["use-wizard", "npm:4.0.6"]\
           ],\
@@ -10632,7 +10628,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react-hooks", "virtual:9e4304a1ef9f2f27a1c168a696ea5f6c317ed4ef495adbb738e5cfc19f0ea6a8eceac7bd471718e6e4ae0912f24a63773a54430ca00a412e8431b883e3645d79#npm:4.5.0"],\
             ["gh-pages", "npm:3.2.3"],\
             ["lodash", "npm:4.17.21"],\
-            ["pretty-quick", "virtual:3baf0c962b63f2dc858078b210c20c5f43c935ebbbd0cd377cdfbbc0e5e8e8cbfea283586f94aed8add36e9b34eae84560b772a19894292ba4e15121144fc8ca#npm:3.1.3"],\
             ["react", "npm:17.0.2"],\
             ["react-async", "virtual:3baf0c962b63f2dc858078b210c20c5f43c935ebbbd0cd377cdfbbc0e5e8e8cbfea283586f94aed8add36e9b34eae84560b772a19894292ba4e15121144fc8ca#npm:10.0.1"],\
             ["react-docgen-typescript-loader", "virtual:9e4304a1ef9f2f27a1c168a696ea5f6c317ed4ef495adbb738e5cfc19f0ea6a8eceac7bd471718e6e4ae0912f24a63773a54430ca00a412e8431b883e3645d79#npm:3.7.2"],\
@@ -27829,44 +27824,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pretty-quick", "npm:3.1.3"]\
           ],\
           "linkType": "SOFT"\
-        }],\
-        ["virtual:3baf0c962b63f2dc858078b210c20c5f43c935ebbbd0cd377cdfbbc0e5e8e8cbfea283586f94aed8add36e9b34eae84560b772a19894292ba4e15121144fc8ca#npm:3.1.3", {\
-          "packageLocation": "./.yarn/__virtual__/pretty-quick-virtual-a23fbe5a21/0/cache/pretty-quick-npm-3.1.3-b3fdb9cf9e-28bdc32571.zip/node_modules/pretty-quick/",\
-          "packageDependencies": [\
-            ["pretty-quick", "virtual:3baf0c962b63f2dc858078b210c20c5f43c935ebbbd0cd377cdfbbc0e5e8e8cbfea283586f94aed8add36e9b34eae84560b772a19894292ba4e15121144fc8ca#npm:3.1.3"],\
-            ["@types/prettier", null],\
-            ["chalk", "npm:3.0.0"],\
-            ["execa", "npm:4.1.0"],\
-            ["find-up", "npm:4.1.0"],\
-            ["ignore", "npm:5.2.0"],\
-            ["mri", "npm:1.2.0"],\
-            ["multimatch", "npm:4.0.0"],\
-            ["prettier", null]\
-          ],\
-          "packagePeers": [\
-            "@types/prettier",\
-            "prettier"\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["virtual:4abdaac96bcf92ee1013007d151e2a65969ace133ced60c3aab4f2718e0f9f6cb571d7ac9de1597d1713ce3524fab4c6406035213bff7a25756a36c88c73a697#npm:3.1.3", {\
-          "packageLocation": "./.yarn/__virtual__/pretty-quick-virtual-6e1511361e/0/cache/pretty-quick-npm-3.1.3-b3fdb9cf9e-28bdc32571.zip/node_modules/pretty-quick/",\
-          "packageDependencies": [\
-            ["pretty-quick", "virtual:4abdaac96bcf92ee1013007d151e2a65969ace133ced60c3aab4f2718e0f9f6cb571d7ac9de1597d1713ce3524fab4c6406035213bff7a25756a36c88c73a697#npm:3.1.3"],\
-            ["@types/prettier", "npm:2.6.0"],\
-            ["chalk", "npm:3.0.0"],\
-            ["execa", "npm:4.1.0"],\
-            ["find-up", "npm:4.1.0"],\
-            ["ignore", "npm:5.2.0"],\
-            ["mri", "npm:1.2.0"],\
-            ["multimatch", "npm:4.0.0"],\
-            ["prettier", "npm:2.6.2"]\
-          ],\
-          "packagePeers": [\
-            "@types/prettier",\
-            "prettier"\
-          ],\
-          "linkType": "HARD"\
         }],\
         ["virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:3.1.3", {\
           "packageLocation": "./.yarn/__virtual__/pretty-quick-virtual-a495defcda/0/cache/pretty-quick-npm-3.1.3-b3fdb9cf9e-28bdc32571.zip/node_modules/pretty-quick/",\

@@ -1,8 +1,7 @@
-import { StepsCore } from '@usds.gov/questionable-core';
-import { IStepData } from '../../survey/IStepData';
+import { TWizard } from '../../composable/Wizard';
 
-export abstract class Steps extends StepsCore {
-  public static goToStep(step: string, props: IStepData): void {
-    props.wizard.goToStep(step);
+export abstract class Steps {
+  public static goToStep({ step, wizard }: {step: string, wizard: TWizard}): void {
+    wizard?.goToStep(step);
   }
 }

@@ -1,32 +1,35 @@
-import { ACTION }     from '@usds.gov/questionable-core';
-import { CSS_CLASS }  from '../../lib/enums';
-import { Action }     from '../wizard/Action';
-import { IPageData }  from '../../survey/IPageData';
-import { noel }       from '../../lib/noel';
-import { Span }       from '../factories/NodeFactory';
-import { StepLayout } from '../wizard/StepLayout';
-import { useGlobal }  from '../../state/GlobalState';
+import { ACTION, GateLogicCore } from '@usds.gov/questionable-core';
+import { CSS_CLASS }             from '../../lib/enums';
+import { Action }                from '../wizard/Action';
+import { noel }                  from '../../lib/noel';
+import { Span }                  from '../factories/NodeFactory';
+import { StepLayout }            from '../wizard/StepLayout';
+import { useGlobal }             from '../../state/GlobalState';
+import { PageComposer }          from '../lib';
+import { Page }                  from '../../composable';
 
 /**
  * Displays the wizard results
  * @param props
  * @returns
  */
-export const NoResultsPage = (props: IPageData): JSX.Element => {
-  const { step }                  = props;
-  const global                    = useGlobal();
-  const { questionnaire, config } = global;
+export const NoResultsPage = ({ step, comp, gate }: {
+  comp: PageComposer,
+  gate: GateLogicCore,
+  step: Page
+}): JSX.Element => {
+  const  { questionnaire, config } = useGlobal();
 
   if (!step) {
     return noel();
   }
 
-  config.events.noResult(props.form);
+  config.events.noResult(gate.form);
 
   const action = questionnaire.getActionByType(ACTION.NONE);
 
   return (
-    <StepLayout {...props}>
+    <StepLayout step={step} comp={comp}>
       <Span node={step.bodyHeader} className={CSS_CLASS.NO_RESULTS_HEADER} />
       <Span
         node={step.bodySubHeader}
@@ -34,7 +37,7 @@ export const NoResultsPage = (props: IPageData): JSX.Element => {
       />
       <Span node={step.body} className={CSS_CLASS.NO_RESULTS_BODY} />
       <Span node={step.children} />
-      <Action action={action} page={props.form} />
+      <Action action={action} page={gate.form} />
     </StepLayout>
   );
 };

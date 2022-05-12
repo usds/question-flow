@@ -3,10 +3,10 @@ import { ProgressBar }           from '../wizard/ProgressBar';
 import { StepIndicator }         from '../wizard/StepIndicator';
 import { noel }                  from '../../lib/noel';
 import { useGlobal }             from '../../state/GlobalState';
-import { IStepData }             from '../../survey/IStepData';
+import { Step }                  from '../../composable';
 
-export const ProgressFactory = ({ props, position }:
-  { position: TVerticalPositionCore, props: IStepData }): JSX.Element => {
+export const ProgressFactory = ({ step, position }:
+  { position: TVerticalPositionCore, step: Step }): JSX.Element => {
   const { config } = useGlobal();
 
   if (config.progressBar.hide || config.progressBar.position !== position) {
@@ -14,9 +14,9 @@ export const ProgressFactory = ({ props, position }:
   }
   switch (config.progressBar.type) {
     case 'progress-bar':
-      return <ProgressBar {...props}/>;
+      return <ProgressBar step={step} />;
     case 'step-indicator':
-      return <StepIndicator {...props} />;
+      return <StepIndicator step={step} />;
     default:
       return noel('Could not find progress type', config.progressBar.type);
   }

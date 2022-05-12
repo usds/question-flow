@@ -1,13 +1,8 @@
-import {
-  registerPrompt,
-} from 'inquirer';
-import { simple_all }     from '@usds.gov/questionable-mocks';
-import { Questionnaire }  from './composable/Questionnaire';
-import { Iterable }       from './composable/Iterable';
-import { IQuestionnaire } from './survey/IQuestionnaire';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-registerPrompt('date', require('inquirer-date-prompt'));
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { simple_all }    from '@usds.gov/questionable-mocks';
+import { FormCore }      from '@usds.gov/questionable-core';
+import { Questionnaire } from './composable/Questionnaire';
+import { Iterable }      from './composable/Iterable';
 
 export const Questionable = (): any => {
   // if (!questionnaire) {
@@ -15,9 +10,10 @@ export const Questionable = (): any => {
   // }
   // const prompts = new Subject();
   // const inq     = prompt(prompts);
-  const data          = simple_all as unknown as IQuestionnaire;
+  const data          = simple_all as unknown as Partial<Questionnaire>; // eslint-disable-line camelcase
+  const form          = new FormCore();
   const questionnaire = new Questionnaire(data);
-  const iterator      = new Iterable(questionnaire);
+  const iterator      = new Iterable(questionnaire, form);
   iterator.start();
   return iterator;
 };

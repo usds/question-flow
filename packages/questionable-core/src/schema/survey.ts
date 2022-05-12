@@ -3,11 +3,6 @@
 export const survey = {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "DESIGN_TYPE": {
-      "const": "Edit",
-      "description": "Defines the known component types for design",
-      "type": "string"
-    },
     "DIRECTION": {
       "description": "Navigation direction for steps by array index (+1 or -1)",
       "enum": [
@@ -38,8 +33,36 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "label"
+        "title"
+      ],
+      "type": "object"
+    },
+    "IAnswerCore": {
+      "properties": {
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "synonyms": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TAnswerType"
+        }
+      },
+      "required": [
+        "title"
       ],
       "type": "object"
     },
@@ -52,58 +75,26 @@ export const survey = {
         },
         "questions": {
           "items": {
-            "$ref": "#/definitions/IRefCore"
+            "$ref": "#/definitions/IQuestionCore"
+          },
+          "type": "array"
+        },
+        "sections": {
+          "items": {
+            "$ref": "#/definitions/ISectionCore"
           },
           "type": "array"
         },
         "title": {
           "title": "Title",
           "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "questions"
-      ],
-      "type": "object"
-    },
-    "IButtonConfigCore": {
-      "description": "Configuration for buttons",
-      "properties": {
-        "core": {
-          "enum": [
-            "IButtonConfig",
-            "I"
-          ],
-          "type": "string"
-        },
-        "id": {
-          "description": "Unique identifier",
-          "title": "Id",
-          "type": "string"
-        },
-        "link": {
-          "description": "Link to tie to button click",
-          "title": "Link",
-          "type": "string"
-        },
-        "title": {
-          "title": "Title",
-          "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TButtonModeCore",
-          "description": "Render mode (link or button)",
-          "title": "Mode"
-        },
-        "visible": {
-          "description": "Visibility status of the button (show/hide)",
-          "title": "Visible",
-          "type": "boolean"
+          "$ref": "#/definitions/TBranchType"
         }
       },
       "required": [
-        "id"
+        "title"
       ],
       "type": "object"
     },
@@ -125,7 +116,7 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/TButtonModeCore",
+          "$ref": "#/definitions/TButtonType",
           "description": "Render mode (link or button)",
           "title": "Mode"
         },
@@ -136,69 +127,12 @@ export const survey = {
         }
       },
       "required": [
-        "id"
-      ],
-      "type": "object"
-    },
-    "IDesignDataCore": {
-      "description": "Data defintion for design step",
-      "properties": {
-        "form": {
-          "$ref": "#/definitions/IFormCore",
-          "description": "The user's current form state",
-          "title": "FormCore"
-        },
-        "step": {
-          "$ref": "#/definitions/IStepCore",
-          "description": "Current step"
-        },
-        "stepId": {
-          "description": "Internally unique identifier",
-          "title": "Step ID",
-          "type": [
-            "string",
-            "number"
-          ]
-        }
-      },
-      "required": [
-        "form",
-        "step",
-        "stepId"
+        "title"
       ],
       "type": "object"
     },
     "IEventCore": {
       "description": "Event Model",
-      "properties": {
-        "onActionClick": {
-          "not": {}
-        },
-        "onAnswer": {
-          "not": {}
-        },
-        "onAnyEvent": {
-          "not": {}
-        },
-        "onError": {
-          "not": {}
-        },
-        "onGateSwitch": {
-          "not": {}
-        },
-        "onInit": {
-          "not": {}
-        },
-        "onNoResults": {
-          "not": {}
-        },
-        "onPage": {
-          "not": {}
-        },
-        "onResults": {
-          "not": {}
-        }
-      },
       "title": "Event",
       "type": "object"
     },
@@ -206,9 +140,42 @@ export const survey = {
       "description": "Represents the survey as completed by the user",
       "properties": {
         "age": {
-          "$ref": "#/definitions/TAgeCore",
           "description": "Customer's age in years/months/days",
-          "title": "Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Age",
+          "type": "object"
         },
         "birthdate": {
           "description": "Customer's entered birthdate",
@@ -237,37 +204,8 @@ export const survey = {
         }
       },
       "required": [
-        "responses",
         "started"
       ],
-      "type": "object"
-    },
-    "INavigationConfigCore": {
-      "description": "Configuration for navigation",
-      "properties": {
-        "core": {
-          "enum": [
-            "INavigationConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IPageConfigCore": {
-      "properties": {
-        "core": {
-          "enum": [
-            "IPageConfig",
-            "I"
-          ],
-          "type": "string"
-        },
-        "visible": {
-          "type": "boolean"
-        }
-      },
       "type": "object"
     },
     "IPageCore": {
@@ -287,6 +225,9 @@ export const survey = {
           "description": "Optional sub header to display below Body Heading",
           "title": "Body Subheading",
           "type": "string"
+        },
+        "display": {
+          "type": "boolean"
         },
         "entryRequirements": {
           "description": "Collection of requirements to view/enter this step",
@@ -325,21 +266,9 @@ export const survey = {
           "type": "string"
         },
         "section": {
+          "$ref": "#/definitions/ISectionCore",
           "description": "Section to which this step belongs",
-          "properties": {
-            "id": {},
-            "requirements": {
-              "description": "Collection of requirements to enable display of this status",
-              "items": {
-                "$ref": "#/definitions/IRequirementCore"
-              },
-              "title": "Requirements",
-              "type": "array"
-            },
-            "title": {}
-          },
-          "title": "Section",
-          "type": "object"
+          "title": "Section"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -351,56 +280,16 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/PAGE_TYPE",
+          "$ref": "#/definitions/TPageType",
           "description": "Type of page",
           "title": "Page Type"
         }
       },
       "required": [
-        "id",
-        "section",
+        "display",
+        "title",
         "type"
       ],
-      "type": "object"
-    },
-    "IPageDataCore": {
-      "description": "Data defintion for page step",
-      "properties": {
-        "form": {
-          "$ref": "#/definitions/IFormCore",
-          "description": "The user's current form state",
-          "title": "FormCore"
-        },
-        "step": {
-          "$ref": "#/definitions/IPageCore",
-          "description": "Current step"
-        },
-        "stepId": {
-          "description": "Internally unique identifier",
-          "title": "Step ID",
-          "type": [
-            "string",
-            "number"
-          ]
-        }
-      },
-      "required": [
-        "form",
-        "step",
-        "stepId"
-      ],
-      "type": "object"
-    },
-    "IPagesConfigCore": {
-      "properties": {
-        "core": {
-          "enum": [
-            "IPagesConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
       "type": "object"
     },
     "IPagesCore": {
@@ -416,6 +305,12 @@ export const survey = {
           "description": "Last step of the survey if there are 0 results",
           "title": "No Results Page"
         },
+        "pages": {
+          "items": {
+            "$ref": "#/definitions/IPageCore"
+          },
+          "type": "array"
+        },
         "resultsPage": {
           "$ref": "#/definitions/IPageCore",
           "description": "Last step of the survey if there are 1 or more results",
@@ -427,46 +322,14 @@ export const survey = {
           "title": "Summary Page"
         }
       },
-      "required": [
-        "noResultsPage",
-        "resultsPage",
-        "summaryPage"
-      ],
-      "type": "object"
-    },
-    "IProgressBarConfigCore": {
-      "description": "Configuration options for the progress bar",
-      "properties": {
-        "core": {
-          "enum": [
-            "IProgressBarConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "IQuestionConfigCore": {
-      "description": "Configuration for question display",
-      "properties": {
-        "core": {
-          "enum": [
-            "IQuestionConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
       "type": "object"
     },
     "IQuestionCore": {
-      "description": "Defines step content for Question type",
       "properties": {
         "answers": {
           "description": "Collection of allowed answers",
           "items": {
-            "$ref": "#/definitions/IRefCore"
+            "$ref": "#/definitions/IAnswerCore"
           },
           "title": "Answers",
           "type": "array"
@@ -508,21 +371,9 @@ export const survey = {
           "type": "string"
         },
         "section": {
+          "$ref": "#/definitions/ISectionCore",
           "description": "Section to which this step belongs",
-          "properties": {
-            "id": {},
-            "requirements": {
-              "description": "Collection of requirements to enable display of this status",
-              "items": {
-                "$ref": "#/definitions/IRequirementCore"
-              },
-              "title": "Requirements",
-              "type": "array"
-            },
-            "title": {}
-          },
-          "title": "Section",
-          "type": "object"
+          "title": "Section"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -534,51 +385,15 @@ export const survey = {
           "type": "string"
         },
         "type": {
-          "$ref": "#/definitions/QUESTION_TYPE",
+          "$ref": "#/definitions/TQuestionType",
           "description": "Type of question",
           "title": "Question Type"
         }
       },
       "required": [
         "answers",
-        "id",
-        "section",
+        "title",
         "type"
-      ],
-      "type": "object"
-    },
-    "IQuestionDataCore": {
-      "description": "Data defintion for question step",
-      "properties": {
-        "core": {
-          "enum": [
-            "IQuestionData",
-            "I"
-          ],
-          "type": "string"
-        },
-        "form": {
-          "$ref": "#/definitions/IFormCore",
-          "description": "The user's current form state",
-          "title": "FormCore"
-        },
-        "step": {
-          "$ref": "#/definitions/IQuestionCore",
-          "description": "Current step"
-        },
-        "stepId": {
-          "description": "Internally unique identifier",
-          "title": "Step ID",
-          "type": [
-            "string",
-            "number"
-          ]
-        }
-      },
-      "required": [
-        "form",
-        "step",
-        "stepId"
       ],
       "type": "object"
     },
@@ -594,12 +409,8 @@ export const survey = {
         "nav": {
           "description": "Navigation configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "INavigationConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Navigation",
@@ -608,26 +419,27 @@ export const survey = {
         "pages": {
           "description": "Page configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IPagesConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Pages",
           "type": "object"
         },
+        "params": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "description": "Properties produced from `getRuntimeConfig()`",
+          "title": "Params",
+          "type": "object"
+        },
         "progressBar": {
           "description": "Progress Bar configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IProgressBarConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Progress Bar",
@@ -636,12 +448,8 @@ export const survey = {
         "questions": {
           "description": "Question configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IQuestionConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Question Configuration",
@@ -650,23 +458,14 @@ export const survey = {
         "steps": {
           "description": "Step configuration",
           "properties": {
-            "core": {
-              "enum": [
-                "IStepConfig",
-                "I"
-              ],
-              "type": "string"
+            "visible": {
+              "type": "boolean"
             }
           },
           "title": "Step Configuration",
           "type": "object"
         }
       },
-      "required": [
-        "mode",
-        "nav",
-        "pages"
-      ],
       "type": "object"
     },
     "IQuestionnaireCore": {
@@ -713,14 +512,8 @@ export const survey = {
         }
       },
       "required": [
-        "actions",
-        "branches",
-        "config",
-        "header",
         "pages",
-        "questions",
-        "results",
-        "sections"
+        "questions"
       ],
       "type": "object"
     },
@@ -738,7 +531,7 @@ export const survey = {
         }
       },
       "required": [
-        "id"
+        "title"
       ],
       "type": "object"
     },
@@ -750,15 +543,86 @@ export const survey = {
           "title": "Exlanation",
           "type": "string"
         },
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
         "maxAge": {
-          "$ref": "#/definitions/TAgeCore",
           "description": "Optional maximum age allowed for this requirement",
-          "title": "Maximum Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Maximum Age",
+          "type": "object"
         },
         "minAge": {
-          "$ref": "#/definitions/TAgeCore",
           "description": "Optional minimum age allowed for this requirement",
-          "title": "Minimum Age"
+          "properties": {
+            "days": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Days",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "months": {
+              "maximum": 31,
+              "minimum": 0,
+              "title": "Months",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "years": {
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Years",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "months",
+            "years"
+          ],
+          "title": "Minimum Age",
+          "type": "object"
         },
         "responses": {
           "description": "Map of step id to required answer values",
@@ -767,10 +631,19 @@ export const survey = {
           },
           "title": "Answers",
           "type": "array"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TRequirementType"
         }
       },
       "required": [
-        "responses"
+        "explanation",
+        "responses",
+        "title"
       ],
       "type": "object"
     },
@@ -779,52 +652,29 @@ export const survey = {
       "properties": {
         "answers": {
           "items": {
-            "properties": {
-              "id": {
-                "description": "Unique identifier",
-                "title": "Id",
-                "type": "string"
-              },
-              "title": {
-                "title": "Title",
-                "type": "string"
-              }
-            },
-            "type": "object"
+            "$ref": "#/definitions/IAnswerCore"
           },
           "type": "array"
         },
+        "id": {
+          "description": "Unique identifier",
+          "title": "Id",
+          "type": "string"
+        },
         "question": {
-          "properties": {
-            "answers": {
-              "description": "Collection of allowed answers",
-              "items": {
-                "$ref": "#/definitions/IRefCore"
-              },
-              "title": "Answers",
-              "type": "array"
-            },
-            "entryRequirements": {},
-            "exitRequirements": {},
-            "footer": {},
-            "id": {},
-            "info": {},
-            "internalNotes": {},
-            "section": {},
-            "subTitle": {},
-            "title": {},
-            "type": {
-              "$ref": "#/definitions/QUESTION_TYPE",
-              "description": "Type of question",
-              "title": "Question Type"
-            }
-          },
-          "type": "object"
+          "$ref": "#/definitions/IQuestionCore"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TResponseType"
         }
       },
       "required": [
         "answers",
-        "question"
+        "title"
       ],
       "type": "object"
     },
@@ -861,12 +711,13 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TResultType"
         }
       },
       "required": [
-        "id",
-        "label",
-        "requirements"
+        "title"
       ],
       "type": "object"
     },
@@ -889,25 +740,14 @@ export const survey = {
         "title": {
           "title": "Title",
           "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/TSectionType"
         }
       },
       "required": [
-        "id",
-        "requirements"
+        "title"
       ],
-      "type": "object"
-    },
-    "IStepConfigCore": {
-      "description": "Customizations for styling and formatting of the steps",
-      "properties": {
-        "core": {
-          "enum": [
-            "IStepConfig",
-            "I"
-          ],
-          "type": "string"
-        }
-      },
       "type": "object"
     },
     "IStepCore": {
@@ -950,21 +790,9 @@ export const survey = {
           "type": "string"
         },
         "section": {
+          "$ref": "#/definitions/ISectionCore",
           "description": "Section to which this step belongs",
-          "properties": {
-            "id": {},
-            "requirements": {
-              "description": "Collection of requirements to enable display of this status",
-              "items": {
-                "$ref": "#/definitions/IRequirementCore"
-              },
-              "title": "Requirements",
-              "type": "array"
-            },
-            "title": {}
-          },
-          "title": "Section",
-          "type": "object"
+          "title": "Section"
         },
         "subTitle": {
           "description": "Text to display below the title",
@@ -982,37 +810,8 @@ export const survey = {
         }
       },
       "required": [
-        "id",
-        "section",
+        "title",
         "type"
-      ],
-      "type": "object"
-    },
-    "IStepDataCore": {
-      "description": "Data defintion for base wizard step",
-      "properties": {
-        "form": {
-          "$ref": "#/definitions/IFormCore",
-          "description": "The user's current form state",
-          "title": "FormCore"
-        },
-        "step": {
-          "$ref": "#/definitions/IStepCore",
-          "description": "Current step",
-          "title": "Step"
-        },
-        "stepId": {
-          "description": "Internally unique identifier",
-          "title": "Step ID",
-          "type": [
-            "string",
-            "number"
-          ]
-        }
-      },
-      "required": [
-        "form",
-        "stepId"
       ],
       "type": "object"
     },
@@ -1024,60 +823,15 @@ export const survey = {
       ],
       "type": "string"
     },
-    "PAGE_TYPE": {
-      "description": "Defines the known component types for pages",
+    "TActionType": {
       "enum": [
-        "Landing",
-        "No Results",
-        "Results",
-        "Summary"
+        "call",
+        "hybrid",
+        "none",
+        "online",
+        "shell"
       ],
       "type": "string"
-    },
-    "QUESTION_TYPE": {
-      "description": "Defines the known component types for questions",
-      "enum": [
-        "dob",
-        "multiple_choice",
-        "multiple_select"
-      ],
-      "type": "string"
-    },
-    "TAgeCore": {
-      "properties": {
-        "days": {
-          "maximum": 31,
-          "minimum": 0,
-          "title": "Days",
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "months": {
-          "maximum": 31,
-          "minimum": 0,
-          "title": "Months",
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "years": {
-          "maximum": 100,
-          "minimum": 0,
-          "title": "Years",
-          "type": [
-            "number",
-            "null"
-          ]
-        }
-      },
-      "required": [
-        "months",
-        "years"
-      ],
-      "type": "object"
     },
     "TAnswerDataCore": {
       "description": "Event data structure to be sent with event callbacks",
@@ -1085,19 +839,70 @@ export const survey = {
         "answer": {
           "type": "string"
         },
-        "step": {
-          "type": "string"
+        "responses": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/definitions/IResponseCore"
+              },
+              "type": "array"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/IQuestionCore"
+              },
+              "type": "array"
+            }
+          ]
         }
       },
       "required": [
         "answer",
-        "step"
+        "responses"
       ],
       "title": "Event Data Type",
       "type": "object"
     },
-    "TButtonModeCore": {
+    "TAnswerType": {
+      "enum": [
+        "fixed",
+        "variable"
+      ],
       "type": "string"
+    },
+    "TBaseType": {
+      "const": "default",
+      "type": "string"
+    },
+    "TBranchType": {
+      "enum": [
+        "linear",
+        "non-linear"
+      ],
+      "type": "string"
+    },
+    "TButtonType": {
+      "enum": [
+        "button",
+        "link"
+      ],
+      "type": "string"
+    },
+    "TDesignType": {
+      "const": "Edit",
+      "description": "Defines the known component types for design",
+      "type": "string"
+    },
+    "TEnmBaseType": {
+      "properties": {
+        "DEFAULT": {
+          "$ref": "#/definitions/TBaseType"
+        }
+      },
+      "required": [
+        "DEFAULT"
+      ],
+      "type": "object"
     },
     "TEventCore": {
       "anyOf": [
@@ -1141,77 +946,156 @@ export const survey = {
       ],
       "type": "object"
     },
+    "TOpType": {
+      "enum": [
+        "RERENDER",
+        "RESET",
+        "undo",
+        "UPDATE"
+      ],
+      "type": "string"
+    },
     "TPageDataCore": {
       "description": "Event data structure to be sent with event callbacks",
       "properties": {
         "dir": {
           "$ref": "#/definitions/DIRECTION"
-        },
-        "step": {
-          "type": "string"
         }
       },
       "required": [
-        "dir",
-        "step"
+        "dir"
       ],
       "title": "Event Data Type",
       "type": "object"
     },
+    "TPageType": {
+      "description": "Defines the known component types for pages",
+      "enum": [
+        "Landing",
+        "No Results",
+        "Results",
+        "Summary"
+      ],
+      "type": "string"
+    },
+    "TPages": {
+      "additionalProperties": {
+        "$ref": "#/definitions/IPageCore"
+      },
+      "type": "object"
+    },
+    "TProgressBarStatusType": {
+      "enum": [
+        "complete",
+        "current",
+        "incomplete"
+      ],
+      "type": "string"
+    },
+    "TQuestionType": {
+      "description": "Defines the known component types for questions",
+      "enum": [
+        "date_time",
+        "dob",
+        "multiple_choice",
+        "multiple_select",
+        "path",
+        "text"
+      ],
+      "type": "string"
+    },
+    "TRefType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TStepType"
+        },
+        {
+          "$ref": "#/definitions/TActionType"
+        },
+        {
+          "$ref": "#/definitions/TAnswerType"
+        },
+        {
+          "$ref": "#/definitions/TBranchType"
+        },
+        {
+          "$ref": "#/definitions/TButtonType"
+        },
+        {
+          "$ref": "#/definitions/TRequirementType"
+        },
+        {
+          "$ref": "#/definitions/TResponseType"
+        },
+        {
+          "$ref": "#/definitions/TResultType"
+        },
+        {
+          "$ref": "#/definitions/TSectionType"
+        }
+      ]
+    },
+    "TRequirementType": {
+      "enum": [
+        "required",
+        "non-required"
+      ],
+      "type": "string"
+    },
+    "TResponseType": {
+      "enum": [
+        "complete",
+        "incomplete"
+      ],
+      "type": "string"
+    },
     "TResultDataCore": {
       "description": "Event data structure for results",
       "properties": {
-        "props": {
-          "$ref": "#/definitions/IStepDataCore"
-        },
         "results": {
           "items": {
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "label": {
-                "type": "string"
-              },
-              "reason": {
-                "type": "string"
-              },
-              "title": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "label",
-              "reason"
-            ],
-            "type": "object"
+            "$ref": "#/definitions/IResultCore"
           },
           "type": "array"
         },
         "step": {
-          "const": "results",
-          "type": "string"
+          "$ref": "#/definitions/IStepCore"
         }
       },
       "required": [
-        "props",
         "results",
         "step"
       ],
       "title": "Event Result Type",
       "type": "object"
     },
+    "TResultType": {
+      "enum": [
+        "match",
+        "non-match"
+      ],
+      "type": "string"
+    },
+    "TSectionType": {
+      "enum": [
+        "locked",
+        "unlocked"
+      ],
+      "type": "string"
+    },
     "TStepType": {
       "anyOf": [
         {
-          "$ref": "#/definitions/PAGE_TYPE"
+          "$ref": "#/definitions/TPageType"
         },
         {
-          "$ref": "#/definitions/QUESTION_TYPE"
+          "$ref": "#/definitions/TQuestionType"
         },
         {
-          "$ref": "#/definitions/DESIGN_TYPE"
+          "$ref": "#/definitions/TDesignType"
+        },
+        {
+          "$ref": "#/definitions/TBaseType"
         }
       ]
     }

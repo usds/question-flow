@@ -5955,7 +5955,6 @@ __metadata:
     eslint-plugin-yaml: ^0.5.0
     prettier: ^2.6.2
     prettier-plugin-organize-imports: ^2.3.4
-    pretty-quick: ^3.1.3
     rimraf: ^3.0.2
     rollup: ^2.70.2
     rollup-plugin-copy: ^3.4.0
@@ -6096,7 +6095,6 @@ __metadata:
     short-unique-id: ^4.4.4
     ts-json-schema-generator: ^1.0.0
     ts-node: ^10.7.0
-    tslib: ^2.4.0
     typescript: ^4.6.3
     uuid: ^8.3.2
   languageName: unknown
@@ -6178,7 +6176,6 @@ __metadata:
     "@types/rimraf": ^3
     "@typescript-eslint/eslint-plugin": ^5.20.0
     "@typescript-eslint/parser": ^5.20.0
-    "@usds.gov/questionable-build": "workspace:*"
     "@usds.gov/questionable-core": "workspace:*"
     babel-loader: ^8.2.4
     babel-preset-react-app: ^10.0.1
@@ -6221,7 +6218,6 @@ __metadata:
     semantic-ui-react: ^2.1.2
     ts-json-schema-generator: ^1.0.0
     ts-node: ^10.7.0
-    tslib: ^2.4.0
     typescript: ^4.6.3
     use-wizard: ^4.0.6
   languageName: unknown
@@ -6321,7 +6317,6 @@ __metadata:
     eslint-plugin-react-hooks: ^4.4.0
     gh-pages: ^3.2.3
     lodash: ^4.17.21
-    pretty-quick: ^3.1.3
     react: ^17.0.2
     react-async: ^10.0.1
     react-docgen-typescript-loader: ^3.7.2
@@ -24160,7 +24155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
+"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
