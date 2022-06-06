@@ -1,7 +1,7 @@
 /*
   eslint-disable max-len,
                 sonarjs/no-duplicate-string,
- */
+*/
 import { merge }                             from 'lodash';
 import { QUESTION_TYPE, IQuestion, IBranch } from '@usds.gov/questionable';
 import { isFraCalculator }                   from '../lib/calculator.flow';
@@ -217,7 +217,7 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
   ) as IQuestion;
 
   /**
-   * Disability will last > 1 year or be terminal
+  * Disability will last > 1 year or be terminal
    */
   const H: IQuestion = merge(
     {
@@ -499,6 +499,16 @@ export const buildQuestions = (json: TQuestionMap): Tq => {
             {
               answers:  [NO],
               question: O,
+            },
+          ],
+        },
+        {
+          explanation: 'Not married for 10 years before divorce',
+          responses:   [
+            OVER_18,
+            {
+              answers:  [NO],
+              question: P,
             },
           ],
         },
