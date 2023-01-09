@@ -10381,7 +10381,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-yaml", "npm:0.5.0"],\
             ["lodash", "npm:4.17.21"],\
             ["loglevel", "npm:1.8.0"],\
-            ["luxon", "npm:2.3.2"],\
+            ["luxon", "npm:2.5.2"],\
             ["prettier", "npm:2.6.2"],\
             ["prettier-plugin-organize-imports", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:2.3.4"],\
             ["pretty-quick", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:3.1.3"],\
@@ -10508,7 +10508,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-saver", "npm:2.0.5"],\
             ["gh-pages", "npm:3.2.3"],\
             ["lodash", "npm:4.17.21"],\
-            ["luxon", "npm:2.3.2"],\
+            ["luxon", "npm:2.5.2"],\
             ["prettier", "npm:2.6.2"],\
             ["prettier-plugin-organize-imports", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:2.3.4"],\
             ["pretty-quick", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:3.1.3"],\
@@ -23377,10 +23377,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["luxon", [\
-        ["npm:2.3.2", {\
-          "packageLocation": "./.yarn/cache/luxon-npm-2.3.2-a6b71034e1-ba4f9daa56.zip/node_modules/luxon/",\
+        ["npm:2.5.2", {\
+          "packageLocation": "./.yarn/cache/luxon-npm-2.5.2-d4f55f89d0-d8b671ffd2.zip/node_modules/luxon/",\
           "packageDependencies": [\
-            ["luxon", "npm:2.3.2"]\
+            ["luxon", "npm:2.5.2"]\
           ],\
           "linkType": "HARD"\
         }]\
