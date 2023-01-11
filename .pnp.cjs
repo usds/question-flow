@@ -9310,10 +9310,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/luxon", [\
-        ["npm:2.3.1", {\
-          "packageLocation": "./.yarn/cache/@types-luxon-npm-2.3.1-7a8bfcdbfe-e75928929a.zip/node_modules/@types/luxon/",\
+        ["npm:3.2.0", {\
+          "packageLocation": "./.yarn/cache/@types-luxon-npm-3.2.0-932ebc98c4-051bfbf841.zip/node_modules/@types/luxon/",\
           "packageDependencies": [\
-            ["@types/luxon", "npm:2.3.1"]\
+            ["@types/luxon", "npm:3.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10356,7 +10356,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@swc/core", "npm:1.2.172"],\
             ["@swc/helpers", "npm:0.3.8"],\
             ["@types/lodash", "npm:4.14.182"],\
-            ["@types/luxon", "npm:2.3.1"],\
+            ["@types/luxon", "npm:3.2.0"],\
             ["@types/node", "npm:17.0.29"],\
             ["@types/uuid", "npm:8.3.4"],\
             ["@typescript-eslint/eslint-plugin", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:5.21.0"],\
@@ -10381,7 +10381,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-yaml", "npm:0.5.0"],\
             ["lodash", "npm:4.17.21"],\
             ["loglevel", "npm:1.8.0"],\
-            ["luxon", "npm:2.3.2"],\
+            ["luxon", "npm:3.2.1"],\
             ["prettier", "npm:2.6.2"],\
             ["prettier-plugin-organize-imports", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:2.3.4"],\
             ["pretty-quick", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:3.1.3"],\
@@ -10475,7 +10475,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/eslint", "npm:8.4.1"],\
             ["@types/file-saver", "npm:2.0.5"],\
             ["@types/lodash", "npm:4.14.182"],\
-            ["@types/luxon", "npm:2.3.1"],\
+            ["@types/luxon", "npm:3.2.0"],\
             ["@types/node", "npm:17.0.29"],\
             ["@types/react", "npm:17.0.44"],\
             ["@types/react-dom", "npm:17.0.16"],\
@@ -10508,7 +10508,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-saver", "npm:2.0.5"],\
             ["gh-pages", "npm:3.2.3"],\
             ["lodash", "npm:4.17.21"],\
-            ["luxon", "npm:2.3.2"],\
+            ["luxon", "npm:3.2.1"],\
             ["prettier", "npm:2.6.2"],\
             ["prettier-plugin-organize-imports", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:2.3.4"],\
             ["pretty-quick", "virtual:c90bc748bea7f22dee4f33c258c50c0ffa66a59a97a976f3281c8a315370f6db880d0eec9bb57168b2ec5adc2c9a4d7c2bc5de6efdaf0208d4f3f6930f82324b#npm:3.1.3"],\
@@ -10576,7 +10576,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/user-event", "virtual:91cf19975259409ef2290e1947563541fe5e59bc3bc309ee70843c2c0f67b9ba7382e77f9d7d71f2a1e73d63e5a9a269d43845d02cc1f632b54d32a94688927b#npm:14.1.1"],\
             ["@types/jest", "npm:27.4.1"],\
             ["@types/lodash", "npm:4.14.182"],\
-            ["@types/luxon", "npm:2.3.1"],\
+            ["@types/luxon", "npm:3.2.0"],\
             ["@types/node", "npm:17.0.29"],\
             ["@types/react", "npm:17.0.44"],\
             ["@types/react-dom", "npm:17.0.16"],\
@@ -23377,10 +23377,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["luxon", [\
-        ["npm:2.3.2", {\
-          "packageLocation": "./.yarn/cache/luxon-npm-2.3.2-a6b71034e1-ba4f9daa56.zip/node_modules/luxon/",\
+        ["npm:3.2.1", {\
+          "packageLocation": "./.yarn/cache/luxon-npm-3.2.1-56f8d97395-3fa3def2c5.zip/node_modules/luxon/",\
           "packageDependencies": [\
-            ["luxon", "npm:2.3.2"]\
+            ["luxon", "npm:3.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\
