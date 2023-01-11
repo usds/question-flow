@@ -18,7 +18,7 @@
     "@rjsf/semantic-ui": "^4.1.1",
     "@trussworks/react-uswds": "^2.8.0",
     "@usds.gov/questionable-core": "workspace:*",
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.0",
     "cross-env": "^7.0.3",
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
